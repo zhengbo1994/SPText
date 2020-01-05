@@ -120,7 +120,7 @@ namespace SPText
             #endregion
 
             #region  设计模式
-            //DesignPattern();
+            DesignPattern();
             
             #endregion
 
