@@ -946,6 +946,7 @@
     <Content Include="Ace\wysiwyg.html" />
     <Content Include="BootStrap\bootstrap\js\jquery.min.js" />
     <Content Include="BootStrap\Custom\page.html" />
+    <Content Include="BootStrap\HtmlPageMain.html" />
     <Content Include="BootStrap\images\jiantou1.png" />
     <Content Include="BootStrap\images\jiantou2.png" />
     <Content Include="BootStrap\images\jiantou3.png" />

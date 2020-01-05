@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>首页-Admin后台管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lt IE 9]>
+      <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            background-color: #fff;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 650px) {
+            .mainPage {
+                height: 65px;
+                width: 650px;
+                border-bottom: 5px solid #1AA094;
+                background-color: transparent;
+                position: relative;
+                overflow: hidden;
+            }
+        }
+
+        .mainPage {
+            height: 65px;
+            width: 100%;
+            border-bottom: 5px solid #1AA094;
+            background-color: transparent;
+            position: relative;
+        }
+
+        .mainPage_Head {
+            margin: 0px 10px;
+            overflow:hidden;
+        }
+
+        .head_Left {
+            float: left;
+            left: 0px;
+            text-align: center;
+            height: 60px;
+            line-height: 60px;
+        }
+
+            .head_Left>span:first-child {
+                color: #000000;
+                font-size: 20px;
+                margin-left: 10px;
+                /*  font-weight: bold;*/
+                display: inline-block;
+            }
+
+            .head_Left>span:last-child {
+                border: 1px solid #1AA094;
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background-color: #1AA094;
+                line-height: 30px;
+                margin-left: 40px;
+                cursor: pointer;
+            }
+
+        .head_Right {
+            float: right;
+            right: 0px;
+            height: 60px;
+        }
+
+            .head_Right > ul > li {
+                display: inline-block;
+                padding: 20px;
+                text-align: center;
+                color: #6c6a6a;
+                list-style: none;
+                cursor: pointer;
+            }
+
+        .head_Right_Helper {
+            float: right;
+            position: relative;
+            right: 20px;
+            top: 30px;
+        }
+
+            .head_Right_Helper > li {
+                list-style: none;
+                padding: 5px;
+            }
+
+        .head_Right > ul > li > img {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            border-radius: 20px;
+        }
+
+        .right_More {
+            font-size: 15px;
+            transform: inherit;
+        }
+
+
+        /* 中间部分*/
+        .mainPage_Body {
+            display: flex;
+        }
+
+            .mainPage_Body > .head_Left {
+                width: 200px;
+            }
+    </style>
+</head>
+<body>
+    <div class="mainPage">
+        <div class="mainPage_Head">
+            <div class="head_Left">
+                <span>BeginnerAdmin</span>
+                <span>&nbsp;</span>
+            </div>
+            <div class="head_Right">
+                <ul>
+                    <li>清除缓存</li>
+                    <li>浏览网站</li>
+                    <li>视频</li>
+                    <li>
+                        <img src="images/jiantou2.png" />
+                        <span>Beginner</span>
+                        <span class="right_More">&nabla;</span>
+                        <!--<ul class="head_Right_Helper">
+                            <li>个人信息</li>
+                            <li>设置</li>
+                            <li>锁屏</li>
+                            <li>退出</li>
+                        </ul>-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mainPage_Body">
+            <div class="body_Left">
+                <ul>
+                    <li>
+                        <i>图标</i>
+                        <span>基本元素</span>
+                        <i>&nabla;</i>
+                        <ul>
+                            <li><i>图标</i><span>按钮</span></li>
+                            <li><i>图标</i><span>表单</span></li>
+                            <li><i>图标</i><span>表格</span></li>
+                            <li><i>图标</i><span>导航</span></li>
+                            <li><i>图标</i><span>Tab选项卡</span></li>
+                            <li><i>图标</i><span>辅助性元素</span></li>
+                        </ul>
+                    </li>
+                    <li>组件</li>
+                    <li>第三方组件</li>
+                    <li>地址本</li>
+                    <li>这是一级导航</li>
+                </ul>
+            </div>
+            <div class="body_Right"></div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
