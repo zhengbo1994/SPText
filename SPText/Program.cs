@@ -2642,41 +2642,10 @@ namespace SPText
     #endregion
 
     #region  测试实体
-    public class SPText1 : BaseSPText
+    public class xmlStudent
     {
-        public string MyProperty1 { get; set; }
-        public override string Show()
-        {
-            Console.WriteLine($"抽象类重写！{this.GetType().Name}");
-            return this.GetType().Name;
-        }
-    }
-    public class SPText2 : BaseSPText
-    {
-        public string MyProperty2 { get; set; }
-        public override string Show()
-        {
-            Console.WriteLine($"抽象类重写！{this.GetType().Name}");
-            return this.GetType().Name;
-        }
-    }
-    public class SPText3 : BaseSPText
-    {
-        public string MyProperty3 { get; set; }
-        public override string Show()
-        {
-            Console.WriteLine($"抽象类重写！{this.GetType().Name}");
-            return this.GetType().Name;
-        }
-    }
-    public abstract class BaseSPText
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public string Area { get; set; }
-
-        public abstract string Show();
+        public string Name { set; get; }
+        public int Age { set; get; }
     }
 
     #region  xml类
@@ -2982,16 +2951,4 @@ namespace SPText
     }
 
     #endregion
-
-    public class xmlStudent
-    {
-        public string Name { set; get; }
-        public int Age { set; get; }
-    }
-    #region
-
-    #endregion
-
-
-
 }
