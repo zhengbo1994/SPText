@@ -40,8 +40,11 @@ namespace EF_CodeDB
             // var configuration = builder.Build();
             // var conn = configuration.GetConnectionString("JDDbConnection");
             // optionsBuilder.UseSqlServer(conn);
+            if (optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(this._IConfiguration.GetConnectionString("JDDbConnection"));
+            }
 
-            optionsBuilder.UseSqlServer(this._IConfiguration.GetConnectionString("JDDbConnection"));
             optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
 
             //optionsBuilder.UseLoggerFactory(this._iLoggerFactory);

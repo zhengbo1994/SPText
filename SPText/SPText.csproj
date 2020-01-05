@@ -313,7 +313,7 @@
     <Reference Include="Unity.Interception.Configuration, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Interception.Configuration.5.11.1\lib\net47\Unity.Interception.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="WinSCPnet">
+    <Reference Include="WinSCPnet, Version=1.7.2.10905, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
       <HintPath>..\packages\WinSCP.5.17.9\lib\net40\WinSCPnet.dll</HintPath>
     </Reference>
     <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -357,6 +357,12 @@
     <Compile Include="Common\CustomCache\MemoryCacheCache.cs" />
     <Compile Include="Common\DataFactory.cs" />
     <Compile Include="Common\DataHelper\Dapper\SqlDatabase.cs" />
+    <Compile Include="Common\DataHelper\Data\ColumnAttribute.cs" />
+    <Compile Include="Common\DataHelper\Data\GetMapping.cs" />
+    <Compile Include="Common\DataHelper\Data\IRepository.cs" />
+    <Compile Include="Common\DataHelper\Data\Repository.cs" />
+    <Compile Include="Common\DataHelper\Data\SqlHelperBase.cs" />
+    <Compile Include="Common\DataHelper\Data\TableAttribute.cs" />
     <Compile Include="Common\DataHelper\DbHelper.cs" />
     <Compile Include="Common\DataHelper\EF\SqlserverDatabase.cs" />
     <Compile Include="Common\DataHelper\EF\SqlServerDbContext.cs" />
@@ -647,5 +653,7 @@
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Data.SqlClient.SNI.2.0.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Data.SqlClient.SNI.2.0.0\build\net46\Microsoft.Data.SqlClient.SNI.targets'))" />
+    <Error Condition="!Exists('..\packages\WinSCP.5.17.9\build\WinSCP.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WinSCP.5.17.9\build\WinSCP.targets'))" />
   </Target>
+  <Import Project="..\packages\WinSCP.5.17.9\build\WinSCP.targets" Condition="Exists('..\packages\WinSCP.5.17.9\build\WinSCP.targets')" />
 </Project>
