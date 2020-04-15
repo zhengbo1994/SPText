@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义指令</title>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+	<div id="itapp">
+		<h3 v-hello>{{msg}}</h3>
+		 <button @click="change()">更新数据</button>
+		<h3 v-world:wbs888="username">{{msg}}</h3>
+		<!--<h3 v-wbs>软谋</h3> -->
+		<input type="text" v-model="msg" v-focus>
+	</div>
+
+	<script>
+		/**
+		 * 自定义全局指令
+		 * 注：使用指令时必须在指名名称前加前缀v-，即v-指令名称
+		 */
+			//钩子函数的参数  el,binding
+		Vue.directive('hello',{
+			bind(el,binding){ //常用！！ 	
+				// console.log(el); //指令所绑定的元素，DOM对象
+				el.style.color='red';
+				console.log(binding); //name
+
+				console.log('bind：指令第一次绑定到元素上时调用，只调用一次，可执行初始化操作');
+			},
+			inserted(el,binding){
+				console.log(el)
+				// binding.arg：传给指令的参数
+				console.log('inserted：被绑定元素插入到DOM中时调用');
+			},
+			update(el,binding){
+				console.log(el)
+				console.log('update：被绑定元素所在模板更新时调用,模板还没更新完成');
+			},
+			componentUpdated(el,binding){
+				console.log(el)
+				console.log('componentUpdated：被绑定元素所在模板完成一次更新周期时调用');
+			},
+			unbind(el,binding){
+				console.log('unbind：指令与元素解绑时调用，只调用一次');
+			}
+		});
+
+		//动态传参  传入一个简单的函数， bind update 钩子函数可以调用
+		Vue.directive('world',function(el,binding){
+			
+			console.log(binding);
+			
+		})
+		var vm=new Vue({
+			el:'#itapp',
+			data:{
+				msg:'welcome to itapp',
+				username:'alice'
+			},
+			methods:{
+				change(){
+					this.msg = '你好';
+				}
+			},
+			directives:{ //自定义局部指令
+
+				focus:{
+					bind(el,binding){
+						//数据还没渲染
+					},
+					//被绑定元素插入到DOM中时调用
+					inserted(el,binding){
+						el.focus();
+					}
+				}
+			}
+			
+		});
+	</script>
+	
+</body>
+</html>

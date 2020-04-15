@@ -1,0 +1,56 @@
+﻿* {
+padding:0px;
+margin:0px;
+font-family:"微软雅黑";
+list-style-type:none;
+}
+#dlunbo{
+    width:520px;
+    height:280px;
+    position:absolute;
+    left:50%;
+    margin-left:-260px;
+    top:50%;
+    margin-top:-140px;
+}
+.ig{
+    position:absolute;
+
+}
+#tabs{
+    position:absolute;
+    bottom:10px;
+    left:200px;
+}
+#tabs li{
+    width:20px;
+    height:20px;
+    border:solid 2px #fff;
+    float:left;
+    margin-left:5px;
+    border-radius:100%;
+
+}
+.btn{
+    position:absolute;
+    width:30px;
+    height:50px;
+    background-color:rgba(0,0,0,0.5);
+    color:#fff;
+    text-align:center;
+    font-size:30px;
+    top:50%;
+    margin-top:-25px;
+    cursor:pointer;
+
+}
+.btn1{
+    left:0px;
+
+}
+.btn2{
+    right:0px;
+}
+#tabs .bg{
+    background-color:red;
+}

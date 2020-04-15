@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="itapp">
+        <!--
+            1.基本用法
+         -->
+        <h2>msg： {{msg}}</h2>
+        <h2>msg2 ：{{msg2}}</h2>
+
+        <!-- 对数据处理再显示 -->
+        <h2>msg : {{msg.split(' ').reverse().join(' ')}}</h2>
+        <h2>reverseMsg : {{reverseMsg}}</h2>
+        <button @click="change">修改计算属性</button>
+
+        <!--
+            2.计算属性 vs 方法
+         -->
+        <h2>num1： {{num1}}</h2>
+        <h2>num2 -计算属性 ：{{num2}}</h2>
+        <h2>getNum 函数: {{getNum2()}}</h2>
+
+        <!--
+            3.get和set
+         -->
+        <!-- <h2>{{num2}}</h2>
+        <button @click="change2">修改计算属性</button> -->
+
+
+    </div>
+
+
+    <script>
+        var vm = new Vue({
+            el: '#itapp',
+            data: { //普通属性
+                msg: 'welcome to itapp',
+                num1: 8
+            },
+            computed: { //计算属性
+                msg2: function () {
+                    //该函数必须有返回值，用来获取属性，称为get函数
+                    return 'hello';
+
+                },
+                reverseMsg() {
+                    return this.msg.split(' ').reverse().join(' ');
+                },
+                num2: {
+                    get() {
+                        console.log('num2：' + new Date());
+                        return this.num1 - 1;
+                    },
+                    set(val) {
+                        console.log('修改num2的值');
+                        this.num1 = val;
+                    }
+                }
+            },
+            methods: {
+                change() {
+                    this.num2 = 50;
+                },
+                getNum2() {
+                    console.log(new Date());
+                    return this.num1 - 1;
+                },
+            },
+            mounted() {
+                // // 多次调取计算属性，可以从缓存获取， 提高性能
+                setInterval(function () {
+                     console.log(vm.num2); //从缓存获取
+                    console.log(vm.getNum2());  //每次都要执行函数
+                }, 1000);
+
+            }
+
+        });
+
+
+    </script>
+
+
+</body>
+</html>

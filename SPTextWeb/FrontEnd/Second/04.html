@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>发送AJAX请求</title>
+	<script src="js/vue.js"></script>
+	<script src="js/axios.min.js"></script>
+	<script>
+		window.onload=function(){
+			new Vue({
+				el:'#itapp',
+				data:{
+					user:{
+						name:'alice',
+						age:19
+					},
+                    uid:'',
+                    loginMsg:{
+
+                    }
+				},
+				methods:{
+                    getUserById(){
+                        axios.get(`https://api.github.com/users/${this.uid}`)
+						.then(resp => {
+							// console.log(resp.data);
+							this.loginMsg=resp.data;
+						});
+                    },
+                    sendJSON(){
+                        axios({
+                            method:'get',
+                            url:'user.json',
+                            // data:{}
+                        }).then((res)=>{
+                            console.log(res);
+                        }).catch((resp)=>{
+                            console.log('请求失败'+resp.status,resp.statusText);
+                        })
+                    },
+                    sendGet(){
+                        axios.get('http://localhost:3000/info',{
+                            params:{
+                                name:'song',
+                                age:'10',
+                                id:1
+                            }
+                        }).then((res)=>{
+                            console.log(res);
+                        }).catch((resp)=>{
+                            console.log('请求失败'+resp.status,resp.statusText);
+                        })
+                    },
+                    sendPost(){
+
+                        axios({
+                            method:'post',
+                            url:'http://localhost:3000/info',
+                            data:{
+                                name:'song',
+                                age:'10',
+                                id:1
+                            }
+                        }).then((res)=>{
+                            console.log(res);
+                        }).catch((resp)=>{
+                            console.log('请求失败'+resp.status,resp.statusText);
+                        })
+
+                        // axios.post('http://localhost:3000/info',{
+                        //     name:'song',
+                        //     age:'10',
+                        //     id:1
+                        // }).then((res)=>{
+                        //     console.log(res);
+                        // }).catch((resp)=>{
+                        //     console.log('请求失败'+resp.status,resp.statusText);
+                        // })
+
+
+                    },
+                    sendPostFormData(){
+                        //  axios.post('http://localhost:3000/info','name=alice&age=20') //方式一
+                         axios.post('http://localhost:3000/info',this.user,{   //transformRequest转化
+                            transformRequest:[
+                                function (data) {
+                                    // 对 data 进行任意转换处理
+                                    // {
+                                    //     name:'alice',
+                                    //     age:19
+                                    // }
+                    
+                                    // 把json数据转化成formData
+                                    var params = '';
+                                    for(var index in data) {
+                                        params+=index+'='+data[index]+'&'
+                                    }
+                                    console.log(params)
+                                    return params;
+                                }
+                             ]
+                         }) 
+                         .then((res)=>{
+                            console.log(res);
+                        }).catch((resp)=>{
+                            console.log('请求失败'+resp.status,resp.statusText);
+                        })
+
+                        // 方式三：qs.stringify
+
+                    }
+                }
+			});
+		}
+	</script>
+</head>
+<body>
+	<div id="itapp">
+		<button @click="sendJSON">发送AJAX请求</button>
+
+		 <button @click="sendGet">GET方式发送AJAX请求</button>
+
+        <button @click="sendPost">POST方式发送AJAX请求</button>
+        
+        <button @click="sendPostFormData">POST方式发送AJAX请求  -- FormData</button>
+		<hr>
+		<br>
+
+		GitHub ID： <input type="text" v-model="uid">
+		<button @click="getUserById">获取指定GitHub账户信息并显示</button>
+		<br>
+		姓名：{{loginMsg.login}} <br>
+		头像：<img :src="loginMsg.avatar_url" alt="" style="width:200px;"> 
+
+	</div>
+</body>
+</html>

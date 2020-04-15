@@ -1,0 +1,35 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+ <meta charset="utf-8">
+ <script src="global.js" ></script>
+ 
+ </head>
+ <body>
+ 
+ <div id="myDiv"><h2>使用 AJAX 修改该文本内容</h2></div>
+ <button type="button" onclick="loadXMLDoc()">修改内容</button>
+ 
+ <script>
+     var baseurl = 'http://localhost:3000/info';
+ function loadXMLDoc(){
+  
+     xmlAjax({
+         method:'post',
+         data:{
+             title:'test',
+             name:'laney'
+         },
+         url:baseurl,
+         done:function(data){
+             console.log(data);
+         }
+         
+     })
+ }
+ loadXMLDoc();
+
+
+ </script>
+ </body>
+ </html> 

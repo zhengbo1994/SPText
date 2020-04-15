@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BaseInfo>
+  <Person>
+    <Name>小明</Name>
+    <Age>16</Age>
+    <Books>
+      <Book>
+        <ISBN>123</ISBN>
+        <Title>借的书1</Title>
+      </Book>
+    </Books>
+  </Person>
+  <Person>
+    <Name>小红</Name>
+    <Age>18</Age>
+    <Books>
+      <Book>
+        <ISBN>456</ISBN>
+        <Title>借的书2</Title>
+      </Book>
+      <Book>
+        <ISBN>789</ISBN>
+        <Title>借的书3</Title>
+      </Book>
+    </Books>
+  </Person>
+</BaseInfo>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<BaseInfo>
+  <Person>
+    <Name>小明</Name>
+    <Age>16</Age>
+    <Books>
+      <Book>
+        <ISBN>123</ISBN>
+        <Title>借的书1</Title>
+      </Book>
+    </Books>
+  </Person>
+  <Person>
+    <Name>小红</Name>
+    <Age>18</Age>
+    <Books>
+      <Book>
+        <ISBN>456</ISBN>
+        <Title>借的书2</Title>
+      </Book>
+      <Book>
+        <ISBN>789</ISBN>
+        <Title>借的书3</Title>
+      </Book>
+    </Books>
+  </Person>
+</BaseInfo>-->

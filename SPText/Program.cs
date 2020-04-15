@@ -1,0 +1,2958 @@
+﻿using IOSerialize.IO;
+using IOSerialize.Serialize;
+using log4net.Config;
+using SPText.Common;
+using SPText.EF;
+using SPText.Unity;
+using SPTextLK.Text;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using Unity;
+using static SPText.DesignPatternText;
+using static SPText.MediatorPattern;
+using static SPText.MementoPattern;
+using static SPText.Program.FlyweightPatternFactory;
+using static SPText.SimpleFactory;
+using static SPText.VisitorPattern;
+
+namespace SPText
+{
+    class Program
+    {
+        private static int[] dataArr = new int[100];
+        string connectionStrings = ConfigurationManager.ConnectionStrings["Connection"].ToString();
+        static void Main(string[] args)
+        {
+            #region  委托
+            //CreateDelegate();
+            #endregion
+
+            #region  常见算法
+            //cjsf();
+            //dysjx();
+            //suijicharu();
+            //mppx(dataArr.ToArray());
+            //QuickSort(dataArr.ToArray(), 0, 10);
+            //daoxu();
+            //Combine(dataArr.ToArray());
+            //jiecheng(10);
+            //qh();
+            //Foo(10);
+            //jisuanzhishu();
+            #endregion
+
+            #region  泛型
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    Console.WriteLine(GenericCache<int>.GetCache());
+            //    Thread.Sleep(10);
+            //    Console.WriteLine(GenericCache<long>.GetCache());
+            //    Thread.Sleep(10);
+            //    Console.WriteLine(GenericCache<DateTime>.GetCache());
+            //    Thread.Sleep(10);
+            //    Console.WriteLine(GenericCache<string>.GetCache());
+            //    Thread.Sleep(10);
+            //    //Console.WriteLine(GenericCache<Program>.GetCache());
+            //    Thread.Sleep(10);
+
+            //    Console.WriteLine("123");
+            //}
+            #endregion
+
+            #region  多线程、高并发
+            //1.分布式（应用程序、文件、数据库）
+            //2.缓存
+            //3.集群
+            //3.消息队列
+            //4.延迟加载
+            #endregion
+
+            #region  反射
+            //AssemblyActivator();
+            #endregion
+
+            #region  日志
+            //InitLog4Net();
+
+            //var logger = LogManager.GetLogger(typeof(Program));
+
+            //logger.Info("消息");
+            //logger.Warn("警告");
+            //logger.Error("异常");
+            //logger.Fatal("错误");
+            #endregion
+
+            #region  多线程 Thread、ThreadPool、Task、Parallel
+            //ThreadDemo();
+            #endregion
+
+            #region  IOC
+
+            //{
+            //    IUnityContainer container = new UnityContainer();//实例化容器
+            //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
+            //    SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
+            //    text.One();
+            //}
+            //{
+            //    IUnityContainer container = ContainnerFactory.GetContainer();
+            //    IText text = container.Resolve<IText>();
+            //    text.One();
+            //}
+            #endregion
+
+            #region  设计模式
+            DesignPattern();
+            #endregion
+
+            #region  xml
+            //xmlSerialize();
+            //xmlDeserialize();
+
+            //LoginUser.UseName = "123";//错误！未实现
+            #endregion
+
+            #region Unity
+            //IUnityContainer container = Unity.ContainnerFactory.GetContainer();
+            //IText iCompanyUserService = container.Resolve<IText>();
+            #endregion
+
+            #region  Lambda
+            #region 匿名类（只读）
+            {
+                var obj = new
+                {
+                    Id = 1,
+                    Name = "张三"
+                };
+            }
+            {
+                object obj = new
+                {
+                    Id = 1,
+                    Name = "张三"
+                };
+            }
+            #endregion
+            List<Text> texts = new List<Text>();
+            texts.ObjWhere(p => p.Id == 1);
+
+
+            //内连接
+            var list0 = from x in texts
+                        join y in texts on x.Id equals y.Id
+                        select new
+                        {
+                            Id = 0,
+                            Name = "1"
+                        };
+
+            //左连接
+            var list1 = from x in texts
+                        join y in texts on x.Id equals y.Id
+                        into xylist
+                        from xy in xylist.DefaultIfEmpty()
+                        select new
+                        {
+                            Id = 0,
+                            Name = "1"
+                        };
+
+
+            #endregion
+
+            #region  设计模式六大原则
+            //单一原则
+            //里式替换原则
+            //迪米特原则
+            //面向抽象原则
+            //接口隔离原则
+            //开闭原则
+
+            #endregion
+
+            #region  表达式目录树
+            //Expression<Action> expression = () => Console.WriteLine("123");
+            //Expression<Action<int,int>> expression1 = (x,y) => Console.WriteLine($"{x}{y}123");
+            //expression1.Compile().Invoke(1, 2);
+
+            //Expression<Func<Text, bool>> textc = c => c.Id == 1 && c.UseName.ToString() == "123";
+
+            //public bool ExpressionText<T>(Expression<Func<T, bool>> textc)
+            //{
+            //    Type type = typeof(T);
+            //    //ExpressionVisitor conditionBuilderVisitor = new ExpressionVisitor();
+            //    //conditionBuilderVisitor.Visit(textc);
+            //    //string result = conditionBuilderVisitor.Condition();
+            //    return true;
+            //}
+            #endregion
+
+            #region  IO(序列化&反序列化、读取文件信息)
+            //JsonAndFile();
+            #endregion
+
+            #region  数据类型/特殊类型
+            //DataTypeAndSpecialType();
+            #endregion
+
+
+
+            //object.ReferenceEquals(1,1);//用于比较
+
+
+            //var texts0 = new List<Text>().AsQueryable().Where(p => p.Id > 100 && p.UseName.Contains("张三"));
+            //var texts1 = TextWhere(new List<Text>(), p => p.Id > 100 && p.UseName.Contains("张三"));
+
+            //{
+            //    long commonSecond = 0;
+            //    Stopwatch watch = new Stopwatch();
+            //    watch.Start();
+            //    for (int i = 0; i < 100_000_000; i++)
+            //    {
+            //        Thread.Sleep(100);
+            //    }
+            //    watch.Stop();
+            //    commonSecond = watch.ElapsedMilliseconds;
+            //}
+
+            //dynamic  避开编译器检查
+            Console.WriteLine("视频代码笔记！");
+            Console.ReadLine();
+
+
+
+            #region  
+            //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
+            #endregion
+        }
+
+        #region  委托
+        public static void CreateDelegate()
+        {
+            DYDeleGate deleGate = new DYDeleGate(insert);
+            int ret = deleGate.Invoke(10, 20);
+
+            Console.WriteLine("10+20={0}", ret);
+
+            deleGate -= insert;
+            deleGate += delete;
+
+            ret = deleGate(10, 20);
+
+            Console.WriteLine("10-20={0}", ret);
+
+            Console.ReadLine();
+            Action action = () => Console.WriteLine("这是一个无参无返回值的委托");
+            Func<int, int, string> func = (int i, int j) => $"{i}{j}这是一个有参返回值为字符串的委托";
+            string funcReturn = func.Invoke(1, 2);
+
+
+            CreateDelete createDelete = new CreateDelete();
+            createDelete.ActionText += createDelete.ShowText1;
+            createDelete.ActionText += createDelete.ShowText2;
+            createDelete.ActionText += createDelete.ShowText3;
+            createDelete.ShowText();
+        }
+        #endregion
+
+        #region  常见算法
+
+        // 9*9乘法表
+        public static void cjsf()
+        {
+            for (int a = 0; a < 9; a++)
+            {
+                for (int b = 0; b <= a; b++)
+                {
+                    Console.Write($"{a}*{b}={a * b}\t");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        // 等腰三角形
+        public static void dysjx()
+        {
+            for (int a = 0; a <= 5; a++)
+            {
+                for (int b = 1; b <= 5 - a; b++)
+                {
+                    Console.Write(" ");
+                }
+                for (int c = 1; c < 2 * a; c++)
+                {
+                    Console.Write("*");
+                }
+                Console.Write("\n");
+            }
+        }
+
+        //随机数
+        public static int[] suijicharu()
+        {
+            int[] arr = new int[100];
+            ArrayList arrList = new ArrayList();
+            Random rdm = new Random();
+            while (arrList.Count < 100)
+            {
+                int num = rdm.Next(1, 101);
+                if (!arrList.Contains(num))
+                {
+                    arrList.Add(num);
+                }
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                arr[i] = int.Parse(arrList[i].ToString());
+            }
+            dataArr = arr;
+            return arr;
+        }
+
+        //冒泡排序
+        public static int[] mppx(int[] data)
+        {
+            int temp = 0;
+
+            for (int i = 0; i < data.Length - 1; i++)
+            {
+                for (int j = i + 1; j < data.Length; j++)
+                {
+                    if (data[i] > data[j])
+                    {
+                        temp = data[i];
+                        data[i] = data[j];
+                        data[j] = temp;
+                    }
+                }
+            }
+            return data;
+        }
+
+        //实现快速排序
+        public static string QuickSort(int[] num, int left, int right)
+        {
+            string data = "";
+            if (left >= right)
+                return "";
+
+            int key = num[left];
+            int i = left;
+            int j = right;
+
+            while (i < j)
+            {
+                while (i < j && key < num[j])
+                    j--;
+                if (i >= j)
+                {
+                    num[i] = key;
+                    break;
+                }
+                num[i] = num[j];
+
+                while (i < j && key >= num[i])
+                    i++;
+                if (i >= j)
+                {
+                    num[i] = key;
+                    break;
+                }
+                num[j] = num[i];
+            }
+            num[i] = key;
+
+            QuickSort(num, left, i - 1);
+            QuickSort(num, i + 1, right);
+
+            for (int k = 0; k < num.Length; k++)
+            {
+                data += num[k] + ",";
+            }
+
+            return data;
+        }
+
+        //字符串倒叙
+        public static string daoxu()
+        {
+            string data = "";
+            string str = "I am a student";
+            string[] strdata = str.Split(' ');
+            for (int i = strdata.Length - 1; i >= 0; i--)
+            {
+                data += strdata[i];
+                //Console.Write(strdata[i]);
+                if (i != 0)
+                {
+                    data += " ";
+                    //Console.Write(' ');
+                }
+            }
+
+            return data;
+        }
+
+        //数组转字符串
+        public static string Combine(int[] data)
+        {
+            string str = "";
+            foreach (var i in data)
+            {
+                str = i.ToString() + ",";
+            }
+
+            return str;
+        }
+
+        //阶乘
+        public static int jiecheng(int i)
+        {
+            if (i == 1)
+            {
+                return 1;
+            }
+            else if (i == 2)
+            {
+                return 2;
+            }
+            else
+            {
+                return i * (jiecheng(i - 1));
+            }
+        }
+
+        #region  求和
+        public static void qh()
+        {
+            // 2、得到结果
+            int sums = Sums(10000, 4);
+
+            Console.WriteLine("1++++++++10000求和：{0}", sums);
+        }
+
+        public static int Sums(int num, int threadCount)
+        {
+            int sum = 0;
+            // 1、计算每一个线程计算的单位
+            int threadUnit = num / threadCount; // 25 
+
+            // 2、计算开始和结束(如果 100 / 6 = 16 余 3)
+            //  1、能除尽
+            //  2、不能除尽
+            for (int i = 0; i <= threadCount; i++)
+            {
+                // i 最大 只能为5
+                // 3.1 开始
+                int startConut = threadUnit * i + 1; // 25 *0  + 1= 1; // 25 * 1 + 1 = 26
+
+                // 3.2 结束
+                int endCount = threadUnit * (i + 1); // 25 *(0+1) = 25; // 25 *(1+1) = 50
+
+                // 3.3 除不尽的判断
+                if (endCount > num)
+                {
+                    endCount = num;
+                }
+
+                // 3.5 计算结果
+                sum += GetSum(startConut, endCount);
+            }
+            return sum;
+        }
+
+        public static int GetSum(int startCount, int endCount)
+        {
+            // 1、开始线程来计算
+            Task<int> taskSum = Task.Run<int>(() =>
+            {
+                int num = 0;
+                for (int i = startCount; i <= endCount; i++)
+                {
+                    num += i;
+                }
+
+                return num;
+            });
+
+            // 2、获取计算结果
+            int result = taskSum.Result;
+
+            Console.WriteLine("{0} 获取结果：{1}", taskSum.Id, result);
+            return result;
+        }
+        #endregion
+
+        #region  递归
+        public static int Foo(int i)
+        {
+            if (i == 0)
+            {
+                return 0;
+            }
+            else if (i > 1 && i <= 2)
+            {
+                return 1;
+            }
+            else
+            {
+                return Foo(i - 1) + Foo(i - 2);
+            }
+        }
+        #endregion
+
+        #region  计算输入的质数
+        //计算输入的质数
+        public static void jisuanzhishu()
+        {
+            long i;
+            while (true)
+            {
+                Console.Write("请输入要计算的质数（0退出）：");
+                i = long.Parse(Console.ReadLine());
+                if (i == 0) break;
+                DateTime t1 = DateTime.Now;
+                switch (i)
+                {
+                    case 1: Console.WriteLine("1 不是质数！"); break;
+                    case 2: Console.WriteLine("2 是质数！"); break;
+                    default: cal(i); break;
+                }
+                DateTime t2 = DateTime.Now;
+                Console.WriteLine("时间为：{0} 毫秒\n", (t2 - t1).Ticks / 10000f);
+            }
+        }
+
+        //以下为函数部分 
+        public static void cal(long x)
+        {
+            long sum = 1;
+            byte row = 1;
+            Console.Write("\n");
+            for (long a = 3; a < x + 1; a++)
+            {
+                bool flag = true;
+                for (long b = 2; b < (a / 2) + 1; b++)
+                {
+                    if (a % b != 0) continue;
+                    flag = false;
+                    break;
+                }
+                if (flag)
+                {
+                    if (row == 10)
+                    {
+                        Console.WriteLine();
+                        row = 0;
+                    }
+                    if (sum == 1)
+                        Console.Write("{0,7}", 2);
+                    Console.Write("{0,7}", a);
+                    sum++; row++;
+                }
+            }
+            Console.WriteLine("\n\n{0} 以内共有 {1} 个质数\n", x, sum);
+        }
+        #endregion
+        #endregion
+
+        #region  泛型 Dictionary List T(自定义类型)
+        //泛型方法
+        public object obj<T>(T obj)
+        {
+            return obj;
+        }
+
+        //泛型类
+        public class ObjClass<T>
+        {
+            public ObjClass()
+            {
+                Console.WriteLine("这是一个构造函数泛型类！");
+                intvalue = 1;
+            }
+
+            private int intvalue;
+
+            public int retValue()
+            {
+                return intvalue;
+            }
+        }
+
+        //  泛型类
+        public class GenericClass<T>
+        {
+            public T _T;
+        }
+
+        public class GenericCache<T>
+        {
+            static GenericCache()
+            {
+                Console.WriteLine("This is GenericCache 静态构造函数");
+                _TypeTime = string.Format("{0}_{1}", typeof(T).FullName, DateTime.Now.ToString("yyyyMMddHHmmss.fff"));
+            }
+
+            private static string _TypeTime = "";
+
+            public static string GetCache()
+            {
+                return _TypeTime;
+            }
+        }
+
+        #region  泛型
+        //泛型方法
+        public T VoidFangFa<T>()
+        //where T : class//引用类型约束
+        //where T : struct//值类型
+        /*where T : new()*///无参数构造函数
+                           //where T:Text//类约束
+                           //where T:IText //接口约束
+        {
+            return default(T);
+        }
+        //泛型类
+        public class ClassFangFa<T>
+        {
+        }
+        //泛型接口
+        public interface interfaceFangFa<T>
+        {
+
+        }
+        //泛型委托
+        public delegate void delegateFangFa<T>() where T : class;
+
+        #region  协变/逆变
+        public static void ShowGeneric()
+        {
+            {
+                Bird bird1 = new Bird();
+                Bird bird2 = new Sparrow();
+                Sparrow sparrow1 = new Sparrow();
+                //Sparrow sparrow2 = new Bird();
+            }
+
+
+            {
+                List<Bird> birdList1 = new List<Bird>();
+                //List<Bird> birdList2 = new List<Sparrow>();
+
+                List<Bird> birdList3 = new List<Sparrow>().Select(c => (Bird)c).ToList();
+            }
+
+
+
+            {//协变
+                IEnumerable<Bird> birdList1 = new List<Bird>();
+                IEnumerable<Bird> birdList2 = new List<Sparrow>();
+
+                Func<Bird> func = new Func<Sparrow>(() => null);
+
+                ICustomerListOut<Bird> customerList1 = new CustomerListOut<Bird>();
+                ICustomerListOut<Bird> customerList2 = new CustomerListOut<Sparrow>();
+            }
+
+
+
+            {//逆变
+                ICustomerListIn<Sparrow> customerList2 = new CustomerListIn<Sparrow>();
+                ICustomerListIn<Sparrow> customerList1 = new CustomerListIn<Bird>();
+
+                ICustomerListIn<Bird> birdList1 = new CustomerListIn<Bird>();
+                birdList1.Show(new Sparrow());
+                birdList1.Show(new Bird());
+
+                Action<Sparrow> act = new Action<Bird>((Bird i) => { });
+            }
+
+
+            {
+                IMyList<Sparrow, Bird> myList1 = new MyList<Sparrow, Bird>();
+                IMyList<Sparrow, Bird> myList2 = new MyList<Sparrow, Sparrow>();//协变
+                IMyList<Sparrow, Bird> myList3 = new MyList<Bird, Bird>();//逆变
+                IMyList<Sparrow, Bird> myList4 = new MyList<Bird, Sparrow>();//协变+逆变
+            }
+        }
+
+
+        public class Bird
+        {
+            public int Id { get; set; }
+        }
+        public class Sparrow : Bird
+        {
+            public string Name { get; set; }
+        }
+        public interface ICustomerListIn<in T>
+        {
+            //T Get();
+
+            void Show(T t);
+        }
+
+        public class CustomerListIn<T> : ICustomerListIn<T>
+        {
+            //public T Get()
+            //{
+            //    return default(T);
+            //}
+
+            public void Show(T t)
+            {
+            }
+        }
+
+        /// <summary>
+        /// out 协变 只能是返回结果
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public interface ICustomerListOut<out T>
+        {
+            T Get();
+
+            //void Show(T t);
+        }
+
+        public class CustomerListOut<T> : ICustomerListOut<T>
+        {
+            public T Get()
+            {
+                return default(T);
+            }
+
+            //public void Show(T t)
+            //{
+
+            //}
+        }
+
+
+
+
+
+        public interface IMyList<in inT, out outT>
+        {
+            void Show(inT t);
+            outT Get();
+            outT Do(inT t);
+
+            ////out 只能是返回值   in只能是参数
+            //void Show1(outT t);
+            //inT Get1();
+
+        }
+
+        public class MyList<T1, T2> : IMyList<T1, T2>
+        {
+
+            public void Show(T1 t)
+            {
+                Console.WriteLine(t.GetType().Name);
+            }
+
+            public T2 Get()
+            {
+                Console.WriteLine(typeof(T2).Name);
+                return default(T2);
+            }
+
+            public T2 Do(T1 t)
+            {
+                Console.WriteLine(t.GetType().Name);
+                Console.WriteLine(typeof(T2).Name);
+                return default(T2);
+            }
+        }
+        #endregion
+
+
+        #endregion
+        #endregion
+
+        #region  供委托调用
+        public static int insert(int a, int b)
+        {
+            return a + b;
+        }
+
+        public static int delete(int a, int b)
+        {
+            return a - b;
+        }
+        #endregion
+
+        #region  16进制字符串转数组
+        public static byte[] HexToByte(string msg)
+        {
+            msg = msg.Replace("", "");
+            byte[] comBuffer = new byte[msg.Length / 2];
+            for (int i = 0; i < msg.Length; i += 2)
+            {
+                comBuffer[i / 2] = (byte)Convert.ToByte(msg.Substring(i, 2), 16); ;
+            }
+            return comBuffer;
+        }
+
+        #endregion
+
+        #region  ORM获取对象
+        public T Find<T>(int Id)
+        {
+            Type type = typeof(T);
+            string sql = (new SqlBuilder<T>()).GetSql(SqlType.SelectSql);//泛型缓存
+
+            IEnumerable<SqlParameter> paraList = new List<SqlParameter>() { new SqlParameter("@Id", Id) };
+            //string columnStrings = string.Join(",", type.GetProperties().Select(p => $"[{p.GetName()}]"));
+            //string sql = string.Format($"SELECT {columnStrings} FROM [{type.GetName()}] WHERE ID={0}", Id);
+
+
+            return this.ExecuteSql<T>(sql, paraList, cmd =>
+            {
+                var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    T t = (T)Activator.CreateInstance(type);
+
+                    foreach (var prop in type.GetProperties())
+                    {
+                        string propName = prop.GetName();
+                        prop.SetValue(t, reader[propName] is DBNull ? null : reader[propName]);
+                    }
+                    return t;
+
+                }
+                else
+                {
+                    throw new Exception("获取数据失败！");
+                }
+            });
+
+            //using (SqlConnection conn = new SqlConnection(""))
+            //{
+            //    SqlCommand cmd = new SqlCommand(sql, conn);
+            //    cmd.Parameters.AddRange(paraList.ToArray());
+            //    conn.Open();
+
+            //    var reader = cmd.ExecuteReader();
+            //    if (reader.Read())
+            //    {
+            //        T t = (T)Activator.CreateInstance(type);
+
+            //        foreach (var prop in type.GetProperties())
+            //        {
+            //            string propName = prop.GetName();
+            //            prop.SetValue(t, reader[propName] is DBNull ? null : reader[propName]);
+            //            //prop.SetValue(t, reader[prop.GetName()] is DBNull ? null : reader[prop.GetName()]);
+            //        }
+            //        return t;
+
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("获取数据失败！");
+            //    }
+            //}
+        }
+
+        public List<T> FindAll<T>()
+        {
+            Type type = typeof(T);
+            string sql = (new SqlBuilder<T>()).GetSql(SqlType.SelectAllSql);//泛型缓存
+
+            //string columnStrings = string.Join(",", type.GetProperties().Select(p => $"[{p.GetName()}]"));
+            //string sql = string.Format($"SELECT {columnStrings} FROM [{type.GetName()}]");
+
+            List<T> tList = new List<T>();
+            using (SqlConnection conn = new SqlConnection(""))
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    T t = (T)Activator.CreateInstance(type);
+
+                    foreach (var prop in type.GetProperties())
+                    {
+                        string propName = prop.GetName();
+                        prop.SetValue(t, reader[propName] is DBNull ? null : reader[propName]);
+                    }
+                    tList.Add(t);
+                }
+                return tList;
+            }
+
+
+        }
+
+        public int Update<T>(T model) where T : Text
+        {
+            Type type = typeof(T);
+
+            string sql = (new SqlBuilder<T>()).GetSql(SqlType.UpdateSql + model.Id);//泛型缓存
+            IEnumerable<SqlParameter> paraList = type.GetProperties().Select(p => new SqlParameter($"@{p.Name}", p.GetValue(model) ?? DBNull.Value));
+            //IEnumerable<SqlParameter> paraList = new List<SqlParameter>() { new SqlParameter("@Id", model.Id) };
+
+            //string columnStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"[{p.Name}]=@[{p.Name}]"));
+            //IEnumerable<SqlParameter> pareList = type.GetProperties().Select(p => new SqlParameter($"@{p.Name}", p.GetValue(model) ?? DBNull.Value));
+            //string sql = $"UPDATE {type.Name} Set {columnStrings} WHERE Id={model.Id}";
+
+
+            if (AttributcMapping.ValiData(type))
+            {
+                throw new Exception("数据检验不通过！");
+            }
+
+            return this.ExecuteSql<int>(sql, paraList, cmd =>
+            {
+                int ireturn = cmd.ExecuteNonQuery();
+                if (ireturn < 1)
+                {
+                    throw new Exception("更新失败！");
+                }
+                else
+                {
+                    return ireturn;
+                }
+            });
+
+            //using (SqlConnection conn = new SqlConnection(""))
+            //{
+            //    SqlCommand cmd = new SqlCommand(sql, conn);
+            //    cmd.Parameters.AddRange(paraList.ToArray());
+            //    conn.Open();
+            //    int ireturn = cmd.ExecuteNonQuery();
+            //    if (ireturn < 1)
+            //    {
+            //        throw new Exception("更新失败！");
+            //    }
+            //    else
+            //    {
+            //        return ireturn;
+            //    }
+            //}
+        }
+
+        public int Insert<T>(T model)
+        {
+            //新增后拿ID  在slq后面价格 select @@identity; new SqlCommand().ExecuteScascalar
+            Type type = typeof(T);
+            string sql = (new SqlBuilder<T>()).GetSql(SqlType.InsertSql);//泛型缓存
+            IEnumerable<SqlParameter> paraList = type.GetProperties().Select(p => new SqlParameter($"@{p.Name}", p.GetValue(model) ?? DBNull.Value));
+
+            //string columnNameStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"[{p.Name}]]"));
+            ////string columnValueStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"'{p.GetValue(model)}'"));//写死
+            //string columnValueStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"@{p.Name}"));//参数化模式
+            //IEnumerable<SqlParameter> pareList = type.GetProperties().Select(p => new SqlParameter($"@{p.Name}", p.GetValue(model) ?? DBNull.Value));
+            //string sql = $"INSERT INTO {type.Name}({columnNameStrings}) VALUE {columnValueStrings} ";
+
+            if (AttributcMapping.ValiData(type))
+            {
+                throw new Exception("数据检验不通过！");
+            }
+
+            return this.ExecuteSql<int>(sql, paraList, cmd =>
+            {
+                int ireturn = cmd.ExecuteNonQuery();
+                if (ireturn < 1)
+                {
+                    throw new Exception("新增失败！");
+                }
+                else
+                {
+                    return ireturn;
+                }
+            });
+
+            //using (SqlConnection conn = new SqlConnection(""))
+            //{
+            //    SqlCommand cmd = new SqlCommand(sql, conn);
+            //    cmd.Parameters.AddRange(pareList.ToArray());
+            //    conn.Open();
+            //    int ireturn = cmd.ExecuteNonQuery();
+            //    if (ireturn < 1)
+            //    {
+            //        throw new Exception("新增失败！");
+            //    }
+            //    else
+            //    {
+            //        return ireturn;
+            //    }
+            //}
+        }
+
+        public int Delete<T>(T model) where T : Text
+        {
+            Type type = typeof(T);
+            string sql = (new SqlBuilder<T>()).GetSql(SqlType.DeleteSql);//泛型缓存
+            //string sql = "DELETE FROM {} WHERE Id={}";
+
+            IEnumerable<SqlParameter> paraList = new List<SqlParameter>() { new SqlParameter("@Id", model.Id) };
+
+            return this.ExecuteSql<int>(sql, paraList, cmd =>
+            {
+                int ireturn = cmd.ExecuteNonQuery();
+                if (ireturn < 1)
+                {
+                    throw new Exception("删除失败！");
+                }
+                else
+                {
+                    return ireturn;
+                }
+            });
+        }
+
+        public int Delete<T>(int Id) where T : Text, new()
+        {
+            return this.Delete<T>(new T
+            {
+                Id = Id
+            });
+        }
+
+        public int DeleteAllByIdList<T>(IEnumerable<int> tList) where T : Text
+        {
+            Type type = typeof(T);
+
+            string IdList = string.Join(",", tList.Select(p => p.ToString()));
+            string sql = $"DELETE FROM {type.GetName()} WHERE Id in{IdList}";
+            IEnumerable<SqlParameter> paraList = new List<SqlParameter>() { };
+
+            return this.ExecuteSql<int>(sql, paraList, cmd =>
+            {
+                int ireturn = cmd.ExecuteNonQuery();
+                if (ireturn < 1)
+                {
+                    throw new Exception("删除失败！");
+                }
+                else
+                {
+                    return ireturn;
+                }
+            });
+        }
+
+        public int SQLPara<T>(string sqlPara)
+        {
+            Type type = typeof(T);
+
+            string sql = $"{sqlPara}";
+            IEnumerable<SqlParameter> paraList = new List<SqlParameter>() { };
+
+            return this.ExecuteSql<int>(sql, paraList, cmd =>
+            {
+                int ireturn = cmd.ExecuteNonQuery();
+                if (ireturn < 1)
+                {
+                    throw new Exception("操作失败！");
+                }
+                else
+                {
+                    return ireturn;
+                }
+            });
+        }
+
+        public T ExecuteSql<T>(string sql, IEnumerable<SqlParameter> paraList, Func<SqlCommand, T> func)
+        {
+            using (SqlConnection conn = new SqlConnection(""))
+            {
+                SqlTransaction tran = null;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddRange(paraList.ToArray());
+                    conn.Open();
+                    tran = conn.BeginTransaction();
+                    T t = func.Invoke(cmd);
+                    tran.Commit();
+                    return t;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    if (tran != null)
+                        tran.Rollback();
+                    throw ex;
+                }
+
+            }
+        }
+        #endregion
+
+        #region  反射
+        public static void AssemblyActivator()
+        {
+            Console.WriteLine("反射学习");
+            Assembly assembly = Assembly.Load("SPMVCText");//相对路径
+            //Assembly assembly1 = Assembly.LoadFile(@"D:\VS有关\VS项目\SPText\SPMVCText\SPMVCText.dll");//绝对路径
+            //Assembly assembly2 = Assembly.LoadFrom("SPMVCText.dll");//相对路径和绝对路径都可以
+
+            //foreach (var typeText in assembly.GetTypes())//获取所有类名称
+            //{
+            //    Console.WriteLine($"{typeText.Name}");
+            //    foreach (var members in typeText.GetMembers())//获取所有方法名称
+            //    {
+            //        Console.WriteLine($"{members.Name}");
+            //    }
+            //}
+
+            Type type = assembly.GetType("SPMVCText.Models.Text");
+            //foreach (var constructor in type.GetConstructors())//获取当前类所有的构造函数
+            //{
+            //    Console.WriteLine($"{constructor.Name}");
+            //    foreach (var parameter in constructor.GetParameters())//获取构造函数参数
+            //    {
+            //        Console.WriteLine($"{parameter.ParameterType}");//获取参数类型
+            //    }
+            //}
+
+
+
+            object obj = Activator.CreateInstance(type);//获取实例
+            //dynamic obj1= Activator.CreateInstance(type);  //dynamic可以避开编译器检查
+            //IText obj2 = obj as IText;//强制转化
+
+
+
+            //object obj3 = Activator.CreateInstance(type, new object[] { 123,"456" });//参数化默认构造函数
+            {
+                //普通方法（无参）
+                MethodInfo memberInfo = type.GetMethod("Query");
+                memberInfo.Invoke(obj, null);
+            }
+            {
+                //静态方法
+                MethodInfo memberInfo = type.GetMethod("Query");
+                memberInfo.Invoke(null, new object[] { "" });
+            }
+            {
+                //重载（两个参数）
+                MethodInfo memberInfo1 = type.GetMethod("Query", new Type[] { typeof(int), typeof(string) });
+                memberInfo1.Invoke(obj, new object[] { 111, "1111" });
+            }
+            {
+                //调用私有方法
+                MethodInfo memberInfo = type.GetMethod("Query", BindingFlags.NonPublic | BindingFlags.Instance);
+                memberInfo.Invoke(null, new object[] { "1111" });
+            }
+            {
+                Type typeText = typeof(Text);
+                object objText = Activator.CreateInstance(typeText);
+                //获取所有的公共属性
+                foreach (PropertyInfo item in typeText.GetProperties())
+                {
+                    Console.WriteLine("{0}:{1}", item.Name, item.GetValue(objText));
+
+                    if (item.Name.Equals("Id"))
+                    {
+                        item.SetValue(objText, "1");
+                    }
+
+                    Console.WriteLine("{0}:{1}", item.Name, item.GetValue(objText));
+                }
+                //获取所有的公共字段
+                foreach (FieldInfo item in type.GetFields())
+                {
+                    Console.WriteLine("{0}:{1}", item.Name, item.GetValue(objText));
+
+                    if (item.Name.Equals("Id"))
+                    {
+                        item.SetValue(objText, "1");
+                    }
+
+                    Console.WriteLine("{0}:{1}", item.Name, item.GetValue(objText));
+                }
+            }
+            {
+                //泛型类
+                Type typeT = assembly.GetType("SPMVCText.Models.Text~3");//泛型类创建（~1表示泛型个数）
+                Type typeMake = type.MakeGenericType(new Type[] { typeof(string), typeof(int), typeof(DateTime) });
+                object objMake = Activator.CreateInstance(typeMake);
+            }
+            {
+                //泛型方法
+                MethodInfo method = type.GetMethod("Query");
+                var methodNew = method.MakeGenericMethod(new Type[] { typeof(string), typeof(int), typeof(DateTime) });
+                methodNew.Invoke(obj, new object[] { "123", 456, DateTime.Now });
+            }
+            {
+                //泛型类和泛型方法
+                Type typeT = assembly.GetType("SPMVCText.Models.Text~3").MakeGenericType(new Type[] { typeof(string), typeof(int), typeof(DateTime) });
+                MethodInfo methodInfo = typeT.GetMethod("Query").MakeGenericMethod(new Type[] { typeof(string), typeof(int), typeof(DateTime) });
+                methodInfo.Invoke(obj, new object[] { "123", 456, DateTime.Now });
+            }
+
+        }
+
+        #endregion
+
+        #region  添加日志
+        //        CREATE TABLE[dbo].[Log]
+        //        (
+
+        //   [Id][int] IDENTITY (1, 1) NOT NULL,
+
+        //  [Date] [datetime]
+        //        NOT NULL,
+
+        //  [Thread] [varchar] (255) NOT NULL,
+
+        //  [Level] [varchar] (50) NOT NULL,
+
+        //  [Logger] [varchar] (255) NOT NULL,
+
+        //  [Message] [varchar] (4000) NOT NULL,
+
+        //  [Exception] [varchar] (2000) NULL
+        //)
+
+
+
+        private static void InitLog4Net()
+        {
+            var logCfg = new FileInfo(AppDomain.CurrentDomain.BaseDirectory + "log4net.config");
+            XmlConfigurator.ConfigureAndWatch(logCfg);
+        }
+        #endregion
+
+        #region  委托+linq(基于委托的封装，把通用逻辑完成，把可变逻辑当成委托进行传递)
+        public static List<Text> TextWhere(List<Text> textList, Func<Text, bool> func)
+        {
+            List<Text> texts = new List<Text>();
+            foreach (var item in textList)
+            {
+                if (func.Invoke(item))
+                {
+                    texts.Add(item);
+                }
+            }
+            return texts;
+        }
+        #endregion
+
+        #region  设计模式
+        #region  单例模式
+        public sealed class SingletonPattern
+        {
+            private SingletonPattern()
+            {
+                long iResult = 0;
+                for (int i = 0; i < 10000; i++)
+                {
+                    iResult += i;
+                }
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------单例模式");
+            }
+
+            private static SingletonPattern _singletonPattern = null;
+
+
+            //静态构造函数
+            static SingletonPattern()
+            {
+                _singletonPattern = new SingletonPattern();
+            }
+
+            public static SingletonPattern SingletonPatternCreate0()
+            {
+                return _singletonPattern;
+            }
+
+            //静态字段构造
+            private static SingletonPattern _singletonPattern1 = new SingletonPattern();
+
+            public static SingletonPattern SingletonPatternCreate1()
+            {
+                return _singletonPattern1;
+            }
+
+            //双锁形式
+            private static readonly object Singleton_Lock = new object();
+            public static SingletonPattern SingletonPatternCreate2()
+            {
+                if (_singletonPattern == null)
+                {
+                    lock (Singleton_Lock)
+                    {
+                        if (_singletonPattern == null)
+                        {
+                            _singletonPattern = new SingletonPattern();
+                        }
+                    }
+                }
+                return _singletonPattern;
+            }
+
+            public void Show()
+            {
+                Console.WriteLine($"Show被构造");
+            }
+
+        }
+        #endregion
+
+        #region  原型模式
+        public class PrototypePattern
+        {
+            private PrototypePattern()
+            {
+                long iResult = 0;
+                for (int i = 0; i < 10000; i++)
+                {
+                    iResult += i;
+                }
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------原型模式");
+            }
+
+            private static PrototypePattern prototypePattern = new PrototypePattern();
+
+            public static PrototypePattern PrototypePatternCreate()
+            {
+                PrototypePattern _prototypePattern = (PrototypePattern)prototypePattern.MemberwiseClone();
+                return _prototypePattern;
+            }
+
+            public void Show()
+            {
+                Console.WriteLine($"Show被构造");
+            }
+        }
+
+        #endregion
+
+        #region  享元模式
+        public class FlyweightPattern
+        {
+            private FlyweightPattern()
+            {
+                long iResult = 0;
+                for (int i = 0; i < 10000; i++)
+                {
+                    iResult += i;
+                }
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------享元模式");
+            }
+            private static FlyweightPattern flyweightPattern = null;
+            static FlyweightPattern()
+            {
+                flyweightPattern = new FlyweightPattern();
+            }
+            public FlyweightPattern FlyweightPatternCreate()
+            {
+                return flyweightPattern;
+            }
+
+
+        }
+
+        public class FlyweightPatternFactory
+        {
+            private static Dictionary<GetSPText, BaseSPText> baseSPTextDictionary = new Dictionary<GetSPText, BaseSPText>();
+            private readonly static object baseSPTextDictionaryLock = new object();
+            public static BaseSPText baseSPText(GetSPText getSPText)
+            {
+                if (!baseSPTextDictionary.ContainsKey(getSPText))
+                {
+                    lock (baseSPTextDictionaryLock)
+                    {
+                        if (!baseSPTextDictionary.ContainsKey(getSPText))
+                        {
+                            BaseSPText baseSPText = null;
+                            switch (getSPText)
+                            {
+                                case GetSPText.Text1:
+                                    baseSPText = new SPText1();
+                                    break;
+                                case GetSPText.Text2:
+                                    baseSPText = new SPText2();
+                                    break;
+                                case GetSPText.Text3:
+                                    baseSPText = new SPText3();
+                                    break;
+                                default:
+                                    throw new Exception("错误！");
+                            }
+                            baseSPTextDictionary.Add(getSPText, baseSPText);
+                        }
+                    }
+                }
+                return baseSPTextDictionary[getSPText];
+
+
+            }
+
+            public enum GetSPText
+            {
+                Text1,
+                Text2,
+                Text3
+            }
+        }
+        #endregion
+
+        #region  装饰器模式
+        public class DecoratorPatternExtend1
+        {
+            private SPText1 _sPText1 = null;
+            public DecoratorPatternExtend1(SPText1 sPText1)
+            {
+                _sPText1 = sPText1;
+            }
+            public void Show()
+            {
+                this._sPText1.Show();
+                Console.WriteLine("添加补充代码！");
+            }
+        }
+
+        public class DecoratorPatternExtend2 : SPText1
+        {
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend3 : SPText1
+        {
+            private SPText1 _sPText1 = null;
+            public DecoratorPatternExtend3(SPText1 sPText1)
+            {
+                _sPText1 = sPText1;
+            }
+            public override string Show()
+            {
+                this._sPText1.Show();
+                Console.WriteLine("添加补充代码---被继承基层！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend4 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend4(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码---4！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend5 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend5(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码---5！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend6 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend6(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码---6！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend7 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend7(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                Console.WriteLine("添加补充代码---前面添加！");
+                base.Show();
+                Console.WriteLine("添加补充代码---7！");
+                return this.GetType().Name;
+            }
+        }
+
+        #endregion
+        #endregion
+
+        #region  xml数据操作
+        public static void xmlSerialize()
+        {
+            Book b1 = new Book("111", "书1");
+            Book b2 = new Book("222", "书2");
+            Book b3 = new Book("333", "书3");
+            Books bs1 = new Books();
+            Books bs2 = new Books();
+            bs1.BookList.Add(b1);
+            bs1.BookList.Add(b2);
+            bs2.BookList.Add(b3);
+            Person p1 = new Person("张三", 11);
+            Person p2 = new Person("李四", 22);
+            p1.BookList.Add(bs1);
+            p2.BookList.Add(bs2);
+            BaseInfo baseInfo = new BaseInfo();
+            baseInfo.PersonList.Add(p1);
+            baseInfo.PersonList.Add(p2);
+
+            FileStream file = new FileStream(@"D:\VS有关\VS项目\SPText\SPText\xmlBaseInfo.xml", FileMode.Create);
+            StreamWriter sr = new StreamWriter(file, System.Text.Encoding.UTF8);
+
+            //创建XML命名空间
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
+            XmlSerializer serializer = new XmlSerializer(typeof(BaseInfo));
+            serializer.Serialize(sr, baseInfo, ns);
+            var configText = sr.ToString();
+            sr.Write(configText);
+        }
+
+        public static void xmlDeserialize()
+        {
+            //FileInfo filePath = new FileInfo("D:\\项目文件\\测试实验项目\\TestProject\\ConsoleApplication1\\BaseInfo.xml");
+            //xml来源可能是外部文件，也可能是从其他系统获得
+            FileStream file = new FileStream(@"D:\VS有关\VS项目\SPText\SPText\xmlBaseInfo.xml", FileMode.Open, FileAccess.Read);
+            XmlSerializer xmlSearializer = new XmlSerializer(typeof(BaseInfo));
+            BaseInfo info = (BaseInfo)xmlSearializer.Deserialize(file);
+            file.Close();
+            foreach (Person per in info.PersonList)
+            {
+                Console.WriteLine("人员：");
+                Console.WriteLine(" 姓名：" + per.Name);
+                Console.WriteLine(" 年龄：" + per.Age);
+                foreach (Books b1 in per.BookList)
+                {
+                    foreach (Book b in b1.BookList)
+                    {
+                        Console.WriteLine(" 书：");
+                        Console.WriteLine("     ISBN:" + b.ISBN);
+                        Console.WriteLine("     书名:" + b.Title);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region  Cache
+        private const string LoginUserKey = "CacheKey-LoginUserCacheKey";
+        /// <summary>
+        /// 获取或设置当前登录用户
+        /// </summary>
+        public static Text LoginUser
+        {
+            get { return WebCache.GetCache(LoginUserKey) as Text; }
+            set { WebCache.SetCache(LoginUserKey, value); }
+        }
+        #endregion
+
+        #region  测试方法
+        public static void Show()
+        {
+            Console.WriteLine("线程1");
+        }
+        public static int Show1()
+        {
+            Console.WriteLine("线程2");
+            return Thread.CurrentThread.ManagedThreadId;
+        }
+        #endregion
+
+        #region  IO(序列化&反序列化、读取文件信息)
+        public static void JsonAndFile()
+        {
+            {
+                MyIO.Show();
+                //MyIO.Log("1235677");
+
+                //var directoryInfos = Recursion.GetAllDirectory(@"D:\软谋教育\Git_Work");
+            }
+
+            {
+                //生成验证码
+                ImageHelper.Drawing();
+            }
+            {
+                //序列化&反序列化
+                //Console.WriteLine("**************Serialize*************");
+                SerializeHelper.BinarySerialize();
+                SerializeHelper.SoapSerialize();
+                SerializeHelper.XmlSerialize();
+            }
+            SerializeHelper.Json();
+
+            List<Programmer> list = DataFactory.BuildProgrammerList();
+            {
+                Console.WriteLine("********************XmlHelper**********************");
+                string xmlResult = XmlHelper.ToXml<List<Programmer>>(list);
+                List<Programmer> list1 = XmlHelper.ToObject<List<Programmer>>(xmlResult);
+                //List<Programmer> list2 = XmlHelper.FileToObject<List<Programmer>>("");
+            }
+
+
+
+            {
+                string jResult = JsonHelper.ObjectToString<List<Programmer>>(list);
+                List<Programmer> list1 = JsonHelper.StringToObject<List<Programmer>>(jResult);
+            }
+            {
+                string jResult = JsonHelper.ToJson<List<Programmer>>(list);
+                List<Programmer> list1 = JsonHelper.ToObject<List<Programmer>>(jResult);
+            }
+        }
+        #endregion
+
+        #region  多线程
+        public static void ThreadDemo()
+        {
+            {
+                Action action = new Action(Show);
+                Task task = new Task(action);
+                task.Start();
+            }
+            {
+                Task task = new Task(() => Console.WriteLine("线程启动！"));
+                task.Start();
+            }
+            //有返回值
+            {
+                Func<int> func = new Func<int>(Show1);
+                Task<int> task = new Task<int>(func);
+                task.Start();
+                int i = task.Result;//阻塞当前线程
+                Console.WriteLine($"线程返回值{i}");
+            }
+            {
+                Task<int> taskSum = Task.Run<int>(() =>
+                {
+                    int sum = 0;
+                    for (int i = 0; i < 100; i++)
+                    {
+                        sum += i;
+                    }
+                    return sum;
+                });
+                Console.WriteLine($"最终结果1+....+100为：{taskSum.Result}");
+            }
+            {
+                Action action = () =>
+                {
+                    Console.WriteLine($"这是一个Task线程 Start{Thread.CurrentThread.ManagedThreadId}");
+                    Thread.Sleep(2000);
+                    Console.WriteLine($"这是一个Task线程 End{Thread.CurrentThread.ManagedThreadId}");
+                };
+                Task task = new Task(action);
+                task.Start();
+            }
+            {
+                List<Task> tasks = new List<Task>();
+
+                tasks.Add(Task.Run(() => Console.WriteLine("1", "9")));
+                tasks.Add(Task.Run(() => Console.WriteLine("2", "9")));
+                tasks.Add(Task.Run(() => Console.WriteLine("3", "9")));
+                TaskFactory taskFactory = new TaskFactory();
+                taskFactory.ContinueWhenAny(tasks.ToArray(), p =>
+                {
+                    Console.WriteLine($"指令！，{Thread.CurrentThread.ManagedThreadId}");
+                });
+                taskFactory.ContinueWhenAll(tasks.ToArray(), p =>
+                {
+                    Console.WriteLine($"指令！，{Thread.CurrentThread.ManagedThreadId}");
+                });
+
+                Task.WaitAny(tasks.ToArray());//阻塞当前线程，直到任意一个任务结束
+                Task.WaitAll(tasks.ToArray());//阻塞当前线程，直到全部任务结束
+            }
+            //Async
+            {
+                //1.
+                Action action = () => Console.WriteLine("这是一个委托！");
+                IAsyncResult asyncResult = null;
+                AsyncCallback asyncCallback = (x) =>
+                {
+                    Console.WriteLine($"{object.ReferenceEquals(x, asyncResult)}");
+                    Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}{new object[] { x.AsyncState, x.AsyncState }}");
+                    Console.WriteLine("启用线程委托！");
+                };
+                asyncResult = action.BeginInvoke(asyncCallback, new object[] { "参数1", "参数2" });
+
+                //2.
+                int i = 0;
+                while (!asyncResult.IsCompleted)
+                {
+                    if (i < 9)
+                    {
+                        Console.WriteLine($"{++i * 10}进行中");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"进行中将完成");
+                    }
+                    Thread.Sleep(200);
+                }
+                Console.WriteLine("asyncResult.IsCompleted 已完成");
+
+                //3.
+                asyncResult.AsyncWaitHandle.WaitOne();//直接等待任务完成
+                asyncResult.AsyncWaitHandle.WaitOne(-1);//一直等待任务完成        
+                asyncResult.AsyncWaitHandle.WaitOne(1000);//最多等待1000ms，超时就不等了    
+
+                //4 EndInvoke  即时等待,而且可以获取委托的返回值 一个异步操作只能End一次
+                action.EndInvoke(asyncResult);//等待某次异步调用操作结束
+            }
+            //async await
+            {
+                Console.WriteLine("主线程方法调用开始");
+                Task<int> t = IntAsyncTask();
+                Console.WriteLine("主线程方法调用结束");
+                long lResult = t.Result;//访问result   主线程等待Task的完成
+                t.Wait();//等价于上一行
+            }
+        }
+
+        public static async Task<int> IntAsyncTask()
+        {
+            Console.WriteLine("方法调用开始");
+            int ireturn = 0;
+            await Task.Run(() =>//启动新线程完成任务
+            {
+                Console.WriteLine("子线程调用进行中");
+                for (int i = 0; i < 100_000_000; i++)
+                {
+                    ireturn += i;
+                    Thread.Sleep(1000);
+                }
+                Console.WriteLine("子线程调用结束");
+            });
+
+            Console.WriteLine("方法调用结束");
+            return ireturn;
+        }
+        #endregion
+
+        #region  设计模式（桥接模式、单例模式、简单工厂、建设工厂方法、抽象工厂、建造者模式、原型模式、适配器模式、享元模式、组合模式、装饰器模式、门面模式、代理模式、解释器模式、模板方法设计模式、责任链模式、命令模式、迭代器模式、中介者模式、备忘录模式、状态模式、策略模式、访问者模式）
+        public static void DesignPattern()
+        {
+
+            //单例模式
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Task.Run(() =>
+                    {
+                        SingletonPattern singletonPattern = SingletonPattern.SingletonPatternCreate0();
+                        singletonPattern.Show();
+                    });
+                }
+            }
+            //原型模式
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Task.Run(() =>
+                    {
+                        PrototypePattern singletonPattern = PrototypePattern.PrototypePatternCreate();
+                        singletonPattern.Show();
+                    });
+                }
+            }
+            //享元模式
+            {
+                BaseSPText baseSPText1 = FlyweightPatternFactory.baseSPText(GetSPText.Text1);
+                BaseSPText baseSPText2 = FlyweightPatternFactory.baseSPText(GetSPText.Text2);
+                BaseSPText baseSPText3 = FlyweightPatternFactory.baseSPText(GetSPText.Text3);
+                Console.WriteLine($"{baseSPText1.Show()}{baseSPText2.Show()}{baseSPText3.Show()}");
+            }
+            //装饰器模式
+            {
+                Console.WriteLine("装饰器模式！");
+
+                SPText1 baseSPText = new SPText1()
+                {
+                    Id = 1,
+                    Age = 2,
+                    Area = "3",
+                    MyProperty1 = "4",
+                    Name = "5"
+                };
+                DecoratorPatternExtend1 decoratorPatternExtend1 = new DecoratorPatternExtend1(baseSPText);
+                decoratorPatternExtend1.Show();
+
+                DecoratorPatternExtend2 decoratorPatternExtend2 = new DecoratorPatternExtend2();
+                decoratorPatternExtend2.Show();
+
+                baseSPText = new DecoratorPatternExtend3(baseSPText);
+                baseSPText = new DecoratorPatternExtend4(baseSPText);
+                baseSPText = new DecoratorPatternExtend5(baseSPText);
+                baseSPText = new DecoratorPatternExtend6(baseSPText);
+                baseSPText = new DecoratorPatternExtend7(baseSPText);
+                baseSPText.Show();
+            }
+            //责任链模式
+            {
+
+            }
+            //策略模式
+            {
+
+            }
+            //桥接模式
+            {
+                ISystem android = new AndroidSystem();
+                ISystem ios = new IOSSystem();
+                ISystem winphone = new WinphoneSystem();
+
+                Console.WriteLine("******************************");
+                {
+                    BasePhoneBridge phone = new GalaxyBridge();
+                    phone.SystemVersion = android;
+                    phone.Call();
+                    phone.Text();
+                }
+                {
+                    BasePhoneBridge phone = new GalaxyBridge();
+                    phone.SystemVersion = ios;
+                    phone.Call();
+                    phone.Text();
+                }
+                {
+                    BasePhoneBridge phone = new GalaxyBridge();
+                    phone.SystemVersion = winphone;
+                    phone.Call();
+                    phone.Text();
+                }
+            }
+            //简单工厂
+            {
+                SimpleFactory.GetSystem(SystemType.AndroidSystem);
+                SimpleFactory.GetSystem(SystemType.IOSSystem);
+                SimpleFactory.GetSystem(SystemType.WinphoneSystem);
+            }
+            //建设工厂方法(把对象创建进行转移，方便扩展。把简单工厂的每一个判断转变成类，通过类进行实现)
+            //门面模式（把复杂逻辑进行封装，该类提供一个单例模式进行访问）
+            //代理模式（把类里面的方法用一个新类进行包装，用字段去实例化原来类，去调用原来方法）
+            //中介者模式
+            {
+                Teacher teacher1 = new Teacher() { Name = "老师1" };
+                Student student1 = new Student() { Name = "学生1" };
+                Student student2 = new Student() { Name = "学生2" };
+                Student student3 = new Student() { Name = "学生3" };
+                Student student4 = new Student() { Name = "学生4" };
+
+
+
+                Mediator mediator = new Mediator();
+                mediator.AddMediator(student1);
+                mediator.AddMediator(student2);
+                mediator.AddMediator(student3);
+                mediator.AddMediator(student4);
+
+                mediator.SendAll("这是一个发送消息", teacher1);
+            }
+            //备忘录模式
+            {
+
+                Text1 text1 = new Text1()
+                {
+                    Id = 1,
+                    Name = "张一",
+                    Age = 1,
+                    Number = 1
+                };
+                text1.Save("保存1");
+
+                text1.Name = "张二";
+                text1.Age = 2;
+                text1.Number = 2;
+                text1.Save("保存2");
+
+                text1.Name = "张三";
+                text1.Age = 3;
+                text1.Number = 3;
+                text1.Save("保存3");
+
+                text1.Load("保存1");
+                text1.Show();
+                text1.Load("保存2");
+                text1.Show();
+                text1.Load("保存3");
+                text1.Show();
+            }
+            //访问者模式
+            {
+                List<VisitorPattern.VisitorStudent> studentList = new List<VisitorPattern.VisitorStudent>()
+                {
+                    new StudentVip()
+                    {
+                        Id=638,
+                        Name="ME860"
+                    },
+                    new StudentVip()
+                    {
+                        Id=586,
+                        Name="如果"
+                    },
+                    new StudentFree()
+                    {
+                        Id=123,
+                        Name="鱼猫"
+                    }
+                };
+                {
+                    Console.WriteLine("*************VisitorCurrent************");
+                    VisitorCurrent visitor = new VisitorCurrent();
+                    foreach (var student in studentList)
+                    {
+                        Console.WriteLine("*************************");
+                        student.Study();
+                        student.GetVideoVisitor(visitor);
+                    }
+                }
+                {
+                    Console.WriteLine("*************VisitorPast************");
+                    VisitorPast visitor = new VisitorPast();
+                    foreach (var student in studentList)
+                    {
+                        Console.WriteLine("*************************");
+                        student.Study();
+                        student.GetVideoVisitor(visitor);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region  数据类型/特殊类型
+        public static void DataTypeAndSpecialType()
+        {
+            //数组
+            {
+                //1.
+                int[] array = new int[] { 1, 2, 3 };
+
+                //2.
+                ArrayList arrayList = new ArrayList();
+                arrayList.Add("1");
+                arrayList.Add(2);
+                arrayList.Add(DateTime.Now);
+
+                //3.
+                List<int> intList = new List<int>();
+                intList.Add(1);
+                intList.Add(2);
+                intList.Add(3);
+            }
+            //链表
+            {
+                LinkedList<int> linkedList = new LinkedList<int>();
+                linkedList.AddFirst(1);
+                linkedList.AddLast(2);
+
+                LinkedListNode<int> linkedListNode = linkedList.Find(1);//节点
+                linkedList.AddBefore(linkedListNode, 3);
+                linkedList.AddAfter(linkedListNode, 4);
+
+
+                linkedList.Remove(1);
+                linkedList.RemoveFirst();
+                linkedList.RemoveLast();
+                linkedList.Clear();
+            }
+            {
+                Queue<string> queueList = new Queue<string>();//先进先出
+                queueList.Enqueue("1");
+                queueList.Enqueue("2");
+                queueList.Enqueue("3");
+                queueList.Enqueue("4");
+
+                queueList.Dequeue();//移除第一个
+                queueList.Peek();//返回第一个
+            }
+            {
+                Stack<string> stackList = new Stack<string>();//先进后出
+                stackList.Push("1");
+                stackList.Push("2");
+                stackList.Push("3");
+                stackList.Push("4");
+
+                stackList.Pop();//移除顶部
+                stackList.Peek();//返回第一个
+            }
+            //Set
+            {
+                HashSet<string> hashSetList = new HashSet<string>();//去重
+
+                hashSetList.Add("1");
+                hashSetList.Add("2");
+                hashSetList.Add("3");
+                hashSetList.Count();
+                hashSetList.Contains("1");
+                hashSetList.ToList();
+                hashSetList.Clear();
+
+                HashSet<string> hashSetList2 = new HashSet<string>();//去重
+                hashSetList.SymmetricExceptWith(hashSetList2);//补
+                hashSetList.UnionWith(hashSetList2);//并
+                hashSetList.ExceptWith(hashSetList2);//差
+                hashSetList.IntersectWith(hashSetList2);//交
+            }
+            {
+                //SortedSet
+            }
+            //Key-Value（哈希）
+            {
+                //Hashtable
+                //Dictionary
+                //SortedDictionary
+            }
+
+        }
+        #endregion
+
+        #region  字典缓存
+        //List<Program> programList = null;
+        //string key = $"{nameof(DBHelper)}_Query_{123}";
+
+        //programList = SPText.CustomCache.GetT<List<Program>>(key, () => DBHelper.Query<Program>(123));
+        #endregion
+    }
+
+
+    #region  特性
+    public static class AttributcMapping
+    {
+        public static bool ValiData<T>(T t)
+        {
+            Type type = typeof(T);
+
+            foreach (var prop in type.GetProperties())
+            {
+                if (prop.IsDefined(typeof(AbstractValidateAttribute), true))
+                {
+                    object oValue = prop.GetValue(t);
+                    AbstractValidateAttribute attribute = (AbstractValidateAttribute)prop.GetCustomAttribute(typeof(AbstractValidateAttribute), true);
+                    attribute.Validate(oValue);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return true;
+        }
+        //获取特性上面标记内容
+        public static string GetName(this MemberInfo member)
+        {
+            if (member.IsDefined(typeof(AbstractBaseAttribute), true))
+            {
+                AbstractBaseAttribute attribute = member.GetCustomAttribute<AbstractBaseAttribute>();
+                return attribute.GetRcalName();
+            }
+            else
+            {
+                return member.Name;
+            }
+        }
+
+
+    }
+
+    #region  反射
+
+    public class ClassAttribute : AbstractBaseAttribute
+    {
+        public ClassAttribute(string name) : base(name) { }
+    }
+    public class PropertyAttribute : AbstractBaseAttribute
+    {
+        public PropertyAttribute(string name) : base(name) { }
+    }
+    public class AbstractBaseAttribute : Attribute
+    {
+        private string _RcalName = null;
+
+        public AbstractBaseAttribute(string RcalName)
+        {
+            this._RcalName = RcalName;
+        }
+
+        public string GetRcalName()
+        {
+            return this._RcalName;
+        }
+    }
+    #endregion
+
+    #region  特性进行验证
+    public class RequiredAttribute : AbstractValidateAttribute
+    {
+        public override bool Validate(object oValue)
+        {
+            if (oValue == null || string.IsNullOrWhiteSpace(oValue.ToString()))
+                return false;
+            else
+                return true;
+        }
+    }
+    public class LengthAttribute : AbstractValidateAttribute
+    {
+        public int _Min = 0;
+        public int _Max = 0;
+        public LengthAttribute(int Min, int Max)
+        {
+            _Min = Min;
+            _Max = Max;
+        }
+
+        public override bool Validate(object oValue)
+        {
+            if (oValue == null || oValue.ToString().Length < this._Min || oValue.ToString().Length > this._Max)
+                return false;
+            else
+                return true;
+
+        }
+    }
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+    public abstract class AbstractValidateAttribute : Attribute
+    {
+        public abstract bool Validate(object oValue);
+    }
+    #endregion
+    #endregion
+
+    #region  测试类（特性类别名）
+    [AbstractBaseAttribute("User")]
+    public class Text
+    {
+
+        public int Id { get; set; }
+        [AbstractBaseAttribute("Name")]
+        [RequiredAttribute]
+        public string UseName { get; set; }
+    }
+    #endregion
+
+    #region  缓存类、反射
+    public enum SqlType
+    {
+        SelectSql,
+        InsertSql,
+        UpdateSql,
+        DeleteSql,
+        SelectAllSql
+    }
+    public class SqlBuilder<T>
+    {
+        private static string SelectSql = null;
+        private static string InsertSql = null;
+        private static string UpdateSql = null;
+        private static string DeleteSql = null;
+        private static string SelectAllSql = null;
+        static SqlBuilder()
+        {
+            Type type = typeof(T);
+            string columnSelectStrings = string.Join(",", type.GetProperties().Select(p => $"[{p.GetName()}]"));
+            string tableName = type.GetName();
+            SelectSql = $@"SELECT {columnSelectStrings} FROM [{tableName}] WHERE ID=@Id";
+
+            SelectAllSql = $@"SELECT {columnSelectStrings} FROM [{tableName}]";
+
+            string columnNameInsertStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"[{p.Name}]]"));
+            string columnValueInsertStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"@{p.Name}"));
+            InsertSql = $"INSERT INTO {type.Name}({columnNameInsertStrings}) VALUE {columnValueInsertStrings} ";
+
+            string columnUpdateStrings = string.Join(",", type.GetProperties().Where(p => !p.Name.Equals("Id")).Select(p => $"[{p.Name}]=@[{p.Name}]"));
+            UpdateSql = $"UPDATE {type.Name} Set {columnUpdateStrings} WHERE Id=@Id";
+
+            DeleteSql = $"DELETE FROM {tableName} WHERE Id=@Id";
+        }
+
+        public string GetSql(SqlType sqlType)
+        {
+            switch (sqlType)
+            {
+                case SqlType.SelectSql:
+                    return SelectSql;
+                case SqlType.InsertSql:
+                    return InsertSql;
+                case SqlType.UpdateSql:
+                    return UpdateSql;
+                case SqlType.DeleteSql:
+                    return DeleteSql;
+                case SqlType.SelectAllSql:
+                    return SelectAllSql;
+                default:
+                    throw new Exception("类型错误");
+            }
+        }
+
+
+
+        #region  反射
+        public static T Resolve()
+        {
+            string ConfigurationName = $"{typeof(T).Name}Assembly";
+            string ConfigurationValue = ConfigurationManager.AppSettings[ConfigurationName].ToString();//获取配置文件信息
+
+            Assembly assembly = Assembly.Load(ConfigurationValue.Split(',')[0]);
+            Type type = assembly.GetType(ConfigurationValue.Split(',')[1]);
+            return (T)Activator.CreateInstance(type);
+        }
+        #endregion
+    }
+    #endregion
+
+    #region  委托
+    public delegate int DYDeleGate(int a, int b);
+
+    public class CreateDelete
+    {
+        public Action ActionText;
+        public void ShowText()
+        {
+            Console.WriteLine($"{this.GetType().Name}");
+            ActionText?.Invoke();
+        }
+
+        public void ShowText1()
+        {
+            Console.WriteLine($"{this.GetType().Name}");
+        }
+        public void ShowText2()
+        {
+            Console.WriteLine($"{this.GetType().Name}");
+        }
+        public void ShowText3()
+        {
+            Console.WriteLine($"{this.GetType().Name}");
+        }
+    }
+
+
+    #endregion
+
+    #region  Linq
+    public static class LinqClass
+    {
+        public static List<T> ObjWhere<T>(this List<T> _tList, Func<T, bool> func)
+        {
+            List<T> tList = new List<T>();
+            foreach (var _t in _tList)
+            {
+                if (func.Invoke(_t))
+                {
+                    tList.Add(_t);
+                }
+            }
+            return tList;
+        }
+    }
+    #endregion
+
+    #region  测试实体
+    public class SPText1 : BaseSPText
+    {
+        public string MyProperty1 { get; set; }
+        public override string Show()
+        {
+            Console.WriteLine($"抽象类重写！{this.GetType().Name}");
+            return this.GetType().Name;
+        }
+    }
+    public class SPText2 : BaseSPText
+    {
+        public string MyProperty2 { get; set; }
+        public override string Show()
+        {
+            Console.WriteLine($"抽象类重写！{this.GetType().Name}");
+            return this.GetType().Name;
+        }
+    }
+    public class SPText3 : BaseSPText
+    {
+        public string MyProperty3 { get; set; }
+        public override string Show()
+        {
+            Console.WriteLine($"抽象类重写！{this.GetType().Name}");
+            return this.GetType().Name;
+        }
+    }
+    public abstract class BaseSPText
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Area { get; set; }
+
+        public abstract string Show();
+    }
+
+    #region  xml类
+    public class Person
+    {
+        string name;
+        int age;
+        List<Books> bookList = new List<Books>();
+
+        /// <summary>
+        /// 必须有默认的构造函数
+        /// </summary>
+        public Person()
+        { }
+
+        public Person(string name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+        [XmlElement(ElementName = "Books")]
+        public List<Books> BookList
+        {
+            get { return bookList; }
+            set { bookList = value; }
+        }
+    }
+    public class Books
+    {
+        List<Book> bookList = new List<Book>();
+
+        [XmlElement(ElementName = "Book")]
+        public List<Book> BookList
+        {
+            get { return bookList; }
+            set { bookList = value; }
+        }
+    }
+
+    public class Book
+    {
+        string isbn;
+        string title;
+
+        public Book() { }
+
+        public Book(string isbn, string title)
+        {
+            this.isbn = isbn;
+            this.title = title;
+        }
+
+        public string ISBN
+        {
+            get { return isbn; }
+            set { isbn = value; }
+        }
+
+        public string Title
+        {
+            get { return title; }
+            set { title = value; }
+        }
+    }
+    [Serializable]
+    public class BaseInfo
+    {
+        List<Person> perList = new List<Person>();
+
+        [XmlElement(ElementName = "Person")]
+        public List<Person> PersonList
+        {
+            get { return perList; }
+            set { perList = value; }
+        }
+    }
+    #endregion
+    #endregion
+
+    #region  字典缓存
+    public static class CustomCache
+    {
+        //多线程可能会出现线程冲突
+        //private static readonly object CustomCache_Lock = new object();
+
+        /// <summary>
+        /// 主动清理
+        /// </summary>
+        static CustomCache()
+        {
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Thread.Sleep(1000 * 60 * 10);
+                        List<string> keyList = new List<string>();
+                        //lock (CustomCache_Lock)
+                        //{
+                        foreach (var key in CustomCacheDictionary.Keys)
+                        {
+                            DataModel model = (DataModel)CustomCacheDictionary[key];
+                            if (model.ObsloteType != ObsloteType.Never && model.DeadLine < DateTime.Now)
+                            {
+                                keyList.Add(key);
+                            }
+                        }
+                        keyList.ForEach(s => Remove(s));
+                        //}
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        continue;
+                    }
+                }
+            });
+        }
+
+        private static Dictionary<string, object> CustomCacheDictionary = new Dictionary<string, object>();
+
+        public static void Add(string key, object oVaule)
+        {
+            //lock (CustomCache_Lock)
+            CustomCacheDictionary.Add(key, new DataModel()
+            {
+                Value = oVaule,
+                ObsloteType = ObsloteType.Never,
+            });
+        }
+
+        /// <summary>
+        /// 绝对过期
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="oVaule"></param>
+        /// <param name="timeOutSecond"></param>
+        public static void Add(string key, object oVaule, int timeOutSecond)
+        {
+            //lock (CustomCache_Lock)
+            CustomCacheDictionary.Add(key, new DataModel()
+            {
+                Value = oVaule,
+                ObsloteType = ObsloteType.Absolutely,
+                DeadLine = DateTime.Now.AddSeconds(timeOutSecond)
+            });
+        }
+
+        /// <summary>
+        /// 相对过期
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="oVaule"></param>
+        /// <param name="duration"></param>
+        public static void Add(string key, object oVaule, TimeSpan duration)
+        {
+            //lock (CustomCache_Lock)
+            CustomCacheDictionary.Add(key, new DataModel()
+            {
+                Value = oVaule,
+                ObsloteType = ObsloteType.Relative,
+                DeadLine = DateTime.Now.Add(duration),
+                Duration = duration
+            });
+        }
+
+        /// <summary>
+        /// 要求在Get前做Exists检测
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static T Get<T>(string key)
+        {
+            return (T)(((DataModel)CustomCacheDictionary[key]).Value);
+        }
+
+
+        /// <summary>
+        /// 被动清理，请求了数据，才能清理
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool Exists(string key)
+        {
+            if (CustomCacheDictionary.ContainsKey(key))
+            {
+                DataModel model = (DataModel)CustomCacheDictionary[key];
+                if (model.ObsloteType == ObsloteType.Never)
+                {
+                    return true;
+                }
+                else if (model.DeadLine < DateTime.Now)//现在已经超过你的最后时间
+                {
+                    //lock (CustomCache_Lock)
+                    CustomCacheDictionary.Remove(key);
+                    return false;
+                }
+                else
+                {
+                    if (model.ObsloteType == ObsloteType.Relative)//没有过期&是滑动 所以要更新
+                    {
+                        model.DeadLine = DateTime.Now.Add(model.Duration);
+                    }
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 删除key
+        /// </summary>
+        /// <param name="key"></param>
+        public static void Remove(string key)
+        {
+            //lock (CustomCache_Lock)
+            CustomCacheDictionary.Remove(key);
+        }
+
+        public static void RemoveAll()
+        {
+            //lock (CustomCache_Lock)
+            CustomCacheDictionary.Clear();
+        }
+
+        /// <summary>
+        /// 按条件删除
+        /// </summary>
+        /// <param name="func"></param>
+        public static void RemoveCondition(Func<string, bool> func)
+        {
+            List<string> keyList = new List<string>();
+            //lock (CustomCache_Lock)
+            foreach (var key in CustomCacheDictionary.Keys)
+            {
+                if (func.Invoke(key))
+                {
+                    keyList.Add(key);
+                }
+            }
+            keyList.ForEach(s => Remove(s));
+        }
+
+        public static T GetT<T>(string key, Func<T> func)
+        {
+            T t = default(T);
+            if (!CustomCache.Exists(key))
+            {
+                t = func.Invoke();
+                CustomCache.Add(key, t);
+
+            }
+            else
+            {
+                t = CustomCache.Get<T>(key);
+            }
+            return t;
+        }
+
+        /// <summary>
+        /// 缓存的信息
+        /// </summary>
+        internal class DataModel
+        {
+            public object Value { get; set; }
+            public ObsloteType ObsloteType { get; set; }
+
+            public DateTime DeadLine { get; set; }
+            public TimeSpan Duration { get; set; }
+
+            //数据清理后出发事件
+            public event Action DataClearEvent;
+        }
+
+        public enum ObsloteType
+        {
+            //永久有效
+            Never,
+            //绝对过期
+            Absolutely,
+            //滑动过期
+            Relative
+        }
+    }
+
+    #endregion
+
+    #region  设计模式
+    #region  桥接模式
+    public class DesignPatternText
+    {
+        /// <summary>
+        /// 抽象父类
+        /// </summary>
+        public abstract class BasePhoneBridge
+        {
+            public int Price { get; set; }
+            public ISystem SystemVersion { get; set; }
+
+
+            ///// <summary>
+            ///// 操作系统
+            ///// </summary>
+            ///// <returns></returns>
+            //public abstract string System();
+            ///// <summary>
+            ///// 系统版本
+            ///// </summary>
+            ///// <returns></returns>
+            //public abstract string Version();
+            /// <summary>
+            /// 打电话
+            /// </summary>
+            public abstract void Call();
+            /// <summary>
+            /// 发短信
+            /// </summary>
+            public abstract void Text();
+        }
+        public class GalaxyBridge : BasePhoneBridge
+        {
+            public override void Call()
+            {
+                Console.WriteLine("Use OS {0}.{1}.{2} Call", this.GetType().Name, this.SystemVersion.System(), this.SystemVersion.Version());
+            }
+            public override void Text()
+            {
+                Console.WriteLine("Use OS {0}.{1}.{2} Text", this.GetType().Name, this.SystemVersion.System(), this.SystemVersion.Version());
+            }
+        }
+
+        public class iPhoneBridge : BasePhoneBridge
+        {
+            public override void Call()
+            {
+                Console.WriteLine("Use OS {0}.{1}.{2} Call", this.GetType().Name, this.SystemVersion.System(), this.SystemVersion.Version());
+            }
+            public override void Text()
+            {
+                Console.WriteLine("Use OS {0}.{1}.{2} Text", this.GetType().Name, this.SystemVersion.System(), this.SystemVersion.Version());
+            }
+        }
+
+        public interface ISystem
+        {
+            string System();
+            string Version();
+        }
+        public class AndroidSystem : ISystem
+        {
+            public string System()
+            {
+                return "Android";
+            }
+            public string Version()
+            {
+                return "6.0";
+            }
+        }
+        public class WinphoneSystem : ISystem
+        {
+
+            public string System()
+            {
+                return "Winphone";
+            }
+            public string Version()
+            {
+                return "10.0";
+            }
+
+        }
+        public class IOSSystem : ISystem
+        {
+            public string System()
+            {
+                return "IOS";
+            }
+            public string Version()
+            {
+                return "9.4";
+            }
+        }
+
+
+
+    }
+    #endregion
+
+    #region  简单工厂
+    public class SimpleFactory
+    {
+        public static ISystem GetSystem(SystemType systemType)
+        {
+            //ISystem system = (SystemType)Enum.Parse(typeof(SystemType), "");
+            ISystem system = null;
+            switch (systemType)
+            {
+                case SystemType.AndroidSystem:
+                    system = new AndroidSystem();
+                    break;
+                case SystemType.WinphoneSystem:
+                    system = new WinphoneSystem();
+                    break;
+                case SystemType.IOSSystem:
+                    system = new IOSSystem();
+                    break;
+                default:
+                    throw new Exception("发生错误！");
+
+            }
+
+            return system;
+        }
+
+        public enum SystemType
+        {
+            AndroidSystem,
+            WinphoneSystem,
+            IOSSystem
+        }
+    }
+    #endregion
+
+    #region  中介者模式
+    public class MediatorPattern
+    {
+        public class Teacher : BasePersonnel
+        {
+            public override void Send(string message, BasePersonnel basePersonnel)
+            {
+                Console.WriteLine($"{this.Name}发送消息{message}给{basePersonnel.Name}");
+            }
+        }
+        public class Student : BasePersonnel
+        {
+            public override void Send(string message, BasePersonnel basePersonnel)
+            {
+                Console.WriteLine($"{this.Name}收到消息{message}，{basePersonnel.Name}");
+            }
+        }
+        public abstract class BasePersonnel
+        {
+            public String Name { get; set; }
+            public abstract void Send(string message, BasePersonnel basePersonnel);
+        }
+
+        public class Mediator
+        {
+            public string Nmae { get; set; }
+            public List<BasePersonnel> basePersonnelList = new List<BasePersonnel>();
+
+            public void AddMediator(BasePersonnel basePersonnel)
+            {
+                basePersonnelList.Add(basePersonnel);
+            }
+            public void SendAll(string message, BasePersonnel basePersonnel)
+            {
+                foreach (var item in basePersonnelList)
+                {
+                    item.Send(message, basePersonnel);
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region  备忘录模式
+    public class MementoPattern
+    {
+        public class Text1
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Age { get; set; }
+            public int Number { get; set; }
+
+            public void Save(string name)
+            {
+                Text2 text2 = new Text2(this.Name, this.Age, this.Number);
+                Text3.SetText3(name, text2);
+            }
+
+            public void Load(string name)
+            {
+                Text2 memento = Text3.GetText3(name);
+
+                this.Name = memento.Name;
+                this.Age = memento.Age;
+                this.Number = memento.Number;
+            }
+
+            public void Show()
+            {
+                Console.WriteLine("********************************");
+                Console.WriteLine("Id:{0}", this.Id);
+                Console.WriteLine("     Name:{0}", this.Name);
+                Console.WriteLine("     Age:{0}", this.Age);
+                Console.WriteLine("     Number:{0}", this.Number);
+                Console.WriteLine("********************************");
+            }
+        };
+
+        public class Text2
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
+            public int Number { get; set; }
+
+            public Text2(string name, int age, int number)
+            {
+                this.Name = name;
+                this.Age = age;
+                this.Number = number;
+            }
+        };
+
+        public class Text3
+        {
+            public static Dictionary<string, Text2> cacheDictionary = new Dictionary<string, Text2>();
+
+            public static Text2 GetText3(string name)
+            {
+                if (name != null)
+                {
+                    if (cacheDictionary.ContainsKey(name))
+                    {
+                        return cacheDictionary[name];
+                    }
+                }
+
+                return default(Text2);
+            }
+
+            public static void SetText3(string name, Text2 text2)
+            {
+                cacheDictionary.Add(name, text2);
+            }
+        }
+    }
+    #endregion
+
+    #region  访问者模式
+    public class VisitorPattern
+    {
+        public abstract class VisitorStudent
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public long QQ { get; set; }
+
+            public void Study()
+            {
+                Console.WriteLine("{0}跟着Eleven老师学习.net高级开发", this.Name);
+            }
+
+            public abstract void GetVideo();
+
+            public abstract void GetVideoVisitor(AbstractVisitor abstractVisitor);
+        }
+
+        public class StudentFree : VisitorStudent
+        {
+            public override void GetVideo()
+            {
+                Console.WriteLine("只能获取当次课的公开课视频代码");
+            }
+
+            public override void GetVideoVisitor(AbstractVisitor abstractVisitor)
+            {
+                abstractVisitor.GetVideoFree(this);
+            }
+        }
+        public class StudentVip : VisitorStudent
+        {
+            public override void GetVideo()
+            {
+                Console.WriteLine("免费获取全套的公开课视频代码合集");
+            }
+
+            public override void GetVideoVisitor(AbstractVisitor abstractVisitor)
+            {
+                abstractVisitor.GetVideoVip(this);
+            }
+        }
+        public class VisitorCurrent : AbstractVisitor
+        {
+            public override void GetVideoFree(StudentFree studentFree)
+            {
+                Console.WriteLine("只能获取当次课的公开课视频代码");
+            }
+
+            public override void GetVideoVip(StudentVip studentVip)
+            {
+                Console.WriteLine("免费获取全套的公开课视频代码合集");
+            }
+        }
+        public class VisitorPast : AbstractVisitor
+        {
+            public override void GetVideoFree(StudentFree studentFree)
+            {
+                Console.WriteLine("没有视频只有代码");
+            }
+
+            public override void GetVideoVip(StudentVip studentVip)
+            {
+                Console.WriteLine("获取公开课代码合集");
+            }
+        }
+
+        public abstract class AbstractVisitor
+        {
+            public abstract void GetVideoFree(StudentFree studentFree);
+            public abstract void GetVideoVip(StudentVip studentVip);
+        }
+    }
+    #endregion
+    #endregion
+}

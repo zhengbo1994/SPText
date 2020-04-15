@@ -1,0 +1,273 @@
+﻿
+@{
+    ViewBag.Title = "Info01";
+}
+
+<h2>Vue基础-01-指令</h2>
+<div id="itapp">
+    {{msg}} {{arr}}  {{users}}
+    <input type="text" v-model="name">
+    <select v-model="tag">
+        <option value="01">01</option>
+        <option value="02">02</option>
+    </select>
+    <!-- <input type="checkbox" value="01" v-model="test" >
+    <input type="checkbox" value="02" v-model="test" >
+    {{name}} {{test}} -->
+    {{tag}}
+
+    <hr>
+    <ul>
+        <!-- 普通循环 -->
+        <!-- <li v-for="value in arr">{{value}}</li> -->
+        <!-- <li v-for="value in user">{{value}}</li> -->
+        <!-- 健值循环 -->
+        <!-- key指定唯一性 -->
+        <!-- <li v-for="(item,index) in user" :key="index">{{index}} -- {{item}}</li> -->
+
+        <li v-for="(item,index) in users" :key="index"> {{index+1}}---{{item.id}} {{item.name}} {{item.age}}</li>
+
+    </ul>
+
+    <hr>
+    <!-- <button onclick="show()">点我</button> -->
+    <button v-on:click="show">点我</button>
+    <!-- 简写 -->
+    <button @@click="show">点我</button>
+
+    <button @@click="add">数组中添加元素</button>
+
+    <button @@mouseover="show">鼠标经过</button>
+    <button @@dblclick="show">双击</button>
+
+
+    <hr>
+    <!-- <button v-on:click="change">隐藏</button> -->
+    <button v-on:click="flag=!flag">隐藏</button>
+
+
+    <div style="width: 100px;height: 100px; background-color: red" v-if="flag">欢迎来到武汉软谋</div>
+
+
+    <hr>
+    <div class="container">
+        <h2 class="text-center">添加用户</h2>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="name" class="control-label col-sm-2 col-sm-offset-2">姓  名：</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="name" v-model="user.name" placeholder="请输入姓名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age" class="control-label col-sm-2 col-sm-offset-2">年  龄：</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="age" v-model="user.age" placeholder="请输入年龄">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-2 col-sm-offset-2">邮  箱：</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="email" v-model="user.email" placeholder="请输入邮箱">
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <input type="button" value="添  加" class="btn btn-primary" @@click="addUser">
+                <input type="reset" value="重  置" class="btn btn-primary">
+            </div>
+        </form>
+        <hr>
+
+        <table class="table table-bordered table-hover">
+            <caption class="h3 text-center text-info">用户列表</caption>
+            <thead>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">年龄</th>
+                    <th class="text-center">邮箱</th>
+                    <th class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user,index) in users6" :key="index" class="text-center">
+                    <td>{{index+1}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.age}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#del" v-on:click="nowIndex=index">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#del" v-on:click="nowIndex=-1">删除所有</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 模态框，弹出框 -->
+        <div class="modal fade" id="del">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title" v-show="nowIndex!==-1">确认要删除用户：{{users[nowIndex]?users[nowIndex].name:''}} 吗？</h4>
+                        <h4 class="modal-title" v-show="nowIndex===-1">确认要删除所有用户吗？</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <button class="btn btn-primary" data-dismiss="modal">取消</button>
+                        <button class="btn btn-primary" data-dismiss="modal" v-on:click="deleteUser">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <hr>
+    <button v-on:click="show7">点我</button>
+    <button @@click="show7">点我</button>
+    <hr>
+
+    <button @@click="print7($event)">Click Me</button>
+
+    <hr />
+    <div @@click="write8">
+        <p @@click="print8">
+            <!-- <button @@click="show8($event)">点我</button> -->
+            <button @@click.stop="show8">点我</button>
+        </p>
+    </div>
+
+    <!-- <a href="http://www.baidu.com" @@click="study8($event)">俺是链接</a> -->
+    <a href="http://www.baidu.com" @@click.prevent="study8">俺是链接</a>
+
+
+    <hr />
+    用户名：<input type="text" @@keydown.13="print9">
+    用户名：<input type="text" @@keydown.enter="print9">
+    用户名：<input type="text" @@keydown.up="print9">
+    <button @@click.once="print9">只触发一次</button>
+
+    <hr />
+    <img :src="url" :width="w" :height="h">
+</div>
+
+
+<script src="~/Content/lib/jquery/dist/jquery.js"></script>
+<script src="~/Content/lib/lib/vue/vue.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script>
+    //配置是否允许vue-devtools检查代码，方便调试，生产环境中需要设置为false
+    //Vue.config.devtool = true;
+    window.onload = function () {
+        var vm = new Vue({
+            el: '#itapp', //指定关联的元素
+            data: { //存储数据
+                msg: 'Hello World',
+                arr: [1, 2, 3],
+                age: 21,
+                name: '',
+                test: '',
+                tag: '01',
+                user: { id: 9527, name: '唐伯虎', age: 25 },
+                arr2: [12, 4, 5, 34, 2, 11, 12],
+                users: [
+                    { id: 9527, name: '唐伯虎', age: 25 },
+                    { id: 1001, name: '秋香', age: 22 },
+                    { id: 1002, name: '石榴姐', age: 24 }
+                ],
+                flag: true,
+                users6: [
+                    { name: 'tom', age: 24, email: 'tom@itany.com' },
+                    { name: 'jack', age: 23, email: 'jack@sina.com' }
+                ],
+                nowIndex: -1, //当前要删除项的索引
+                url: 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
+                w: '200px',
+                h: '100px',
+                tag: '122'
+            },
+            methods: { //存储方法
+                show: function () {
+                    console.log('show方法');
+                },
+                add() {
+
+                    console.log(this); //this表示当前vue实例
+                    console.log(this === vm); //true
+                    this.arr.push(666); //使用this访问当前实例中的成员
+                    this.show();
+                },
+                print(e) {
+                    // console.log(e);
+                    console.log(e.target.innerHTML); //DOM对象
+                    console.log(this);
+                },
+                change() {
+                    this.flag = !this.flag;
+                },
+                addUser() {
+                    this.users6.push(this.user);
+                    this.user = {};
+                },
+                deleteUser() {
+
+                    if (this.nowIndex == -1) {
+                        //删除所有
+                        this.users6 = [];
+                        // this.users.length=0;
+                    } else {
+                        //从指定索引的位置开始删除
+                        this.users6.splice(this.nowIndex, 1)
+                    }
+
+                },
+                show7() {
+                    console.log(111);
+                },
+                print7(e) {
+                    var tatget = e.target;
+                    // console.log(e);
+                    console.log(tatget.innerHTML); //DOM对象
+                    // console.log(this);
+                },
+                show8() {
+                    console.log(111);
+                    // e.stopPropagation();
+                },
+                print8() {
+                    console.log(222);
+                },
+                write8() {
+                    console.log(333);
+                },
+                study8() {
+                    console.log(444);
+                    // e.preventDefault();
+                },
+                show9(e) {
+                    console.log(e.keyCode);
+                    if (e.keyCode == 13) {
+                        console.log('您按了回车');
+                    }
+                },
+                print9() {
+                    console.log('向上');
+                    // console.log('您按了方向键上');
+                    console.log('11111');
+                }
+
+            }
+        });
+    }
+
+</script>
+
+
+

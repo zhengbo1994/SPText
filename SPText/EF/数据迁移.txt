@@ -1,0 +1,4 @@
+﻿Install-Package EntityFramework -ProjectName 'DAL'
+Enable-Migrations -ContextTypeName 'DatabaseContext' -ProjectName 'DAL' -StartUpProjectName 'ETesting'  -ConnectionStringName 'DefaultConnection' -Force
+Add-Migration -Name "Update"  -ProjectName "DAL" -StartUpProjectName "ETesting"  -ConnectionStringName 'DefaultConnection'
+Update-Database -ProjectName "DAL" -StartUpProjectName "ETesting"  -ConnectionStringName 'DefaultConnection'

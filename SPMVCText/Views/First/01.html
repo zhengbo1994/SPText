@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>起步 Hello World</title>
+	<script src="js/vue.js"></script>
+	<!-- <script src="js/vue.runtime.esm.js"></script>  不行， 因为没有render函数--> 
+
+</head>
+<body>
+	<div id="itapp">
+        {{msg}}
+		<!-- {{msg}} 两对大括号{{}}称为模板，用来进行数据的绑定显示在页面中 -->
+	</div>
+
+    <script>
+        //配置是否允许vue-devtools检查代码，方便调试，生产环境中需要设置为false
+        Vue.config.devtool = true; 
+        var vm=new Vue({
+            el:'#itapp', //指定关联的元素
+            data:{ //存储数据
+                msg:'Hello World',
+                arr:[1,2,3]
+            }
+        });
+		
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page1111111";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">第一个界面123456</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @*<div id="app" v-cloak>*@
+    <div id="app">
+        这是一个dome
+        <h7>{{message}}这是一个P标签</h7>
+        <h6 v-text="message">这是一个P标签</h6>
+        <h5 v-html="htmltext">这是一个htmltext</h5>
+        <h5 v-text="htmltext">这是一个htmltext</h5>
+        @*<input type="button" id="btn" :value="buttontext" @click="chickMe" />*@
+        <input type="button" id="btn" value="按钮" v-bind:value="buttontext" v-on:click="chickMe" />
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    //setTimeout(function () {
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: "Hello World",
+            htmltext: "<h1>我是一段文本！</h1>",
+            buttontext: "我是按钮！"
+        },
+        methods: {
+            chickMe() {
+                this.buttontext = "我是修改后的按钮！"
+            }
+        }
+    })
+    //}, 3000)
+
+    $("#app").val("");
+</script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/lib/vue/vue.min.js"></script>

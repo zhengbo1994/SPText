@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加和删除属性：$forceUpdate</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="itapp">
+        {{user.name}}
+        <!-- {{user.age}} -->
+        {{country}}
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#itapp',
+            data(){
+                return {
+                    user:{
+                        name:'song'
+                    }
+                }
+            },
+            methods:{
+
+            },
+            created(){ 
+
+            },
+            beforeMount(){
+                this.country = 'china';
+            },
+            mounted(){
+              this.country = '中国';
+            //   this.$set(this,'country','中国'); //不可以
+              this.$forceUpdate(); //迫使vue实例重新渲染
+              
+            }
+        })
+    </script>
+</body>
+</html>

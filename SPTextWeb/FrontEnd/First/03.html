@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>常用指令：v-for</title>
+	<script src="js/vue.js"></script>
+	<script>
+		window.onload=function(){
+			new Vue({
+				el:'#itany',
+				data:{
+					arr:[12,4,5,34,2,11],
+					user:{id:9527,name:'唐伯虎',age:25},
+					arr2:[12,4,5,34,2,11,12],
+					users:[
+						{id:9527,name:'唐伯虎',age:25},
+						{id:1001,name:'秋香',age:22},
+						{id:1002,name:'石榴姐',age:24}
+					]
+				}
+			});
+		}
+	</script>
+</head>
+<body>
+	<div id="itany">
+		<ul>
+            <!-- 普通循环 -->
+            <!-- <li v-for="value in arr">{{value}}</li> -->
+            <!-- <li v-for="value in user">{{value}}</li> -->
+                <!-- 健值循环 -->
+                <!-- key指定唯一性 -->
+            <!-- <li v-for="(item,index) in user" :key="index">{{index}} -- {{item}}</li> -->
+        
+            <li v-for="(item,index) in users" :key="index"> {{index+1}}---{{item.id}} {{item.name}} {{item.age}}</li>
+        
+        </ul>
+        
+
+	</div>
+</body>
+</html>

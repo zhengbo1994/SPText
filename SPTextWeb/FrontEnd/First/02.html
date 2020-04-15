@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>常用指令v-model</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div class="itapp">
+        {{msg}} {{arr}}  {{users}}
+        <input type="text" v-model="name">
+        <select v-model="tag">
+            <option value="01">01</option>
+            <option value="02">02</option>
+        </select>
+        <!-- <input type="checkbox" value="01" v-model="test" >
+        <input type="checkbox" value="02" v-model="test" >
+        {{name}} {{test}} -->
+ {{tag}}
+
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'.itapp', //指定关联的元素
+            data:{ //存储数据
+                msg:'Hello World',
+                arr:[1,2,3],
+                age:21,
+                users:{
+                    id:12,name:'秋香'
+                }, 
+                name:'',
+                test:'',
+                tag:'01'
+
+            }
+        });
+    </script>
+</body>
+</html>

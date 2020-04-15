@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue实例的属性和方法</title>
+	<script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="itapp">
+        {{msg}}
+        <h2 ref="hello">你好</h2>
+        <p ref="world">世界</p>
+
+        <h1 ref="title">标题：{{nameK}}</h1>
+        -----{{user.name}}
+    </div>
+    <script>
+       	var vm=new Vue({
+			// el:'#itapp',
+			data:{
+                msg:'welcome to itapp',
+                nameK:'ceshi'
+			},
+			name:'tom',
+			age:24,
+			show:function(){
+				console.log('show');
+			},
+            methods:{
+               
+            },
+            mounted(){
+            }
+        });
+        vm.$mount('#itapp');
+        //属性：vm.属性名，获取data中的某个属性
+        // console.log(vm.msg)
+
+        // vm.$el 获取vm关联的元素
+        // console.log(vm.$el)
+        // vm.$el.style.color="red";
+
+        // vm.$data 获取数据对象data
+        // console.log(vm.$data)
+
+        // vm.$options  //获取自定义
+        console.log(vm.$options)
+        console.log(vm.$options.name)
+        console.log(vm.$options.age)
+        vm.$options.show();
+
+        // document.getElementById('itapp')
+
+        // vm.$refs :获取所有添加ref属性的元素
+        console.log(vm.$refs);
+        console.log(vm.$refs.hello);
+        vm.$refs.hello.style.color='red';
+
+
+        // 方法
+        // vm.$mount() :手动挂载vue实例
+        // vm.$destroy()  //销毁实例
+
+       // vm.$nextTick(callback)  //在dom更新完后再执行回调函数
+      
+
+       //dom没有更新完， vue实现响应式并不是数据发生变化之后， dom马上变化，需要时间
+          console.log(vm.msg);
+          vm.nameK="测试";
+          console.log(vm.$refs.title.textContent)     
+
+        //宏任务
+        setTimeout(()=>{
+            console.log('setTimeout');
+            console.log(vm.$refs.title.innerHTML)
+        },0)
+        
+         //微任务
+         vm.$nextTick(function(){
+            console.log('nextTick');
+            console.log(vm.$refs.title.innerHTML)
+        });
+
+        // $nextTick :推荐
+
+
+        // 修改数据
+        vm.msg = 'Hello'
+        // DOM 还没有更新
+        Vue.nextTick(function () {
+        // DOM 更新了
+            console.log('vm.msg',vm.msg);
+        })
+
+    </script>
+</body>
+</html>

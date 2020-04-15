@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SPApiText</name>
+    </assembly>
+    <members>
+        <member name="M:SPApiText.Controllers.WeatherForecastController.Get">
+            <summary>
+            测试api
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

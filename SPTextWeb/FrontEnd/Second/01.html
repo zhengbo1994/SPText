@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class和style</title>
+    <script src="js/vue.js"></script>
+    <style>
+        .aa{
+            color:red;
+            font-size: 30px;
+        }
+        .bb {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+   <div id="itapp">
+        <!-- 方式1: 变量的形式 -->
+        <p :class="bb">武汉</p>   <!-- 不可以，Vue的属性绑定时不能直接css样式 -->
+        
+        <!-- 方式2：数组的形式 -->
+        <p :class="[bb,dd]">武汉</p> 
+
+        <!-- 方式3：JSON  常用-->
+        <p :class="{aa:true,bb:true}">武汉</p> 
+
+        <p :class="{aa:num>2}">武汉</p> 
+     
+        <p style="color:red;font-size:40px">hello world</p> 
+        <!-- v-bind:style -->
+        <p :style="[xx,yy]">hello world</p>
+   </div>
+   <script>
+       new Vue({
+           el:'#itapp',
+           data:{
+                bb:'aa',
+                dd:'bb',
+                num:1,
+                xx:{color:'blue',fontSize:'30px'},
+				yy:{backgroundColor:'#ff7300'}
+           }
+       })
+   </script>
+
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态组件</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="itapp">
+        <button @click="flag='my-hello'">显示hello组件</button>
+        <button @click="flag='my-world'">显示world组件</button>
+        
+         <!-- 默认每次都会销毁非活动组件并重新创建
+         缓存，避免重新渲染， -->
+        <keep-alive>
+            <component :is="flag"></component>
+        </keep-alive>
+        <!-- <my-world></my-world> -->
+    </div>
+
+    <template id="wbs">
+        <div>
+            <h3>{{msg}}</h3>
+            {{time}}
+            <ul>
+                <li v-for="(item,index) in arr" :key="index">{{item}}</li>
+            </ul>
+        </div>
+    </template>
+    <script>
+
+        var vm=new Vue({ //这里的vm也是一个组件，称为根组件Root
+			el:'#itapp',
+			data:{
+				msg:'软谋',
+                flag:'my-hello'
+			},
+            components:{
+                'my-world':{
+                    name:'wbsx',
+                    template:'#wbs',
+                    data(){  
+                        return {
+                            age:'20',
+                            msg:'world',
+                            arr:['tom','jack','laney'],
+                            time:Math.random()
+                        }
+                    }
+                },
+                'my-hello':{
+                    template:'<h2>我是my hello {{time}}</h2>',
+                    data(){
+                        return {
+                            time:Math.random()
+                        }
+                    }
+                }
+            }
+		});	
+
+    </script>
+</body>
+</html>
