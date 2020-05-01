@@ -2,6 +2,7 @@
 using IOSerialize.Serialize;
 using log4net.Config;
 using SPText.Common;
+using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.Unity;
 using SPTextLK.Text;
@@ -33,22 +34,18 @@ namespace SPText
         string connectionStrings = ConfigurationManager.ConnectionStrings["Connection"].ToString();
         static void Main(string[] args)
         {
+
+            #region  linq交叉并补
+            //linqUse();
+
+            #endregion
+
             #region  委托
             //CreateDelegate();
             #endregion
 
             #region  常见算法
-            //cjsf();
-            //dysjx();
-            //suijicharu();
-            //mppx(dataArr.ToArray());
-            //QuickSort(dataArr.ToArray(), 0, 10);
-            //daoxu();
-            //Combine(dataArr.ToArray());
-            //jiecheng(10);
-            //qh();
-            //Foo(10);
-            //jisuanzhishu();
+            //sf();
             #endregion
 
             #region  泛型
@@ -112,7 +109,7 @@ namespace SPText
             #endregion
 
             #region  设计模式
-            DesignPattern();
+            //DesignPattern();
             #endregion
 
             #region  xml
@@ -206,7 +203,9 @@ namespace SPText
             //DataTypeAndSpecialType();
             #endregion
 
-
+            #region  （nosql）Redis
+            //RedisShow();
+            #endregion
 
             //object.ReferenceEquals(1,1);//用于比较
 
@@ -236,6 +235,31 @@ namespace SPText
             //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
             #endregion
         }
+        #region  linq交叉并补
+        public static void linqUse()
+        {
+            int[] a = { 1, 2, 3, 4, 5, 6, 7 };
+            int[] b = { 4, 5, 6, 7, 8, 9, 10 };
+            int[] c = { 1, 2, 3, 3, 4, 1, 2, 4, 6, 1, 6, 5 };
+            // 交集
+            var fuck = a.Intersect(b);
+            // 并集
+            var shit = a.Union(b);
+            // a有b没有的
+            var diff1 = a.Except(b);
+            // b有a没有的
+            var diff2 = b.Except(a);
+            var max = a.Max();
+            var min = a.Min();
+            var avg = a.Average();
+            var dis = c.Distinct();
+
+            Console.WriteLine(max);
+            Console.WriteLine(min);
+            Console.WriteLine(avg);
+            Console.ReadKey();
+        }
+        #endregion
 
         #region  委托
         public static void CreateDelegate()
@@ -267,6 +291,25 @@ namespace SPText
         #endregion
 
         #region  常见算法
+        public static void sf()
+        {
+            cjsf();
+            dysjx();
+            suijicharu();
+            mppx(dataArr.ToArray());
+            QuickSort(dataArr.ToArray(), 0, 10);
+            daoxu();
+            Combine(dataArr.ToArray());
+            jiecheng(10);
+            qh();
+            Foo(10);
+            jisuanzhishu();
+            qssz(dataArr.ToArray());
+            cf(dataArr.ToArray());
+            MaxAndMin(dataArr.ToArray());
+            gys(8, 64);
+        }
+
 
         // 9*9乘法表
         public static void cjsf()
@@ -563,6 +606,79 @@ namespace SPText
                 }
             }
             Console.WriteLine("\n\n{0} 以内共有 {1} 个质数\n", x, sum);
+        }
+        #endregion
+
+        #region  求数组缺失的数
+        public static void qssz(int[] nums)
+        {
+            int n = nums.Length;
+            int sum = (n + 1) * (n + 2) / 2;
+            int otherSum = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                otherSum += nums[i];
+            }
+            int defextdata = sum - otherSum;
+        }
+        #endregion
+
+        #region  给定的整型数组中的重复数字
+        public static void cf(int[] nums)
+        {
+            Dictionary<int, int> keyValues = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (keyValues.Keys.Contains(nums[i]))
+                {
+                    keyValues[nums[i]]++;
+                }
+                else
+                {
+                    keyValues[nums[i]] = 1;
+                }
+            }
+
+            int[] numArr = keyValues.Where(t => t.Value > 1).ToDictionary(t => t.Key, t => t.Value).Keys.ToArray();
+        }
+        #endregion
+
+        #region  求数组最大值和最小值
+        public static void MaxAndMin(int[] nums)
+        {
+            int Max = nums[0];
+            int Min = nums[0];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (Max < nums[i])
+                {
+                    Max = nums[i];
+                }
+            }
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[Min] > nums[i])
+                {
+                    Min = nums[i];
+                }
+            }
+        }
+        #endregion
+
+        #region  公约数
+        public static void gys(int x, int y)
+        {
+            int min = x < y ? x : y;
+            for (int i = 0; i < min - 1; i++)
+            {
+                if (x % i == 0 && y % i == 0)
+                {
+                    Console.WriteLine("{0}和{1}的最大公约数是：{2}", x, i, i);
+                    break;
+
+                }
+            }
         }
         #endregion
         #endregion
@@ -1247,267 +1363,7 @@ namespace SPText
         }
         #endregion
 
-        #region  设计模式
-        #region  单例模式
-        public sealed class SingletonPattern
-        {
-            private SingletonPattern()
-            {
-                long iResult = 0;
-                for (int i = 0; i < 10000; i++)
-                {
-                    iResult += i;
-                }
-                Thread.Sleep(1000);
 
-                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------单例模式");
-            }
-
-            private static SingletonPattern _singletonPattern = null;
-
-
-            //静态构造函数
-            static SingletonPattern()
-            {
-                _singletonPattern = new SingletonPattern();
-            }
-
-            public static SingletonPattern SingletonPatternCreate0()
-            {
-                return _singletonPattern;
-            }
-
-            //静态字段构造
-            private static SingletonPattern _singletonPattern1 = new SingletonPattern();
-
-            public static SingletonPattern SingletonPatternCreate1()
-            {
-                return _singletonPattern1;
-            }
-
-            //双锁形式
-            private static readonly object Singleton_Lock = new object();
-            public static SingletonPattern SingletonPatternCreate2()
-            {
-                if (_singletonPattern == null)
-                {
-                    lock (Singleton_Lock)
-                    {
-                        if (_singletonPattern == null)
-                        {
-                            _singletonPattern = new SingletonPattern();
-                        }
-                    }
-                }
-                return _singletonPattern;
-            }
-
-            public void Show()
-            {
-                Console.WriteLine($"Show被构造");
-            }
-
-        }
-        #endregion
-
-        #region  原型模式
-        public class PrototypePattern
-        {
-            private PrototypePattern()
-            {
-                long iResult = 0;
-                for (int i = 0; i < 10000; i++)
-                {
-                    iResult += i;
-                }
-                Thread.Sleep(1000);
-
-                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------原型模式");
-            }
-
-            private static PrototypePattern prototypePattern = new PrototypePattern();
-
-            public static PrototypePattern PrototypePatternCreate()
-            {
-                PrototypePattern _prototypePattern = (PrototypePattern)prototypePattern.MemberwiseClone();
-                return _prototypePattern;
-            }
-
-            public void Show()
-            {
-                Console.WriteLine($"Show被构造");
-            }
-        }
-
-        #endregion
-
-        #region  享元模式
-        public class FlyweightPattern
-        {
-            private FlyweightPattern()
-            {
-                long iResult = 0;
-                for (int i = 0; i < 10000; i++)
-                {
-                    iResult += i;
-                }
-                Thread.Sleep(1000);
-
-                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------享元模式");
-            }
-            private static FlyweightPattern flyweightPattern = null;
-            static FlyweightPattern()
-            {
-                flyweightPattern = new FlyweightPattern();
-            }
-            public FlyweightPattern FlyweightPatternCreate()
-            {
-                return flyweightPattern;
-            }
-
-
-        }
-
-        public class FlyweightPatternFactory
-        {
-            private static Dictionary<GetSPText, BaseSPText> baseSPTextDictionary = new Dictionary<GetSPText, BaseSPText>();
-            private readonly static object baseSPTextDictionaryLock = new object();
-            public static BaseSPText baseSPText(GetSPText getSPText)
-            {
-                if (!baseSPTextDictionary.ContainsKey(getSPText))
-                {
-                    lock (baseSPTextDictionaryLock)
-                    {
-                        if (!baseSPTextDictionary.ContainsKey(getSPText))
-                        {
-                            BaseSPText baseSPText = null;
-                            switch (getSPText)
-                            {
-                                case GetSPText.Text1:
-                                    baseSPText = new SPText1();
-                                    break;
-                                case GetSPText.Text2:
-                                    baseSPText = new SPText2();
-                                    break;
-                                case GetSPText.Text3:
-                                    baseSPText = new SPText3();
-                                    break;
-                                default:
-                                    throw new Exception("错误！");
-                            }
-                            baseSPTextDictionary.Add(getSPText, baseSPText);
-                        }
-                    }
-                }
-                return baseSPTextDictionary[getSPText];
-
-
-            }
-
-            public enum GetSPText
-            {
-                Text1,
-                Text2,
-                Text3
-            }
-        }
-        #endregion
-
-        #region  装饰器模式
-        public class DecoratorPatternExtend1
-        {
-            private SPText1 _sPText1 = null;
-            public DecoratorPatternExtend1(SPText1 sPText1)
-            {
-                _sPText1 = sPText1;
-            }
-            public void Show()
-            {
-                this._sPText1.Show();
-                Console.WriteLine("添加补充代码！");
-            }
-        }
-
-        public class DecoratorPatternExtend2 : SPText1
-        {
-            public override string Show()
-            {
-                base.Show();
-                Console.WriteLine("添加补充代码！");
-                return this.GetType().Name;
-            }
-        }
-
-        public class DecoratorPatternExtend3 : SPText1
-        {
-            private SPText1 _sPText1 = null;
-            public DecoratorPatternExtend3(SPText1 sPText1)
-            {
-                _sPText1 = sPText1;
-            }
-            public override string Show()
-            {
-                this._sPText1.Show();
-                Console.WriteLine("添加补充代码---被继承基层！");
-                return this.GetType().Name;
-            }
-        }
-
-        public class DecoratorPatternExtend4 : DecoratorPatternExtend3
-        {
-            public DecoratorPatternExtend4(SPText1 sPText1) : base(sPText1)
-            {
-            }
-            public override string Show()
-            {
-                base.Show();
-                Console.WriteLine("添加补充代码---4！");
-                return this.GetType().Name;
-            }
-        }
-
-        public class DecoratorPatternExtend5 : DecoratorPatternExtend3
-        {
-            public DecoratorPatternExtend5(SPText1 sPText1) : base(sPText1)
-            {
-            }
-            public override string Show()
-            {
-                base.Show();
-                Console.WriteLine("添加补充代码---5！");
-                return this.GetType().Name;
-            }
-        }
-
-        public class DecoratorPatternExtend6 : DecoratorPatternExtend3
-        {
-            public DecoratorPatternExtend6(SPText1 sPText1) : base(sPText1)
-            {
-            }
-            public override string Show()
-            {
-                base.Show();
-                Console.WriteLine("添加补充代码---6！");
-                return this.GetType().Name;
-            }
-        }
-
-        public class DecoratorPatternExtend7 : DecoratorPatternExtend3
-        {
-            public DecoratorPatternExtend7(SPText1 sPText1) : base(sPText1)
-            {
-            }
-            public override string Show()
-            {
-                Console.WriteLine("添加补充代码---前面添加！");
-                base.Show();
-                Console.WriteLine("添加补充代码---7！");
-                return this.GetType().Name;
-            }
-        }
-
-        #endregion
-        #endregion
 
         #region  xml数据操作
         public static void xmlSerialize()
@@ -1954,6 +1810,268 @@ namespace SPText
         }
         #endregion
 
+        #region  设计模式
+        #region  单例模式
+        public sealed class SingletonPattern
+        {
+            private SingletonPattern()
+            {
+                long iResult = 0;
+                for (int i = 0; i < 10000; i++)
+                {
+                    iResult += i;
+                }
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------单例模式");
+            }
+
+            private static SingletonPattern _singletonPattern = null;
+
+
+            //静态构造函数
+            static SingletonPattern()
+            {
+                _singletonPattern = new SingletonPattern();
+            }
+
+            public static SingletonPattern SingletonPatternCreate0()
+            {
+                return _singletonPattern;
+            }
+
+            //静态字段构造
+            private static SingletonPattern _singletonPattern1 = new SingletonPattern();
+
+            public static SingletonPattern SingletonPatternCreate1()
+            {
+                return _singletonPattern1;
+            }
+
+            //双锁形式
+            private static readonly object Singleton_Lock = new object();
+            public static SingletonPattern SingletonPatternCreate2()
+            {
+                if (_singletonPattern == null)
+                {
+                    lock (Singleton_Lock)
+                    {
+                        if (_singletonPattern == null)
+                        {
+                            _singletonPattern = new SingletonPattern();
+                        }
+                    }
+                }
+                return _singletonPattern;
+            }
+
+            public void Show()
+            {
+                Console.WriteLine($"Show被构造");
+            }
+
+        }
+        #endregion
+
+        #region  原型模式
+        public class PrototypePattern
+        {
+            private PrototypePattern()
+            {
+                long iResult = 0;
+                for (int i = 0; i < 10000; i++)
+                {
+                    iResult += i;
+                }
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------原型模式");
+            }
+
+            private static PrototypePattern prototypePattern = new PrototypePattern();
+
+            public static PrototypePattern PrototypePatternCreate()
+            {
+                PrototypePattern _prototypePattern = (PrototypePattern)prototypePattern.MemberwiseClone();
+                return _prototypePattern;
+            }
+
+            public void Show()
+            {
+                Console.WriteLine($"Show被构造");
+            }
+        }
+
+        #endregion
+
+        #region  享元模式
+        public class FlyweightPattern
+        {
+            private FlyweightPattern()
+            {
+                long iResult = 0;
+                for (int i = 0; i < 10000; i++)
+                {
+                    iResult += i;
+                }
+                Thread.Sleep(1000);
+
+                Console.WriteLine($"{this.GetType().Name}被构造一次-------------------享元模式");
+            }
+            private static FlyweightPattern flyweightPattern = null;
+            static FlyweightPattern()
+            {
+                flyweightPattern = new FlyweightPattern();
+            }
+            public FlyweightPattern FlyweightPatternCreate()
+            {
+                return flyweightPattern;
+            }
+
+
+        }
+
+        public class FlyweightPatternFactory
+        {
+            private static Dictionary<GetSPText, BaseSPText> baseSPTextDictionary = new Dictionary<GetSPText, BaseSPText>();
+            private readonly static object baseSPTextDictionaryLock = new object();
+            public static BaseSPText baseSPText(GetSPText getSPText)
+            {
+                if (!baseSPTextDictionary.ContainsKey(getSPText))
+                {
+                    lock (baseSPTextDictionaryLock)
+                    {
+                        if (!baseSPTextDictionary.ContainsKey(getSPText))
+                        {
+                            BaseSPText baseSPText = null;
+                            switch (getSPText)
+                            {
+                                case GetSPText.Text1:
+                                    baseSPText = new SPText1();
+                                    break;
+                                case GetSPText.Text2:
+                                    baseSPText = new SPText2();
+                                    break;
+                                case GetSPText.Text3:
+                                    baseSPText = new SPText3();
+                                    break;
+                                default:
+                                    throw new Exception("错误！");
+                            }
+                            baseSPTextDictionary.Add(getSPText, baseSPText);
+                        }
+                    }
+                }
+                return baseSPTextDictionary[getSPText];
+
+
+            }
+
+            public enum GetSPText
+            {
+                Text1,
+                Text2,
+                Text3
+            }
+        }
+        #endregion
+
+        #region  装饰器模式
+        public class DecoratorPatternExtend1
+        {
+            private SPText1 _sPText1 = null;
+            public DecoratorPatternExtend1(SPText1 sPText1)
+            {
+                _sPText1 = sPText1;
+            }
+            public void Show()
+            {
+                this._sPText1.Show();
+                Console.WriteLine("添加补充代码！");
+            }
+        }
+
+        public class DecoratorPatternExtend2 : SPText1
+        {
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend3 : SPText1
+        {
+            private SPText1 _sPText1 = null;
+            public DecoratorPatternExtend3(SPText1 sPText1)
+            {
+                _sPText1 = sPText1;
+            }
+            public override string Show()
+            {
+                this._sPText1.Show();
+                Console.WriteLine("添加补充代码---被继承基层！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend4 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend4(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码---4！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend5 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend5(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码---5！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend6 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend6(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                base.Show();
+                Console.WriteLine("添加补充代码---6！");
+                return this.GetType().Name;
+            }
+        }
+
+        public class DecoratorPatternExtend7 : DecoratorPatternExtend3
+        {
+            public DecoratorPatternExtend7(SPText1 sPText1) : base(sPText1)
+            {
+            }
+            public override string Show()
+            {
+                Console.WriteLine("添加补充代码---前面添加！");
+                base.Show();
+                Console.WriteLine("添加补充代码---7！");
+                return this.GetType().Name;
+            }
+        }
+
+        #endregion
+        #endregion
+
         #region  数据类型/特殊类型
         public static void DataTypeAndSpecialType()
         {
@@ -2047,6 +2165,320 @@ namespace SPText
 
         //programList = SPText.CustomCache.GetT<List<Program>>(key, () => DBHelper.Query<Program>(123));
         #endregion
+
+        #region  Redis
+        public class StudentRedisParem
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Remark { get; set; }
+        }
+        public static void RedisShow()
+        {
+            StudentRedisParem student_1 = new StudentRedisParem()
+            {
+                Id = 11,
+                Name = "Eleven"
+            };
+            StudentRedisParem student_2 = new StudentRedisParem()
+            {
+                Id = 12,
+                Name = "Twelve",
+                Remark = "123423245"
+            };
+
+            //String（键值对 Key-Name）
+            Console.WriteLine("********************String*********************");
+            {
+                using (RedisStringService service = new RedisStringService())
+                {
+                    service.Set<string>("student1", "梦的翅膀");
+                    Console.WriteLine(service.Get("student1"));
+
+                    service.Append("student1", "20180802");
+                    Console.WriteLine(service.Get("student1"));
+
+                    Console.WriteLine(service.GetAndSetValue("student1", "程序错误"));
+                    Console.WriteLine(service.Get("student1"));
+
+                    service.Set<string>("student2", "王", DateTime.Now.AddSeconds(5));
+                    Thread.Sleep(5100);
+                    Console.WriteLine(service.Get("student2"));
+
+                    service.Set<int>("Age", 32);
+                    Console.WriteLine(service.Incr("Age"));
+                    Console.WriteLine(service.IncrBy("Age", 3));
+                    Console.WriteLine(service.Decr("Age"));
+                    Console.WriteLine(service.DecrBy("Age", 3));
+                }
+            }
+            //Hashtable（集合对象）
+            Console.WriteLine("********************Hashtable*********************");
+            {
+                using (RedisHashService service = new RedisHashService())
+                {
+                    service.SetEntryInHash("student", "id", "123456");
+                    service.SetEntryInHash("student", "name", "张xx");
+                    service.SetEntryInHash("student", "remark", "高级班的学员");
+
+                    var keys = service.GetHashKeys("student");
+                    var values = service.GetHashValues("student");
+                    var keyValues = service.GetAllEntriesFromHash("student");
+                    Console.WriteLine(service.GetValueFromHash("student", "id"));
+
+                    service.SetEntryInHashIfNotExists("student", "name", "太子爷");
+                    service.SetEntryInHashIfNotExists("student", "description", "高级班的学员2");
+
+                    Console.WriteLine(service.GetValueFromHash("student", "name"));
+                    Console.WriteLine(service.GetValueFromHash("student", "description"));
+                    service.RemoveEntryFromHash("student", "description");
+                    Console.WriteLine(service.GetValueFromHash("student", "description"));
+                }
+            }
+            //Set（去重，交差并补）
+            Console.WriteLine("***********************Set******************");
+            {
+                using (RedisSetService service = new RedisSetService())
+                {
+                    service.FlushAll();//清理全部数据
+
+                    service.Add("advanced", "111");
+                    service.Add("advanced", "112");
+                    service.Add("advanced", "114");
+                    service.Add("advanced", "114");
+                    service.Add("advanced", "115");
+                    service.Add("advanced", "115");
+                    service.Add("advanced", "113");
+
+                    var result = service.GetAllItemsFromSet("advanced");
+
+                    var random = service.GetRandomItemFromSet("advanced");//随机获取
+                    service.GetCount("advanced");//独立的ip数
+                    service.RemoveItemFromSet("advanced", "114");
+
+                    {
+                        service.Add("begin", "111");
+                        service.Add("begin", "112");
+                        service.Add("begin", "115");
+
+                        service.Add("end", "111");
+                        service.Add("end", "114");
+                        service.Add("end", "113");
+
+                        var result1 = service.GetIntersectFromSets("begin", "end");
+                        var result2 = service.GetDifferencesFromSet("begin", "end");
+                        var result3 = service.GetUnionFromSets("begin", "end");
+                        //共同好友   共同关注
+                    }
+                }
+            }
+            //ZSet：有序集合，排列（去重，交差并补）
+            Console.WriteLine("********************ZSet*********************");
+            {
+                using (RedisZSetService service = new RedisZSetService())
+                {
+                    service.FlushAll();//清理全部数据
+
+                    service.Add("advanced", "1");
+                    service.Add("advanced", "2");
+                    service.Add("advanced", "5");
+                    service.Add("advanced", "4");
+                    service.Add("advanced", "7");
+                    service.Add("advanced", "5");
+                    service.Add("advanced", "9");
+
+                    var result1 = service.GetAll("advanced");
+                    var result2 = service.GetAllDesc("advanced");
+
+                    service.AddItemToSortedSet("Sort", "BY", 123234);
+                    service.AddItemToSortedSet("Sort", "走自己的路", 123);
+                    service.AddItemToSortedSet("Sort", "redboy", 45);
+                    service.AddItemToSortedSet("Sort", "大蛤蟆", 7567);
+                    service.AddItemToSortedSet("Sort", "路人甲", 9879);
+                    service.AddRangeToSortedSet("Sort", new List<string>() { "123", "花生", "加菲猫" }, 3232);
+                    var result3 = service.GetAllWithScoresFromSortedSet("Sort");
+
+                    //交叉并
+                }
+            }
+
+            //List
+            Console.WriteLine("********************List*********************");
+            {
+                using (RedisListService service = new RedisListService())
+                {
+                    service.FlushAll();
+
+                    service.Add("article", "eleven1234");
+                    service.Add("article", "kevin");
+                    service.Add("article", "大叔");
+                    service.Add("article", "C卡");
+                    service.Add("article", "触不到的线");
+                    service.Add("article", "程序错误");
+                    service.RPush("article", "eleven1234");
+                    service.RPush("article", "kevin");
+                    service.RPush("article", "大叔");
+                    service.RPush("article", "C卡");
+                    service.RPush("article", "触不到的线");
+                    service.RPush("article", "程序错误");
+
+                    var result1 = service.Get("article");
+                    var result2 = service.Get("article", 0, 3);
+                    //可以按照添加顺序自动排序；而且可以分页获取
+
+                    Console.WriteLine("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                    //栈
+                    service.FlushAll();
+                    service.Add("article", "eleven1234");
+                    service.Add("article", "kevin");
+                    service.Add("article", "大叔");
+                    service.Add("article", "C卡");
+                    service.Add("article", "触不到的线");
+                    service.Add("article", "程序错误");
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine(service.PopItemFromList("article"));
+                        var result3 = service.Get("article");
+                    }
+                    Console.WriteLine("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                    // 队列：生产者消费者模型   
+                    service.FlushAll();
+                    service.RPush("article", "eleven1234");
+                    service.RPush("article", "kevin");
+                    service.RPush("article", "大叔");
+                    service.RPush("article", "C卡");
+                    service.RPush("article", "触不到的线");
+                    service.RPush("article", "程序错误");
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.WriteLine(service.PopItemFromList("article"));
+                        var result4 = service.Get("article");
+                    }
+                    //分布式缓存，多服务器都可以访问到，多个生产者，多个消费者，任何产品只被消费一次
+                }
+
+                #region 生产者消费者
+                using (RedisListService service = new RedisListService())
+                {
+                    service.Add("test", "这是一个学生Add1");
+                    service.Add("test", "这是一个学生Add2");
+                    service.Add("test", "这是一个学生Add3");
+
+                    service.LPush("test", "这是一个学生LPush1");
+                    service.LPush("test", "这是一个学生LPush2");
+                    service.LPush("test", "这是一个学生LPush3");
+                    service.LPush("test", "这是一个学生LPush4");
+                    service.LPush("test", "这是一个学生LPush5");
+                    service.LPush("test", "这是一个学生LPush6");
+
+                    service.RPush("test", "这是一个学生RPush1");
+                    service.RPush("test", "这是一个学生RPush2");
+                    service.RPush("test", "这是一个学生RPush3");
+                    service.RPush("test", "这是一个学生RPush4");
+                    service.RPush("test", "这是一个学生RPush5");
+                    service.RPush("test", "这是一个学生RPush6");
+
+                    List<string> stringList = new List<string>();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        stringList.Add(string.Format($"放入任务{i}"));
+                    }
+                    service.Add("task", stringList);
+
+                    Console.WriteLine(service.Count("test"));
+                    Console.WriteLine(service.Count("task"));
+                    var list = service.Get("test");
+                    list = service.Get("task", 2, 4);
+
+                    Action act = new Action(() =>
+                    {
+                        while (true)
+                        {
+                            Console.WriteLine("************请输入数据**************");
+                            string testTask = Console.ReadLine();
+                            service.LPush("test", testTask);
+                        }
+                    });
+                    act.Invoke();
+                    act.EndInvoke(act.BeginInvoke(null, null));
+                }
+                #endregion
+
+                #region 发布订阅:观察者，一个数据源，多个接受者，只要订阅了就可以收到的，能被多个数据源共享
+                Task.Run(() =>
+                {
+                    using (RedisListService service = new RedisListService())
+                    {
+                        service.Subscribe("Eleven", (c, message, iRedisSubscription) =>
+                        {
+                            Console.WriteLine($"注册{1}{c}:{message}，Dosomething else");
+                            if (message.Equals("exit"))
+                                iRedisSubscription.UnSubscribeFromChannels("Eleven");
+                        });//blocking
+                    }
+                });
+                Task.Run(() =>
+                {
+                    using (RedisListService service = new RedisListService())
+                    {
+                        service.Subscribe("ZhengBo", (c, message, iRedisSubscription) =>
+                        {
+                            Console.WriteLine($"注册{2}{c}:{message}，Dosomething else");
+                            if (message.Equals("exit"))
+                                iRedisSubscription.UnSubscribeFromChannels("ZhengBo");
+                        });//blocking
+                    }
+                });
+                Task.Run(() =>
+                {
+                    using (RedisListService service = new RedisListService())
+                    {
+                        service.Subscribe("Twelve", (c, message, iRedisSubscription) =>
+                        {
+                            Console.WriteLine($"注册{3}{c}:{message}，Dosomething else");
+                            if (message.Equals("exit"))
+                                iRedisSubscription.UnSubscribeFromChannels("Twelve");
+                        });//blocking
+                    }
+                });
+                using (RedisListService service = new RedisListService())
+                {
+                    Thread.Sleep(1000);
+
+                    service.Publish("Eleven", "Eleven123");
+                    service.Publish("Eleven", "Eleven234");
+                    service.Publish("Eleven", "Eleven345");
+                    service.Publish("Eleven", "Eleven456");
+
+                    service.Publish("Twelve", "Twelve123");
+                    service.Publish("Twelve", "Twelve234");
+                    service.Publish("Twelve", "Twelve345");
+                    service.Publish("Twelve", "Twelve456");
+                    Console.WriteLine("**********************************************");
+
+                    service.Publish("ZhengBo", "exit");
+                    service.Publish("ZhengBo", "123Eleven");
+                    service.Publish("ZhengBo", "234Eleven");
+                    service.Publish("ZhengBo", "345Eleven");
+                    service.Publish("ZhengBo", "456Eleven");
+
+                    service.Publish("Twelve", "exit");
+                    service.Publish("Twelve", "123Twelve");
+                    service.Publish("Twelve", "234Twelve");
+                    service.Publish("Twelve", "345Twelve");
+                    service.Publish("Twelve", "456Twelve");
+                }
+                //观察者模式：微信订阅号---群聊天---数据同步--
+                //MSMQ---RabbitMQ---ZeroMQ---RedisList:学习成本 技术成本
+                #endregion
+            }
+        }
+        #endregion
+
+
+
     }
 
 
@@ -2955,4 +3387,5 @@ namespace SPText
     }
     #endregion
     #endregion
+
 }

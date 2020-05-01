@@ -10,6 +10,12 @@ namespace SPMVCText.Controllers
     {
         public ActionResult Index()
         {
+            Response.Cookies["Cookies1"].Value = "1";
+
+            HttpCookie hcCookie = new HttpCookie("Cookies2", "2");
+            Response.Cookies.Add(hcCookie);
+
+
             return View();
         }
 

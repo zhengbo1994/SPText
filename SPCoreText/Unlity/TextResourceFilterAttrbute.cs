@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SPCoreText.Unlity
 {
-    //最主要做缓存（控制器执行前后）
+    //最主要做缓存（不进入Action和Result）
     public class TextResourceFilterAttrbute : Attribute, IResourceFilter
     {
         private static Dictionary<string, IActionResult> dictionary = new Dictionary<string, IActionResult>();
@@ -16,18 +16,18 @@ namespace SPCoreText.Unlity
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
             string key = context.HttpContext.Request.Path;
-            if (dictionary.ContainsKey(key))
+            if (!dictionary.ContainsKey(key))
             {
-                context.Result = dictionary[key];//断路器--到Result生成了，但是Result还需要转换成Html
+                dictionary.Add(key, context.Result);
             }
         }
 
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             string key = context.HttpContext.Request.Path;
-            if (!dictionary.ContainsKey(key))
+            if (dictionary.ContainsKey(key))
             {
-                dictionary.Add(key, context.Result);
+                context.Result = dictionary[key];//断路器--到Result生成了，但是Result还需要转换成Html
             }
         }
     }

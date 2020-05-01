@@ -17,21 +17,29 @@ namespace SPCoreText.Controllers
         //https://localhost:44317/first/index
 
         private readonly ILogger<FirstController> _logger;
+        private readonly ILoggerFactory _loggerFactory;
         private readonly IConfiguration _iConfiguration;
         private readonly ICategoryService _iCategoryService;
         public FirstController(ILogger<FirstController> logger
                        , IConfiguration configuration
              , ICategoryService iCategoryService
+            , ILoggerFactory iLoggerFactory
             )
         {
             this._iConfiguration = configuration;
             this._iCategoryService = iCategoryService;
-            _logger = logger;
+            this._logger = logger;
+            this._loggerFactory = iLoggerFactory;
         }
 
         public IActionResult Index()
         {
+            try
+            {
+
+            
             this._logger.LogInformation("12345667789");
+            this._loggerFactory.CreateLogger<FirstController>().LogInformation("12345667789");
 
             #region ViewData
             base.ViewData["User1"] = new CurrentUser()
@@ -111,6 +119,12 @@ namespace SPCoreText.Controllers
             ViewData["User2"] = "测试2";
             TempData["User3"] = "测试3";
             return View(new Text() { User4 = "测试4" });
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public class Text

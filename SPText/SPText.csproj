@@ -82,6 +82,18 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Common.5.8.0\lib\net45\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Interfaces.5.8.0\lib\net45\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Redis.5.8.0\lib\net45\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.5.8.0\lib\net45\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
@@ -183,6 +195,14 @@
     <Compile Include="Common\PageHelper.cs" />
     <Compile Include="Common\Pagination.cs" />
     <Compile Include="Common\QRCodeHelper.cs" />
+    <Compile Include="Common\Redis\Init\RedisConfigInfo.cs" />
+    <Compile Include="Common\Redis\Init\RedisManager.cs" />
+    <Compile Include="Common\Redis\Interface\RedisBase.cs" />
+    <Compile Include="Common\Redis\Service\RedisHashService.cs" />
+    <Compile Include="Common\Redis\Service\RedisListService.cs" />
+    <Compile Include="Common\Redis\Service\RedisSetService.cs" />
+    <Compile Include="Common\Redis\Service\RedisStringService.cs" />
+    <Compile Include="Common\Redis\Service\RedisZSetService.cs" />
     <Compile Include="Common\Serialize\JsonHelper.cs" />
     <Compile Include="Common\Serialize\LinqToXml.cs" />
     <Compile Include="Common\Serialize\Person.cs" />

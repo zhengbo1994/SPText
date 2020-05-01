@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using EF_CodeDB;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using SPCoreText.Extensions;
 using SPCoreText.Services;
 using SPCoreText.Unlity;
@@ -34,12 +38,6 @@ namespace SPCoreText
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // 服务容器 IoC(控制反转,Inversion of Control)容器
-            // 注册类型、请求实例
-
-            // 默认已经为我们注册了一些服务,服务，服务容器
-
-            // 添加对控制器和API相关功能的支持，但是不支持视图和页面
             services.AddControllers();
 
             //// 添加对控制器\API\视图相关功能的支持。（全局注册）（调试有错误）
@@ -52,9 +50,8 @@ namespace SPCoreText
             //    CookieAuthenticationDefaults.AuthenticationScheme)
             //    .AddCookie(options =>
             //    {
-            //        options.LoginPath = new PathString("/Fourth/Login");
+            //        options.LoginPath = new PathString("/Home/Login");
             //        options.AccessDeniedPath = new PathString("/Home/Privacy");
-
             //    });//用cookie的方式验证，顺便初始化登录地址
 
 
@@ -62,48 +59,61 @@ namespace SPCoreText
             services.AddRazorPages();
 
             // 这里是ASP.NET CORE 2.X 
+
+
             services.AddMvc();
-            services.AddCors();
+
+            #region 支持跨域  所有的Api都支持跨域
+            services.AddCors(option => option.AddPolicy("AllowCors", _build => _build.AllowAnyOrigin().AllowAnyMethod()));
+            #endregion
+
+            #region JWT鉴权授权（需创建一个独立的类库）
+            ////1.Nuget引入程序包：Microsoft.AspNetCore.Authentication.JwtBearer 
+            ////services.AddAuthentication();//禁用  
+            //var validAudience = this.Configuration["audience"];
+            //var validIssuer = this.Configuration["issuer"];
+            //var securityKey = this.Configuration["SecurityKey"];
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  //默认授权机制名称；                                      
+            //         .AddJwtBearer(options =>
+            //         {
+            //             options.TokenValidationParameters = new TokenValidationParameters
+            //             {
+            //                 ValidateIssuer = true,//是否验证Issuer
+            //                 ValidateAudience = true,//是否验证Audience
+            //                 ValidateLifetime = true,//是否验证失效时间
+            //                 ValidateIssuerSigningKey = true,//是否验证SecurityKey
+            //                 ValidAudience = validAudience,//Audience
+            //                 ValidIssuer = validIssuer,//Issuer，这两项和前面签发jwt的设置一致  表示谁签发的Token
+            //                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey))//拿到SecurityKey
+            //                 //AudienceValidator = (m, n, z) =>
+            //                 //{ 
+            //                 //    return m != null && m.FirstOrDefault().Equals(this.Configuration["audience"]);
+            //                 //},//自定义校验规则，可以新登录后将之前的无效 
+            //             };
+            //         });
+            #endregion
+
             // 比较规范的服务封装
             services.AddMessage(builder => builder.UseSms());
 
             //缓存
             services.AddResponseCaching();
 
-            // 内置的服务
-
-            // 第三方的，EF Core，日志框架、Swagger、
-
-            // 注册自定义服务
-            // 服务生存期   类型生命周期
-
-            // 注册自定义服务的时候，必须要选择一个生存周期
-
-            // 有几种生存周期
-            // 瞬时，每次从服务容器里进行请求实例时，都会创建一个新的实例。
-            // 作用域，线程单例，在同一个线程（请求）里，只实例化一次
-            // 单例，全局单例，每一次都是使用相同的实例，
-
             //生存周期
-            //services.AddScoped<TextActionFilterAttribute>();  //作用域注册
-            //services.AddSingleton();//单例
-            //services.AddTransient();//瞬时
+            //services.AddScoped<TextActionFilterAttribute>();  //作用域注册（作用域，线程单例，在同一个线程（请求）里，只实例化一次）
+            //services.AddSingleton();//单例（单例，全局单例，每一次都是使用相同的实例，）
+            //services.AddTransient();//瞬时（瞬时，每次从服务容器里进行请求实例时，都会创建一个新的实例。）
 
             services.AddSingleton<IMessageService, EmailService>();
             services.AddSingleton<IMessageService, SmsService>();
             services.AddSingleton<ICategoryService, CategoryService>();
             services.AddScoped(typeof(TextExecptionFilterAttrbute));  //注册全局异常处理特性
-            services.AddScoped<DbContext, DataBaseContext>();//EF数据库映射
+
 
             services.AddSession();
-            //全局注册
-            //services.AddMvc(p =>
-            //{
-            //    p.Filters.Add(typeof(TextExecptionFilterAttrbute));
-            //});
 
             #region  EF（DbContext）配置
-
+            services.AddScoped<DbContext, DataBaseContext>();//EF数据库映射
 
             services.AddDbContext<DataBaseContext>(options =>
             {
@@ -122,7 +132,7 @@ namespace SPCoreText
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // 配置中间件
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             //app.Use(async (context, next) =>
             //{
@@ -138,6 +148,9 @@ namespace SPCoreText
             //    await context.Response.WriteAsync("Hello Run \r\n");
             //});
 
+
+            loggerFactory.AddLog4Net();
+            app.UseSession();
 
             // 环境名称Development
             if (env.IsDevelopment())
@@ -160,12 +173,20 @@ namespace SPCoreText
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot"))
             });
 
+            #region 支持跨域
+            app.UseCors("AllowCors");
+            #endregion
+
+            #region 通过中间件来支持鉴权授权
+            //app.UseAuthentication(); //告诉框架 要使用权限认证
+            #endregion
+
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseResponseCaching();
-            app.UseSession();
+
 
             // 通用的添加中间件的方法
             //app.UseMiddleware<TestMiddleware>();
@@ -180,6 +201,10 @@ namespace SPCoreText
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                //endpoints.MapAreaControllerRoute(
+                //    name: "areas", "areas",
+                //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

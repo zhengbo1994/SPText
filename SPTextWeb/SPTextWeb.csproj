@@ -92,6 +92,9 @@
     <Content Include="FrontEnd\Fourth\08.html" />
     <Content Include="FrontEnd\Fourth\css\animate.css" />
     <Content Include="FrontEnd\Fourth\js\vue.js" />
+    <Content Include="FrontEnd\OOP\test.html" />
+    <Content Include="FrontEnd\OOP\事件委托1.html" />
+    <Content Include="FrontEnd\OOP\洗衣机.html" />
     <Content Include="FrontEnd\Second\01.html" />
     <Content Include="FrontEnd\Second\02.html" />
     <Content Include="FrontEnd\Second\03.html" />

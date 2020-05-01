@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .pop-window {
+        width:200px;
+        height:200px;
+        background: red;
+        position: absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%,-50%);
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <div class="pop-window" id="popWindow"></div>
+      <input type="button" value="click me" id="btn6">
+
+    <script>
+
+      var btn6 = document.getElementById("btn6");
+      var popWindow = document.getElementById('popWindow');
+        // document.onclick = function(event){
+        //     event = event || window.event;
+        //     var target = event.target || event.srcElement;
+            
+        //     if(target == btn6){
+        //         alert(btn5.value);
+        //     }
+        // }
+
+
+        // btn6.addEventListener('click',function(ev){
+        //     ev.stopPropagation();
+        //     console.log('btn');
+        //     popWindow.style.display='block';
+        // })
+
+        // window.addEventListener('click',function(event){
+        //     console.log('window');
+        //     popWindow.style.display='none';
+        // });
+
+        window.addEventListener('click',function(event){
+            var target = event.target;
+            popWindow.style.display='none';
+            if(target == btn6){
+                popWindow.style.display='block';
+             }
+
+        });
+
+        </script>
+</body>
+</html>

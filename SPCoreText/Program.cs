@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SPCoreText
 {
+    //dotnet SPCoreText.dll --urls=”http://*:5177” –-ip=”127.0.0.1” --port=5177
     public class Program
     {
         //(1)挂载到iis上加载项目
@@ -44,6 +45,7 @@ namespace SPCoreText
                     webBuilder.UseStartup<Startup>();
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())//设置工厂来替换实例
+
                 .ConfigureLogging((context, builder) =>
                 {
                     builder.AddFilter("System", LogLevel.Warning);//过滤掉命名空间
