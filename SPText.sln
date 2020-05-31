@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTextWeb", "SPTextWeb\SPTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTextWPF", "SPTextWPF\SPTextWPF.csproj", "{6173CDEE-DD22-4E11-81BA-A1EB9E04E614}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTextCommon", "SPTextCommon\SPTextCommon.csproj", "{D86A4FA1-D5AA-4F84-BC2E-EEE0DA5C198F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{6173CDEE-DD22-4E11-81BA-A1EB9E04E614}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6173CDEE-DD22-4E11-81BA-A1EB9E04E614}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6173CDEE-DD22-4E11-81BA-A1EB9E04E614}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D86A4FA1-D5AA-4F84-BC2E-EEE0DA5C198F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D86A4FA1-D5AA-4F84-BC2E-EEE0DA5C198F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D86A4FA1-D5AA-4F84-BC2E-EEE0DA5C198F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D86A4FA1-D5AA-4F84-BC2E-EEE0DA5C198F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
