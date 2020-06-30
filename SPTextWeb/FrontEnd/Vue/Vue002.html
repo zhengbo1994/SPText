@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../../Content/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../Content/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../../Content/lib/lib/vue/vue.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .backg {
+            background-color: aquamarine;
+        }
+
+        .fontcolor {
+            color: red;
+        }
+
+        .fontcolor1 {
+            color: blue;
+        }
+
+        table {
+            width: 600px;
+            border-collapse: collapse;
+        }
+
+            table td {
+                border: 1px solid #000;
+                text-align: center;
+            }
+
+        .oddStyle {
+            background-color: rgb(255, 168, 168);
+        }
+
+        [v-cloak]::after {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!--<div id="app" v-cloak>-->
+    <div id="app">
+        <div title="第一次课">
+            <h7>{{message}}这是一个P标签</h7>
+            <h6 v-text="message">这是一个P标签</h6>
+            <h5 v-html="htmltext">这是一个htmltext</h5>
+            <h5 v-text="htmltext">这是一个htmltext</h5>
+            @*<input type="button" id="btn" :value="buttontext" @click="chickMe" />*@
+            <input type="button" id="btn" v-bind:value="buttontext" v-on:click="chickMe" />
+
+
+            <p>{{score}}</p>
+            <p>{{level}}</p>
+            <input type="button" value="开始抽奖" v-on:click="start()">
+            <input type="button" value="停止" v-on:click="stop()">
+        </div>
+
+
+        <div title="第二次课" style="margin-top:20px;">
+            <p :class="'backg'">{{msg}}</p>
+            <p :class="['backg',flag?'fontcolor':'']">{{msg}}</p>
+            <p :class="['backg',{'fontcolor':flag}]">{{msg}}</p>
+            <p :style="[style1,style2]">{{msg}}</p>
+            <input type="text" v-model="msg">
+            <button v-on:click="change">变</button>
+            <div v-for="userId in userIds">{{userId}}</div>
+            <div v-for="(user,i) in userList">id: {{user.id}}; 姓名: {{user.name}}; 索引: {{i}}</div>
+            <div v-for="item in 10">{{item}}</div>
+            <div v-for="(value, key,index) in userInfo">值：{{value}} ； 键：{{key}} ；索引：{{index}}</div>
+            <select>
+                <option v-for="(user,i) in userList" :key="user.id">{{user.name}}</option>
+            </select>
+            <button v-on:click="addUser">添加人</button>
+            <div v-if="isif">div1</div>
+            <div v-else>div1_else</div>
+            <div v-show="isShow">div2</div>
+
+
+
+            <input type="text" v-model="scoreIndex">
+            <br>
+            <input type="range" v-model="scoreIndex" min="0" :max="maxValue">
+            <br>
+            <select v-model="maxValue">
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+                <option value="10000">10000</option>
+            </select>
+
+            <table>
+                <tr>
+                    <td>序号</td>
+                    <td>编号</td>
+                    <td>姓名</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="(user,index) in userList" :key="user.id" :class="{'oddStyle':isOdd(index)}">
+                    <td>{{index}} </td>
+                    <td>{{user.id}}</td>
+                    <td v-text="user.name"></td>
+                    <td v-on:click="remove(index)"><a href="#" style="text-decoration: none;">删除</a> </td>
+                </tr>
+            </table>
+            <input type="text" v-model="id">
+            <input type="text" v-model="userName"><br>
+            <button v-on:click="addUser">添加</button>
+        </div>
+
+
+    </div>
+
+    <script type="text/javascript">
+        
+    //setTimeout(function () {
+    var vm = new Vue({
+        el: "#app",
+        //设置绑定值
+        data: {
+            message: "Hello World",
+            htmltext: "<h1>我是一段文本！</h1>",
+            buttontext: "我是按钮！",
+            score: 0,
+            level: null,
+            intervalIndex: null,
+            msg: "Hello World",
+            flag: false,
+            style1: { 'background-color': 'brown', color: 'white' },
+            style2: { 'font-size': "18px" },
+            userIds: [1, 2, 3, 4, 5, 6],
+            userList: [
+                { id: 1, name: "张三" },
+                { id: 2, name: "李四" },
+                { id: 3, name: "王五" },
+                { id: 4, name: "赵六" }
+            ],
+            userInfo: { id: 4, name: "赵六" },
+            isif: false,
+            isShow: true,
+            scoreIndex: 50,
+            maxValue: 100,
+            id: 5,
+            userName: "",
+            getData: [],
+        },
+        //注册方法（没色四）
+        methods: {
+            chickMe() {
+                this.buttontext = "我是修改后的按钮！"
+            },
+            start() {
+                if (this.intervalIndex == null) {
+                    this.intervalIndex = setInterval(() => {
+                        //Math.random() 生成 0~1之间的随机数
+                        this.score = parseInt(Math.random() * 100);
+                        //switch语句的范围判断
+                        switch (true) {
+                            case this.score < 30:
+                                this.level = "参与奖"
+                                break;
+                            case this.score >= 30 && this.score < 65:
+                                this.level = "三等奖"
+                                break;
+                            case this.score >= 65 && this.score < 85:
+                                this.level = "二等奖"
+                                break;
+                            case this.score >= 85:
+                                this.level = "一等奖"
+                                break;
+                        }
+                    }, 50)
+                }
+            },
+            stop() {
+                clearInterval(this.intervalIndex);
+                this.intervalIndex = null
+            },
+            change() {
+                this.style2['font-size'] = "22px";
+            },
+            addUser() {
+                this.userList.unshift({ id: 5, name: "田七" })
+            },
+            isOdd(index) {
+                var res = index % 2;
+                if (res == 1) return true;
+                else return false;
+            },
+            addUser() {
+                this.userList.push({ id: this.id++, name: this.userName })
+            },
+            remove(index) {
+                this.userList.splice(index, 1);
+                //delete this.userList[0];
+                //this.$forceUpdate();
+            },
+            qq() {
+                var that = this;
+                $.get("/Home/GetData", {}, function (res) {
+                    this.getData = res;
+                })
+            },
+            search() {
+                //includes内容包括
+                //var searchRes = this.supplys.filter(m => m.supplyDemandTitle.includes(this.searchText));
+            },
+        },
+        //对属性进行计算（啃皮提的）
+        computed: {
+            js() {
+                debugger
+                //filter类似于where
+                this.userList.filter(m => m.id == 1);
+            }
+        },
+        //方法请求前进行调用（ajax）（忙提的）
+        mounted() {
+            this.qq();
+        },
+    })
+    //}, 3000)
+    </script>
+</body>
+</html>

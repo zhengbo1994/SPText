@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SPApiText.Utiltiy;
+using SPCoreApiText.Utiltiy;
 
-namespace SPApiText.Controllers
+namespace SPCoreApiText.Controllers
 {
     [ApiController]
     [Route("[controller]")]

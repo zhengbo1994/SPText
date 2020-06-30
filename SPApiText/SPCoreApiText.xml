@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SPApiText</name>
+        <name>SPCoreApiText</name>
     </assembly>
     <members>
-        <member name="M:SPApiText.Controllers.WeatherForecastController.Get">
+        <member name="M:SPCoreApiText.Controllers.WeatherForecastController.Get">
             <summary>
             测试api
             </summary>

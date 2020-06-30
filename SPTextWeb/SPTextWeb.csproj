@@ -67,6 +67,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Content\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="Content\lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="Content\lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="Content\lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="Content\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="Content\lib\jquery\dist\jquery.js" />
+    <Content Include="Content\lib\jquery\dist\jquery.min.js" />
+    <Content Include="Content\lib\jquery\LICENSE.txt" />
+    <Content Include="Content\lib\lib\layer\layer.js" />
+    <Content Include="Content\lib\lib\layer\mobile\layer.js" />
+    <Content Include="Content\lib\lib\layer\mobile\need\layer.css" />
+    <Content Include="Content\lib\lib\layer\theme\default\icon-ext.png" />
+    <Content Include="Content\lib\lib\layer\theme\default\icon.png" />
+    <Content Include="Content\lib\lib\layer\theme\default\layer.css" />
+    <Content Include="Content\lib\lib\layer\theme\default\loading-0.gif" />
+    <Content Include="Content\lib\lib\layer\theme\default\loading-1.gif" />
+    <Content Include="Content\lib\lib\layer\theme\default\loading-2.gif" />
+    <Content Include="Content\lib\lib\vue\vue.min.js" />
     <Content Include="FrontEnd\First\01.html" />
     <Content Include="FrontEnd\First\02.html" />
     <Content Include="FrontEnd\First\03.html" />
@@ -81,6 +115,10 @@
     <Content Include="FrontEnd\First\bootstrap\bootstrap.min.js" />
     <Content Include="FrontEnd\First\bootstrap\jquery.min.js" />
     <Content Include="FrontEnd\First\js\vue.js" />
+    <Content Include="FrontEnd\Vue\Vue001.html" />
+    <Content Include="FrontEnd\Vue\Vue002.html" />
+    <Content Include="FrontEnd\图片拖拽.html" />
+    <Content Include="FrontEnd\表单验证.html" />
     <Content Include="FrontEnd\Fourth\01--.html" />
     <Content Include="FrontEnd\Fourth\01.html" />
     <Content Include="FrontEnd\Fourth\02.html" />
@@ -92,6 +130,8 @@
     <Content Include="FrontEnd\Fourth\08.html" />
     <Content Include="FrontEnd\Fourth\css\animate.css" />
     <Content Include="FrontEnd\Fourth\js\vue.js" />
+    <Content Include="FrontEnd\弹框封装.html" />
+    <Content Include="FrontEnd\无限极目录树.html" />
     <Content Include="FrontEnd\OOP\test.html" />
     <Content Include="FrontEnd\OOP\事件委托1.html" />
     <Content Include="FrontEnd\OOP\洗衣机.html" />
@@ -187,6 +227,23 @@
   <ItemGroup>
     <Content Include="FrontEnd\First\README.md" />
     <Content Include="FrontEnd\Fourth\README.md" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="Content\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Include="Content\lib\bootstrap\LICENSE" />
+    <Content Include="Content\lib\jquery-validation\LICENSE.md" />
+    <Content Include="Content\lib\jquery\dist\jquery.min.map" />
     <None Include="packages.config" />
     <Content Include="FrontEnd\Second\README.md" />
     <Content Include="FrontEnd\Second\user.json" />

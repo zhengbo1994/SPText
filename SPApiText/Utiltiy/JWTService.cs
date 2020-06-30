@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPApiText.Utiltiy
+namespace SPCoreApiText.Utiltiy
 {
     public interface IJWTService
     {

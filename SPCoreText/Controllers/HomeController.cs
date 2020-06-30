@@ -49,6 +49,10 @@ namespace SPCoreText.Controllers
         {
             return View();
         }
+        public IActionResult ApiIndex()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 600, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

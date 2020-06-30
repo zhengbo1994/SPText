@@ -1,6 +1,6 @@
 using System;
 
-namespace SPApiText
+namespace SPCoreApiText
 {
     public class WeatherForecast
     {

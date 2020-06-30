@@ -120,8 +120,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Areas\System\Controllers\HomeController.cs" />
-    <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\FirstController.cs" />
     <Compile Include="Controllers\FourthController.cs" />
@@ -252,10 +250,6 @@
       <DependentUpon>jquery.min.js</DependentUpon>
     </Content>
     <Content Include="Content\lib\jquery-validation\LICENSE.md" />
-    <Content Include="Areas\System\Views\web.config" />
-    <Content Include="Areas\System\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\System\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\System\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -326,7 +320,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\System\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
