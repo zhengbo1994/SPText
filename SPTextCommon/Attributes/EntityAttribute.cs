@@ -1,5 +1,8 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.ComponentModel;
+=======
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -52,6 +55,7 @@ namespace SPTextCommon.Attributes
             }
             return entityName;
         }
+<<<<<<< HEAD
 
         /// <summary>
         /// 返回枚举项的描述信息。
@@ -80,5 +84,7 @@ namespace SPTextCommon.Attributes
             }
             return null;
         }
+=======
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     }
 }

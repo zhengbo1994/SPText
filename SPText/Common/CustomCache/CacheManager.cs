@@ -16,7 +16,11 @@ namespace SPText.Common.CustomCache
 
         static CacheManager()
         {
+<<<<<<< HEAD
             Console.WriteLine("开始缓存的初始化.....");
+=======
+            //Console.WriteLine("开始缓存的初始化.....");
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
             //可以创建不同的cache对象
             cache = (MemoryCacheCache)Activator.CreateInstance(typeof(MemoryCacheCache));
             // 这里可以根据配置文件来选择

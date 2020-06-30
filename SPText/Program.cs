@@ -207,6 +207,11 @@ namespace SPText
             //RedisShow();
             #endregion
 
+            #region  NPOI
+            //NOPIHelper.Show();
+            #endregion
+
+            #region
             //object.ReferenceEquals(1,1);//用于比较
 
 
@@ -224,6 +229,7 @@ namespace SPText
             //    watch.Stop();
             //    commonSecond = watch.ElapsedMilliseconds;
             //}
+            #endregion
 
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");

@@ -109,7 +109,11 @@
         var arr = str.split(separator);
         return arr;
     }
+<<<<<<< HEAD
 
+=======
+    //生成年月日
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     var formatDateString = function (strDate) {
         var date = new Date(strDate);
         var year = date.getFullYear().toString();
@@ -353,6 +357,7 @@
         if (r != null) return unescape(r[2]); return null;
     }
 
+<<<<<<< HEAD
     // 定义一个深拷贝函数  接收目标target参数
     var deepClone= function(target) {
         // 定义一个变量
@@ -385,6 +390,30 @@
         }
         // 返回最终结果
         return result;
+=======
+    //obj 拷贝对象(object or array)
+    //cache 缓存数组
+    var deepCopy = function deepCopy(obj, cache = []) {
+        if (obj === null || typeof obj !== 'object') {
+            return obj
+        }
+
+        const hit = cache.filter(c => c.original === obj)[0]
+        if (hit) {
+            return hit.copy
+        }
+
+        const copy = Array.isArray(obj) ? [] : {}
+        cache.push({
+            original: obj,
+            copy
+        })
+        Object.keys(obj).forEach(key => {
+            copy[key] = deepCopy(obj[key], cache)
+        })
+
+        return copy
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     }
 
     this.getQueryString = getQueryString;
@@ -403,12 +432,21 @@
     this.formatDateString = formatDateString;
 
     this.getJson = getJson;
+<<<<<<< HEAD
     // this.getForm = getForm;
+=======
+    this.getForm = getForm;
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
 
     this.setJson = setJson;
     this.isArray = isArray;
     //终止进程
     this.abortThread = abortThread;
+<<<<<<< HEAD
     this.deepClone = deepClone;
 
+=======
+
+    this.deepCopy = deepCopy;
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
 }).call(this)

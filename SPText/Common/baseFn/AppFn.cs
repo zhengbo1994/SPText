@@ -7,11 +7,26 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Drawing;
 using System.Web.Script.Serialization;
+using System.Transactions;
 
-namespace Common
+namespace Common.baseFn
 {
     public static class AppFn
     {
+        /// <summary>
+        /// 分布式事务封装
+        /// </summary>
+        /// <param name="action"></param>
+        /// 数据库和服务器都必须开启分布式事务的服务
+        ///https://blog.csdn.net/jiben2qingshan/article/details/23547887
+        public static void TransactionScope(Action action)
+        {
+            using (TransactionScope tran = new TransactionScope()) {
+                action.Invoke();
+                tran.Complete();
+            }
+        }
+
         /// <summary>
         /// 判断是否为空，为空返回true
         /// </summary>
@@ -171,7 +186,7 @@ namespace Common
         /// <param name="source"></param>
         /// <param name="datetimeformatter">时间格式</param>
         /// <returns></returns>
-        public static Dictionary<string, object>[] ConvertToDictionaryArray<T>(List<T> source, string datetimeformatter = null) where T : class,new()
+        public static Dictionary<string, object>[] ConvertToDictionaryArray<T>(List<T> source, string datetimeformatter = null) where T : class, new()
         {
             if (source == null)
             {
@@ -222,14 +237,24 @@ namespace Common
             }
             return result;
         }
-
+        /// <summary>
+        /// string转Json
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="JsonStr"></param>
+        /// <returns></returns>
         public static List<T> JSONStringToList<T>(this string JsonStr)
         {
             JavaScriptSerializer Serializer = new JavaScriptSerializer();
             List<T> objs = Serializer.Deserialize<List<T>>(JsonStr);
             return objs;
         }
-
+        /// <summary>
+        /// string转泛型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="JsonStr"></param>
+        /// <returns></returns>
         public static T JSONStringToObj<T>(this string JsonStr)
         {
             JavaScriptSerializer Serializer = new JavaScriptSerializer();
@@ -268,6 +293,11 @@ namespace Common
             }
         }
 
+        /// <summary>
+        /// 获取文件字节
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static byte[] GetFileBytes(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
@@ -341,7 +371,7 @@ namespace Common
         }
 
         /// <summary>  
-        /// Files the content.  
+        /// 将内容归档
         /// </summary>  
         /// <param name="fileName">Name of the file.</param>  
         /// <returns></returns>  
@@ -368,7 +398,11 @@ namespace Common
                 }
             }
         }
-      
+        /// <summary>
+        /// 获取应用设置值
+        /// </summary>
+        /// <param name="appSettingKey"></param>
+        /// <returns></returns>
         public static string GetAppSettingsValue(string appSettingKey)
         {
             string value = null;
