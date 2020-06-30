@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Eco.Handles, Version=7.0.0.11964, Culture=neutral, PublicKeyToken=46a833be9e90de8c, processorArchitecture=MSIL">
       <HintPath>..\packages\EcoCore.7.0.0.11964\lib\net40\Eco.Handles.dll</HintPath>
     </Reference>
@@ -49,11 +52,26 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentFTP, Version=32.4.3.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentFTP.32.4.3\lib\net45\FluentFTP.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Hyak.Common.1.2.2\lib\net452\Hyak.Common.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.1.1.11\lib\net46\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.Streams.1.1.11\lib\net46\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -67,8 +85,21 @@
     <Reference Include="Microsoft.Azure.Management.DataFactories, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.Management.DataFactories.4.13.3\lib\net452\Microsoft.Azure.Management.DataFactories.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Graph, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Graph.3.6.0\lib\net461\Microsoft.Graph.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Graph.Core, Version=1.20.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Graph.Core.1.20.1\lib\net45\Microsoft.Graph.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPinyin, Version=0.2.6321.26573, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPinyin.0.2.6321.26573\lib\net20\NPinyin.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.dll</HintPath>
@@ -81,6 +112,12 @@
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.7.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Common.5.8.0\lib\net45\ServiceStack.Common.dll</HintPath>
@@ -95,13 +132,23 @@
       <HintPath>..\packages\ServiceStack.Text.5.8.0\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -114,6 +161,7 @@
     <Reference Include="System.Reflection.Metadata, Version=1.4.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reflection.Metadata.1.8.0\lib\netstandard2.0\System.Reflection.Metadata.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -126,6 +174,11 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -134,6 +187,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Ubiety.Dns.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Abstractions, Version=5.11.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.11.4\lib\net47\Unity.Abstractions.dll</HintPath>
     </Reference>
@@ -148,6 +204,9 @@
     </Reference>
     <Reference Include="Unity.Interception.Configuration, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Interception.Configuration.5.11.1\lib\net47\Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Zstandard.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -170,17 +229,39 @@
     <Compile Include="Common\AHelper\NetworkHelper.cs" />
     <Compile Include="Common\AHelper\ObjectHelper.cs" />
     <Compile Include="Common\AHelper\StringHelper.cs" />
-    <Compile Include="Common\baseFn\AppFn.cs" />
     <Compile Include="Common\CacheHelper.cs" />
     <Compile Include="Common\CGeneral.cs" />
     <Compile Include="Common\ConfigContext.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\CustomCache\CacheManager.cs" />
+    <Compile Include="Common\CustomCache\CustomCache.cs" />
+    <Compile Include="Common\CustomCache\MemoryCacheCache.cs" />
     <Compile Include="Common\DataFactory.cs" />
     <Compile Include="Common\DataHelper.cs" />
     <Compile Include="Common\DirFileHelper.cs" />
     <Compile Include="Common\ExcelAdoDotNetHelper.cs" />
     <Compile Include="Common\ExcelHelper.cs" />
+    <Compile Include="Common\ExpressionExtend\ConditionBuilderVisitor.cs" />
+    <Compile Include="Common\ExpressionExtend\OperationsVisitor.cs" />
+    <Compile Include="Common\ExpressionExtend\PredicateBuilder.cs" />
+    <Compile Include="Common\ExpressionExtend\SqlOperator.cs" />
     <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Common\InfoEarthFrame\ColorRamp.cs" />
+    <Compile Include="Common\InfoEarthFrame\ColorRampPlus.cs" />
+    <Compile Include="Common\InfoEarthFrame\config\ConfigContext.cs" />
+    <Compile Include="Common\InfoEarthFrame\Database.cs" />
+    <Compile Include="Common\InfoEarthFrame\DataTableConvertJson.cs" />
+    <Compile Include="Common\InfoEarthFrame\ExcelUtility.cs" />
+    <Compile Include="Common\InfoEarthFrame\HttpClinetHelper.cs" />
+    <Compile Include="Common\InfoEarthFrame\IDatabase.cs" />
+    <Compile Include="Common\InfoEarthFrame\Json.cs" />
+    <Compile Include="Common\InfoEarthFrame\LinqExtensions.cs" />
+    <Compile Include="Common\InfoEarthFrame\MD5Encryption.cs" />
+    <Compile Include="Common\InfoEarthFrame\MySqlHelper.cs" />
+    <Compile Include="Common\InfoEarthFrame\NpoiExcelUtility.cs" />
+    <Compile Include="Common\InfoEarthFrame\RarHelper.cs" />
+    <Compile Include="Common\InfoEarthFrame\UtilityMessage.cs" />
+    <Compile Include="Common\InfoEarthFrame\XmlConvert.cs" />
     <Compile Include="Common\IO\ImageHelper.cs" />
     <Compile Include="Common\IO\MyIO.cs" />
     <Compile Include="Common\IO\Recursion.cs" />
@@ -188,8 +269,9 @@
     <Compile Include="Common\JSONHelper.cs" />
     <Compile Include="Common\Log.cs" />
     <Compile Include="Common\LogFactory.cs" />
-    <Compile Include="Common\LogFn\AppFn.cs" />
+    <Compile Include="Common\baseFn\AppFn.cs" />
     <Compile Include="Common\LogHelper.cs" />
+    <Compile Include="Common\NOPIHelper.cs" />
     <Compile Include="Common\Offices\ExcelConfig.cs" />
     <Compile Include="Common\Offices\ExcelHelper.cs" />
     <Compile Include="Common\PageHelper.cs" />
@@ -205,7 +287,6 @@
     <Compile Include="Common\Redis\Service\RedisZSetService.cs" />
     <Compile Include="Common\Serialize\JsonHelper.cs" />
     <Compile Include="Common\Serialize\LinqToXml.cs" />
-    <Compile Include="Common\Serialize\Person.cs" />
     <Compile Include="Common\Serialize\SerializeHelper.cs" />
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\Serialize\XmlHelper.cs" />
@@ -230,6 +311,123 @@
     <Compile Include="XmlConvert.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\Public\ace\css\ace-ie.css" />
+    <Content Include="Common\Public\ace\css\ace-part2.css" />
+    <Content Include="Common\Public\ace\css\ace.css" />
+    <Content Include="Common\Public\ace\css\images\pattern.jpg" />
+    <Content Include="Common\Public\ace\js\ace-elements.js" />
+    <Content Include="Common\Public\ace\js\ace-extra.js" />
+    <Content Include="Common\Public\ace\js\ace.js" />
+    <Content Include="Common\Public\base\jsApp.js" />
+    <Content Include="Common\Public\base\jsFn.js" />
+    <Content Include="Common\Public\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Common\Public\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Common\Public\bootstrap\js\bootstrap-wysiwyg.js" />
+    <Content Include="Common\Public\bootstrap\js\bootstrap.js" />
+    <Content Include="Common\Public\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Common\Public\calendar\css\fullcalendar.css" />
+    <Content Include="Common\Public\calendar\css\fullcalendar.print.css" />
+    <Content Include="Common\Public\calendar\js\fullcalendar.js" />
+    <Content Include="Common\Public\chosen\css\chosen.css" />
+    <Content Include="Common\Public\chosen\js\chosen.jquery.js" />
+    <Content Include="Common\Public\content\activationcodeissuance\css\activationcodeissuance.css" />
+    <Content Include="Common\Public\content\activationcodeissuance\js\activationcodeissuance.js" />
+    <Content Include="Common\Public\content\activationcodetypeconfig\css\activationcodetypeconfig.css" />
+    <Content Include="Common\Public\content\activationcodetypeconfig\js\activationcodetypeconfig.js" />
+    <Content Include="Common\Public\content\activationcodeuseingquery\css\activationcodeuseingquery.css" />
+    <Content Include="Common\Public\content\activationcodeuseingquery\js\activationcodeuseingquery.js" />
+    <Content Include="Common\Public\content\activemanage\js\activemanage.js" />
+    <Content Include="Common\Public\content\cooperationinstitutionmanage\js\cooperationinstitutionmanage.js" />
+    <Content Include="Common\Public\content\customermanage\js\customermanage.js" />
+    <Content Include="Common\Public\content\enterprisemanage\js\enterprisemanage.js" />
+    <Content Include="Common\Public\content\exercisemanager\css\exercisemanager.css" />
+    <Content Include="Common\Public\content\exercisemanager\js\exercisemanager.js" />
+    <Content Include="Common\Public\content\exerciserecordquery\js\exerciserecordquery.js" />
+    <Content Include="Common\Public\content\lessonconfig\js\lessonconfig.js" />
+    <Content Include="Common\Public\content\login\css\index.css" />
+    <Content Include="Common\Public\content\login\images\indexBG.jpg" />
+    <Content Include="Common\Public\content\login\js\landing-min.js" />
+    <Content Include="Common\Public\content\login\js\login.js" />
+    <Content Include="Common\Public\content\login\js\scroll.js" />
+    <Content Include="Common\Public\content\login\js\tab1.js" />
+    <Content Include="Common\Public\content\managedepartment\css\managedepartment.css" />
+    <Content Include="Common\Public\content\managedepartment\js\managedepartment.js" />
+    <Content Include="Common\Public\content\offlinelessonmanager\css\offlinelessonmanager.css" />
+    <Content Include="Common\Public\content\offlinelessonmanager\js\offlinelessonmanager.js" />
+    <Content Include="Common\Public\content\permissionallocation\js\permissionallocation.js" />
+    <Content Include="Common\Public\content\roommanage\js\roommanage.js" />
+    <Content Include="Common\Public\content\shared\css\main.css" />
+    <Content Include="Common\Public\content\shared\js\main.js" />
+    <Content Include="Common\Public\content\studyrecordquery\js\studyrecordquery.js" />
+    <Content Include="Common\Public\content\subjectconfig\js\subjectconfig.js" />
+    <Content Include="Common\Public\content\systemmessage\js\systemmessage.js" />
+    <Content Include="Common\Public\content\teacherpermissionmanage\js\teacherpermissionmanage.js" />
+    <Content Include="Common\Public\content\trainingconfig\js\trainingconfig.js" />
+    <Content Include="Common\Public\content\traininginstitutionmanage\js\traininginstitutionmanage.js" />
+    <Content Include="Common\Public\content\trainingrecordquery\css\trainingrecordquery.css" />
+    <Content Include="Common\Public\content\trainingrecordquery\js\trainingrecordquery.js" />
+    <Content Include="Common\Public\content\trainingteachermanage\js\trainingteachermanage.js" />
+    <Content Include="Common\Public\content\videoconfig\js\videoconfig.js" />
+    <Content Include="Common\Public\cookie\jquery.cookie.js" />
+    <Content Include="Common\Public\datetimepicker\css\bootstrap-datetimepicker.css" />
+    <Content Include="Common\Public\datetimepicker\js\bootstrap-datetimepicker.js" />
+    <Content Include="Common\Public\datetimepicker\js\bootstrap-datetimepicker.zh-CN.js" />
+    <Content Include="Common\Public\file\dataFile.txt" />
+    <Content Include="Common\Public\font-awesome\css\font-awesome.css" />
+    <Content Include="Common\Public\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Common\Public\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Common\Public\font-awesome\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Common\Public\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="Common\Public\highchart\js\adapters\standalone-framework.js" />
+    <Content Include="Common\Public\highchart\js\adapters\standalone-framework.src.js" />
+    <Content Include="Common\Public\highchart\js\highcharts.js" />
+    <Content Include="Common\Public\highchart\js\highcharts.src.js" />
+    <Content Include="Common\Public\highchart\js\highmaps.js" />
+    <Content Include="Common\Public\highchart\js\highmaps.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\boost.js" />
+    <Content Include="Common\Public\highchart\js\modules\boost.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\canvas-tools.js" />
+    <Content Include="Common\Public\highchart\js\modules\canvas-tools.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\data.js" />
+    <Content Include="Common\Public\highchart\js\modules\data.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\drilldown.js" />
+    <Content Include="Common\Public\highchart\js\modules\drilldown.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\exporting.js" />
+    <Content Include="Common\Public\highchart\js\modules\exporting.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\heatmap.js" />
+    <Content Include="Common\Public\highchart\js\modules\heatmap.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\map.js" />
+    <Content Include="Common\Public\highchart\js\modules\map.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\offline-exporting.js" />
+    <Content Include="Common\Public\highchart\js\modules\offline-exporting.src.js" />
+    <Content Include="Common\Public\highchart\js\modules\treemap.js" />
+    <Content Include="Common\Public\highchart\js\modules\treemap.src.js" />
+    <Content Include="Common\Public\highchart\js\themes\dark-blue.js" />
+    <Content Include="Common\Public\highchart\js\themes\dark-green.js" />
+    <Content Include="Common\Public\highchart\js\themes\dark-unica.js" />
+    <Content Include="Common\Public\highchart\js\themes\gray.js" />
+    <Content Include="Common\Public\highchart\js\themes\grid-light.js" />
+    <Content Include="Common\Public\highchart\js\themes\grid.js" />
+    <Content Include="Common\Public\highchart\js\themes\sand-signika.js" />
+    <Content Include="Common\Public\highchart\js\themes\skies.js" />
+    <Content Include="Common\Public\imageUpload\js\imageUpload.js" />
+    <Content Include="Common\Public\jqgrid\css\ui.jqgrid-bootstrap.css" />
+    <Content Include="Common\Public\jqgrid\css\ui.jqgrid.css" />
+    <Content Include="Common\Public\jqgrid\js\grid.locale-cn.js" />
+    <Content Include="Common\Public\jqgrid\js\jquery.jqGrid.min.js" />
+    <Content Include="Common\Public\jquery-form\jquery.form.min.js" />
+    <Content Include="Common\Public\jquery.pagenation\css\jqpagination.css" />
+    <Content Include="Common\Public\jquery.pagenation\js\jquery.jqpagination.js" />
+    <Content Include="Common\Public\jquery.pagenation\js\jquery.jqpagination.min.js" />
+    <Content Include="Common\Public\jquery\js\jquery-1.10.2.min.js" />
+    <Content Include="Common\Public\jquery\js\jquery.hotkeys.js" />
+    <Content Include="Common\Public\jquery\js\jquery.mobile.custom.js" />
+    <Content Include="Common\Public\js-plug\js\html5shiv.js" />
+    <Content Include="Common\Public\js-plug\js\json2.js" />
+    <Content Include="Common\Public\js-plug\js\md5.js" />
+    <Content Include="Common\Public\js-plug\js\respond.js" />
+    <Content Include="Common\Public\md5\js\md5.js" />
+    <Content Include="Common\Public\moment\js\moment.js" />
     <Content Include="EF\数据迁移.txt" />
     <Content Include="xmlBaseInfo.xml" />
     <None Include="..\.editorconfig">
@@ -239,6 +437,24 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Common\Public\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Common\Public\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Common\Public\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Common\Public\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Common\Public\font-awesome\fonts\fontawesome-webfont.eot" />
+    <None Include="Common\Public\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <None Include="Common\Public\font-awesome\fonts\fontawesome-webfont.woff" />
+    <None Include="Common\Public\font-awesome\fonts\FontAwesome.otf" />
+    <None Include="Common\Public\font-awesome\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Common\Public\font-awesome\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="Common\Public\font-awesome\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Common\Public\font-awesome\fonts\OpenSans-300.woff" />
+    <None Include="Common\Public\font-awesome\fonts\OpenSans-400.woff" />
+    <None Include="Common\Public\font-awesome\fonts\readme" />
+    <None Include="Common\Public\font-awesome\font\fontawesome-webfont.eot" />
+    <None Include="Common\Public\font-awesome\font\fontawesome-webfont.ttf" />
+    <None Include="Common\Public\font-awesome\font\fontawesome-webfont.woff" />
+    <None Include="Common\Public\font-awesome\font\FontAwesome.otf" />
     <None Include="Unity\Unity.Config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -256,6 +472,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Common\Public\highchart\css\" />
+    <Folder Include="Common\Public\images\" />
     <Folder Include="Unity\Aop\" />
     <Folder Include="Unity\Filter\" />
   </ItemGroup>
