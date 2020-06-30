@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -102,7 +101,6 @@
     <Content Include="Content\lib\lib\layer\theme\default\loading-1.gif" />
     <Content Include="Content\lib\lib\layer\theme\default\loading-2.gif" />
     <Content Include="Content\lib\lib\vue\vue.min.js" />
-=======
     <Content Include="BootStrap\bootstrap\css\bootstrap.min.css" />
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="BootStrap\bootstrap\js\bootstrap-wysiwyg.js" />
@@ -112,7 +110,6 @@
     <Content Include="BootStrap\test2.html" />
     <Content Include="BootStrap\test3.html" />
     <Content Include="BootStrap\test4.html" />
->>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     <Content Include="FrontEnd\First\01.html" />
     <Content Include="FrontEnd\First\02.html" />
     <Content Include="FrontEnd\First\03.html" />
@@ -127,14 +124,11 @@
     <Content Include="FrontEnd\First\bootstrap\bootstrap.min.js" />
     <Content Include="FrontEnd\First\bootstrap\jquery.min.js" />
     <Content Include="FrontEnd\First\js\vue.js" />
-<<<<<<< HEAD
     <Content Include="FrontEnd\Vue\Vue001.html" />
     <Content Include="FrontEnd\Vue\Vue002.html" />
     <Content Include="FrontEnd\图片拖拽.html" />
     <Content Include="FrontEnd\表单验证.html" />
-=======
     <Content Include="FrontEnd\FormValidation.html" />
->>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     <Content Include="FrontEnd\Fourth\01--.html" />
     <Content Include="FrontEnd\Fourth\01.html" />
     <Content Include="FrontEnd\Fourth\02.html" />
@@ -244,7 +238,6 @@
   <ItemGroup>
     <Content Include="FrontEnd\First\README.md" />
     <Content Include="FrontEnd\Fourth\README.md" />
-<<<<<<< HEAD
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -262,12 +255,10 @@
     <Content Include="Content\lib\bootstrap\LICENSE" />
     <Content Include="Content\lib\jquery-validation\LICENSE.md" />
     <Content Include="Content\lib\jquery\dist\jquery.min.map" />
-=======
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
->>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     <None Include="packages.config" />
     <Content Include="FrontEnd\Second\README.md" />
     <Content Include="FrontEnd\Second\user.json" />

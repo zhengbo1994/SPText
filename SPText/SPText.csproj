@@ -91,10 +91,7 @@
     <Reference Include="Microsoft.Graph.Core, Version=1.20.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Graph.Core.1.20.1\lib\net45\Microsoft.Graph.Core.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-=======
     <Reference Include="Microsoft.VisualBasic" />
->>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
