@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +11,16 @@ using Microsoft.Extensions.Logging;
 
 namespace SPCoreApiText
 {
+    //dotnet SPCoreApiText.dll --urls=°±http://*:5177°± ®C-ip=°±127.0.0.1°± --port=5177
     public class Program
     {
         public static void Main(string[] args)
         {
+            //var config = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddCommandLine(args)//÷ß≥÷√¸¡Ó––
+            //    .Build();
+
             CreateHostBuilder(args).Build().Run();
         }
 

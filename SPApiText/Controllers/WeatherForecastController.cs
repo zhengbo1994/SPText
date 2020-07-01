@@ -16,7 +16,7 @@ using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 namespace SPCoreApiText.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     //[Route("api/[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
@@ -31,6 +31,8 @@ namespace SPCoreApiText.Controllers
         {
             _logger = logger;
         }
+
+        //http://localhost:5177/api/WeatherForecast/Get
         /// <summary>
         /// 测试api
         /// </summary>

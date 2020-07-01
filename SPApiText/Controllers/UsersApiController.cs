@@ -18,11 +18,13 @@ using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using Microsoft.AspNetCore.Authentication;
 
 namespace SPCoreApiText.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    //[Microsoft.AspNetCore.Authorization.Authorize]
     [Microsoft.AspNetCore.Authorization.AllowAnonymous]
     public class UsersApiController : ControllerBase
     {
@@ -62,8 +64,9 @@ namespace SPCoreApiText.Controllers
         }
         #endregion
 
+
         #region HttpGet
-        // GET api/Users
+        //http://localhost:5177/api/usersapi/get
         [HttpGet]
         public IEnumerable<Users> Get()
         {
@@ -71,7 +74,7 @@ namespace SPCoreApiText.Controllers
         }
 
 
-        // GET api/Users/5
+        //http://localhost:5177/api/usersapi/GetUserByID?id=12
         [HttpGet]
         [Microsoft.AspNetCore.Authorization.Authorize]
         public Users GetUserByID(int id)

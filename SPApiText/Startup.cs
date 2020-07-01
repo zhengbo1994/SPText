@@ -44,15 +44,17 @@ namespace SPCoreApiText
         {
             services.AddControllers();
 
-            services.AddScoped<DbContext, DataBaseContext>();//下面这套还不是把我封装了一下
+    
             services.AddScoped<IUserService, UserService>();
 
+            #region  EF
+            services.AddScoped<DbContext, DataBaseContext>();//下面这套还不是把我封装了一下
             //这个注入没有成功--注入是没问题的，构造函数也只是支持参数就好，错在注入的地方不能写DbContext
             services.AddDbContext<DataBaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("JDDbConnection"));
             });
-
+            #endregion
 
             services.AddTransient<ITestServiceA, TestServiceA>();//瞬时
             services.AddSingleton<ITestServiceB, TestServiceB>();//单例
@@ -94,6 +96,7 @@ namespace SPCoreApiText
             #endregion
 
             #region jwt校验
+            services.AddScoped<IJWTService, JWTService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -151,7 +154,7 @@ namespace SPCoreApiText
             //app.UseOcelot();//网关
             #endregion
             //实例启动时执行，且只执行一次
-            //this.Configuration.ConsulRegist();
+            //this.Configuration.ConsulRegist();//服务注册与发现
         }
     }
 }
