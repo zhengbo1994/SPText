@@ -21,11 +21,7 @@ namespace SPTextCommon
         /// <param name="str">加密字符</param>
         /// <param name="code">加密位数16/32</param>
         /// <returns></returns>
-<<<<<<< HEAD
-        public static string MD5(string str, int code)
-=======
         public static string MD5(string str, int code = 32)
->>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
         {
             string strEncrypt = string.Empty;
             if (code == 16)
