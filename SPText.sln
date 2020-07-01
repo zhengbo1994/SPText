@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPApiText", "SPApiText\SPApiText.csproj", "{2311AFA4-28AF-4D82-AA26-229F6ACF3A61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPCoreApiText", "SPApiText\SPCoreApiText.csproj", "{2311AFA4-28AF-4D82-AA26-229F6ACF3A61}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPCoreTextLK", "SPCoreTextLK\SPCoreTextLK.csproj", "{6B2D5203-8E2D-4067-A6DC-167CA87EADF8}"
 EndProject

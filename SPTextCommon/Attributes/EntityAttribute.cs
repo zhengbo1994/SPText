@@ -1,4 +1,8 @@
 ﻿using System;
+<<<<<<< HEAD
+using System.ComponentModel;
+=======
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -51,5 +55,36 @@ namespace SPTextCommon.Attributes
             }
             return entityName;
         }
+<<<<<<< HEAD
+
+        /// <summary>
+        /// 返回枚举项的描述信息。
+        /// </summary>
+        /// <param name="value">要获取描述信息的枚举项。</param>
+        /// <returns>枚举想的描述信息。</returns>
+        public static string GetDescription(Enum value)
+        {
+            Type enumType = value.GetType();
+            // 获取枚举常数名称。
+            string name = Enum.GetName(enumType, value);
+            if (name != null)
+            {
+                // 获取枚举字段。
+                FieldInfo fieldInfo = enumType.GetField(name);
+                if (fieldInfo != null)
+                {
+                    // 获取描述的属性。
+                    DescriptionAttribute attr = Attribute.GetCustomAttribute(fieldInfo,
+                        typeof(DescriptionAttribute), false) as DescriptionAttribute;
+                    if (attr != null)
+                    {
+                        return attr.Description;
+                    }
+                }
+            }
+            return null;
+        }
+=======
+>>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
     }
 }

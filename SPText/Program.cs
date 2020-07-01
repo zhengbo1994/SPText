@@ -1393,6 +1393,7 @@ namespace SPText
 
             FileStream file = new FileStream(@"D:\VS有关\VS项目\SPText\SPText\xmlBaseInfo.xml", FileMode.Create);
             StreamWriter sr = new StreamWriter(file, System.Text.Encoding.UTF8);
+            
 
             //创建XML命名空间
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();

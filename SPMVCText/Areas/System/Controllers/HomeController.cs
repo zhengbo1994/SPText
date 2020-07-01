@@ -8,6 +8,8 @@ namespace SPMVCText.Areas.System.Controllers
 {
     public class HomeController : Controller
     {
+        //[Area("Areas")]
+        [Route("Areas/[controller]/[action]")]//可以搞个父类
         // GET: System/Home
         public ActionResult Index()
         {

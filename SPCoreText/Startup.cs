@@ -21,6 +21,8 @@ using Microsoft.IdentityModel.Tokens;
 using SPCoreText.Extensions;
 using SPCoreText.Services;
 using SPCoreText.Unlity;
+using SPCoreTextLK.Interface;
+using SPCoreTextLK.Service;
 using SPTextLK.Interface;
 using SPTextLK.Service;
 
@@ -108,11 +110,12 @@ namespace SPCoreText
             services.AddSingleton<IMessageService, SmsService>();
             services.AddSingleton<ICategoryService, CategoryService>();
             services.AddScoped(typeof(TextExecptionFilterAttrbute));  //注册全局异常处理特性
-
+            services.AddTransient<IUserService, UserService>();
 
             services.AddSession();
 
             #region  EF（DbContext）配置
+
             services.AddScoped<DbContext, DataBaseContext>();//EF数据库映射
 
             services.AddDbContext<DataBaseContext>(options =>
