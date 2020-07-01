@@ -208,7 +208,8 @@ namespace SPText
             #endregion
 
             #region  NPOI
-            //NOPIHelper.Show();
+            NOPIHelper.Show();
+            NOPIHelper.show2();
             #endregion
 
             #region

@@ -75,6 +75,113 @@ namespace SPText.Common
         }
         #endregion
 
+        public static void show2() {
+            string path = $"E:\\A-CompanyProject\\SPText\\SPText\bin\\Debug\\前台日志(20200630 042526).xls";
+            DataTable dt = ImportExcelFile(path);
+            WriteExcel(dt, path);
+            
+        }
+
+
+     
+        #region   Asp.Net导入代码
+
+        /// <summary>
+        /// 通过路径获取DataTable
+        /// </summary>
+        /// <param name="filePath">传入的路径</param>
+        /// <returns></returns>
+        public static DataTable ImportExcelFile(string filePath)
+        {
+            HSSFWorkbook hssfworkbook;
+            filePath = $"E:\\A-CompanyProject\\SPText\\SPText\\bin\\Debug\\前台日志(20200630 042526).xls";
+            #region//初始化信息  
+            try
+            {
+                using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    hssfworkbook = new HSSFWorkbook(file);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            #endregion
+
+            ISheet sheet = hssfworkbook.GetSheetAt(0);
+            System.Collections.IEnumerator rows = sheet.GetRowEnumerator();
+            DataTable dt = new DataTable();
+            for (int j = 0; j < (sheet.GetRow(0).LastCellNum); j++)
+            {
+                var tochar= Convert.ToChar((int)'A' + j).ToString();
+                dt.Columns.Add(tochar);
+            }
+            while (rows.MoveNext())
+            {
+                HSSFRow row = (HSSFRow)rows.Current;
+                DataRow dr = dt.NewRow();
+                for (int i = 0; i < row.LastCellNum; i++)
+                {
+                    ICell cell = row.GetCell(i);
+                    if (cell == null)
+                    {
+                        dr[i] = null;
+                    }
+                    else
+                    {
+                        dr[i] = cell.ToString();
+                    }
+                }
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// 通过DataTable将数据转化为Excel
+        /// </summary>
+        /// <param name="dt">数据源</param>
+        /// <param name="filePath">保存的路径</param>
+        public static void WriteExcel(DataTable dt, string filePath)
+        {
+            dt.TableName = "new";
+            filePath = $"E:\\A-CompanyProject\\SPText\\SPText\\bin\\Debug\\前台日志新.xls";
+            if (!string.IsNullOrEmpty(filePath) && null != dt && dt.Rows.Count > 0)
+            {
+                NPOI.HSSF.UserModel.HSSFWorkbook book = new NPOI.HSSF.UserModel.HSSFWorkbook();
+                NPOI.SS.UserModel.ISheet sheet = book.CreateSheet(dt.TableName);
+
+                NPOI.SS.UserModel.IRow row = sheet.CreateRow(0);
+                //写入第一行数据（一般这行数据可以删除）
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    row.CreateCell(i).SetCellValue(dt.Columns[i].ColumnName);
+                }
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    NPOI.SS.UserModel.IRow row2 = sheet.CreateRow(i + 1);
+                    for (int j = 0; j < dt.Columns.Count; j++)
+                    {
+                        row2.CreateCell(j).SetCellValue(Convert.ToString(dt.Rows[i][j]));
+                    }
+                }
+                // 写入到客户端  
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    book.Write(ms);
+                    using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                    {
+                        byte[] data = ms.ToArray();
+                        fs.Write(data, 0, data.Length);
+                        fs.Flush();
+                    }
+                    book = null;
+                }
+            }
+        }
+        #endregion
+
         #region  NPOI操作
 
         /// <summary>
