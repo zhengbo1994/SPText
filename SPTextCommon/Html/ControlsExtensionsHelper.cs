@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -350,32 +349,5 @@ namespace SPTextCommon.Html
 
 
 
-    }
-
-    public class ControlsExtensionsHelperNew : TagHelper
-    {
-        public WebsiteInfo Info { get; set; }
-
-
-
-        public override void Process(TagHelperContext context, TagHelperOutput output)
-        {
-            output.TagName = "section";
-
-            output.Content.SetHtmlContent($@"<ul><li><strong>Version:</strong> {Info.Version}</li>
-            <li><strong>Copyright Year:</strong> {Info.CopyrightYear}</li>
-            <li><strong>Powered by:</strong> {Info.PoweredBy}</li></ul>");
-            output.TagMode = TagMode.StartTagAndEndTag;
-
-        }
-        public class WebsiteInfo
-        {
-            public Version Version { get; set; }
-
-            public int CopyrightYear { get; set; }
-
-            public string PoweredBy { get; set; }
-
-        }
     }
 }
