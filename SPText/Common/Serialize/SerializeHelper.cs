@@ -92,8 +92,8 @@ namespace IOSerialize.Serialize
         public static void Json()
         {
             List<Programmer> pList = SPText.Common.DataFactory.BuildProgrammerList();
-            string result = JsonHelper.ObjectToString<List<Programmer>>(pList);
-            List<Programmer> pList1 = JsonHelper.StringToObject<List<Programmer>>(result);
+            string result = JsonHelper.SerializeObject<List<Programmer>>(pList);
+            List<Programmer> pList1 = JsonHelper.DeserializeObject<List<Programmer>>(result);
         }
     }
 }

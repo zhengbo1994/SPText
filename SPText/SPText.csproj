@@ -289,12 +289,10 @@
     <Compile Include="Common\Serialize\LinqToXml.cs" />
     <Compile Include="Common\Serialize\SerializeHelper.cs" />
     <Compile Include="Common\Serialize\xHelper.cs" />
-    <Compile Include="Common\Serialize\XmlHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
     <Compile Include="Common\UploadFileContext.cs" />
     <Compile Include="Common\ValidateCodeImage.cs" />
     <Compile Include="Common\WebHelper.cs" />
-    <Compile Include="Common\XmlHelper.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="EF\BaseService.cs" />
     <Compile Include="EF\DatabaseContext.cs" />
@@ -462,6 +460,10 @@
     <ProjectReference Include="..\SPMVCText\SPMVCText.csproj">
       <Project>{50af66a8-7410-4efe-8e8e-47f1a61cbb67}</Project>
       <Name>SPMVCText</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SPTextCommon\SPTextCommon.csproj">
+      <Project>{d86a4fa1-d5aa-4f84-bc2e-eee0da5c198f}</Project>
+      <Name>SPTextCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\SPTextLK\SPTextLK.csproj">
       <Project>{7a2bb2cf-9e3a-45b9-aef8-cd98b43efa38}</Project>
