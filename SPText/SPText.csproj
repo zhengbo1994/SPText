@@ -229,6 +229,7 @@
     <Compile Include="Common\AHelper\NetworkHelper.cs" />
     <Compile Include="Common\AHelper\ObjectHelper.cs" />
     <Compile Include="Common\AHelper\StringHelper.cs" />
+    <Compile Include="Common\AlgorithmHelper.cs" />
     <Compile Include="Common\CacheHelper.cs" />
     <Compile Include="Common\CGeneral.cs" />
     <Compile Include="Common\ConfigContext.cs" />

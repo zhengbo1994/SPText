@@ -319,6 +319,12 @@ namespace SPText
             cf(dataArr.ToArray());
             MaxAndMin(dataArr.ToArray());
             gys(8, 64);
+
+            AlgorithmHelper.Show0();
+            AlgorithmHelper.Show1();
+            AlgorithmHelper.Show2();
+            AlgorithmHelper.Show4();
+            AlgorithmHelper.Show5();
         }
 
 
