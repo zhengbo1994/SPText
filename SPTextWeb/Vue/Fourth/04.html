@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定义组件的方式</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="itapp">
+        <hello></hello>
+        <my-world></my-world>
+        <!-- <myWorld></myWorld> -->
+
+    </div>
+    <script>
+        // 方式1：先创建组件构造器，然后由组件构造器创建组件
+        // 1. Vue.extend创建组件构造器
+        var mycom = Vue.extend({
+            template:'<h2>hello word</h2>'
+        });
+        // 2. Vue.component(组件名，组件构造器)
+        Vue.component('hello',mycom);
+
+        // 方式2：直接创建组件 (推荐)
+        Vue.component('my-world',{
+            template:'<h2>世界， 你好</h2>'
+        });
+
+        var vm=new Vue({ //这里的vm也是一个组件，称为根组件Root
+			el:'#itapp',
+			data:{
+				msg:'软谋'
+			}
+		});	
+    </script>
+</body>
+</html>

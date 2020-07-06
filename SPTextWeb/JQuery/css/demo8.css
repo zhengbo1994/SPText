@@ -1,0 +1,11 @@
+﻿*{
+    margin:0px;
+    padding:0px;
+
+}
+body{
+    overflow:hidden;
+    background-image:url("../img/bg.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+}

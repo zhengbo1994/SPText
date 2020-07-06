@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监视数据的变化：$watch</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+        <div id="itapp">
+            <input type="text" v-model="name">
+            <h3>{{name}}</h3>
+            <hr>
+            
+            <input type="text" v-model="age">
+            <h3>{{age}}</h3>
+            <hr>
+    
+            <input type="text" v-model="user.name">
+            <h3>{{user.name}}</h3>
+    
+            <!-- <input type="text" v-model="user.links.link">
+            <h3>{{user.links.link}}</h3> -->
+        </div>
+
+    <script>
+        var vm = new Vue({
+            el:'#itapp',
+            data(){
+                return {
+                    name:'tom',
+                    age:20,
+                    user:{
+                        name:'song',
+                        age:10
+                    }
+                }
+            },
+            //vue实例的watch选项，就是监视数据的更新
+            watch:{
+                age:function(newVal,oldVal){
+                    console.log('age被修改啦,原来的值'+oldVal+'新值：' + newVal);
+                },
+                // age:(newVal,oldVal)=>{ },
+                // age(newVal,oldVal){ }
+                // 'user.name':function(newVal,oldVal){
+                //     console.log('user.name被修改啦,原来的值'+oldVal+'新值：' + newVal);
+                // },
+                user:{
+                    handler(newVal,oldVal){
+                        debugger
+                        console.log('newVal',newVal);
+                        console.log('oldVal',oldVal);
+                    },
+                    deep:true //深度监视，当对象中的属性发生变化的时候会监视
+                }
+
+            },
+            methods:{
+
+            },
+            created(){ 
+
+            },
+            beforeMount(){
+               
+            },
+            mounted(){
+             
+              
+            }
+        });
+        //vue实例提供的$watch方法
+        vm.$watch('name',function(newVal,oldVal){
+            console.log('name被修改啦,原来的值'+oldVal+'新值：' + newVal);
+        })
+    </script>
+</body>
+</html>
