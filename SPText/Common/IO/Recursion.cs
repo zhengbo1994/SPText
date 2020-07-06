@@ -39,26 +39,6 @@ namespace IOSerialize.IO
             var directioryList = GetChilds(directoryList, directory);
 
             return directioryList;
-
-            //var chaildArray = directory.GetDirectories();
-            //if (chaildArray != null && chaildArray.Length > 0)
-            //{
-            //    foreach (var child in chaildArray)
-            //    {
-            //        directoryList.Add(child);
-
-            //        var childChild = child.GetDirectories();
-
-            //        if (childChild != null && childChild.Length > 0)
-            //        {
-            //            directoryList.Add(child); 
-            //        }
-
-            //    }
-            //}
-
-
-
         }
 
         private static List<DirectoryInfo> GetChilds(List<DirectoryInfo> directoryList, DirectoryInfo directory)

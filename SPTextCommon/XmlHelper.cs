@@ -726,19 +726,18 @@ namespace SPTextCommon
         }
         #endregion
 
-        #region 将XML转换为DATATABLE
+        #region 将XML转换为DATATABLE/DataSet
         /// <summary>
         /// 将XML转换为DATATABLE
         /// </summary>
         /// <param name="FileURL"></param>
         /// <returns></returns>
-        public static DataTable XmlAnalysisArray()
+        public static DataTable XmlToDataTable(string path)
         {
             try
             {
-                string FileURL = System.Configuration.ConfigurationManager.AppSettings["Client"].ToString();
                 DataSet ds = new DataSet();
-                ds.ReadXml(FileURL);
+                ds.ReadXml(path);
                 return ds.Tables[0];
             }
             catch (Exception ex)
@@ -752,13 +751,13 @@ namespace SPTextCommon
         /// </summary>
         /// <param name="FileURL"></param>
         /// <returns></returns>
-        public static DataTable XmlAnalysisArray(string FileURL)
+        public static DataSet XmlToDataSet(string path)
         {
             try
             {
                 DataSet ds = new DataSet();
-                ds.ReadXml(FileURL);
-                return ds.Tables[0];
+                ds.ReadXml(path);
+                return ds;
             }
             catch (Exception ex)
             {

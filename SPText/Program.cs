@@ -117,10 +117,10 @@ namespace SPText
             #region  xml
 
             //xmlSerialize();
-            xmlDeserialize();
-            xmlOperation();
+            //xmlDeserialize();
+            //xmlOperation();
             //FileOperation();
-            LoginUser.UseName = "123";//错误！未实现
+            //LoginUser.UseName = "123";//错误！未实现
             #endregion
 
             #region Unity
@@ -200,7 +200,7 @@ namespace SPText
             #endregion
 
             #region  IO(序列化&反序列化、读取文件信息)
-            //JsonAndFile();
+            JsonAndFile();
             #endregion
 
             #region  数据类型/特殊类型
