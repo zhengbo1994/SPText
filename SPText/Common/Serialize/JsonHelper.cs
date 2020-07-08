@@ -17,7 +17,7 @@ namespace IOSerialize.Serialize
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static string ObjectToString<T>(T obj)
+        public static string Serialize<T>(T obj)
         {
             JavaScriptSerializer jss = new JavaScriptSerializer();
             return jss.Serialize(obj);
@@ -29,7 +29,7 @@ namespace IOSerialize.Serialize
         /// <typeparam name="T"></typeparam>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static T StringToObject<T>(string content)
+        public static T Deserialize<T>(string content)
         {
             JavaScriptSerializer jss = new JavaScriptSerializer();
             return jss.Deserialize<T>(content);
@@ -41,7 +41,7 @@ namespace IOSerialize.Serialize
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static string ToJson<T>(T obj)
+        public static string SerializeObject<T>(T obj)
         {
             return JsonConvert.SerializeObject(obj);
         }
@@ -52,7 +52,7 @@ namespace IOSerialize.Serialize
         /// <typeparam name="T"></typeparam>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static T ToObject<T>(string content)
+        public static T DeserializeObject<T>(string content)
         {
             return JsonConvert.DeserializeObject<T>(content);
         }

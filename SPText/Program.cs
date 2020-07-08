@@ -5,6 +5,7 @@ using SPText.Common;
 using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.Unity;
+using SPTextCommon;
 using SPTextLK.Text;
 using System;
 using System.Collections;
@@ -19,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Unity;
+using static Microsoft.Graph.CoreConstants.MimeTypeNames;
 using static SPText.DesignPatternText;
 using static SPText.MediatorPattern;
 using static SPText.MementoPattern;
@@ -113,9 +115,11 @@ namespace SPText
             #endregion
 
             #region  xml
+
             //xmlSerialize();
             //xmlDeserialize();
-
+            //xmlOperation();
+            //FileOperation();
             //LoginUser.UseName = "123";//错误！未实现
             #endregion
 
@@ -196,7 +200,7 @@ namespace SPText
             #endregion
 
             #region  IO(序列化&反序列化、读取文件信息)
-            //JsonAndFile();
+            JsonAndFile();
             #endregion
 
             #region  数据类型/特殊类型
@@ -208,11 +212,11 @@ namespace SPText
             #endregion
 
             #region  NPOI
-            NOPIHelper.Show();
-            NOPIHelper.show2();
+            //NOPIHelper.Show();
+            //NOPIHelper.show2();
             #endregion
 
-            #region
+            #region  比较和计时
             //object.ReferenceEquals(1,1);//用于比较
 
 
@@ -315,6 +319,12 @@ namespace SPText
             cf(dataArr.ToArray());
             MaxAndMin(dataArr.ToArray());
             gys(8, 64);
+
+            AlgorithmHelper.Show0();
+            AlgorithmHelper.Show1();
+            AlgorithmHelper.Show2();
+            AlgorithmHelper.Show4();
+            AlgorithmHelper.Show5();
         }
 
 
@@ -1373,6 +1383,7 @@ namespace SPText
 
 
         #region  xml数据操作
+
         public static void xmlSerialize()
         {
             Book b1 = new Book("111", "书1");
@@ -1391,27 +1402,31 @@ namespace SPText
             baseInfo.PersonList.Add(p1);
             baseInfo.PersonList.Add(p2);
 
-            FileStream file = new FileStream(@"D:\VS有关\VS项目\SPText\SPText\xmlBaseInfo.xml", FileMode.Create);
-            StreamWriter sr = new StreamWriter(file, System.Text.Encoding.UTF8);
-            
+            string path = GetFilePath();
 
-            //创建XML命名空间
-            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-            ns.Add("", "");
-            XmlSerializer serializer = new XmlSerializer(typeof(BaseInfo));
-            serializer.Serialize(sr, baseInfo, ns);
-            var configText = sr.ToString();
-            sr.Write(configText);
+            using (var fs = new FileStream(path, FileMode.Create))
+            {
+                using (var sr = new StreamWriter(fs, System.Text.Encoding.UTF8))
+                {
+                    var configText = XmlConvert.XmlSerializer<BaseInfo>(baseInfo);
+                    sr.Write(configText);
+                }
+            }
         }
 
         public static void xmlDeserialize()
         {
-            //FileInfo filePath = new FileInfo("D:\\项目文件\\测试实验项目\\TestProject\\ConsoleApplication1\\BaseInfo.xml");
-            //xml来源可能是外部文件，也可能是从其他系统获得
-            FileStream file = new FileStream(@"D:\VS有关\VS项目\SPText\SPText\xmlBaseInfo.xml", FileMode.Open, FileAccess.Read);
-            XmlSerializer xmlSearializer = new XmlSerializer(typeof(BaseInfo));
-            BaseInfo info = (BaseInfo)xmlSearializer.Deserialize(file);
-            file.Close();
+            var info=new BaseInfo();
+            string path = GetFilePath();
+            #region  读取节点
+            using (var fs = new FileStream(path, FileMode.Open))
+            {
+                using (var sr = new StreamReader(fs))
+                {
+                    info = XmlConvert.XmlDeserializer<BaseInfo>(sr.ReadToEnd(), System.Text.Encoding.UTF8);
+                }
+            }
+            #endregion
             foreach (Person per in info.PersonList)
             {
                 Console.WriteLine("人员：");
@@ -1427,6 +1442,56 @@ namespace SPText
                     }
                 }
             }
+
+            info.PersonList[0].Age = 99;
+            #region  储存节点
+            using (var fs = new FileStream(path, FileMode.Create))
+            {
+                using (var sr = new StreamWriter(fs, System.Text.Encoding.UTF8))
+                {
+                    var configText = XmlConvert.XmlSerializer<BaseInfo>(info);
+                    sr.Write(configText);
+                }
+            }
+            #endregion
+        }
+
+        public static void xmlOperation()
+        {
+            string path = GetFilePath();
+            string vakue = XmlHelper.Read(path, "/BaseInfo/Person[@Person='1']/Name");
+        }
+
+        public static string GetFilePath(string pathName = "xmlBaseInfo.xml")
+        {
+            string baseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+            DirectoryInfo di = new DirectoryInfo(string.Format(@"{0}..\..\", baseDirectory));
+            string path = Path.Combine(di.FullName, pathName);
+            return path;
+        }
+
+        //读取文件/存储文件
+        public static void FileOperation()
+        {
+            Book b1 = new Book("111", "书1");
+            Book b2 = new Book("222", "书2");
+            Book b3 = new Book("333", "书3");
+            Books bs1 = new Books();
+            Books bs2 = new Books();
+            bs1.BookList.Add(b1);
+            bs1.BookList.Add(b2);
+            bs2.BookList.Add(b3);
+            Person p1 = new Person("张三", 11);
+            Person p2 = new Person("李四", 22);
+            p1.BookList.Add(bs1);
+            p2.BookList.Add(bs2);
+            BaseInfo baseInfo = new BaseInfo();
+            baseInfo.PersonList.Add(p1);
+            baseInfo.PersonList.Add(p2);
+
+            string path1 = GetFilePath("123");
+            XmlHelper.SetFile(path1, JsonHelper.SerializeObject(baseInfo));
+            var returnFile = JsonHelper.DeserializeObject<BaseInfo>(XmlHelper.GetFile(path1));
         }
         #endregion
 
@@ -1488,12 +1553,12 @@ namespace SPText
 
 
             {
-                string jResult = JsonHelper.ObjectToString<List<Programmer>>(list);
-                List<Programmer> list1 = JsonHelper.StringToObject<List<Programmer>>(jResult);
+                string jResult = JsonHelper.SerializeObject<List<Programmer>>(list);
+                List<Programmer> list1 = JsonHelper.DeserializeObject<List<Programmer>>(jResult);
             }
             {
-                string jResult = JsonHelper.ToJson<List<Programmer>>(list);
-                List<Programmer> list1 = JsonHelper.ToObject<List<Programmer>>(jResult);
+                string jResult = JsonHelper.SerializeObject<List<Programmer>>(list);
+                List<Programmer> list1 = JsonHelper.DeserializeObject<List<Programmer>>(jResult);
             }
         }
         #endregion
@@ -2761,6 +2826,18 @@ namespace SPText
     }
 
     #region  xml类
+    [Serializable]
+    public class BaseInfo
+    {
+        List<Person> perList = new List<Person>();
+
+        [XmlElement(ElementName = "Person")]
+        public List<Person> PersonList
+        {
+            get { return perList; }
+            set { perList = value; }
+        }
+    }
     public class Person
     {
         string name;
@@ -2833,18 +2910,6 @@ namespace SPText
         {
             get { return title; }
             set { title = value; }
-        }
-    }
-    [Serializable]
-    public class BaseInfo
-    {
-        List<Person> perList = new List<Person>();
-
-        [XmlElement(ElementName = "Person")]
-        public List<Person> PersonList
-        {
-            get { return perList; }
-            set { perList = value; }
         }
     }
     #endregion

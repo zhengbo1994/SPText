@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using EF_CodeDB;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -70,6 +71,9 @@ namespace SPCoreApiText.Controllers
         [HttpGet]
         public IEnumerable<Users> Get()
         {
+            //获取JWT授权信息
+            //var claims = base.HttpContext.AuthenticateAsync().Result.Principal.Claims.ToList();
+            //string a= claims[0].Value;
             return _userList;
         }
 

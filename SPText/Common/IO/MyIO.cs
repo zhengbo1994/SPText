@@ -20,8 +20,8 @@ namespace IOSerialize.IO
         /// <summary>
         /// 配置绝对路径
         /// </summary>
-        private static string LogPath = ConfigurationManager.AppSettings["LogPath"];
-        private static string LogMovePath = ConfigurationManager.AppSettings["LogMovePath"];
+        //private static string LogPath = ConfigurationManager.AppSettings["LogPath"];
+        //private static string LogMovePath = ConfigurationManager.AppSettings["LogMovePath"];
         /// <summary>
         /// 获取当前程序路径
         /// </summary>
@@ -33,37 +33,37 @@ namespace IOSerialize.IO
         public static void Show()
         {
             {//check
-                if (!Directory.Exists(LogPath))//检测文件夹是否存在
+                if (!Directory.Exists(LogPath2))//检测文件夹是否存在
                 {
 
                 }
-                DirectoryInfo directory = new DirectoryInfo(LogPath);//不存在不报错  注意exists属性
+                DirectoryInfo directory = new DirectoryInfo(LogPath2);//不存在不报错  注意exists属性
                 Console.WriteLine(string.Format("{0} {1} {2}", directory.FullName, directory.CreationTime, directory.LastWriteTime));
 
-                if (!File.Exists(Path.Combine(LogPath, "info.txt")))
+                if (!File.Exists(Path.Combine(LogPath2, "info.txt")))
                 {
                 }
 
-                FileInfo fileInfo = new FileInfo(Path.Combine(LogPath, "info.txt"));
+                FileInfo fileInfo = new FileInfo(Path.Combine(LogPath2, "info.txt"));
 
                 Console.WriteLine(string.Format("{0} {1} {2}", fileInfo.FullName, fileInfo.CreationTime, fileInfo.LastWriteTime));
             }
             {//Directory
-                if (!Directory.Exists(LogPath))
+                if (!Directory.Exists(LogPath2))
                 {
-                    DirectoryInfo directoryInfo = Directory.CreateDirectory(LogPath);//一次性创建全部的子路径
-                    Directory.Move(LogPath, LogMovePath);//移动  原文件夹就不在了
-                    Directory.Delete(LogMovePath);//删除
+                    DirectoryInfo directoryInfo = Directory.CreateDirectory(LogPath2);//一次性创建全部的子路径
+                    Directory.Move(LogPath2, LogPath2+"1");//移动  原文件夹就不在了
+                    Directory.Delete(LogPath2);//删除
                 }
             }
             {//File
-                string fileName = Path.Combine(LogPath, "log.txt");
-                string fileNameCopy = Path.Combine(LogPath, "logCopy.txt");
-                string fileNameMove = Path.Combine(LogPath, "logMove.txt");
+                string fileName = Path.Combine(LogPath2, "log.txt");
+                string fileNameCopy = Path.Combine(LogPath2, "logCopy.txt");
+                string fileNameMove = Path.Combine(LogPath2, "logMove.txt");
                 bool isExists = File.Exists(fileName);
                 if (!isExists)
                 {
-                    Directory.CreateDirectory(LogPath);//创建了文件夹之后，才能创建里面的文件
+                    Directory.CreateDirectory(LogPath2);//创建了文件夹之后，才能创建里面的文件
                     using (FileStream fileStream = File.Create(fileName))//打开文件流 （创建文件并写入）
                     {
                         string name = "12345567778890";
@@ -144,14 +144,14 @@ namespace IOSerialize.IO
             }
 
             {
-                Console.WriteLine(Path.GetDirectoryName(LogPath));  //返回目录名，需要注意路径末尾是否有反斜杠对结果是有影响的
+                Console.WriteLine(Path.GetDirectoryName(LogPath2));  //返回目录名，需要注意路径末尾是否有反斜杠对结果是有影响的
                 Console.WriteLine(Path.GetDirectoryName(@"d:\\abc")); //将返回 d:\
                 Console.WriteLine(Path.GetDirectoryName(@"d:\\abc\"));// 将返回 d:\abc
                 Console.WriteLine(Path.GetRandomFileName());//将返回随机的文件名
                 Console.WriteLine(Path.GetFileNameWithoutExtension("d:\\abc.txt"));// 将返回abc
                 Console.WriteLine(Path.GetInvalidPathChars());// 将返回禁止在路径中使用的字符
                 Console.WriteLine(Path.GetInvalidFileNameChars());//将返回禁止在文件名中使用的字符
-                Console.WriteLine(Path.Combine(LogPath, "log.txt"));//合并两个路径
+                Console.WriteLine(Path.Combine(LogPath2, "log.txt"));//合并两个路径
             }
         }
 
@@ -168,11 +168,11 @@ namespace IOSerialize.IO
             try
             {
                 string fileName = "log.txt";
-                string totalPath = Path.Combine(LogPath, fileName);
+                string totalPath = Path.Combine(LogPath2, fileName);
 
-                if (!Directory.Exists(LogPath))
+                if (!Directory.Exists(LogPath2))
                 {
-                    Directory.CreateDirectory(LogPath);
+                    Directory.CreateDirectory(LogPath2);
                 }
                 sw = File.AppendText(totalPath); // 如果文件不存在，就新建一个文件，然后写入内容
                 sw.WriteLine(string.Format("{0}:{1}", DateTime.Now, msg));
