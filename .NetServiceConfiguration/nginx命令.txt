@@ -1,0 +1,4 @@
+注意Nginx文件不能带有中文
+
+启动：start nginx.exe
+重启：nginx   -s reload

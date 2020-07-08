@@ -15,6 +15,10 @@ using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace SPCoreApiText.Controllers
 {
+    //启动：start nginx.exe
+    //重启：nginx   -s reload
+
+
     [ApiController]
     [Route("api/[controller]/[action]")]
     //[Route("api/[controller]/[action]")]
@@ -48,6 +52,20 @@ namespace SPCoreApiText.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+
+
+        //http://localhost:8888/api/WeatherForecast/Get
+        [HttpGet]
+        [Route("GetString")]
+        public string GetString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new
+            {
+                应用程序监听端口号 = $"this is 03服务器",
+                访问次数 = DateTime.Now
+            });
         }
     }
 
