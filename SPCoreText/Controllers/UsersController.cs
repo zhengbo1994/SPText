@@ -9,14 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using System.Web.Http;
-using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
-using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
-using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
-using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
-using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
-using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+//using System.Web.Http;
+//using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
+//using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
+//using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
+//using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+//using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
+//using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace SPCoreText.Controllers
 {
@@ -78,7 +77,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
 
@@ -110,7 +109,7 @@ namespace SPCoreText.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Users> GetUserByModel([FromUri] Users user)
+        public IEnumerable<Users> GetUserByModel([System.Web.Http.FromUri] Users user)
         {
             string idParam = base.HttpContext.Request.Query["id"];
             string userNameParam = base.HttpContext.Request.Query["userName"];
@@ -120,7 +119,7 @@ namespace SPCoreText.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Users> GetUserByModelUri([FromUri] Users user)
+        public IEnumerable<Users> GetUserByModelUri([System.Web.Http.FromUri] Users user)
         {
             string idParam = base.HttpContext.Request.Query["id"];
             string userNameParam = base.HttpContext.Request.Query["userName"];
@@ -171,7 +170,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
         }
@@ -187,7 +186,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
         }
@@ -252,7 +251,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
         }
@@ -268,7 +267,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
         }
@@ -333,7 +332,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
         }
@@ -349,7 +348,7 @@ namespace SPCoreText.Controllers
             var user = _userList.FirstOrDefault(users => users.UserID == id);
             if (user == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
             }
             return user;
         }

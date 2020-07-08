@@ -28,6 +28,7 @@ using SPCoreTextLK.Service;
 
 namespace SPCoreApiText
 {
+    //dotnet SPCoreApiText.dll --urls=¡±http://*:5726¡± ¨C-ip=¡±127.0.0.1¡± --port=5726
     //Install-Package Swashbuckle.AspNetCore -Version 5.0.0-rc4
     //https://localhost:44398/swagger/index.html
     public class Startup
