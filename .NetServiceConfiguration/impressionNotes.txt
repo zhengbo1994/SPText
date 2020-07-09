@@ -1,0 +1,65 @@
+前端框架 easyui、layui、knockout、bootstrap、miniui、angular、jqueryui、jquery、vue
+小程序UI
+https://weui.io/
+小程序教程
+https://mp.weixin.qq.com/debug/wxadoc/dev/index.html
+开发之类的下载软件 https://www.nuget.org/packages
+code first（Entity Framework） https://blog.csdn.net/lucky51222/article/details/52174079
+C# 调用Api https://www.cnblogs.com/MuNet/p/6732338.html
+Sql常见脚本 https://blog.csdn.net/baidu_34049233/article/details/66972914
+三层架构 https://blog.csdn.net/cai15191466621/article/details/6612580
+WCF https://www.cnblogs.com/TianFang/archive/2012/12/26/2834206.html
+Dapper https://www.cnblogs.com/lihuali/p/7792184.html
+Xml https://www.runoob.com/xml/xml-cdata.html
+xml http://www.cnblogs.com/sjqq/p/6933017.html
+WebApi接口的请求 http://www.cnblogs.com/wangjiming/p/8378108.html
+WebApi返回值  https://www.cnblogs.com/landeanfen/p/5501487.html
+swagger创建  https://www.cnblogs.com/RayWang/p/9216820.html
+swagger创建  https://blog.csdn.net/boonya/article/details/80321229
+                         https://jingyan.baidu.com/article/acf728fd79974ff8e510a33b.html
+Swagger介绍（进阶篇）                     https://www.cnblogs.com/xiongtaotao/p/10820698.html
+C# 使用NLog记录日志   https://www.cnblogs.com/skyapplezhao/p/5690565.html
+C#进阶系列——WebApi 接口返回值不困惑：返回值类型详解   http://www.cnblogs.com/landeanfen/p/5501487.html
+oracle创建库  https://jingyan.baidu.com/article/fea4511ad9a183f7bb9125aa.html
+oracle创建表空间 https://www.cnblogs.com/wangsaiming/p/3555994.html
+ABP项目创建  https://jingyan.baidu.com/article/3d69c55122b557f0cf02d7c0.html
+ABP项目下载官网  http://www.aspnetboilerplate.com
+ASP.NET EF(LINQ/Lambda查询)   http://www.cnblogs.com/Dr-Hao/p/5356928.html
+C#制作ORM映射学习笔记三 ORM映射实现  https://www.cnblogs.com/vaevvaev/p/7054951.html
+C#制作ORM映射学习笔记一 自定义Attribute类   http://www.bubuko.com/infodetail-2129798.html
+.net中关于实体类的映射的详解   https://blog.csdn.net/uniqueweimeijun/article/details/80307404
+asp.net 实现在线浏览word文档（word转html）https://blog.csdn.net/u013711462/article/details/41594399
+使用Visual Studio进行Web项目部署的Web.config转换语法   https://docs.microsoft.com/en-us/previous-versions/aspnet/dd465326(v=vs.110)
+Asp.Net MVC+EF+三层架构的完整搭建过程   https://www.cnblogs.com/zzqvq/p/5816091.html#autoid-0-0-0
+JS中获取页面单选框radio和复选框checkbox中当前选中的值  https://www.cnblogs.com/houji/p/5192950.html
+jqGrid的Api  http://blog.mn886.net/jqGrid/
+ajax表单提交  https://www.cnblogs.com/fengxuehuanlin/p/5311648.html
+sql  基本语法 https://www.cnblogs.com/chaoa/articles/3894311.html
+chach用法   https://www.cnblogs.com/CherishTheYouth/p/CherishTheYouth_2019_0509.html
+asp.net 获取当前，相对，绝对路径   https://www.cnblogs.com/feiquan/p/10833414.html
+datatable与实体类之间相互转化的几种方法   https://www.cnblogs.com/yang_mysky/p/4042936.html
+导入导出的方法以及引用       https://www.cnblogs.com/luxiaoxun/p/3374992.html
+ASP.NET工具类：文件夹目录Directory操作工具类  https://www.cnblogs.com/xu-yi/p/10577602.html
+asp.net Web项目中使用Log4Net进行错误日志记录 https://www.cnblogs.com/zoujinhua/p/10323655.html
+数据库优化 https://blog.csdn.net/zhangbijun1230/article/details/81608252
+github本地如何上传代码   https://baijiahao.baidu.com/s?id=1619544681032320225&wfr=spider&for=pc
+
+
+
+
+
+
+
+
+
+
+公司项目（水工环）    http://121.199.72.208:8080/SGHWeb/
+                                    http://121.199.72.208:8080/GeoWeb/
+空间数据管理               http://192.168.1.195:8007/ admin infoearth
+国土空间适应性    http://219.142.70.212/Home/AdminWater   System  0000
+快速开发框架    https://infoearth.yuque.com/cpkj/sxucgp/bhe3d6
+
+
+
+
+

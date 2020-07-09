@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace SPText.EF
 {
-    public class BaseService : IBaseService
+    public class BaseService : DbContext, IBaseService
     {
+
+
         #region Identity
         protected DbContext Context { get; private set; }
         /// <summary>
@@ -24,8 +26,23 @@ namespace SPText.EF
 
         public BaseService()
         {
-            this.Context = new DatabaseContext("JDDbContext");
+            CreateBaseService("name=DataContext");
         }
+
+        public BaseService(string connection)
+        {
+            CreateBaseService(connection);
+        }
+
+        public void CreateBaseService(string connection)
+        {
+            this.Context = new DbContext(connection);//连接数据库字符串
+            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+        }
+
+
         #endregion Identity
 
         #region Query

@@ -295,14 +295,14 @@
     <Compile Include="Common\ValidateCodeImage.cs" />
     <Compile Include="Common\WebHelper.cs" />
     <Compile Include="Company.cs" />
-    <Compile Include="EF\BaseService.cs" />
-    <Compile Include="EF\DatabaseContext.cs" />
+    <Compile Include="EF\EF1\BaseService.cs" />
+    <Compile Include="EF\EF0\DatabaseContext.cs" />
     <Compile Include="DBHelper.cs" />
-    <Compile Include="EF\IBaseService.cs" />
-    <Compile Include="EF\IDatabase.cs" />
-    <Compile Include="EF\Repository.cs" />
-    <Compile Include="EF\SqlserverDatabase.cs" />
-    <Compile Include="EF\Uow.cs" />
+    <Compile Include="EF\EF1\IBaseService.cs" />
+    <Compile Include="EF\EF1\IDatabase.cs" />
+    <Compile Include="EF\EF0\Repository.cs" />
+    <Compile Include="EF\EF1\SqlserverDatabase.cs" />
+    <Compile Include="EF\EF0\Uow.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unity\ContainnerFactory.cs" />
@@ -427,7 +427,7 @@
     <Content Include="Common\Public\js-plug\js\respond.js" />
     <Content Include="Common\Public\md5\js\md5.js" />
     <Content Include="Common\Public\moment\js\moment.js" />
-    <Content Include="EF\数据迁移.txt" />
+    <Content Include="EF\EF0\数据迁移.txt" />
     <Content Include="xmlBaseInfo.xml" />
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>

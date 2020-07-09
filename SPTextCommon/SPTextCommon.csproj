@@ -43,6 +43,9 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit">
+      <HintPath>..\packages\AAAcustom\LinqKit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
     </Reference>
@@ -149,6 +152,7 @@
     <Compile Include="ConvertExt.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DynamicMethodFactory.cs" />
+    <Compile Include="EFBaseServices\BaseDal.cs" />
     <Compile Include="EFBaseServices\BaseServices.cs" />
     <Compile Include="EFBaseServices\IBaseDal.cs" />
     <Compile Include="EFBaseServices\IBaseServices.cs" />
@@ -184,10 +188,6 @@
     <Compile Include="ValidateUtil.cs" />
     <Compile Include="WebHelper.cs" />
     <Compile Include="XmlHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
