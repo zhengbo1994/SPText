@@ -412,5 +412,72 @@ namespace Common.baseFn
             }
             return value;
         }
+
+        #region 后台分页
+        public static string strPage(int intCounts, int intPageSizes, int intPageCounts, int intThisPages, string strUrl)
+        {
+            int intCount = Convert.ToInt32(intCounts); //总记录数
+            int intPageCount = Convert.ToInt32(intPageCounts); //总共页数
+            int intPageSize = Convert.ToInt32(intPageSizes); //每页显示
+            int intPage = 5;  //数字显示
+            int intThisPage = Convert.ToInt32(intThisPages); //当前页数
+            int intBeginPage = 0; //开始页数
+            int intCrossPage = 0; //变换页数
+            int intEndPage = 0; //结束页数
+            string strPage = null; //返回值
+
+            intCrossPage = intPage / 2;
+            if (intThisPage > 1)
+            {
+                strPage = strPage + "<li ><a  class=\"leftbtn\" href=\"" + strUrl + Convert.ToString(intThisPage - 1) + "\">&laquo;</a></li>";
+            }
+            if (intPageCount > intPage)
+            {
+                if (intThisPage > intPageCount - intCrossPage)
+                {
+                    intBeginPage = intPageCount - intPage + 1;
+                    intEndPage = intPageCount;
+                }
+                else
+                {
+                    if (intThisPage <= intPage - intCrossPage)
+                    {
+                        intBeginPage = 1;
+                        intEndPage = intPage;
+                    }
+                    else
+                    {
+                        intBeginPage = intThisPage - intCrossPage;
+                        intEndPage = intThisPage + intCrossPage;
+                    }
+                }
+            }
+            else
+            {
+                intBeginPage = 1;
+                intEndPage = intPageCount;
+            }
+            if (intCount > 0)
+            {
+
+                for (int i = intBeginPage; i <= intEndPage; i++)
+                {
+                    if (i == intThisPage)
+                    {
+                        strPage = strPage + "<li><a class=\"curr\">" + i.ToString() + "</a></li>";
+                    }
+                    else
+                    {
+                        strPage = strPage + "<li> <a href=\"" + strUrl + i.ToString() + "\">" + i.ToString() + "</a></li> ";
+                    }
+                }
+            }
+            if (intThisPage < intPageCount)
+            {
+                strPage = strPage + "<li ><a class=\"rightbtn\" href=\"" + strUrl + Convert.ToString(intThisPage + 1) + "\">&raquo;</a></li>";
+            }
+            return strPage;
+        }
+        #endregion
     }
 }
