@@ -22,7 +22,26 @@ namespace SPTextCommon.EFBaseServices
     public class BaseDBContext : DbContext
     {
         public BaseDBContext() : base("name=DataContext") { }
-        public BaseDal<Company> Company { get; set; }
+
+
+        //protected DbContext Context { get; private set; }
+        //public BaseDBContext()
+        //{
+        //    CreateBaseService("name=DataContext");
+        //}
+        //public BaseDBContext(string connection)
+        //{
+        //    CreateBaseService(connection);
+        //}
+
+        //public void CreateBaseService(string connection)
+        //{
+        //    this.Context = new DbContext(connection);//连接数据库字符串
+        //    this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+        //    this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+        //    this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+        //}
+        public DbSet<Company> Company { get; set; }
     }
 
     [Table("Company")]

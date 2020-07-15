@@ -7,6 +7,7 @@ using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.Unity;
 using SPTextCommon;
+using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
 using SPTextLK.Text;
 using System;
@@ -133,47 +134,7 @@ namespace SPText
             #endregion
 
             #region  Lambda
-            #region 匿名类（只读）
-            {
-                var obj = new
-                {
-                    Id = 1,
-                    Name = "张三"
-                };
-            }
-            {
-                object obj = new
-                {
-                    Id = 1,
-                    Name = "张三"
-                };
-            }
-            #endregion
-            List<Text> texts = new List<Text>();
-            texts.ObjWhere(p => p.Id == 1);
-
-
-            //内连接
-            var list0 = from x in texts
-                        join y in texts on x.Id equals y.Id
-                        select new
-                        {
-                            Id = 0,
-                            Name = "1"
-                        };
-
-            //左连接
-            var list1 = from x in texts
-                        join y in texts on x.Id equals y.Id
-                        into xylist
-                        from xy in xylist.DefaultIfEmpty()
-                        select new
-                        {
-                            Id = 0,
-                            Name = "1"
-                        };
-
-
+            lambdaOperation();
             #endregion
 
             #region  设计模式六大原则
@@ -204,7 +165,7 @@ namespace SPText
             #endregion
 
             #region  IO(序列化&反序列化、读取文件信息)
-            JsonAndFile();
+            //JsonAndFile();
             #endregion
 
             #region  数据类型/特殊类型
@@ -2094,7 +2055,7 @@ namespace SPText
                 }
             }
 
-            //List
+            //List（链表）
             Console.WriteLine("********************List*********************");
             {
                 using (RedisListService service = new RedisListService())
@@ -2266,12 +2227,27 @@ namespace SPText
                 //MSMQ---RabbitMQ---ZeroMQ---RedisList:学习成本 技术成本
                 #endregion
             }
+
+            {
+                //RedisCache.Set("RedisCache", "111");
+            }
         }
         #endregion
 
         #region  数据库相关操作
         public static void DatabaseOperations()
         {
+
+            {
+                Uow uow = new Uow("DataContext");
+                List<Company> a = uow.Company.GetAll().Where(p => p.Id > 0).ToList();
+            }
+            {
+                IBaseDal<Company> baseDal = new BaseDal<Company>();
+                baseDal.QueryWhere(p => p.Id > 0).ToList();
+                IBaseServices<Company> baseServices = new BaseServices<Company>();
+                List<Company> a = baseServices.QueryByWhereLambda(p => p.Id > 0).ToList();
+            }
             {
                 IBaseService baseService = new BaseService("DataContext");
                 Expression<Func<Company, bool>> eps = PredicateBuilder.True<Company>();
@@ -2279,28 +2255,70 @@ namespace SPText
                 List<Company> textModel = baseService.Query<Company>(eps).ToList();
             }
             {
-                Uow uow = new Uow("DataContext");
-                List<Company> a = uow.Company.GetAll().Where(p => p.Id > 0).ToList();
-            }
-            {
-                BaseDBContext baseDB = new BaseDBContext();
-                List<SPTextCommon.EFBaseServices.Company> a = baseDB.Company.QueryByWhereLambda(p => p.Id > 0).ToList();
-            }
-            {
                 //手写ORM
                 CustomDBHelper database = new CustomDBHelper();
                 List<Company> textModel = database.FindAll<Company>().ToList();
             }
             {
-                InfoEarthFrame.Data.IDatabase database = new InfoEarthFrame.Data.SqlDatabase("DataContext");
-                string sql = "select * from table";
-                int i = database.ExcuteCommand(sql, new SqlParameter[] { });
+                string strConn = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
+                InfoEarthFrame.Data.IDatabase database = new InfoEarthFrame.Data.SqlDatabase(strConn);
+                string sql = "select * from Company";
+                var i = database.GetDataSetFromExcuteCommand(sql, new SqlParameter[] { });
             }
             {
                 DBHelper dBHelper = new DBHelper();
-                string sql = "select * from table";
-                int i = dBHelper.ExecuteNonQuery(sql, CommandType.Text, new SqlParameter[] { });
+                string sql = "select * from Company";
+                var i = dBHelper.ExecuteNonQuery(sql, CommandType.Text, new SqlParameter[] { });
             }
+        }
+        #endregion
+
+        #region  Lambda
+        public static void lambdaOperation()
+        {
+            #region  Lambda
+            #region 匿名类（只读）
+            {
+                var obj = new
+                {
+                    Id = 1,
+                    Name = "张三"
+                };
+            }
+            {
+                object obj = new
+                {
+                    Id = 1,
+                    Name = "张三"
+                };
+            }
+            #endregion
+            List<Text> texts = new List<Text>();
+            texts.ObjWhere(p => p.Id == 1);
+
+
+            //内连接
+            var list0 = from x in texts
+                        join y in texts on x.Id equals y.Id
+                        select new
+                        {
+                            Id = 0,
+                            Name = "1"
+                        };
+
+            //左连接
+            var list1 = from x in texts
+                        join y in texts on x.Id equals y.Id
+                        into xylist
+                        from xy in xylist.DefaultIfEmpty()
+                        select new
+                        {
+                            Id = 0,
+                            Name = "1"
+                        };
+
+
+            #endregion
         }
         #endregion
     }
