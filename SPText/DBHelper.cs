@@ -12,7 +12,8 @@ namespace SPText
 {
     public class DBHelper
     {
-        public static string strConn = ConfigurationManager.AppSettings["DefaultConnection"];
+        public static string strConn = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
+        //public static string strConn = ConfigurationManager.AppSettings["DataContext"];
 
         public int ExecuteNonQuery(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
@@ -125,6 +126,7 @@ namespace SPText
 
     public class CustomDBHelper
     {
+        public static string strConn = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
         public T Find<T>(int Id)
         {
             Type type = typeof(T);
@@ -156,7 +158,7 @@ namespace SPText
                 }
             });
 
-            //using (SqlConnection conn = new SqlConnection(""))
+            //using (SqlConnection conn = new SqlConnection(strConn))
             //{
             //    SqlCommand cmd = new SqlCommand(sql, conn);
             //    cmd.Parameters.AddRange(paraList.ToArray());
@@ -192,7 +194,7 @@ namespace SPText
             //string sql = string.Format($"SELECT {columnStrings} FROM [{type.GetName()}]");
 
             List<T> tList = new List<T>();
-            using (SqlConnection conn = new SqlConnection(""))
+            using (SqlConnection conn = new SqlConnection(strConn))
             {
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 conn.Open();
@@ -246,7 +248,7 @@ namespace SPText
                 }
             });
 
-            //using (SqlConnection conn = new SqlConnection(""))
+            //using (SqlConnection conn = new SqlConnection(strConn))
             //{
             //    SqlCommand cmd = new SqlCommand(sql, conn);
             //    cmd.Parameters.AddRange(paraList.ToArray());
@@ -294,7 +296,7 @@ namespace SPText
                 }
             });
 
-            //using (SqlConnection conn = new SqlConnection(""))
+            //using (SqlConnection conn = new SqlConnection(strConn))
             //{
             //    SqlCommand cmd = new SqlCommand(sql, conn);
             //    cmd.Parameters.AddRange(pareList.ToArray());
@@ -385,7 +387,7 @@ namespace SPText
 
         public T ExecuteSql<T>(string sql, IEnumerable<SqlParameter> paraList, Func<SqlCommand, T> func)
         {
-            using (SqlConnection conn = new SqlConnection(""))
+            using (SqlConnection conn = new SqlConnection(strConn))
             {
                 SqlTransaction tran = null;
                 try
