@@ -1,8 +1,10 @@
 ﻿using IOSerialize.IO;
 using IOSerialize.Serialize;
 using log4net.Config;
+using ServiceStack.Redis;
 using SPText.Common;
 using SPText.Common.ExpressionExtend;
+using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.Unity;
@@ -1928,6 +1930,20 @@ namespace SPText
         }
         public static void RedisShow()
         {
+
+            {
+                //事务模式 
+                using (RedisClient client = new RedisClient("127.0.0.1", 6379))
+                {
+                    client.SetEntryInHash("ceshi", "id", "001");
+                    Console.WriteLine(client.GetValuesFromHash("ceshi", "id").FirstOrDefault());
+                }
+                Data_StringTest.Show();
+                Data_HashTest.Show();
+                Data_SetAndZsetTest.Show();
+                Data_ListTest.Show();
+            }
+
             StudentRedisParem student_1 = new StudentRedisParem()
             {
                 Id = 11,

@@ -35,8 +35,8 @@ namespace SPText.Common.Redis.Init
         /// </summary>
         private static void CreateManager()
         {
-            string[] WriteServerConStr = RedisConfigInfo.WriteServerList.Split(',');
             string[] ReadServerConStr = RedisConfigInfo.ReadServerList.Split(',');
+            string[] WriteServerConStr = RedisConfigInfo.WriteServerList.Split(',');
             prcManager = new PooledRedisClientManager(ReadServerConStr, WriteServerConStr,
                              new RedisClientManagerConfig
                              {
