@@ -2,3 +2,9 @@
 
 启动：start nginx.exe
 重启：nginx   -s reload
+
+
+
+
+
+https://blog.csdn.net/qq_41134769/article/details/83477424?depth_1-
