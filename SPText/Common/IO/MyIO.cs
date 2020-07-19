@@ -52,7 +52,7 @@ namespace IOSerialize.IO
                 if (!Directory.Exists(LogPath2))
                 {
                     DirectoryInfo directoryInfo = Directory.CreateDirectory(LogPath2);//一次性创建全部的子路径
-                    Directory.Move(LogPath2, LogPath2+"1");//移动  原文件夹就不在了
+                    Directory.Move(LogPath2, LogPath2 + "1");//移动  原文件夹就不在了
                     Directory.Delete(LogPath2);//删除
                 }
             }
@@ -193,6 +193,23 @@ namespace IOSerialize.IO
                     sw.Dispose();
                 }
             }
+        }
+
+
+        public void IO(string path)
+        {
+            using (FileStream fileStream = File.OpenWrite(path))
+            {
+                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                {
+                 
+                    string name = "12345567778890";
+                    byte[] bytes = Encoding.Default.GetBytes(name);
+                    streamWriter.WriteLine(bytes);
+                    streamWriter.Flush();
+                }
+            }
+
         }
 
     }
