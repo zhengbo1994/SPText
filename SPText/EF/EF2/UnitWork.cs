@@ -22,6 +22,7 @@ namespace SPText.EF.EF2
             return _context;
         }
 
+
         /// <summary>
         /// 根据过滤条件，获取记录
         /// </summary>

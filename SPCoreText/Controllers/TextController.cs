@@ -34,10 +34,6 @@ namespace SPCoreText.Controllers
             }
             #endregion
 
-            #region 这么多地址你怎么管理？1 2 3 要累死--可以自行选择
-
-            #endregion
-
             #region 通过consul去发现这些服务地址
             {
                 //using (ConsulClient client = new ConsulClient(c =>

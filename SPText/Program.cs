@@ -1,4 +1,6 @@
-﻿using IOSerialize.IO;
+﻿using CLSLibrary;
+using InfoEarthFrame.Data;
+using IOSerialize.IO;
 using IOSerialize.Serialize;
 using log4net.Config;
 using ServiceStack.Redis;
@@ -7,10 +9,12 @@ using SPText.Common.ExpressionExtend;
 using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
 using SPText.EF;
+using SPText.EF.EF2;
 using SPText.Unity;
 using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
+using SPTextCommon.EFBaseServices.Model;
 using SPTextLK.Text;
 using System;
 using System.Collections;
@@ -34,13 +38,14 @@ using static SPText.MementoPattern;
 using static SPText.Program.FlyweightPatternFactory;
 using static SPText.SimpleFactory;
 using static SPText.VisitorPattern;
+using IDatabase = SPText.EF.IDatabase;
 
 namespace SPText
 {
     class Program
     {
         private static int[] dataArr = new int[100];
-        string connectionStrings = ConfigurationManager.ConnectionStrings["Connection"].ToString();
+        static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
 
@@ -136,7 +141,7 @@ namespace SPText
             #endregion
 
             #region  Lambda
-            lambdaOperation();
+            //lambdaOperation();
             #endregion
 
             #region  设计模式六大原则
@@ -205,6 +210,10 @@ namespace SPText
 
             #region  数据库操作
             DatabaseOperations();
+            #endregion
+
+            #region  二维码
+            //GetQRCode();
             #endregion
 
             //dynamic  避开编译器检查
@@ -2253,22 +2262,46 @@ namespace SPText
         #region  数据库相关操作
         public static void DatabaseOperations()
         {
-
             {
-                Uow uow = new Uow("DataContext");
-                List<Company> a = uow.Company.GetAll().Where(p => p.Id > 0).ToList();
-            }
-            {
-                IBaseDal<Company> baseDal = new BaseDal<Company>();
-                baseDal.QueryWhere(p => p.Id > 0).ToList();
-                IBaseServices<Company> baseServices = new BaseServices<Company>();
-                List<Company> a = baseServices.QueryByWhereLambda(p => p.Id > 0).ToList();
-            }
-            {
-                IBaseService baseService = new BaseService("DataContext");
+                Uow uow = new Uow();
                 Expression<Func<Company, bool>> eps = PredicateBuilder.True<Company>();
                 eps = eps.And(p => p.Id > 0);
-                List<Company> textModel = baseService.Query<Company>(eps).ToList();
+                List<Company> a = uow.Company.GetAll().Where(eps.Compile()).ToList();
+            }
+            {
+                ModelDbset modelDbset = new ModelDbset();
+                IUnitWork unitWork = new UnitWork(modelDbset);
+                List<Company> a = unitWork.Find<Company>().Where(p => p.Id > 0).ToList();
+            }
+            {
+                {
+                    IDatabase database = new SqlserverDatabase("name=DataContext");
+                    string sql = "select * from Company";
+                    var i = database.FindTable(sql);
+                }
+                {
+                    IDatabase database = new SqlserverDatabase("name=DataContext");
+                    var iList = database.FindList<Company>(p => p.Id > 0).ToList();
+                }
+            }
+            {
+
+                //{
+                //    //IBaseServices<Company> baseServices = new BaseServices<Company>();
+                //    //List<Company> a = baseServices.QueryByWhereLambda(p => p.Id > 0).ToList();
+                //    IBaseDal<CompanyModel> baseDal = new BaseDal<CompanyModel>();
+                //    var i= baseDal.QueryByWhereLambda(p => p.Id > 0).ToList();
+                //}
+                //{
+                //    IsysCompanyModelRepository baseDal = new sysCompanyModelRepository();
+                //    IBaseCompanyModelServices iBaseCompanyModelServices = new BaseCompanyModelServices(baseDal);
+                //    List<CompanyModel> companyModels = iBaseCompanyModelServices.QueryByWhereLambda(p => p.Id > 0).ToList();
+                //}
+            }
+            {
+                SPText.EF.DatabaseContext databaseContext = new SPText.EF.DatabaseContext();
+                IBaseService baseService = new BaseService(databaseContext);
+                List<Company> textModel = baseService.Query<Company>(p => p.Id > 0).ToList();
             }
             {
                 //手写ORM
@@ -2284,8 +2317,9 @@ namespace SPText
             {
                 DBHelper dBHelper = new DBHelper();
                 string sql = "select * from Company";
-                var i = dBHelper.ExecuteNonQuery(sql, CommandType.Text, new SqlParameter[] { });
+                var i = dBHelper.DataSet(sql, CommandType.Text, new SqlParameter[] { });
             }
+
         }
         #endregion
 
@@ -2336,6 +2370,22 @@ namespace SPText
 
             #endregion
         }
+        #endregion
+
+        #region  QRCode
+        public static void GetQRCode()
+        {
+            string file = Directory.GetCurrentDirectory();
+            string filePath = Path.Combine(file, "QRCode");
+            if (!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+
+            QRCodeHelper qRCodeHelper = new QRCodeHelper();
+            qRCodeHelper.GetQRCODEByString("https://zhidao.baidu.com/question/504101834.html", file, 60);
+        }
+
         #endregion
     }
 

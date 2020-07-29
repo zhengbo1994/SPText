@@ -12,37 +12,16 @@ namespace SPText.EF
     public class BaseService : DbContext, IBaseService
     {
 
-
         #region Identity
-        protected DbContext Context { get; private set; }
+        protected DatabaseContext Context { get; private set; }
         /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="context"></param>
-        public BaseService(DbContext context)
+        public BaseService(DatabaseContext context)
         {
             this.Context = context;
         }
-
-        public BaseService()
-        {
-            CreateBaseService("name=DataContext");
-        }
-
-        public BaseService(string connection)
-        {
-            CreateBaseService(connection);
-        }
-
-        public void CreateBaseService(string connection)
-        {
-            this.Context = new DbContext(connection);//连接数据库字符串
-            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
-            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
-            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
-        }
-
-
         #endregion Identity
 
         #region Query
@@ -235,5 +214,43 @@ namespace SPText.EF
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public List<T> DataList { get; set; }
+    }
+
+    public class DatabaseContext :DbContext
+    {
+        public virtual DbSet<Company> Company { get; set; }
+
+
+        #region Identity
+        protected DbContext Context { get; private set; }
+        /// <summary>
+        /// 构造函数注入
+        /// </summary>
+        /// <param name="context"></param>
+        public DatabaseContext(DbContext context)
+        {
+            this.Context = context;
+        }
+
+        public DatabaseContext() : base("name=DataContext")
+        {
+            CreateBaseService("name=DataContext");
+        }
+
+        public DatabaseContext(string connection) : base(connection)
+        {
+            CreateBaseService(connection);
+        }
+
+        public void CreateBaseService(string connection)
+        {
+            this.Context = new DbContext(connection);//连接数据库字符串
+            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+        }
+
+
+        #endregion Identity
     }
 }

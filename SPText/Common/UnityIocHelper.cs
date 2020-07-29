@@ -11,13 +11,6 @@ using Unity.Resolution;
 
 namespace Common
 {
-    /// <summary>
-    /// 版 本 6.1
-    /// Copyright (c) 2013-2016 
-    /// 创建人：陈彬彬
-    /// 日 期：2015.10.10
-    /// 描 述：UnityIoc
-    /// </summary>
     public class UnityIocHelper : IServiceProvider
     {
         private readonly IUnityContainer _container;

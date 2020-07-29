@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SPTextCommon.EFBaseServices
 {
     using LinqKit;
+    using SPTextCommon.EFBaseServices.Model;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity;
@@ -21,44 +22,24 @@ namespace SPTextCommon.EFBaseServices
     /// </summary>
     public class BaseDBContext : DbContext
     {
-        public BaseDBContext() : base("name=DataContext") { }
+        protected DbContext Context { get; private set; }
+        public BaseDBContext() : base("name=DataContext")
+        {
+            CreateBaseService("name=DataContext");
+        }
+        public BaseDBContext(string connection)
+        {
+            CreateBaseService(connection);
+        }
 
-
-        //protected DbContext Context { get; private set; }
-        //public BaseDBContext()
-        //{
-        //    CreateBaseService("name=DataContext");
-        //}
-        //public BaseDBContext(string connection)
-        //{
-        //    CreateBaseService(connection);
-        //}
-
-        //public void CreateBaseService(string connection)
-        //{
-        //    this.Context = new DbContext(connection);//连接数据库字符串
-        //    this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
-        //    this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
-        //    this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
-        //}
-        public DbSet<Company> Company { get; set; }
-    }
-
-    [Table("Company")]
-    public partial class Company
-    {
-        public int Id { get; set; }
-
-        [StringLength(500)]
-        public string Name { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
-        public int CreatorId { get; set; }
-
-        public int? LastModifierId { get; set; }
-
-        public DateTime? LastModifyTime { get; set; }
+        public void CreateBaseService(string connection)
+        {
+            this.Context = new DbContext(connection);//连接数据库字符串
+            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+        }
+        //public virtual DbSet<CompanyModel> CompanyModel { get; set; }
     }
 
     /// <summary>

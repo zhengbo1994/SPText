@@ -156,6 +156,7 @@
     <Compile Include="EFBaseServices\BaseServices.cs" />
     <Compile Include="EFBaseServices\IBaseDal.cs" />
     <Compile Include="EFBaseServices\IBaseServices.cs" />
+    <Compile Include="EFBaseServices\Model\CompanyModel.cs" />
     <Compile Include="EmailHelper.cs" />
     <Compile Include="Enums\DataType.cs" />
     <Compile Include="Extensions.cs" />

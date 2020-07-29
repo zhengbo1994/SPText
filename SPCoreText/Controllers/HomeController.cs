@@ -159,7 +159,7 @@ namespace SPCoreText.Controllers
             //HttpContext.User.Claims//其他信息
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
             #endregion
-            return RedirectToAction("Index", "Home"); ;
+            return RedirectToAction("Index", "Home");
         }
     }
 }

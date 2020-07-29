@@ -97,12 +97,26 @@
     <Reference Include="Microsoft.Graph.Core, Version=1.20.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Graph.Core.1.20.1\lib\net45\Microsoft.Graph.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.PowerPoint.15.0.4420.1017\lib\net20\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLipsum.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=593e1df460e1bda0, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLipsum.1.1.0\lib\net20\NLipsum.Core.dll</HintPath>
     </Reference>
     <Reference Include="NPinyin, Version=0.2.6321.26573, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NPinyin.0.2.6321.26573\lib\net20\NPinyin.dll</HintPath>
@@ -118,6 +132,10 @@
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.19.7.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
@@ -239,7 +257,7 @@
     <Compile Include="Common\AHelper\ObjectHelper.cs" />
     <Compile Include="Common\AHelper\StringHelper.cs" />
     <Compile Include="Common\AlgorithmHelper.cs" />
-    <Compile Include="Common\CacheHelper.cs" />
+    <Compile Include="Common\CustomCache\CacheHelper.cs" />
     <Compile Include="Common\CGeneral.cs" />
     <Compile Include="Common\ConfigContext.cs" />
     <Compile Include="Common\Constant.cs" />
@@ -248,7 +266,7 @@
     <Compile Include="Common\CustomCache\MemoryCacheCache.cs" />
     <Compile Include="Common\DataFactory.cs" />
     <Compile Include="Common\DataHelper.cs" />
-    <Compile Include="Common\DirFileHelper.cs" />
+    <Compile Include="Common\IO\DirFileHelper.cs" />
     <Compile Include="Common\ExcelAdoDotNetHelper.cs" />
     <Compile Include="Common\ExcelHelper.cs" />
     <Compile Include="Common\ExpressionExtend\ConditionBuilderVisitor.cs" />
@@ -277,10 +295,10 @@
     <Compile Include="Common\IO\Recursion.cs" />
     <Compile Include="Common\Json.cs" />
     <Compile Include="Common\JSONHelper.cs" />
-    <Compile Include="Common\Log.cs" />
-    <Compile Include="Common\LogFactory.cs" />
+    <Compile Include="Common\Log\Log.cs" />
+    <Compile Include="Common\Log\LogFactory.cs" />
     <Compile Include="Common\baseFn\AppFn.cs" />
-    <Compile Include="Common\LogHelper.cs" />
+    <Compile Include="Common\Log\LogHelper.cs" />
     <Compile Include="Common\NOPIHelper.cs" />
     <Compile Include="Common\Offices\ExcelConfig.cs" />
     <Compile Include="Common\Offices\ExcelHelper.cs" />

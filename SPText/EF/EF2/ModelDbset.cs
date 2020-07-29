@@ -9,8 +9,8 @@ namespace SPText.EF.EF2
 {
     public class ModelDbset : DbContext
     {
-        private DbContext DBContext { get; set; }
-        public ModelDbset() : base()
+        public DbContext DBContext { get; set; }
+        public ModelDbset() : base("name=DataContext")
         {
             CreateDatabaseContext("DataContext");
         }
