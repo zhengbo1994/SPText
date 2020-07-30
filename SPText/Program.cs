@@ -3,8 +3,11 @@ using InfoEarthFrame.Data;
 using IOSerialize.IO;
 using IOSerialize.Serialize;
 using log4net.Config;
+using ServiceStack;
 using ServiceStack.Redis;
 using SPText.Common;
+using SPText.Common.DataHelper;
+using SPText.Common.DataHelper.Sql;
 using SPText.Common.ExpressionExtend;
 using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
@@ -38,7 +41,6 @@ using static SPText.MementoPattern;
 using static SPText.Program.FlyweightPatternFactory;
 using static SPText.SimpleFactory;
 using static SPText.VisitorPattern;
-using IDatabase = SPText.EF.IDatabase;
 
 namespace SPText
 {
@@ -2262,6 +2264,7 @@ namespace SPText
         #region  数据库相关操作
         public static void DatabaseOperations()
         {
+  
             {
                 Uow uow = new Uow();
                 Expression<Func<Company, bool>> eps = PredicateBuilder.True<Company>();
@@ -2275,12 +2278,12 @@ namespace SPText
             }
             {
                 {
-                    IDatabase database = new SqlserverDatabase("name=DataContext");
+                    SPText.EF.IDatabase database = new SqlserverDatabase(connectionStrings);
                     string sql = "select * from Company";
                     var i = database.FindTable(sql);
                 }
                 {
-                    IDatabase database = new SqlserverDatabase("name=DataContext");
+                    SPText.EF.IDatabase database = new SqlserverDatabase(connectionStrings);
                     var iList = database.FindList<Company>(p => p.Id > 0).ToList();
                 }
             }
@@ -2309,8 +2312,8 @@ namespace SPText
                 List<Company> textModel = database.FindAll<Company>().ToList();
             }
             {
-                string strConn = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
-                InfoEarthFrame.Data.IDatabase database = new InfoEarthFrame.Data.SqlDatabase(strConn);
+          
+                InfoEarthFrame.Data.IDatabase database = new InfoEarthFrame.Data.SqlDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.GetDataSetFromExcuteCommand(sql, new SqlParameter[] { });
             }
@@ -2319,7 +2322,34 @@ namespace SPText
                 string sql = "select * from Company";
                 var i = dBHelper.DataSet(sql, CommandType.Text, new SqlParameter[] { });
             }
-
+            {//Dapper
+                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
+                string sql = "select * from Company";
+                var i = database.FindList<Company>();
+                var value = database.FindTable(sql);
+            }
+            {//EF
+                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
+                string sql = "select * from Company";
+                var i = database.FindList<Company>();
+                var value = database.FindTable(sql);
+            }
+            {//Repository
+                //{
+                //    Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
+                //    Common.DataHelper.IDatabase database1 = new SPText.Common.DataHelper.Repository.IRepository.Repository(database);
+                //    string sql = "select * from Company";
+                //    var i = database1.FindList<Company>();
+                //    var value = database1.ExecuteBySql(sql);
+                //}
+                //{
+                //    Common.DataHelper.IDatabase database = new SPTextCommon.DataHelper.Repository.Repository.RepositoryFactory();
+                //}
+            }
+            {//Sql
+                var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
+                var datatabel= SqlHelper.ExecuteDataTable(sql.ToString(),CommandType.Text,null);
+            }
         }
         #endregion
 
