@@ -11,7 +11,7 @@ namespace SPTextCommon
     /// <summary>
     /// 数据源转换
     /// </summary>
-    public class DataHelper
+    public class DataHelper1
     {
         #region IList如何转成List<T>
         /// <summary>
@@ -37,7 +37,7 @@ namespace SPTextCommon
         /// <returns></returns>
         public static DataTable DataFilter(DataTable dt, string condition)
         {
-            if (DataHelper.IsExistRows(dt))
+            if (DataHelper1.IsExistRows(dt))
             {
                 if (condition.Trim() == "")
                 {
@@ -62,7 +62,7 @@ namespace SPTextCommon
         }
         public static DataTable DataFilter(DataTable dt, string condition, string sort)
         {
-            if (DataHelper.IsExistRows(dt))
+            if (DataHelper1.IsExistRows(dt))
             {
                 DataTable newdt = new DataTable();
                 newdt = dt.Clone();

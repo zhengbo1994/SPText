@@ -37,6 +37,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\AAAcustom\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Eco.Handles, Version=7.0.0.11964, Culture=neutral, PublicKeyToken=46a833be9e90de8c, processorArchitecture=MSIL">
       <HintPath>..\packages\EcoCore.7.0.0.11964\lib\net40\Eco.Handles.dll</HintPath>
     </Reference>
@@ -155,6 +158,14 @@
     <Reference Include="ServiceStack.Text, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Text.5.8.0\lib\net45\ServiceStack.Text.dll</HintPath>
     </Reference>
+    <Reference Include="SQLinq, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1c5d57eb9e11fe4b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AAAcustom\SQLinq.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLinq.Dapper, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AAAcustom\SQLinq.Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -265,7 +276,20 @@
     <Compile Include="Common\CustomCache\CustomCache.cs" />
     <Compile Include="Common\CustomCache\MemoryCacheCache.cs" />
     <Compile Include="Common\DataFactory.cs" />
-    <Compile Include="Common\DataHelper.cs" />
+    <Compile Include="Common\DataHelper\Dapper\SqlDatabase.cs" />
+    <Compile Include="Common\DataHelper\DbHelper.cs" />
+    <Compile Include="Common\DataHelper\EF\SqlserverDatabase.cs" />
+    <Compile Include="Common\DataHelper\EF\SqlServerDbContext.cs" />
+    <Compile Include="Common\DataHelper\IDatabase.cs" />
+    <Compile Include="Common\DataHelper\Repository\IRepository\IRepository.cs" />
+    <Compile Include="Common\DataHelper\Repository\IRepository\IRepositoryT.cs" />
+    <Compile Include="Common\DataHelper\Repository\Repository\Class1.cs" />
+    <Compile Include="Common\DataHelper\Repository\Repository\Repository.cs" />
+    <Compile Include="Common\DataHelper\Repository\Repository\RepositoryFactory.cs" />
+    <Compile Include="Common\DataHelper\Repository\Repository\RepositoryFactoryT.cs" />
+    <Compile Include="Common\DataHelper\Repository\Repository\RepositoryT.cs" />
+    <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
+    <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
     <Compile Include="Common\IO\DirFileHelper.cs" />
     <Compile Include="Common\ExcelAdoDotNetHelper.cs" />
     <Compile Include="Common\ExcelHelper.cs" />

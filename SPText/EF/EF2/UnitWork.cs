@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -141,6 +142,18 @@ namespace SPText.EF.EF2
 
         }
 
+        private T GetById<T>(string Id) where T : Entity
+        {
+            var dbSet = _context.Set<T>().AsNoTracking().AsQueryable();
+            return dbSet.FirstOrDefault(p => p.Id == Id);
+        }
+
+        private IQueryable<T> GeAll<T>() where T : class
+        {
+            var dbSet = _context.Set<T>().AsNoTracking().AsQueryable();
+            return dbSet;
+        }
+
         private IQueryable<T> Filter<T>(Expression<Func<T, bool>> exp) where T : class
         {
             var dbSet = _context.Set<T>().AsNoTracking().AsQueryable();
@@ -153,10 +166,5 @@ namespace SPText.EF.EF2
         {
             _context.Database.ExecuteSqlCommand(sql);
         }
-
-        //public void Entry(PurchasingInformation purchasingInformations)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
