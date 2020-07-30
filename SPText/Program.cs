@@ -1254,9 +1254,10 @@ namespace SPText
         }
         #endregion
 
-        #region  多线程
+        #region  多线程（Thread、ThreadPool、Task、Parallel）
         public static void ThreadDemo()
         {
+
             {
                 Action action = new Action(Show);
                 Task task = new Task(action);
@@ -1359,6 +1360,15 @@ namespace SPText
                 Console.WriteLine("主线程方法调用结束");
                 long lResult = t.Result;//访问result   主线程等待Task的完成
                 t.Wait();//等价于上一行
+            }
+            {
+                Parallel.Invoke(
+                    () => { Console.WriteLine("1"); },
+                    () => { Console.WriteLine("2"); }
+                    );
+
+                Parallel.For(0, 2, i => { Console.WriteLine("打印"); });
+
             }
         }
 
