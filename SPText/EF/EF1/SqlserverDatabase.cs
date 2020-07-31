@@ -1,4 +1,5 @@
 ﻿using Common;
+using NLog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace SPText.EF
             }
             catch (Exception ex)
             {
-                LogFactory.GetLogger("Database").Error(ex);
+                //LogFactory.GetLogger("Database").Error(ex);
                 if (ex.InnerException != null && ex.InnerException.InnerException is SqlException)
                 {
                     SqlException sqlEx = ex.InnerException.InnerException as SqlException;
