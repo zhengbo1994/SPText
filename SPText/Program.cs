@@ -218,6 +218,10 @@ namespace SPText
             //GetQRCode();
             #endregion
 
+            #region  SFtp
+            SharpSSH();
+            #endregion
+
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
             Console.ReadLine();
@@ -2420,6 +2424,25 @@ namespace SPText
             qRCodeHelper.GetQRCODEByString("https://zhidao.baidu.com/question/504101834.html", file, 60);
         }
 
+        #endregion
+
+        #region  SFtp
+        public static void SharpSSH() {
+            //上传至FTP
+            SFtpHelper sftpHelper = new SFtpHelper("SftpIp",Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
+            if (sftpHelper.Connect())
+            {
+                if (SFtpHelper.Put("本地路径", "远程路径"))
+                {
+                    Console.WriteLine("操作完成");
+                }
+            }
+            else
+            {
+                Console.WriteLine("SFTP连接失败");
+            }
+            sftpHelper.Disconnect();
+        }
         #endregion
     }
 
