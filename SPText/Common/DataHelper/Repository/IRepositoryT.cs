@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPText.Common.DataHelper.Repository.IRepository
+namespace SPText.Common.DataHelper.Repository
 {
     public interface IRepositoryT<T> where T : class, new()
     {
