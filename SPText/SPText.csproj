@@ -229,6 +229,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tamir.SharpSSH">
+      <HintPath>..\packages\AAAcustom\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
     <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Ubiety.Dns.Core.dll</HintPath>
     </Reference>
@@ -285,13 +288,12 @@
     <Compile Include="Common\DataHelper\EF\SqlserverDatabase.cs" />
     <Compile Include="Common\DataHelper\EF\SqlServerDbContext.cs" />
     <Compile Include="Common\DataHelper\IDatabase.cs" />
-    <Compile Include="Common\DataHelper\Repository\IRepository\IRepository.cs" />
-    <Compile Include="Common\DataHelper\Repository\IRepository\IRepositoryT.cs" />
-    <Compile Include="Common\DataHelper\Repository\Repository\Class1.cs" />
-    <Compile Include="Common\DataHelper\Repository\Repository\Repository.cs" />
-    <Compile Include="Common\DataHelper\Repository\Repository\RepositoryFactory.cs" />
-    <Compile Include="Common\DataHelper\Repository\Repository\RepositoryFactoryT.cs" />
-    <Compile Include="Common\DataHelper\Repository\Repository\RepositoryT.cs" />
+    <Compile Include="Common\DataHelper\Repository\IRepository.cs" />
+    <Compile Include="Common\DataHelper\Repository\IRepositoryT.cs" />
+    <Compile Include="Common\DataHelper\Repository\Repository.cs" />
+    <Compile Include="Common\DataHelper\Repository\RepositoryFactory.cs" />
+    <Compile Include="Common\DataHelper\Repository\RepositoryFactoryT.cs" />
+    <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
     <Compile Include="Common\IO\DirFileHelper.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Common\Serialize\LinqToXml.cs" />
     <Compile Include="Common\Serialize\SerializeHelper.cs" />
     <Compile Include="Common\Serialize\xHelper.cs" />
+    <Compile Include="Common\SFtpHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
     <Compile Include="Common\UploadFileContext.cs" />
     <Compile Include="Common\ValidateCodeImage.cs" />

@@ -1192,11 +1192,11 @@ namespace SPText.Common.DataHelper
     public class UnityIocHelper : IServiceProvider
     {
         private readonly IUnityContainer _container;
-        private static readonly UnityIocHelper dbinstance = new UnityIocHelper("DBcontainer");
-        private static readonly UnityIocHelper wfdbinstance = new UnityIocHelper("WorkFlowcontainer");
+        private static readonly UnityIocHelper dbinstance = new UnityIocHelper("DataContext");
+        private static readonly UnityIocHelper wfdbinstance = new UnityIocHelper("DataContext");
         private UnityIocHelper(string containerName)
         {
-            UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("DataContext");
             _container = new UnityContainer();
             section.Configure(_container, containerName);
             //section.Configure(_container);
@@ -1205,7 +1205,7 @@ namespace SPText.Common.DataHelper
         {
             try
             {
-                UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+                UnityConfigurationSection section = (UnityConfigurationSection)ConfigurationManager.GetSection("DataContext");
                 var _Containers = section.Containers;
                 foreach (var _Container in _Containers)
                 {

@@ -8,27 +8,20 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPText.Common.DataHelper.Repository.IRepository
+namespace SPText.Common.DataHelper.Repository
 {
-    public class RepositoryT<T> : IRepositoryT<T> where T : class, new()
+    public class Repository :IRepository
     {
         #region 构造
         public IDatabase db;
-        private IDatabase database;
-
-        public RepositoryT(IDatabase idatabase)
+        public Repository(IDatabase idatabase)
         {
             this.db = idatabase;
         }
-
-        //public RepositoryT(IDatabase database)
-        //{
-        //    this.database = database;
-        //}
         #endregion
 
         #region 事物提交
-        public IRepositoryT<T> BeginTrans()
+        public IRepository BeginTrans()
         {
             db.BeginTrans();
             return this;
@@ -63,107 +56,115 @@ namespace SPText.Common.DataHelper.Repository.IRepository
         #endregion
 
         #region 对象实体 添加、修改、删除
-        public int Insert(T entity)
+        public int Insert<T>(T entity) where T : class
         {
             return db.Insert<T>(entity);
         }
-        public int Insert(List<T> entity)
+        public int Insert<T>(List<T> entity) where T : class
         {
             return db.Insert<T>(entity);
         }
-        public int Delete()
+        public int Delete<T>() where T : class
         {
             return db.Delete<T>();
         }
-        public int Delete(T entity)
+        public int Delete<T>(T entity) where T : class
         {
             return db.Delete<T>(entity);
         }
-        public int Delete(List<T> entity)
+        public int Delete<T>(List<T> entity) where T : class
         {
             return db.Delete<T>(entity);
         }
-        public int Delete(Expression<Func<T, bool>> condition)
+        public int Delete<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
             return db.Delete<T>(condition);
         }
-        public int Delete(object keyValue)
+        public int Delete<T>(object keyValue) where T : class
         {
             return db.Delete<T>(keyValue);
         }
-        public int Delete(object[] keyValue)
+        public int Delete<T>(object[] keyValue) where T : class
         {
             return db.Delete<T>(keyValue);
         }
-        public int Delete(object propertyValue, string propertyName)
+        public int Delete<T>(object propertyValue, string propertyName) where T : class
         {
             return db.Delete<T>(propertyValue, propertyName);
         }
-        public int Update(T entity)
+        public int Update<T>(T entity) where T : class
         {
             return db.Update<T>(entity);
         }
-        public int UpdateEx(T entity)
+        public int UpdateEx<T>(T entity) where T : class
         {
-            return db.UpdateEx(entity);
+            return db.UpdateEx<T>(entity);
         }
-        public int Update(List<T> entity)
+        public int Update<T>(List<T> entity) where T : class
         {
             return db.Update<T>(entity);
         }
-        public int Update(Expression<Func<T, bool>> condition)
+        public int Update<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
             return db.Update<T>(condition);
         }
         #endregion
 
         #region 对象实体 查询
-        public T FindEntity(object keyValue)
+        public T FindEntity<T>(object keyValue) where T : class
         {
             return db.FindEntity<T>(keyValue);
         }
-        public T FindEntity(Expression<Func<T, bool>> condition)
+        public T FindEntity<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
             return db.FindEntity<T>(condition);
         }
-        public IQueryable<T> IQueryable()
+        public IQueryable<T> IQueryable<T>() where T : class, new()
         {
             return db.IQueryable<T>();
         }
-        public IQueryable<T> IQueryable(Expression<Func<T, bool>> condition)
+        public IQueryable<T> IQueryable<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
             return db.IQueryable<T>(condition);
         }
-        public IEnumerable<T> FindList(string strSql)
+        public IEnumerable<T> FindList<T>() where T : class, new()
+        {
+            return db.FindList<T>();
+        }
+        public IEnumerable<T> FindList<T>(Expression<Func<T, bool>> condition) where T : class, new()
+        {
+            return db.FindList<T>(condition);
+        }
+        public IEnumerable<T> FindList<T>(string strSql) where T : class
         {
             return db.FindList<T>(strSql);
         }
-        public IEnumerable<T> FindList(string strSql, DbParameter[] dbParameter)
+        public IEnumerable<T> FindList<T>(string strSql, DbParameter[] dbParameter) where T : class
         {
             return db.FindList<T>(strSql, dbParameter);
         }
-        public IEnumerable<T> FindList(Pagination pagination)
+        public IEnumerable<T> FindList<T>(Pagination pagination) where T : class, new()
         {
             int total = pagination.records;
             var data = db.FindList<T>(pagination.sidx, pagination.sord.ToLower() == "asc" ? true : false, pagination.rows, pagination.page, out total);
             pagination.records = total;
             return data;
         }
-        public IEnumerable<T> FindList(Expression<Func<T, bool>> condition, Pagination pagination)
+        public IEnumerable<T> FindList<T>(Expression<Func<T, bool>> condition, Pagination pagination) where T : class, new()
         {
             int total = pagination.records;
             var data = db.FindList<T>(condition, pagination.sidx, pagination.sord.ToLower() == "asc" ? true : false, pagination.rows, pagination.page, out total);
             pagination.records = total;
             return data;
         }
-        public IEnumerable<T> FindList(string strSql, Pagination pagination)
+        public IEnumerable<T> FindList<T>(string strSql, Pagination pagination) where T : class
         {
             int total = pagination.records;
             var data = db.FindList<T>(strSql, pagination.sidx, pagination.sord.ToLower() == "asc" ? true : false, pagination.rows, pagination.page, out total);
             pagination.records = total;
             return data;
         }
-        public IEnumerable<T> FindList(string strSql, DbParameter[] dbParameter, Pagination pagination)
+        public IEnumerable<T> FindList<T>(string strSql, DbParameter[] dbParameter, Pagination pagination) where T : class
         {
             int total = pagination.records;
             var data = db.FindList<T>(strSql, dbParameter, pagination.sidx, pagination.sord.ToLower() == "asc" ? true : false, pagination.rows, pagination.page, out total);

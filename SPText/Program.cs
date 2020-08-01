@@ -218,6 +218,10 @@ namespace SPText
             //GetQRCode();
             #endregion
 
+            #region  SFtp
+            SharpSSH();
+            #endregion
+
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
             Console.ReadLine();
@@ -2346,14 +2350,18 @@ namespace SPText
             }
             {//Repository
                 //{
-                //    Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
-                //    Common.DataHelper.IDatabase database1 = new SPText.Common.DataHelper.Repository.IRepository.Repository(database);
+                //    Common.DataHelper.Repository.RepositoryFactory repository = new Common.DataHelper.Repository.RepositoryFactory();
+                //    var database = repository.BaseRepository(connectionStrings, Common.DataHelper.DatabaseType.SqlServer);
                 //    string sql = "select * from Company";
-                //    var i = database1.FindList<Company>();
-                //    var value = database1.ExecuteBySql(sql);
+                //    var i = database.IQueryable<Company>(p => p.Id > 0);
+                //    var value = database.ExecuteBySql(sql);
                 //}
                 //{
-                //    Common.DataHelper.IDatabase database = new SPTextCommon.DataHelper.Repository.Repository.RepositoryFactory();
+                //    Common.DataHelper.Repository.RepositoryFactoryT<Company> repositoryFactoryT = new Common.DataHelper.Repository.RepositoryFactoryT<Company>();
+                //    var repositoryT = repositoryFactoryT.BaseRepository(connectionStrings, Common.DataHelper.DatabaseType.SqlServer);
+                //    string sql = "select * from Company";
+                //    var i = repositoryT.IQueryable(p => p.Id > 0);
+                //    var value = repositoryT.ExecuteBySql(sql);
                 //}
             }
             {//Sql
@@ -2426,6 +2434,25 @@ namespace SPText
             qRCodeHelper.GetQRCODEByString("https://zhidao.baidu.com/question/504101834.html", file, 60);
         }
 
+        #endregion
+
+        #region  SFtp
+        public static void SharpSSH() {
+            //上传至FTP
+            SFtpHelper sftpHelper = new SFtpHelper("SftpIp",Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
+            if (sftpHelper.Connect())
+            {
+                if (SFtpHelper.Put("本地路径", "远程路径"))
+                {
+                    Console.WriteLine("操作完成");
+                }
+            }
+            else
+            {
+                Console.WriteLine("SFTP连接失败");
+            }
+            sftpHelper.Disconnect();
+        }
         #endregion
     }
 
