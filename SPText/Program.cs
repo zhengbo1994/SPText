@@ -14,6 +14,7 @@ using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.EF.EF2;
 using SPText.Unity;
+using SPText.Unity.Aop;
 using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
@@ -219,8 +220,17 @@ namespace SPText
             #endregion
 
             #region  SFtp
-            SharpSSH();
+            //SharpSSH();
             #endregion
+
+            #region  加密
+            //Encrypt();
+            #endregion
+
+            #region  Aop(面向切面编程)
+            //Aop();
+            #endregion
+
 
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
@@ -1268,6 +1278,7 @@ namespace SPText
                 Action action = new Action(Show);
                 Task task = new Task(action);
                 task.Start();
+                Task.Delay(2000);//不足塞
             }
             {
                 Task task = new Task(() => Console.WriteLine("线程启动！"));
@@ -2278,7 +2289,7 @@ namespace SPText
         #region  数据库相关操作
         public static void DatabaseOperations()
         {
-  
+
             {
                 Uow uow = new Uow();
                 Expression<Func<Company, bool>> eps = PredicateBuilder.True<Company>();
@@ -2326,7 +2337,7 @@ namespace SPText
                 List<Company> textModel = database.FindAll<Company>().ToList();
             }
             {
-          
+
                 InfoEarthFrame.Data.IDatabase database = new InfoEarthFrame.Data.SqlDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.GetDataSetFromExcuteCommand(sql, new SqlParameter[] { });
@@ -2366,7 +2377,7 @@ namespace SPText
             }
             {//Sql
                 var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
-                var datatabel= SqlHelper.ExecuteDataTable(sql.ToString(),CommandType.Text,null);
+                var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
             }
         }
         #endregion
@@ -2437,9 +2448,10 @@ namespace SPText
         #endregion
 
         #region  SFtp
-        public static void SharpSSH() {
+        public static void SharpSSH()
+        {
             //上传至FTP
-            SFtpHelper sftpHelper = new SFtpHelper("SftpIp",Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
+            SFtpHelper sftpHelper = new SFtpHelper("SftpIp", Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
             if (sftpHelper.Connect())
             {
                 if (SFtpHelper.Put("本地路径", "远程路径"))
@@ -2452,6 +2464,40 @@ namespace SPText
                 Console.WriteLine("SFTP连接失败");
             }
             sftpHelper.Disconnect();
+        }
+        #endregion
+
+        #region  加密
+        public static void Encrypt()
+        {
+            {
+                string md50 = HashEncrypt.Encrypt("1");
+                string md51 = HashEncrypt.Encrypt("1");
+                string md52 = HashEncrypt.Encrypt("123456小李");
+                string md53 = HashEncrypt.Encrypt("113456小李");
+            }
+            {
+                string desEn = HashEncrypt.Encrypt("Richard老师");
+                string desDe = HashEncrypt.Decrypt(desEn);
+                string desEn1 = HashEncrypt.Encrypt("张三李四");
+                string desDe1 = HashEncrypt.Decrypt(desEn1);
+            }
+            {
+                KeyValuePair<string, string> encryptDecrypt = HashEncrypt.GetKeyPair();
+                string rsaEn1 = HashEncrypt.Encrypt("net", encryptDecrypt.Key);
+                string rsaDe1 = HashEncrypt.Decrypt(rsaEn1, encryptDecrypt.Value);
+            }
+        }
+        #endregion
+
+        #region  aop(面向切面编程)
+        public static void Aop()
+        {
+            DecoratorAOP.Show();
+            ProxyAOP.Show();
+            RealProxyAOP.Show();
+            CastleProxyAOP.Show();
+            UnityConfigAOP.Show();
         }
         #endregion
     }
