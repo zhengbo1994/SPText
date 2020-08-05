@@ -211,7 +211,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            DatabaseOperations();
+            //DatabaseOperations();
             #endregion
 
             #region  二维码
@@ -219,7 +219,11 @@ namespace SPText
             #endregion
 
             #region  SFtp
-            SharpSSH();
+            //SharpSSH();
+            #endregion
+
+            #region  打印PDF
+            //Printer();
             #endregion
 
             //dynamic  避开编译器检查
@@ -2268,7 +2272,7 @@ namespace SPText
         #region  数据库相关操作
         public static void DatabaseOperations()
         {
-  
+
             {
                 Uow uow = new Uow();
                 Expression<Func<Company, bool>> eps = PredicateBuilder.True<Company>();
@@ -2316,7 +2320,7 @@ namespace SPText
                 List<Company> textModel = database.FindAll<Company>().ToList();
             }
             {
-          
+
                 InfoEarthFrame.Data.IDatabase database = new InfoEarthFrame.Data.SqlDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.GetDataSetFromExcuteCommand(sql, new SqlParameter[] { });
@@ -2356,7 +2360,7 @@ namespace SPText
             }
             {//Sql
                 var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
-                var datatabel= SqlHelper.ExecuteDataTable(sql.ToString(),CommandType.Text,null);
+                var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
             }
         }
         #endregion
@@ -2427,9 +2431,10 @@ namespace SPText
         #endregion
 
         #region  SFtp
-        public static void SharpSSH() {
+        public static void SharpSSH()
+        {
             //上传至FTP
-            SFtpHelper sftpHelper = new SFtpHelper("SftpIp",Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
+            SFtpHelper sftpHelper = new SFtpHelper("SftpIp", Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
             if (sftpHelper.Connect())
             {
                 if (SFtpHelper.Put("本地路径", "远程路径"))
@@ -2442,6 +2447,29 @@ namespace SPText
                 Console.WriteLine("SFTP连接失败");
             }
             sftpHelper.Disconnect();
+        }
+        #endregion
+
+        #region  打印
+        public static void Printer()
+        {
+            {
+                PrinterSettingHelper printer0 = new PrinterSettingHelper();
+                printer0.PrintLable();
+            }
+            {
+                PrinterSettingHelper printer1 = new PrinterSettingHelper(1, "内容1");
+                printer1.PrintLable();
+            }
+            {
+                List<string> strList = new List<string>();
+                strList.Add("打印1");
+                strList.Add("打印2");
+                strList.Add("打印3");
+                PrinterSettingHelper printer2 = new PrinterSettingHelper(1, strList);
+                printer2.PrintLable();
+            }
+
         }
         #endregion
     }
