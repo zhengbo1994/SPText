@@ -223,7 +223,7 @@ namespace SPText
             //SharpSSH();
             #endregion
 
-            #region  加密
+ #region  加密
             //Encrypt();
             #endregion
 
@@ -2471,7 +2471,7 @@ namespace SPText
         }
         #endregion
 
-        #region  加密
+#region  加密
         public static void Encrypt()
         {
             {
