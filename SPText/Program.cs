@@ -231,6 +231,10 @@ namespace SPText
             //Aop();
             #endregion
 
+            #region  爬虫
+            //Crawler();
+            #endregion
+
 
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
@@ -2498,6 +2502,48 @@ namespace SPText
             RealProxyAOP.Show();
             CastleProxyAOP.Show();
             UnityConfigAOP.Show();
+        }
+        #endregion
+
+        #region  爬虫
+        public static void Crawler() 
+        {
+            try
+            {
+                #region 抓取腾讯课堂类别数据 
+                Common.Crawler.CategorySearch search = new Common.Crawler.CategorySearch();
+                search.Crawler();
+                #endregion
+
+                //获取所有页的数据
+                // 发现每一页的数据URL后面拼接的page数据不一样
+                //1.需要先获取最大页数
+                //2.就可以通过拼接不同的URL来获取每一页的数据 
+                //4.循环读取数据
+                //CourseSearch search = new CourseSearch(category);
+                //search.ShowPageData("https://ke.qq.com/course/list?tuin=a3ff93bc");
+
+                #region 抓取课程
+                Common.Crawler.TencentCategoryEntity tencentCategoryEntity = new Common.Crawler.TencentCategoryEntity() {
+                    Url = "https://ke.qq.com/course/list/.net?tuin=a3ff93bc"
+                };
+                Common.Crawler.CourseSearch search1 = new Common.Crawler.CourseSearch(tencentCategoryEntity);
+                search1.Crawler();
+                #endregion
+
+
+
+                #region 获取Ajax数据 
+                Common.Crawler.CourseSearch courseSearch = new Common.Crawler.CourseSearch();
+                courseSearch.GetAjaxRequest();
+                #endregion
+
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         #endregion
     }

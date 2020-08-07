@@ -64,6 +64,9 @@
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.24.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.24\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Hyak.Common.1.2.2\lib\net452\Hyak.Common.dll</HintPath>
     </Reference>
@@ -226,6 +229,7 @@
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -278,6 +282,9 @@
     <Compile Include="Common\AHelper\ObjectHelper.cs" />
     <Compile Include="Common\AHelper\StringHelper.cs" />
     <Compile Include="Common\AlgorithmHelper.cs" />
+    <Compile Include="Common\Crawler\CategorySearch.cs" />
+    <Compile Include="Common\Crawler\CourseSearch.cs" />
+    <Compile Include="Common\Crawler\HttpHelper.cs" />
     <Compile Include="Common\CustomCache\CacheHelper.cs" />
     <Compile Include="Common\CGeneral.cs" />
     <Compile Include="Common\ConfigContext.cs" />
