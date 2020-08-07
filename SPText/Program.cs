@@ -14,6 +14,7 @@ using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.EF.EF2;
 using SPText.Unity;
+using SPText.Unity.Aop;
 using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
@@ -225,6 +226,19 @@ namespace SPText
             #region  打印PDF
             //Printer();
             #endregion
+
+            #region  加密
+            //Encrypt();
+            #endregion
+
+            #region  Aop(面向切面编程)
+            //Aop();
+            #endregion
+
+            #region  爬虫
+            //Crawler();
+            #endregion
+
 
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
@@ -1264,13 +1278,15 @@ namespace SPText
         }
         #endregion
 
-        #region  多线程
+        #region  多线程（Thread、ThreadPool、Task、Parallel）
         public static void ThreadDemo()
         {
+
             {
                 Action action = new Action(Show);
                 Task task = new Task(action);
                 task.Start();
+                Task.Delay(2000);//不足塞
             }
             {
                 Task task = new Task(() => Console.WriteLine("线程启动！"));
@@ -1369,6 +1385,15 @@ namespace SPText
                 Console.WriteLine("主线程方法调用结束");
                 long lResult = t.Result;//访问result   主线程等待Task的完成
                 t.Wait();//等价于上一行
+            }
+            {
+                Parallel.Invoke(
+                    () => { Console.WriteLine("1"); },
+                    () => { Console.WriteLine("2"); }
+                    );
+
+                Parallel.For(0, 2, i => { Console.WriteLine("打印"); });
+
             }
         }
 
@@ -2469,7 +2494,82 @@ namespace SPText
                 PrinterSettingHelper printer2 = new PrinterSettingHelper(1, strList);
                 printer2.PrintLable();
             }
+        }
+        #endregion
 
+        #region  加密
+        public static void Encrypt()
+        {
+            {
+                string md50 = HashEncrypt.Encrypt("1");
+                string md51 = HashEncrypt.Encrypt("1");
+                string md52 = HashEncrypt.Encrypt("123456小李");
+                string md53 = HashEncrypt.Encrypt("113456小李");
+            }
+            {
+                string desEn = HashEncrypt.Encrypt("Richard老师");
+                string desDe = HashEncrypt.Decrypt(desEn);
+                string desEn1 = HashEncrypt.Encrypt("张三李四");
+                string desDe1 = HashEncrypt.Decrypt(desEn1);
+            }
+            {
+                KeyValuePair<string, string> encryptDecrypt = HashEncrypt.GetKeyPair();
+                string rsaEn1 = HashEncrypt.Encrypt("net", encryptDecrypt.Key);
+                string rsaDe1 = HashEncrypt.Decrypt(rsaEn1, encryptDecrypt.Value);
+            }
+        }
+        #endregion
+
+        #region  aop(面向切面编程)
+        public static void Aop()
+        {
+            DecoratorAOP.Show();
+            ProxyAOP.Show();
+            RealProxyAOP.Show();
+            CastleProxyAOP.Show();
+            UnityConfigAOP.Show();
+        }
+        #endregion
+
+        #region  爬虫
+        public static void Crawler() 
+        {
+            try
+            {
+                #region 抓取腾讯课堂类别数据 
+                Common.Crawler.CategorySearch search = new Common.Crawler.CategorySearch();
+                search.Crawler();
+                #endregion
+
+                //获取所有页的数据
+                // 发现每一页的数据URL后面拼接的page数据不一样
+                //1.需要先获取最大页数
+                //2.就可以通过拼接不同的URL来获取每一页的数据 
+                //4.循环读取数据
+                //CourseSearch search = new CourseSearch(category);
+                //search.ShowPageData("https://ke.qq.com/course/list?tuin=a3ff93bc");
+
+                #region 抓取课程
+                Common.Crawler.TencentCategoryEntity tencentCategoryEntity = new Common.Crawler.TencentCategoryEntity() {
+                    Url = "https://ke.qq.com/course/list/.net?tuin=a3ff93bc"
+                };
+                Common.Crawler.CourseSearch search1 = new Common.Crawler.CourseSearch(tencentCategoryEntity);
+                search1.Crawler();
+                #endregion
+
+
+
+                #region 获取Ajax数据 
+                Common.Crawler.CourseSearch courseSearch = new Common.Crawler.CourseSearch();
+                courseSearch.GetAjaxRequest();
+                #endregion
+
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         #endregion
     }
