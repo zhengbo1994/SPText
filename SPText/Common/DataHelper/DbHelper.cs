@@ -897,51 +897,9 @@ namespace SPText.Common.DataHelper
             /// 来创建相应数据库的参数对象
             /// </summary>
             /// <returns></returns>
-            public static DbParameter CreateDbParameter(DatabaseType dbType = DatabaseType.SqlServer)
-            {
-                DbParameter param = null;
-                switch (dbType)
-                {
-                    case DatabaseType.SqlServer:
-                        param = new SqlParameter();
-                        break;
-                    //case DatabaseType.MySql:
-                    //    param = new MySqlParameter();
-                    //    break;
-                    //case DatabaseType.Oracle:
-                    //    param = new OracleParameter();
-                    //    break;
-                    //case DatabaseType.Access:
-                    //    param = new OleDbParameter();
-                    //    break;
-                    //case DatabaseType.SQLite:
-                    //    param = new SQLiteParameter();
-                    //    break;
-                    default:
-                        throw new Exception("数据库类型目前不支持！");
-                }
-                return param;
-            }
-            /// <summary>
-            /// 根据配置文件中所配置的数据库类型
-            /// 来创建相应数据库的参数对象
-            /// </summary>
-            /// <returns></returns>
-            public static DbParameter CreateDbParameter(string paramName, object value, DatabaseType dbType = DatabaseType.SqlServer)
-            {
-                DbParameter param = DbParameters.CreateDbParameter(dbType);
-                param.ParameterName = paramName;
-                param.Value = value;
-                return param;
-            }
-            /// <summary>
-            /// 根据配置文件中所配置的数据库类型
-            /// 来创建相应数据库的参数对象
-            /// </summary>
-            /// <returns></returns>
             public static DbParameter CreateDbParameter(string paramName, object value, DbType dbType)
             {
-                DbParameter param = DbParameters.CreateDbParameter(DatabaseType.SqlServer);
+                DbParameter param = new SqlParameter();
                 param.DbType = dbType;
                 param.ParameterName = paramName;
                 param.Value = value;
@@ -1168,7 +1126,7 @@ namespace SPText.Common.DataHelper
         /// <returns></returns>
         public static IDatabase Data()
         {
-            string providerName = ConfigurationManager.ConnectionStrings["DataDb"].ProviderName;
+            string providerName = ConfigurationManager.ConnectionStrings["DataContext"].ProviderName;
             switch (providerName)
             {
                 case "System.Data.SqlClient":
@@ -1185,7 +1143,7 @@ namespace SPText.Common.DataHelper
                     break;
             }
             return UnityIocHelper.DBInstance.GetService<IDatabase>(DbHelper.DbType.ToString(), new ParameterOverride(
-             "connString", "DataDb"));
+             "connString", "data source=.;initial catalog=Customers;persist security info=True;user id=sa;password=123456;MultipleActiveResultSets=True;App=EntityFramework"));
         }
     }
 

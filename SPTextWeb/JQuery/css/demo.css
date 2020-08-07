@@ -91,9 +91,9 @@ div {
     word-wrap: break-word; /*断单词*/
     word-break: break-all; /*断字符*/
     white-space: nowrap; /*强制在一行内显示所有文本*/
+    overflow: hidden;
     text-overflow: clip; /*不显示省略标记，而是简单的裁切掉（结合 overflow: hidden;使用）*/
     text-overflow: ellipsis; /*当对象内文本溢出时显示省略标记（结合 overflow: hidden;使用）*/
-    overflow: hidden;
     background-size: cover; /*背景图片铺满*/
     opacity: 0.5; /*图片透明图*/
     animation: show; /*自定义动画*/

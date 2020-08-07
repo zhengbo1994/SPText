@@ -341,6 +341,7 @@
     <Compile Include="Common\Offices\ExcelHelper.cs" />
     <Compile Include="Common\PageHelper.cs" />
     <Compile Include="Common\Pagination.cs" />
+    <Compile Include="Common\PrinterSettingHelper.cs" />
     <Compile Include="Common\QRCodeHelper.cs" />
     <Compile Include="Common\Redis\Data_HashTest.cs" />
     <Compile Include="Common\Redis\Data_ListTest.cs" />

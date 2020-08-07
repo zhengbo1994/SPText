@@ -124,7 +124,7 @@ namespace SPText
         }
     }
 
-    public partial class RunSqlRepository 
+    public partial class RunSqlRepository
     {
         public static string connectionString = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
         //执行192.168.80.100端口的数据操作
@@ -151,10 +151,6 @@ namespace SPText
             }
         }
 
-
-
-
-        //執行192.168.80.100增刪改操作
         public bool ExecuteCommand(string sql, string connectionString, params SqlParameter[] parameters)
         {
             return ExecuteCommandBase(sql, parameters, connectionString);
@@ -338,8 +334,6 @@ namespace SPText
             cmd.CommandType = CommandType.Text;//cmdType;
             if (cmdParms != null)
             {
-
-
                 foreach (SqlParameter parameter in cmdParms)
                 {
                     if ((parameter.Direction == ParameterDirection.InputOutput || parameter.Direction == ParameterDirection.Input) &&
