@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Dropdown
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
+
+
+        <div class="dropup">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropup
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
+
+
+        <div class="dropup">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropup
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                <li class="dropdown-header"><a href="#">Action</a></li>
+                <li class="dropdown-header"><a href="#">Another action</a></li>
+                <li class="dropdown-header"><a href="#">Something else here</a></li>
+                <li class="divider" role="separator">分割线</li>
+                <li class="dropdown-header"><a href="#">Separated link</a></li>
+            </ul>
+        </div>
+
+
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">按钮组1</button>
+            <button type="button" class="btn btn-default">按钮组2</button>
+            <button type="button" class="btn btn-default">按钮组3</button>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">1</button>
+            <button type="button" class="btn btn-default">2</button>
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-left">
+                    <li><a href="#">Dropdown link</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Dropdown link</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a href="#">Home <span class="badge">42</span></a></li>
+            <li role="presentation"><a href="#">Profile</a></li>
+            <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
+        </ul>
+
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>警告框</strong>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                <span class="sr-only">60% 进度条</span>
+            </div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 35%">
+                <span class="sr-only">35% 条纹1 (success)</span>
+            </div>
+            <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
+                <span class="sr-only">20% 条纹2 (warning)</span>
+            </div>
+            <div class="progress-bar progress-bar-danger" style="width: 10%">
+                <span class="sr-only">10% 条纹3 (danger)</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap-wysiwyg.js"></script>
+</body>
+</html>
