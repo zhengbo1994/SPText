@@ -7,9 +7,8 @@ namespace EF_CodeDB
     using System.ComponentModel.DataAnnotations.Schema;
     using System.IO;
     using System.Linq;
-
+    //Scaffold - DbContext 'Data Source=.;Initial Catalog=Library;integrated security=true' Microsoft.EntityFrameworkCore.SqlServer
     //using Zhaoxi.EntityFrameworkCore31.Model.SqlLog;
-
     /// <summary>
     /// 日志问题
     /// </summary>
@@ -35,12 +34,12 @@ namespace EF_CodeDB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           // var builder = new ConfigurationBuilder()
-           //.SetBasePath(Directory.GetCurrentDirectory())
-           //.AddJsonFile("appsettings.json");
-           // var configuration = builder.Build();
-           // var conn = configuration.GetConnectionString("DbContext");
-           // optionsBuilder.UseSqlServer(conn);
+            // var builder = new ConfigurationBuilder()
+            //.SetBasePath(Directory.GetCurrentDirectory())
+            //.AddJsonFile("appsettings.json");
+            // var configuration = builder.Build();
+            // var conn = configuration.GetConnectionString("JDDbConnection");
+            // optionsBuilder.UseSqlServer(conn);
 
             optionsBuilder.UseSqlServer(this._IConfiguration.GetConnectionString("JDDbConnection"));
             optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
