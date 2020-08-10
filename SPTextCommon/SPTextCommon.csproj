@@ -187,7 +187,6 @@
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Security\DESEncrypt.cs" />
     <Compile Include="Security\HashEncrypt.cs" />
-    <Compile Include="Security\Md5Helper.cs" />
     <Compile Include="Serialize.cs" />
     <Compile Include="SmsHelper.cs" />
     <Compile Include="SpellHelper.cs" />

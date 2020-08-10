@@ -14,6 +14,7 @@ using SPText.Common.Redis.Service;
 using SPText.EF;
 using SPText.EF.EF2;
 using SPText.Unity;
+using SPText.Unity.Aop;
 using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
@@ -227,12 +228,45 @@ namespace SPText
             //Printer();
             #endregion
 
+            #region  加密
+            //Encrypt();
+            #endregion
+
+            #region  Aop(面向切面编程)
+            //Aop();
+            #endregion
+
+            #region  值储存方式（DataTable，Hashtable，Dictionary，List）
+            //EnumerableData();
+            #endregion<<<<<<< .mine
             #region  值储存方式（DataTable，Hashtable，Dictionary，List）
             //EnumerableData();
             #endregion
 
 
 
+
+
+
+
+
+
+
+=======
+            #region  加密
+            //Encrypt();
+            #endregion
+
+            #region  Aop(面向切面编程)
+            //Aop();
+            #endregion
+
+            #region  爬虫
+            //Crawler();
+            #endregion
+
+
+>>>>>>> .theirs
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
             Console.ReadLine();
@@ -1269,13 +1303,15 @@ namespace SPText
         }
         #endregion
 
-        #region  多线程
+        #region  多线程（Thread、ThreadPool、Task、Parallel）
         public static void ThreadDemo()
         {
+
             {
                 Action action = new Action(Show);
                 Task task = new Task(action);
                 task.Start();
+                Task.Delay(2000);//不足塞
             }
             {
                 Task task = new Task(() => Console.WriteLine("线程启动！"));
@@ -1374,6 +1410,15 @@ namespace SPText
                 Console.WriteLine("主线程方法调用结束");
                 long lResult = t.Result;//访问result   主线程等待Task的完成
                 t.Wait();//等价于上一行
+            }
+            {
+                Parallel.Invoke(
+                    () => { Console.WriteLine("1"); },
+                    () => { Console.WriteLine("2"); }
+                    );
+
+                Parallel.For(0, 2, i => { Console.WriteLine("打印"); });
+
             }
         }
 
@@ -2474,9 +2519,86 @@ namespace SPText
                 PrinterSettingHelper printer2 = new PrinterSettingHelper(1, strList);
                 printer2.PrintLable();
             }
-
         }
         #endregion
+
+        #region  加密
+        public static void Encrypt()
+        {
+            {
+                string md50 = HashEncrypt.Encrypt("1");
+                string md51 = HashEncrypt.Encrypt("1");
+                string md52 = HashEncrypt.Encrypt("123456小李");
+                string md53 = HashEncrypt.Encrypt("113456小李");
+            }
+            {
+                string desEn = HashEncrypt.Encrypt("Richard老师");
+                string desDe = HashEncrypt.Decrypt(desEn);
+                string desEn1 = HashEncrypt.Encrypt("张三李四");
+                string desDe1 = HashEncrypt.Decrypt(desEn1);
+            }
+            {
+                KeyValuePair<string, string> encryptDecrypt = HashEncrypt.GetKeyPair();
+                string rsaEn1 = HashEncrypt.Encrypt("net", encryptDecrypt.Key);
+                string rsaDe1 = HashEncrypt.Decrypt(rsaEn1, encryptDecrypt.Value);
+            }
+        }
+        #endregion
+
+
+        #region  aop(面向切面编程)
+        public static void Aop()
+        {
+            DecoratorAOP.Show();
+            ProxyAOP.Show();
+            RealProxyAOP.Show();
+            CastleProxyAOP.Show();
+            UnityConfigAOP.Show();
+        }
+        #endregion
+
+        #region  爬虫
+        public static void Crawler() 
+        {
+            try
+            {
+                #region 抓取腾讯课堂类别数据 
+                Common.Crawler.CategorySearch search = new Common.Crawler.CategorySearch();
+                search.Crawler();
+                #endregion
+
+                //获取所有页的数据
+                // 发现每一页的数据URL后面拼接的page数据不一样
+                //1.需要先获取最大页数
+                //2.就可以通过拼接不同的URL来获取每一页的数据 
+                //4.循环读取数据
+                //CourseSearch search = new CourseSearch(category);
+                //search.ShowPageData("https://ke.qq.com/course/list?tuin=a3ff93bc");
+
+                #region 抓取课程
+                Common.Crawler.TencentCategoryEntity tencentCategoryEntity = new Common.Crawler.TencentCategoryEntity() {
+                    Url = "https://ke.qq.com/course/list/.net?tuin=a3ff93bc"
+                };
+                Common.Crawler.CourseSearch search1 = new Common.Crawler.CourseSearch(tencentCategoryEntity);
+                search1.Crawler();
+                #endregion
+
+
+
+                #region 获取Ajax数据 
+                Common.Crawler.CourseSearch courseSearch = new Common.Crawler.CourseSearch();
+                courseSearch.GetAjaxRequest();
+                #endregion
+
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        #endregion
+<<<<<<< .mine
 
         #region  值储存方式（DataTable，Hashtable，Dictionary，List）
         public static void EnumerableData()
@@ -2609,7 +2731,276 @@ namespace SPText
             List<string> strList = new List<string>();
         }
         #endregion
+=======
+
+        #region  aop(面向切面编程)
+        public static void Aop()
+        {
+            DecoratorAOP.Show();
+            ProxyAOP.Show();
+            RealProxyAOP.Show();
+            CastleProxyAOP.Show();
+            UnityConfigAOP.Show();
+        }
+        #endregion
+
+        #region  爬虫
+        public static void Crawler() 
+        {
+            try
+            {
+                #region 抓取腾讯课堂类别数据 
+                Common.Crawler.CategorySearch search = new Common.Crawler.CategorySearch();
+                search.Crawler();
+                #endregion
+
+                //获取所有页的数据
+                // 发现每一页的数据URL后面拼接的page数据不一样
+                //1.需要先获取最大页数
+                //2.就可以通过拼接不同的URL来获取每一页的数据 
+                //4.循环读取数据
+                //CourseSearch search = new CourseSearch(category);
+                //search.ShowPageData("https://ke.qq.com/course/list?tuin=a3ff93bc");
+
+                #region 抓取课程
+                Common.Crawler.TencentCategoryEntity tencentCategoryEntity = new Common.Crawler.TencentCategoryEntity() {
+                    Url = "https://ke.qq.com/course/list/.net?tuin=a3ff93bc"
+                };
+                Common.Crawler.CourseSearch search1 = new Common.Crawler.CourseSearch(tencentCategoryEntity);
+                search1.Crawler();
+                #endregion
+
+
+
+                #region 获取Ajax数据 
+                Common.Crawler.CourseSearch courseSearch = new Common.Crawler.CourseSearch();
+                courseSearch.GetAjaxRequest();
+                #endregion
+
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
     }
+
+
+ #region  值储存方式（DataTable，Hashtable，Dictionary，List）
+        public static void EnumerableData()
+        {
+            {//DataTable
+                //创建一个数据表
+                DataTable CustomersTable = new DataTable();
+                CustomersTable.TableName = "Customers";
+                //声明数据表的行和列变量
+                DataColumn column;
+                DataRow row;
+                //创建一个新列，设置列的数据列性和列名，并把这个新列添加到Customers表中
+                column = new DataColumn();
+                column.DataType = System.Type.GetType("System.Int32");
+                column.ColumnName = " CustID ";
+                CustomersTable.Columns.Add(column);
+                //再创建一个新列
+                column = new DataColumn();
+                column.DataType = Type.GetType("System.String");
+                column.ColumnName = " CustLName ";
+                CustomersTable.Columns.Add(column);
+                //创建新的一行并把这个行添加到Customers表中
+                for (int i = 0; i < 10; i++)
+                {
+                    row = CustomersTable.NewRow();
+                    row["CustID "] = i;
+                    row["CustLName "] = "item " + i.ToString();
+                    CustomersTable.Rows.Add(row);
+                }
+            }
+            {//Hashtable
+                Hashtable ht = new Hashtable(); //创建一个Hashtable实例
+                ht.Add("E", "e");//添加keyvalue键值对
+                ht.Add("A", "a");
+                ht.Add("C", "c");
+                ht.Add("B", "b");
+
+                string s = (string)ht["A"];
+                if (ht.Contains("E")) //判断哈希表是否包含特定键,其返回值为true或false
+                    Console.WriteLine("the E key exist");
+                ht.Remove("C");//移除一个keyvalue键值对
+                Console.WriteLine(ht["A"]);//此处输出a
+                ht.Clear();//移除所有元素
+                Console.WriteLine(ht["A"]); //此处将不会有任何输出
+
+                foreach (DictionaryEntry de in ht) //ht为一个Hashtable实例
+                {
+                    Console.WriteLine(de.Key);//de.Key对应于keyvalue键值对key
+                    Console.WriteLine(de.Value);//de.Key对应于keyvalue键值对value
+                }
+
+                ArrayList akeys = new ArrayList(ht.Keys); //别忘了导入System.Collections
+                akeys.Sort(); //按字母顺序进行排序
+                foreach (string skey in akeys)
+                {
+                    Console.Write(skey + ":");
+                    Console.WriteLine(ht[skey]); //排序后输出
+                }
+
+            }
+            {//Dictionary
+                //创建泛型哈希表,Key类型为int,Value类型为string
+                Dictionary<int, string> myDictionary = new Dictionary<int, string>();
+                //1.添加元素
+                myDictionary.Add(1, "a");
+                myDictionary.Add(2, "b");
+                myDictionary.Add(3, "c");
+                //2.删除元素
+                myDictionary.Remove(3);
+                //3.假如不存在元素则添加元素
+                if (!myDictionary.ContainsKey(4))
+                {
+                    myDictionary.Add(4, "d");
+                }
+                //4.显示容量和元素个数
+                Console.WriteLine("元素个数：{0}", myDictionary.Count);
+                //5.通过key查找元素
+                if (myDictionary.ContainsKey(1))
+                {
+                    Console.WriteLine("key:{0},value:{1}", "1", myDictionary[1]);
+                    Console.WriteLine(myDictionary[1]);
+                }
+                //6.通过KeyValuePair遍历元素
+                foreach (KeyValuePair<int, string> kvp in myDictionary)
+                {
+                    Console.WriteLine("key={0},value={1}", kvp.Key, kvp.Value);
+
+                }
+                //7.得到哈希表键的集合
+                Dictionary<int, string>.KeyCollection keyCol = myDictionary.Keys;
+                //遍历键的集合
+                foreach (int n in keyCol)
+                {
+                    Console.WriteLine("key={0}", n);
+                }
+                //8.得到哈希表值的集合
+                Dictionary<int, string>.ValueCollection valCol = myDictionary.Values;
+                //遍历值的集合
+                foreach (string s in valCol)
+                {
+                    Console.WriteLine("value：{0}", s);
+                }
+                //9.使用TryGetValue方法获取指定键对应的值
+                string slove = string.Empty;
+                if (myDictionary.TryGetValue(5, out slove))
+                {
+                    Console.WriteLine("查找结果：{0}", slove);
+                }
+                else
+                {
+                    Console.WriteLine("查找失败");
+                }
+                //10.清空哈希表
+                myDictionary.Clear();
+            }
+            {//List
+                List<int> list = new List<int>();
+                list.Add(2);
+                list.Add(3);
+                list.Add(7);
+                foreach (int prime in list) // Loop through List with foreach
+                {
+                    Console.WriteLine(prime);
+                }
+                for (int i = 0; i < list.Count; i++) // Loop through List with for
+                {
+                    Console.WriteLine(list[i]);
+                }
+            }
+            List<string> strList = new List<string>();
+        }
+        #endregion
+    }
+
 
 
     #region  特性
