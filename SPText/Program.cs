@@ -223,7 +223,7 @@ namespace SPText
             //SharpSSH();
             #endregion
 
- #region  加密
+            #region  加密
             //Encrypt();
             #endregion
 
@@ -235,6 +235,9 @@ namespace SPText
             //Crawler();
             #endregion
 
+            #region  定时调度(有错误)
+            //Quartz();
+            #endregion
 
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
@@ -2471,7 +2474,7 @@ namespace SPText
         }
         #endregion
 
-#region  加密
+        #region  加密
         public static void Encrypt()
         {
             {
@@ -2506,7 +2509,7 @@ namespace SPText
         #endregion
 
         #region  爬虫
-        public static void Crawler() 
+        public static void Crawler()
         {
             try
             {
@@ -2524,7 +2527,8 @@ namespace SPText
                 //search.ShowPageData("https://ke.qq.com/course/list?tuin=a3ff93bc");
 
                 #region 抓取课程
-                Common.Crawler.TencentCategoryEntity tencentCategoryEntity = new Common.Crawler.TencentCategoryEntity() {
+                Common.Crawler.TencentCategoryEntity tencentCategoryEntity = new Common.Crawler.TencentCategoryEntity()
+                {
                     Url = "https://ke.qq.com/course/list/.net?tuin=a3ff93bc"
                 };
                 Common.Crawler.CourseSearch search1 = new Common.Crawler.CourseSearch(tencentCategoryEntity);
@@ -2546,6 +2550,12 @@ namespace SPText
             }
         }
         #endregion
+
+        public static void Quartz() {
+            QuartzHelper quartzHelper = new QuartzHelper();
+            quartzHelper.Show().GetAwaiter().GetResult();
+
+        }
     }
 
 
