@@ -244,6 +244,9 @@ namespace SPText
             //Crawler();
             #endregion
 
+            #region  定时调度(有错误)
+            //Quartz();
+            #endregion
 
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
@@ -2556,11 +2559,20 @@ namespace SPText
         }
         #endregion
 
+        #region  定时调度
+        public static void Quartz()
+        {
+            QuartzHelper quartzHelper = new QuartzHelper();
+            quartzHelper.Show().GetAwaiter().GetResult();
+
+        }
+        #endregion
+
         #region  值储存方式（DataTable，Hashtable，Dictionary，List）
         public static void EnumerableData()
         {
             {//DataTable
-                //创建一个数据表
+             //创建一个数据表
                 DataTable CustomersTable = new DataTable();
                 CustomersTable.TableName = "Customers";
                 //声明数据表的行和列变量
@@ -2616,7 +2628,7 @@ namespace SPText
 
             }
             {//Dictionary
-                //创建泛型哈希表,Key类型为int,Value类型为string
+             //创建泛型哈希表,Key类型为int,Value类型为string
                 Dictionary<int, string> myDictionary = new Dictionary<int, string>();
                 //1.添加元素
                 myDictionary.Add(1, "a");
@@ -3523,7 +3535,4 @@ namespace SPText
     }
     #endregion
     #endregion
-
-
-
 }
