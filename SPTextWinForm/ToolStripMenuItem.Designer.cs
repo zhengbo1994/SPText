@@ -47,6 +47,7 @@
             this.dgvDatas.RowTemplate.Height = 27;
             this.dgvDatas.Size = new System.Drawing.Size(483, 278);
             this.dgvDatas.TabIndex = 3;
+            this.dgvDatas.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvDatas_RowPostPaint);
             // 
             // toolStrip1
             // 
@@ -75,14 +76,14 @@
             // tsmiExport
             // 
             this.tsmiExport.Name = "tsmiExport";
-            this.tsmiExport.Size = new System.Drawing.Size(180, 22);
+            this.tsmiExport.Size = new System.Drawing.Size(129, 22);
             this.tsmiExport.Text = "Excel导出";
             this.tsmiExport.Click += new System.EventHandler(this.tsmiExport_Click);
             // 
             // tsmiImoprt
             // 
             this.tsmiImoprt.Name = "tsmiImoprt";
-            this.tsmiImoprt.Size = new System.Drawing.Size(180, 22);
+            this.tsmiImoprt.Size = new System.Drawing.Size(129, 22);
             this.tsmiImoprt.Text = "Excel导入";
             this.tsmiImoprt.Click += new System.EventHandler(this.tsmiImoprt_Click);
             // 

@@ -14,6 +14,7 @@ namespace SPCoreApiText.Utiltiy
     {
         string GetToken(string UserName);
     }
+
     /// <summary>
     /// 备注下：代码演示的是对称加密，所以只有一个key，在返回的信息里面是没有的
     ///         PPT介绍时，说的是非对称的，那样是把解密key公开的，前面是后台用私钥加密的，

@@ -43,5 +43,17 @@ namespace SPTextWinForm
                 this.dgvDatas.DataSource = ExcelHelper.ExcelToTable(ofd.FileName);//临时表和集合
             }
         }
+        /// <summary>
+        /// 自动编号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvDatas_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            //自动编号，与数据无关
+            Rectangle rectangle = new Rectangle(e.RowBounds.Location.X, e.RowBounds.Location.Y, dgvDatas.RowHeadersWidth - 4, e.RowBounds.Height);
+            TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), dgvDatas.RowHeadersDefaultCellStyle.Font,
+                rectangle, dgvDatas.RowHeadersDefaultCellStyle.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+        }
     }
 }
