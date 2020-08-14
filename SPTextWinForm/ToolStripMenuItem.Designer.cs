@@ -34,6 +34,7 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsmiExport = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiImoprt = new System.Windows.Forms.ToolStripMenuItem();
+            this.userPagingControlFrom1 = new SPTextWinForm.UserPagingControlFrom();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatas)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -87,11 +88,20 @@
             this.tsmiImoprt.Text = "Excel导入";
             this.tsmiImoprt.Click += new System.EventHandler(this.tsmiImoprt_Click);
             // 
+            // userPagingControlFrom1
+            // 
+            this.userPagingControlFrom1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.userPagingControlFrom1.Location = new System.Drawing.Point(12, 350);
+            this.userPagingControlFrom1.Name = "userPagingControlFrom1";
+            this.userPagingControlFrom1.Size = new System.Drawing.Size(776, 54);
+            this.userPagingControlFrom1.TabIndex = 4;
+            // 
             // ToolStripMenuItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.userPagingControlFrom1);
             this.Controls.Add(this.dgvDatas);
             this.Controls.Add(this.toolStrip1);
             this.Name = "ToolStripMenuItem";
@@ -111,5 +121,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem tsmiExport;
         private System.Windows.Forms.ToolStripMenuItem tsmiImoprt;
+        private UserPagingControlFrom userPagingControlFrom1;
     }
 }

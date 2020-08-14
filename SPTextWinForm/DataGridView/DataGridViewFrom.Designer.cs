@@ -82,6 +82,8 @@
             this.dgvProducts.Size = new System.Drawing.Size(619, 355);
             this.dgvProducts.TabIndex = 2;
             this.dgvProducts.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvProducts_CellMouseDown);
+            this.dgvProducts.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvProducts_RowPostPaint);
+            this.dgvProducts.Paint += new System.Windows.Forms.PaintEventHandler(this.dgvProducts_Paint);
             // 
             // ProductNo
             // 

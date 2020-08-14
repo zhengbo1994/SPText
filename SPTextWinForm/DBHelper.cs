@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace SPTextWinForm
     /// </summary>
     public class DBHelper
     {
-        private static string ConnStr = "server=.;uid=sa;pwd=123456;database=Customers";
+
+        private static string ConnStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        //private static string ConnStr = "server=.;uid=sa;pwd=123456;database=Customers";
         /// <summary>
         /// 执行添加、删除、修改的方法
         /// </summary>

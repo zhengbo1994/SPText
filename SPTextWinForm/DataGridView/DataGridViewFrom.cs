@@ -90,5 +90,46 @@ namespace SPTextWinForm.DataGridView
             cbo.DisplayMember = "typename";
             cbo.DataSource = DBHelper.GetDataTable(sql);//绑定数据源
         }
+        /// <summary>
+        /// 自动编号（正序）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvProducts_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            //自动编号，与数据无关
+            //Rectangle rectangle = new Rectangle(e.RowBounds.Location.X, e.RowBounds.Location.Y, dataGVScanShipment.RowHeadersWidth - 4, e.RowBounds.Height);
+            //TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), dataGVScanShipment.RowHeadersDefaultCellStyle.Font,
+            //    rectangle, dataGVScanShipment.RowHeadersDefaultCellStyle.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+        }
+        /// <summary>
+        /// 自动编号（倒序）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvProducts_Paint(object sender, PaintEventArgs e)
+        {
+            int rowcount = dgvProducts.RowCount;
+            int showcount = dgvProducts.DisplayedRowCount(true);
+            if (showcount == 0) return;
+            System.Drawing.Rectangle currrct;
+            int startNo = dgvProducts.FirstDisplayedCell.RowIndex;
+            int ColNo = dgvProducts.FirstDisplayedCell.ColumnIndex;
+            string stext = "";
+            int nowy = 0;
+            int hDelta = 0;
+            for (int i = startNo; i < startNo + showcount; i++)
+            {
+                currrct = (System.Drawing.Rectangle)dgvProducts.GetCellDisplayRectangle(ColNo, i, true);
+                nowy = currrct.Y + 2;
+                stext = string.Format("{0, 3}", rowcount - i);
+                if (hDelta == 0)
+                    hDelta = (currrct.Height - dgvProducts.Font.Height) / 2;
+                if (dgvProducts.Rows[i].Selected == true)
+                    e.Graphics.DrawString(stext, dgvProducts.Font, new System.Drawing.SolidBrush(System.Drawing.Color.White), 10, nowy + hDelta);
+                else
+                    e.Graphics.DrawString(stext, dgvProducts.Font, new System.Drawing.SolidBrush(System.Drawing.Color.Black), 10, nowy + hDelta);
+            }
+        }
     }
 }

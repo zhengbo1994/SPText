@@ -35,10 +35,32 @@ namespace SPText
                 };
             };
         }
+
+        //insert into 表(列1, 列2,...) values(value1, value2,...) SELECT SCOPE_IDENTITY();  //返回主键Id
         public object ExecuteScalar(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             using (SqlConnection conn = new SqlConnection(strConn))
             {
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.CommandType = commandType;
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters);
+                    }
+                    conn.Open();
+                    object i = cmd.ExecuteScalar();
+
+                    return i;
+                };
+            }
+        }
+
+        public object GetInsertIdBySql(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
+        {
+            using (SqlConnection conn = new SqlConnection(strConn))
+            {
+                sql = sql + " SELECT SCOPE_IDENTITY()";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.CommandType = commandType;

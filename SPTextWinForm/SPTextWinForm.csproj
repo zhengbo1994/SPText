@@ -52,7 +52,9 @@
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -88,6 +90,12 @@
     <Compile Include="DataGridView\DataGridViewFrom.Designer.cs">
       <DependentUpon>DataGridViewFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataGridView\DataGridViewPageFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataGridView\DataGridViewPageFrom.Designer.cs">
+      <DependentUpon>DataGridViewPageFrom.cs</DependentUpon>
+    </Compile>
     <Compile Include="DBHelper.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="ListView.cs">
@@ -115,6 +123,12 @@
     <Compile Include="MenuStripAndToolStripMenuItemNew.Designer.cs">
       <DependentUpon>MenuStripAndToolStripMenuItemNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenFileDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OpenFileDialogForm.Designer.cs">
+      <DependentUpon>OpenFileDialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TabControlAndToolStripMenuItem.cs">
@@ -141,6 +155,12 @@
     <Compile Include="TreeViewAndDataGridView.Designer.cs">
       <DependentUpon>TreeViewAndDataGridView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserPagingControlFrom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserPagingControlFrom.Designer.cs">
+      <DependentUpon>UserPagingControlFrom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="AddStudentForm.resx">
       <DependentUpon>AddStudentForm.cs</DependentUpon>
@@ -154,6 +174,9 @@
     <EmbeddedResource Include="DataGridView\DataGridViewFrom.resx">
       <DependentUpon>DataGridViewFrom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataGridView\DataGridViewPageFrom.resx">
+      <DependentUpon>DataGridViewPageFrom.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListView.resx">
       <DependentUpon>ListView.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +189,9 @@
     <EmbeddedResource Include="MenuStripAndToolStripMenuItemNew.resx">
       <DependentUpon>MenuStripAndToolStripMenuItemNew.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OpenFileDialogForm.resx">
+      <DependentUpon>OpenFileDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -175,6 +201,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="TabControlAndToolStripMenuItem.resx">
       <DependentUpon>TabControlAndToolStripMenuItem.cs</DependentUpon>
@@ -191,6 +218,9 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UserPagingControlFrom.resx">
+      <DependentUpon>UserPagingControlFrom.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -201,6 +231,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\灰上页-png.x-png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
