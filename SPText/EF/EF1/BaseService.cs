@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace SPText.EF
 {
@@ -207,6 +208,25 @@ namespace SPText.EF
             }
         }
         #endregion
+
+        /// <summary>
+        /// 分布式事务
+        /// </summary>
+        /// <param name="action"></param>
+        public void TransactionScopeInvoke(Action action)
+        {
+            TransactionScope transactionScope = null;
+            try
+            {
+                transactionScope = new TransactionScope();
+                action.Invoke();
+                transactionScope.Complete();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
     public class PageResult<T>
     {
@@ -216,7 +236,7 @@ namespace SPText.EF
         public List<T> DataList { get; set; }
     }
 
-    public class DatabaseContext :DbContext
+    public class DatabaseContext : DbContext
     {
         public virtual DbSet<Company> Company { get; set; }
 
