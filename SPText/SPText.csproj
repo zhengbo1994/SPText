@@ -580,10 +580,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SPMVCText\SPMVCText.csproj">
-      <Project>{50af66a8-7410-4efe-8e8e-47f1a61cbb67}</Project>
-      <Name>SPMVCText</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SPTextCommon\SPTextCommon.csproj">
       <Project>{d86a4fa1-d5aa-4f84-bc2e-eee0da5c198f}</Project>
       <Name>SPTextCommon</Name>
