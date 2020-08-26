@@ -394,10 +394,12 @@
     <Compile Include="Common\Serialize\SerializeHelper.cs" />
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\SFtpHelper.cs" />
+    <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
     <Compile Include="Common\UploadFileContext.cs" />
     <Compile Include="Common\ValidateCodeImage.cs" />
     <Compile Include="Common\WebHelper.cs" />
+    <Compile Include="Common\WebSocketHelper.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="EF\EF1\BaseService.cs" />
     <Compile Include="EF\EF0\DatabaseContext.cs" />

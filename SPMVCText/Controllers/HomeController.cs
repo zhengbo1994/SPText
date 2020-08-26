@@ -32,5 +32,27 @@ namespace SPMVCText.Controllers
 
             return View();
         }
+        public ActionResult WebSocket()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// WebSocket建立链接的方法
+        /// </summary>
+        /// <param name="name"></param>
+        public void MyWebSocket(string name)
+        {
+            HttpContext.Session.Add("userName", HttpContext);
+            SPText.Common.WebSocketHelper webSocket = new SPText.Common.WebSocketHelper();
+            if (HttpContext.IsWebSocketRequest)
+            {
+                HttpContext.AcceptWebSocketRequest(webSocket.ProcessChat);
+            }
+            else
+            {
+                HttpContext.Response.Write("我不处理");
+            }
+        }
     }
 }

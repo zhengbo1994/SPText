@@ -317,6 +317,7 @@
     <Content Include="Views\Fourth\.vs\VSWorkspaceState.json" />
     <Content Include="Views\Fourth\.vs\过渡动画与组件以及传参-2020-2-15\v16\.suo" />
     <Content Include="Views\Fourth\README.md" />
+    <Content Include="Views\Home\WebSocket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

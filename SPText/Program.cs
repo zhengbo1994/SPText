@@ -34,6 +34,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml.Serialization;
 using Unity;
 using static Microsoft.Graph.CoreConstants.MimeTypeNames;
@@ -246,6 +247,10 @@ namespace SPText
 
             #region  定时调度(有错误)
             //Quartz();
+            #endregion
+
+            #region  WebSocket
+            //WebSocket();
             #endregion
 
             //dynamic  避开编译器检查
@@ -1287,7 +1292,9 @@ namespace SPText
         #region  多线程（Thread、ThreadPool、Task、Parallel）
         public static void ThreadDemo()
         {
-
+            {
+                new ThreadHelper().Show();//多线程所有方法
+            }
             {
                 Action action = new Action(Show);
                 Task task = new Task(action);
@@ -2697,6 +2704,22 @@ namespace SPText
                 }
             }
             List<string> strList = new List<string>();
+        }
+        #endregion
+
+        #region  WebSocket
+        public static void WebSocket()
+        {
+            WebSocketHelper webSocket = new WebSocketHelper();
+            if (HttpContext.Current.IsWebSocketRequest)
+            {
+                HttpContext.Current.AcceptWebSocketRequest(webSocket.ProcessChat);
+                HttpContext.Current.AcceptWebSocketRequest(webSocket.ProcessChat0);
+            }
+            else
+            {
+                HttpContext.Current.Response.Write("我不处理");
+            }
         }
         #endregion
     }
