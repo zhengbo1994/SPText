@@ -85,14 +85,6 @@ namespace SPText
             //}
             #endregion
 
-            #region  多线程、高并发
-            //1.分布式（应用程序、文件、数据库）
-            //2.缓存
-            //3.集群
-            //3.消息队列
-            //4.延迟加载
-            #endregion
-
             #region  反射
             //AssemblyActivator();
             #endregion
@@ -214,7 +206,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            DatabaseOperations();
+            //DatabaseOperations();
             #endregion
 
             #region  二维码
@@ -259,6 +251,11 @@ namespace SPText
 
             #region  
             //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
+            //1.分布式（应用程序、文件、数据库）
+            //2.缓存
+            //3.集群
+            //3.消息队列
+            //4.延迟加载
             #endregion
         }
         #region  linq交叉并补
@@ -2471,8 +2468,13 @@ namespace SPText
         #region  SFtp
         public static void SharpSSH()
         {
+
+            string SftpIp = "192.168.3.3";
+            string SftpPort = "23";
+            string SftpUser = "user";
+            string SftpPwd = "user";
             //上传至FTP
-            SFtpHelper sftpHelper = new SFtpHelper("SftpIp", Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
+            SFtpHelper sftpHelper = new SFtpHelper(SftpIp, Convert.ToInt32(SftpPort), SftpUser, SftpPwd);
             if (sftpHelper.Connect())
             {
                 if (SFtpHelper.Put("本地路径", "远程路径"))
