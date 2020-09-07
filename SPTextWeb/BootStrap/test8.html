@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>基于Bootstrap的步骤引导html页面</title>
+    <script src="bootstrap/js/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</head>
+<style type="text/css">
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+    }
+
+    #myTab li {
+        width: 25%;
+        float: left;
+        height: 40px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        #myTab li img {
+            float: left;
+            height: 40px;
+        }
+
+        #myTab li a {
+            color: white;
+            text-align: center;
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+        }
+
+    .blue {
+        background: #0f9af2;
+    }
+
+    .gray {
+        background: #dfdfdf;
+    }
+
+    .tabPaneUl {
+        width: 700px;
+        margin: 0 auto;
+        list-style: none;
+    }
+
+        .tabPaneUl li {
+            height: 40px;
+            line-height: 40px;
+        }
+
+    .tab-pane {
+        margin-top: 50px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myTabContent").children("div").css("display", "none");
+        $("#myTabContent").children("div").eq(0).css("display", "block");
+    });
+
+    //dom操作
+    var domFun = {
+
+    };
+
+    //事件操作
+    var eventFun = {
+        setStep: function (index) {
+            for (var i = 2; i <= index; i++) {
+                $("#step" + i + "Li").addClass("blue").removeClass("gray");
+                $("#step" + i + "Img").attr("src", "images/jiantou1.png");//蓝色蓝
+            }
+            for (var i = index + 1; i <= 4; i++) {
+                $("#step" + i + "Li").addClass("gray").removeClass("blue");
+                $("#step" + i + "Img").attr("src", "images/jiantou3.png");//灰色
+            }
+            $("#step" + (index + 1) + "Img").attr("src", "images/jiantou2.png");//蓝灰色
+
+            $("#myTabContent").children("div").css("display", "none")
+            $("#myTabContent").children("div").eq(index - 1).css("display", "block");
+        }
+    };
+</script>
+<body>
+    <div id="page-inner">
+        <div class="row" style="padding:10px;background: #bebebe;display:block">
+            <div class="col-md-12">
+                <div class="input-group" style="width: 60%; float: left;font-size: 20px;font-weight: bolder;">
+                    创建会议
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:30px">
+            <ul id="myTab" role="tablist">
+                <li id="step1Li" class="active blue">
+                    <a href="#step1" onclick="eventFun.setStep(1)" role="tab" data-toggle="tab">
+                        <div>申请</div>
+                    </a>
+                </li>
+                <li id="step2Li" class="gray">
+                    <img id="step2Img" src="images/jiantou2.png" /><!--蓝灰色-->
+                    <a href="#step2" onclick="eventFun.setStep(2)" role="tab" data-toggle="tab">
+                        <div>审核<span>销售</span><span>技术</span><span>产品</span><span>财务</span></div>
+                    </a>
+                </li>
+                <li id="step3Li" class="gray">
+                    <img id="step3Img" src="images/jiantou3.png" /><!--灰色-->
+                    <a href="#step3" onclick="eventFun.setStep(3)" role="tab" data-toggle="tab">
+                        <div>采购</div>
+                        <!--3.流程3-->
+                    </a>
+                </li>
+                <li id="step4Li" class="gray">
+                    <img id="step4Img" src="images/jiantou3.png" /><!--灰色-->
+                    <a href="#step4" onclick="eventFun.setStep(4)" role="tab" data-toggle="tab">
+                        4.流程
+                    </a>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div id="step1" class="tab-pane fade active in">
+                    1
+                </div>
+                <div id="step2" class="tab-pane fade">
+                    2
+                </div>
+                <div id="step3" class="tab-pane fade">
+                    3
+                </div>
+                <div id="step4" class="tab-pane fade">
+                    4
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
