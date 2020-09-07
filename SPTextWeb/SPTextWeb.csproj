@@ -68,9 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BootStrap\bootstrap\js\jquery.min.js" />
+    <Content Include="BootStrap\images\jiantou1.png" />
+    <Content Include="BootStrap\images\jiantou2.png" />
+    <Content Include="BootStrap\images\jiantou3.png" />
     <Content Include="BootStrap\test5.html" />
     <Content Include="BootStrap\test6.html" />
     <Content Include="BootStrap\test7.html" />
+    <Content Include="BootStrap\test8.html" />
+    <Content Include="BootStrap\test9.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

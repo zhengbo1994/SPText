@@ -53,7 +53,7 @@ namespace SPText.Common
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
@@ -124,6 +124,34 @@ namespace SPText.Common
             }
         }
 
+        public string CheckConnectyAndGetFileList()
+        {
+            try
+            {
+                //首先连接
+                if (!Connected)
+                {
+                    m_session.connect();
+                    m_channel = m_session.openChannel("sftp");
+                    m_channel.connect();
+                    m_sftp = (ChannelSftp)m_channel;
+                }
+                //其次获取根目录
+                Tamir.SharpSsh.java.util.Vector vvv = m_sftp.ls("/");
+                ArrayList objList = new ArrayList();
+                foreach (Tamir.SharpSsh.jsch.ChannelSftp.LsEntry qqq in vvv)
+                {
+                    objList.Add(qqq.getFilename());
+                }
+                this.Disconnect();
+                return "Succeed";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
         //获取SFTP文件列表
         public ArrayList GetFileList(string remotePath)
         {
@@ -186,6 +214,18 @@ namespace SPText.Common
             }
             return false;
 
+        }
+        public bool Rename(string oldPath, string newPath)
+        {
+            try
+            {
+                m_sftp.rename(oldPath, newPath);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
 

@@ -339,6 +339,7 @@
     <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
+    <Compile Include="Common\FtpHelper.cs" />
     <Compile Include="Common\IO\DirFileHelper.cs" />
     <Compile Include="Common\ExcelAdoDotNetHelper.cs" />
     <Compile Include="Common\ExcelHelper.cs" />
@@ -394,10 +395,12 @@
     <Compile Include="Common\Serialize\SerializeHelper.cs" />
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\SFtpHelper.cs" />
+    <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
     <Compile Include="Common\UploadFileContext.cs" />
     <Compile Include="Common\ValidateCodeImage.cs" />
     <Compile Include="Common\WebHelper.cs" />
+    <Compile Include="Common\WebSocketHelper.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="EF\EF1\BaseService.cs" />
     <Compile Include="EF\EF0\DatabaseContext.cs" />
@@ -578,10 +581,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SPMVCText\SPMVCText.csproj">
-      <Project>{50af66a8-7410-4efe-8e8e-47f1a61cbb67}</Project>
-      <Name>SPMVCText</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SPTextCommon\SPTextCommon.csproj">
       <Project>{d86a4fa1-d5aa-4f84-bc2e-eee0da5c198f}</Project>
       <Name>SPTextCommon</Name>

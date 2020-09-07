@@ -34,6 +34,7 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml.Serialization;
 using Unity;
 using static Microsoft.Graph.CoreConstants.MimeTypeNames;
@@ -82,14 +83,6 @@ namespace SPText
 
             //    Console.WriteLine("123");
             //}
-            #endregion
-
-            #region  多线程、高并发
-            //1.分布式（应用程序、文件、数据库）
-            //2.缓存
-            //3.集群
-            //3.消息队列
-            //4.延迟加载
             #endregion
 
             #region  反射
@@ -213,7 +206,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            DatabaseOperations();
+            //DatabaseOperations();
             #endregion
 
             #region  二维码
@@ -248,12 +241,21 @@ namespace SPText
             //Quartz();
             #endregion
 
+            #region  WebSocket
+            //WebSocket();
+            #endregion
+
             //dynamic  避开编译器检查
             Console.WriteLine("视频代码笔记！");
             Console.ReadLine();
 
             #region  
             //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
+            //1.分布式（应用程序、文件、数据库）
+            //2.缓存
+            //3.集群
+            //3.消息队列
+            //4.延迟加载
             #endregion
         }
         #region  linq交叉并补
@@ -1287,7 +1289,9 @@ namespace SPText
         #region  多线程（Thread、ThreadPool、Task、Parallel）
         public static void ThreadDemo()
         {
-
+            {
+                new ThreadHelper().Show();//多线程所有方法
+            }
             {
                 Action action = new Action(Show);
                 Task task = new Task(action);
@@ -2464,8 +2468,13 @@ namespace SPText
         #region  SFtp
         public static void SharpSSH()
         {
+
+            string SftpIp = "192.168.3.3";
+            string SftpPort = "23";
+            string SftpUser = "user";
+            string SftpPwd = "user";
             //上传至FTP
-            SFtpHelper sftpHelper = new SFtpHelper("SftpIp", Convert.ToInt32("SftpPort"), "SftpUser", "SftpPwd");
+            SFtpHelper sftpHelper = new SFtpHelper(SftpIp, Convert.ToInt32(SftpPort), SftpUser, SftpPwd);
             if (sftpHelper.Connect())
             {
                 if (SFtpHelper.Put("本地路径", "远程路径"))
@@ -2697,6 +2706,22 @@ namespace SPText
                 }
             }
             List<string> strList = new List<string>();
+        }
+        #endregion
+
+        #region  WebSocket
+        public static void WebSocket()
+        {
+            WebSocketHelper webSocket = new WebSocketHelper();
+            if (HttpContext.Current.IsWebSocketRequest)
+            {
+                HttpContext.Current.AcceptWebSocketRequest(webSocket.ProcessChat);
+                HttpContext.Current.AcceptWebSocketRequest(webSocket.ProcessChat0);
+            }
+            else
+            {
+                HttpContext.Current.Response.Write("我不处理");
+            }
         }
         #endregion
     }

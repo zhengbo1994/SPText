@@ -317,6 +317,7 @@
     <Content Include="Views\Fourth\.vs\VSWorkspaceState.json" />
     <Content Include="Views\Fourth\.vs\过渡动画与组件以及传参-2020-2-15\v16\.suo" />
     <Content Include="Views\Fourth\README.md" />
+    <Content Include="Views\Home\WebSocket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -333,6 +334,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SPText\SPText.csproj">
+      <Project>{380fc052-e6f9-46ed-90fd-a543eb996f8a}</Project>
+      <Name>SPText</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
