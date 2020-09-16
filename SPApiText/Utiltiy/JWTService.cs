@@ -40,7 +40,7 @@ namespace SPCoreApiText.Utiltiy
                //new Claim
             };
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"]));
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);//对称可逆加密
             /**
              *  Claims (Payload)
                 Claims 部分包含了一些跟这个 token 有关的重要信息。 JWT 标准规定了一些字段，下面节选一些字段: 
