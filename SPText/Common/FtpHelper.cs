@@ -138,30 +138,6 @@ namespace SPText.Common
             }
             return dir;
         }
-        /// <summary>
-        /// 创建目录
-        /// </summary>
-        /// <param name="errorMsg"></param>
-        /// <returns></returns>
-        private string MakeDir(string dir)
-        {
-            string errorMsg = "";
-            FtpWebRequest reqFTP;
-            try
-            {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(dir));
-                reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
-                reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
-                reqFTP.KeepAlive = false;
-                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-                response.Close();
-            }
-            catch (Exception ex)
-            {
-                errorMsg = "创建文件失败，原因: " + ex.Message;
-            }
-            return errorMsg;
-        }
         #endregion
 
 
