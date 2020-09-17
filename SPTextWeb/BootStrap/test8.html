@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>基于Bootstrap的步骤引导html页面</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <script src="bootstrap/js/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <style type="text/css">
@@ -61,6 +62,204 @@
             margin-top: 50px;
         }
     </style>
+
+    <style type="text/css">
+        .step {
+            position: relative;
+            vertical-align: top;
+            display: inline-block;
+        }
+
+        .step-head {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            line-height: 19px;
+            text-align: center;
+            vertical-align: top;
+            color: #bfcbd9;
+            font-size: 14px;
+            border: 2px solid #bfcbd9;
+            z-index: 10000;
+        }
+
+        .step-main {
+            font-size: 12px;
+            color: #48576a;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 9px;
+            height: 5px;
+            left: 22px;
+            right: -5px;
+            display: inline-block;
+            background-color: #bfcbd9;
+            z-index: 10000;
+        }
+
+        .step-circle {
+            margin: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #bfcbd9;
+        }
+
+        .is-sucess > .step-head {
+            color: #2f318e;
+            border-color: #2f318e;
+        }
+
+            .is-sucess > .step-head .step-circle {
+                background-color: #2f318e;
+            }
+
+            .is-sucess > .step-head > .step-line {
+                background-color: #2f318e;
+            }
+
+
+        .last-sucess > .step-head {
+            color: #2f318e;
+            border-color: #2f318e;
+        }
+
+            .last-sucess > .step-head .step-circle {
+                background-color: #2f318e;
+            }
+    </style>
+
+    <style type="text/css">
+        .card {
+            position: relative;
+            margin-bottom: 24px;
+            background-color: #fff;
+            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-progress {
+            padding: 16px;
+            background-color: #fafafa;
+            margin: 0 auto;
+        }
+
+            .step-progress .step-slider {
+                width: 100%;
+            }
+
+                .step-progress .step-slider .step-slider-item {
+                    width: 25%;
+                    height: 1px;
+                    position: relative;
+                    float: left;
+                    background-color: #e0e0e0;
+                }
+
+                    .step-progress .step-slider .step-slider-item:after {
+                        content: "";
+                        width: 10px;
+                        height: 10px;
+                        position: absolute;
+                        top: -6px;
+                        right: 0;
+                        background-color: #fafafa;
+                        border: 1px solid #e0e0e0;
+                        border-radius: 50%;
+                        z-index: 2;
+                        transition: all 0.3s ease-out 0.5s;
+                        -webkit-transition: all 0.3s ease-out 0.5s;
+                    }
+
+                    .step-progress .step-slider .step-slider-item:before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 0%;
+                        height: 1px;
+                        background-color: #b0bec5;
+                        z-index: 1;
+                        -webkit-transition: all 0.5s ease-out;
+                    }
+
+                    .step-progress .step-slider .step-slider-item.active:before {
+                        width: 100%;
+                        background-color: #ff8f00;
+                    }
+
+                    .step-progress .step-slider .step-slider-item.active:after {
+                        border-color: #ff8f00;
+                    }
+
+        .step-content {
+            padding: 16px 0;
+        }
+
+            .step-content .step-content-foot {
+                text-align: right;
+            }
+
+                .step-content .step-content-foot button {
+                    border: 0;
+                    padding: 8px 16px;
+                    background-color: #cfd8dc;
+                    font-size: 14px;
+                    border-radius: 3px;
+                    outline: 0;
+                }
+
+                    .step-content .step-content-foot button:active {
+                        background-color: rgba(255, 255, 255, 0.2);
+                    }
+
+                    .step-content .step-content-foot button.out {
+                        display: none;
+                    }
+
+                    .step-content .step-content-foot button.disable {
+                        background-color: #eceff1;
+                    }
+
+                    .step-content .step-content-foot button.active {
+                        background-color: #00acc1;
+                        color: white;
+                    }
+
+            .step-content .step-content-body {
+                padding: 16px 0;
+                text-align: center;
+                font-size: 18px;
+            }
+
+                .step-content .step-content-body.out {
+                    display: none;
+                }
+    </style>
+    <style type="text/css">
+        .navigation_line {
+            display: inline;
+            border-bottom: 3px solid red;
+            margin-top: 50px;
+        }
+
+        .navigation_circular {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: inline;
+            border: 1px solid red;
+            background-color: red;
+        }
+        .examine_top > div > p {
+            margin-left: 60px;
+        }
+        .examine_top > div > h3 {
+            margin-left: 110px;
+        }
+    </style>
 </head>
 
 
@@ -116,6 +315,113 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="row">
+            <button οnclick="addStep()">addStep</button>
+            <button οnclick="clearSteps()">clearSteps</button>
+            <div class="steps">
+                <div class="step ">
+                    <div class="step-head">
+                        <div class="step-line"></div>
+                        <div class="step-icon">
+                            1
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        步骤一
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-head">
+                        <div class="step-line"></div>
+                        <div class="step-icon">
+                            2
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        步骤二
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-head">
+                        <div class="step-line"></div>
+                        <div class="step-icon">
+                            <div class="step-circle"></div>
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        步骤三
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-head">
+
+                        <div class="step-icon">
+                            <div class="step-circle"></div>
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        步骤四
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card step-progress">
+            <div class="step-slider">
+                <div data-id="step1" class="step-slider-item"></div>
+                <div data-id="step2" class="step-slider-item"></div>
+                <div data-id="step3" class="step-slider-item"></div>
+                <div data-id="step4" class="step-slider-item"></div>
+            </div>
+            <div class="step-content">
+                <div id="step1" class="step-content-body">Step 1</div>
+                <div id="step2" class="step-content-body out">Step 2</div>
+                <div id="step3" class="step-content-body out">Step 3</div>
+                <div id="step4" class="step-content-body out">Step 4</div>
+                <div id="stepLast" class="step-content-body out">Completed</div>
+                <div class="step-content-foot">
+                    <button type="button" class="active" name="prev">Prev</button>
+                    <button type="button" class="active" name="next">Next</button>
+                    <button type="button" class="active out" name="finish">Finish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-2 navigation_circular"></div>
+            <div class="col-md-3 navigation_line"></div>
+            <div class="col-md-2 navigation_circular"></div>
+            <div class="col-md-3 navigation_line"></div>
+            <div class="col-md-2 navigation_circular"></div>
+        </div>
+        <div class="row examine_top">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <h3>提审</h3>
+                <p>张三 2020-09-09 提审</p>
+            </div>
+            <div class="col-md-4">
+                <h3>审核</h3>
+                <p>张三0 2020-09-09 已审核</p>
+                <p>张三1 2020-09-09 已审核</p>
+                <p>张三2 2020-09-09 已审核</p>
+                <p>张三3 2020-09-09 已审核</p>
+            </div>
+            <div class="col-md-3">
+                <h3>采购审核</h3>
+                <p>张三 2020-09-09 采购审核</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -147,4 +453,96 @@
             $("#myTabContent").children("div").eq(index - 1).css("display", "block");
         }
     };
+</script>
+
+<script type="text/javascript">
+    var steps = $(".step");
+    var stepIndex = 0;
+
+    setStep(stepIndex);
+
+    $(".step-icon").click(function () {
+        var me = this;
+        stepIndex = $(me).parents(".step").index();
+        setStep(stepIndex);
+    });
+
+
+    function setStep(stepIndex) {
+        $(steps).removeClass("is-sucess");
+        $(steps).removeClass("last-sucess");
+
+        for (var i = 0; i <= stepIndex; i++) {
+            var step = steps[i];
+            if (i < stepIndex) {
+                $(step).addClass("is-sucess");
+            }
+            else {
+                $(step).addClass("last-sucess");
+            }
+        }
+    }
+
+
+    function clearSteps() {
+        stepIndex = -1;
+        setStep(stepIndex);
+
+    }
+
+
+    function addStep(addnum) {
+        if (!addnum) { addnum = 1 }
+        stepIndex += addnum;
+        setStep(stepIndex);
+    }
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        var step = 0;
+        var stepItem = $('.step-progress .step-slider .step-slider-item');
+
+        // Step Next
+        $('.step-content .step-content-foot button[name="next"]').on('click', function () {
+            var instance = $(this);
+            if (stepItem.length - 1 < step) {
+                return;
+            }
+            if (step == (stepItem.length - 2)) {
+                instance.addClass('out');
+                instance.siblings('button[name="finish"]').removeClass('out');
+            }
+            $(stepItem[step]).addClass('active');
+            $('.step-content-body').addClass('out');
+            $('#' + stepItem[step + 1].dataset.id).removeClass('out');
+            step++;
+        });
+
+        // Step Last
+        $('.step-content .step-content-foot button[name="finish"]').on('click', function () {
+            if (step == stepItem.length) {
+                return;
+            }
+            $(stepItem[stepItem.length - 1]).addClass('active');
+            $('.step-content-body').addClass('out');
+            $('#stepLast').removeClass('out');
+        });
+
+        // Step Previous
+        $('.step-content .step-content-foot button[name="prev"]').on('click', function () {
+            var instance = $(this);
+            $(stepItem[step]).removeClass('active');
+            if (step == (stepItem.length - 1)) {
+                instance.siblings('button[name="next"]').removeClass('out');
+                instance.siblings('button[name="finish"]').addClass('out');
+            }
+            $('.step-content-body').addClass('out');
+            $('#' + stepItem[step].dataset.id).removeClass('out');
+            if (step <= 0) {
+                return;
+            }
+            step--;
+        });
+    });
 </script>

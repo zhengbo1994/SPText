@@ -71,6 +71,7 @@
     <Content Include="BootStrap\images\jiantou1.png" />
     <Content Include="BootStrap\images\jiantou2.png" />
     <Content Include="BootStrap\images\jiantou3.png" />
+    <Content Include="BootStrap\test10.html" />
     <Content Include="BootStrap\test5.html" />
     <Content Include="BootStrap\test6.html" />
     <Content Include="BootStrap\test7.html" />

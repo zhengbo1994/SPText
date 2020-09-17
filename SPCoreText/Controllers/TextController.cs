@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Autofac.Core;
 using Consul;
 using Microsoft.AspNetCore.Mvc;
 using SPCoreApiText.Utiltiy;
@@ -18,6 +19,35 @@ namespace SPCoreText.Controllers
         public IActionResult ApiIndex()
         {
             return View();
+        }
+
+        public void Show() {
+            Uri uri = new Uri("http://localhost:8500");
+            using (ConsulClient consulClient = new ConsulClient(c => c.Address = new Uri("http://localhost:8500"))) {
+                Dictionary<string, AgentService> services = consulClient.Agent.Services().Result.Response;
+                foreach (var kv in services)
+                {
+                    Console.WriteLine($"key={kv.Key},{kv.Value.Address},{kv.Value.ID},{kv.Value.Service},{kv.Value.Port}");
+                }
+                var agentServices = services.Where(s => s.Value.Service.Equals("apiservice1", StringComparison.CurrentCultureIgnoreCase)).Select(s => s.Value);
+
+                var agentService = agentServices.ElementAt(Environment.TickCount % agentServices.Count());
+                Console.WriteLine($"key={agentService.Address},{agentService.ID},{agentService.Service},{agentService.Port}");
+                var resultUrl = $"{uri.Scheme}://{agentService.Address}:{agentService.Port}{uri.PathAndQuery}";
+                string result = WebApiHelperExtend.InvokeApi(resultUrl, HttpMethod.Get);
+            }
+
+
+            Uri url = new Uri("http://localhost:8500/");
+            using (ConsulClient consul = new ConsulClient(s => s.Address = new Uri("http://localhost:8511"))) {
+                Dictionary<string, AgentService> pairs = consul.Agent.Services().Result.Response;
+                foreach (var item in pairs)
+                {
+                    
+                }
+
+                var a = pairs.Where(s => s.Value.Service.Equals("aaa", StringComparison.CurrentCultureIgnoreCase)).Select(s => s.Value);
+            }
         }
 
         public IActionResult Info()
