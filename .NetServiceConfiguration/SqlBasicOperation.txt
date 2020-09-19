@@ -1,4 +1,4 @@
-1、创建数据库
+﻿1、创建数据库
 CREATE DATABASE database-name
 
 2、删除数据库
@@ -23,6 +23,7 @@ drop table tabname
 
 6、增加一个列
 Alter table tabname add column col type
+alter table 表名 add 字段名 type not null default 0
 注：列增加后将不能删除。DB2中列加上后数据类型也不能改变，唯一能改变的是增加varchar类型的长度。
 
 7、添加主键： Alter table tabname add primary key(col)
@@ -48,12 +49,24 @@ Alter table tabname add column col type
 最大：select max(field1) as maxvalue from table1
 最小：select min(field1) as minvalue from table1
 
+11、sql修改字段长度
+假如有名T1,字段名F1,原来F1为varchar(3),现在要改为varchar(10),则可以这么写:
+alter table T1 alter column F1 varchar(10)
 
-11.临时表
-select * init #table from table
-create table #table(
-id int identity(1,1),
-name nvarchar(50) not null,
+12、批量插入
+insert into [表]([字段]) SELECT [字段] from [表] WHERE Id=2
 
-)
+13、清除数据
+TRUNCATE TABLE [表]
 
+14、修改字段名：
+alter table 表名 rename column A to B
+
+15、修改字段类型：
+alter table 表名 alter column 字段名 type not null
+
+16、修改字段默认值
+alter table 表名 add default (0) for 字段名 with values
+
+17、删除字段：
+alter table 表名 drop column 字段名;

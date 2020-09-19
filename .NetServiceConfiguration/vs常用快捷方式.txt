@@ -1,0 +1,32 @@
+Ctrl + Shift + B = 生成项目
+Ctrl + K，Ctrl + C = 注释选定行
+Ctrl + K，Ctrl + U = 取消选定行的注释
+Ctrl + K，Ctrl + D = 正确对齐所有代码
+Shift+D = 删除整行
+Ctrl+D = 复制整行
+Ctrl + Shift + S = 保存所有文件和项目
+Ctrl + Delete = 删除光标右侧的所有字
+Ctrl + - = 让光标移动到它先前的位置
+Ctrl +Shift + 左右箭头  选定单词
+Ctrl +M,Ctrl+L  将所有过程设置为相同的隐藏或是显示
+Alt + Shift + 箭头键(←,↑,↓,→) = 选择代码的自定义部分
+Ctrl + } = 匹配大括号、括号
+
+
+
+
+
+Ctrl + Alt + P = 附加到进程
+
+
+
+
+
+
+
+
+
+
+
+
+

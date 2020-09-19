@@ -430,10 +430,8 @@
         //$("#navStr").html(strPage);
     }
 
-
-
     // 定义一个深拷贝函数  接收目标target参数
-    var deepClone= function(target) {
+    var deepClone = function (target) {
         // 定义一个变量
         let result;
         // 如果当前需要深拷贝的是一个对象的话
@@ -464,8 +462,40 @@
         }
         // 返回最终结果
         return result;
-=======
-    //obj 拷贝对象(object or array)
+    }
+
+    var deepCloneConversion= function deepClone() {
+        return JSON.parse(JSON.stringify(obj))
+    }
+
+    var deepPrototypeClone= function deepClone(obj) {
+        function isClass(o) {
+            if (o === null) return "Null";
+            if (o === undefined) return "Undefined";
+            return Object.prototype.toString.call(o).slice(8, -1);
+        }
+        var result;
+        var oClass = isClass(obj);
+        if (oClass === "Object") {
+            result = {};
+        } else if (oClass === "Array") {
+            result = [];
+        } else {
+            return obj;
+        }
+        for (var key in obj) {
+            var copy = obj[key];
+            if (isClass(copy) == "Object") {
+                result[key] = arguments.callee(copy);//递归调用    
+            } else if (isClass(copy) == "Array") {
+                result[key] = arguments.callee(copy);
+            } else {
+                result[key] = obj[key];
+            }
+        }
+        return result;
+    }
+
     //cache 缓存数组
     var deepCopy = function deepCopy(obj, cache = []) {
         if (obj === null || typeof obj !== 'object') {
@@ -487,7 +517,40 @@
         })
 
         return copy
->>>>>>> fa641b5990f1b2545d894741bc2328b8717b0462
+    }
+
+    //防抖
+    function debounce(func, wait) {
+        let timeout;
+        return function () {
+            let context = this;
+            let args = arguments;
+
+            if (timeout) clearTimeout(timeout);
+
+            timeout = setTimeout(() => {
+                func.apply(context, args)
+            }, wait);
+        }
+    }
+
+    //节流
+    function throttle(func, wait) {
+        let previous = 0;
+        return function () {
+            let now = Date.now();
+            let context = this;
+            let args = arguments;
+            if (now - previous > wait) {
+                func.apply(context, args);
+                previous = now;
+            }
+        }
+    }
+
+    //判断小数是否相等
+    function epsEqu(x, y) {
+        return Math.abs(x - y) < Math.pow(2, -52);
     }
 
     this.getQueryString = getQueryString;
@@ -510,9 +573,21 @@
     this.getForm = getForm;
     this.setJson = setJson;
     this.isArray = isArray;
-    //终止进程
-    this.abortThread = abortThread;
+    this.abortThread = abortThread;//终止进程
     this.deepClone = deepClone;
+    this.deepPrototypeClone = deepPrototypeClone;
+    this.deepCloneConversion = deepCloneConversion;
+    this.debounce = debounce;
+    this.throttle = throttle;
+    this.epsEqu = epsEqu;
     this.deepCopy = deepCopy;
     this.getpage = getpage;
 }).call(this)
+//1、find 查询数组中符合条件的第一个元素，如果没有符合条件的元素则返回undefined
+//var dogs = arr.find(v => v === 4);
+//2、filter 过滤数组元素，返回过滤后的数组，如果没有符合条件的元素则返回空数组
+//var ar = arr.filter(v => v > 5);
+//3、map 对每个数组元素执行相同操作，返回执行后的新数组
+//var tr = arr.map(v => v + 1);
+//4、splice 删除元素
+//var dogs = arr.splice(1, 1);

@@ -15,5 +15,4 @@ $(function () {
     }, function () {
         $(this).removeClass();
     });
-
 });
