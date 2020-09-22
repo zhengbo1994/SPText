@@ -119,5 +119,7 @@ namespace SPText.EF
         /// <param name="parameters"></param>
         void Excute<T>(string sql, SqlParameter[] parameters) where T : class;
         #endregion
+
+        void TransactionScopeInvoke(Action action);
     }
 }

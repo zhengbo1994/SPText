@@ -9,7 +9,7 @@ namespace SPText.Common.CustomCache
 {
     public class CustomCache //: ICache
     {
-        //ConcurrentDictionary
+        //ConcurrentDictionary  线程安全
 
         private static readonly object CustomCache_Lock = new object();
 
