@@ -17,7 +17,7 @@ namespace SPTextWinForm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DataGridViewPageFrom());
+            Application.Run(new Na312AutoOrderReceive());
 
         }
     }

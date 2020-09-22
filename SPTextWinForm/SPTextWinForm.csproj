@@ -123,6 +123,12 @@
     <Compile Include="MenuStripAndToolStripMenuItemNew.Designer.cs">
       <DependentUpon>MenuStripAndToolStripMenuItemNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="Na312AutoOrderReceive.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Na312AutoOrderReceive.Designer.cs">
+      <DependentUpon>Na312AutoOrderReceive.cs</DependentUpon>
+    </Compile>
     <Compile Include="OpenFileDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +195,9 @@
     <EmbeddedResource Include="MenuStripAndToolStripMenuItemNew.resx">
       <DependentUpon>MenuStripAndToolStripMenuItemNew.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Na312AutoOrderReceive.resx">
+      <DependentUpon>Na312AutoOrderReceive.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OpenFileDialogForm.resx">
       <DependentUpon>OpenFileDialogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,6 +224,7 @@
     <EmbeddedResource Include="TreeViewAndDataGridView.resx">
       <DependentUpon>TreeViewAndDataGridView.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="config\set.xml" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -235,6 +245,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SPTextCommon\SPTextCommon.csproj">
+      <Project>{d86a4fa1-d5aa-4f84-bc2e-eee0da5c198f}</Project>
+      <Name>SPTextCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SPText\SPText.csproj">
+      <Project>{380fc052-e6f9-46ed-90fd-a543eb996f8a}</Project>
+      <Name>SPText</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
