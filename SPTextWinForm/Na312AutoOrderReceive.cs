@@ -238,6 +238,10 @@ namespace SPTextWinForm
                         if (dataLoadByDataTableList.Count > 0)
                         {
                             int productDescriptionCount = dataLoadByDataTableList.Select(p => p.ProductDescription).Distinct().Count();//镜种数量
+
+                            string a = string.Join(",", dataLoadByDataTableList.Select(p => p.ProductDescription).ToArray());
+
+
                             this.rtb_logs.AppendText("从文件名为" + fileName + "共解析到" + productDescriptionCount + "镜种信息 \n");
                             string mailPath = Path.Combine(orders_Mail_AttachmentsLocalPath, fileName.Split('.')[0] + ".xls");
                             bool insertResultFlag = ReadExcelToList(dataLoadByDataTableList, templateFileLocalPath, mailPath, errorInfo, currentTime, fileAbsolutelyAddressPath);//数据写入
@@ -266,15 +270,18 @@ namespace SPTextWinForm
                         }
 
                         {//发送邮件
-                            this.rtb_logs.AppendText("正在准备发送邮件 \n");
-                            bool sentEmailFlag = SentEmail(this.rtb_logs, fileAbsolutelyAddressPath, sendEmailSettingInfo);
-                            if (sentEmailFlag)
+                            if (dataLoadByDataTableList.Count > 0 || errorDt.Rows.Count > 0)
                             {
-                                Thread.Sleep(10);
-                                this.rtb_logs.AppendText("发送邮件成功 \n");
+                                this.rtb_logs.AppendText("正在准备发送邮件 \n");
+                                bool sentEmailFlag = SentEmail(this.rtb_logs, fileAbsolutelyAddressPath, sendEmailSettingInfo);
+                                if (sentEmailFlag)
+                                {
+                                    Thread.Sleep(10);
+                                    this.rtb_logs.AppendText("发送邮件成功 \n");
+                                }
                             }
-                        }//移动文件
-                        {
+                        }
+                        {//移动文件
                             string currentProcessedFile = Path.Combine(orders_ProcessedLocalPath, fileName);
                             string moveProcessedFile = Path.Combine(orders_SuccessLocalPath, fileName.Trim().Split('.')[0] + "_Success_File_" + currentTime + "." + fileName.Trim().Split('.')[1]);
                             fileAbsolutelyAddressPath.successAddress = moveProcessedFile;
@@ -304,6 +311,7 @@ namespace SPTextWinForm
         /// <param name="codeContrastList"></param>
         public void GetCodeContrastList(List<CodeContrast> codeContrastList)
         {
+            #region  1.5 Tintable HC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.5 Tintable HC",
@@ -312,7 +320,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "COT"
             });
+            #endregion
 
+            #region  1.5 ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.5 ETC",
@@ -321,7 +331,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.5 T7 Grey HMC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.5 T7 Grey HMC",
@@ -330,7 +342,9 @@ namespace SPTextWinForm
                 Color = "TGY",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.59 Revolution Tintable HC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.59 Revolution Tintable HC",
@@ -339,7 +353,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = ""
             });
+            #endregion
 
+            #region  1.59 Revolution EPC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.59 Revolution EPC",
@@ -348,7 +364,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.61ASETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.61ASETC",
@@ -357,16 +375,20 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.67ASETC
             codeContrastList.Add(new CodeContrast()
             {
-                ProductDescription = "1.61ASETC",
+                ProductDescription = "1.67ASETC",
                 Mat = "H67",
                 Sty = "ASPHERIC-SV",
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.74ASETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.74ASETC",
@@ -375,7 +397,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  Trivex HC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "Trivex HC",
@@ -384,7 +408,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = ""
             });
+            #endregion
 
+            #region  Trivex ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "Trivex ETC",
@@ -393,7 +419,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  plano 1.60 UV3G with ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "plano 1.60 UV3G with ETC",
@@ -402,7 +430,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  plano Poly UV410 ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "plano Poly UV410 ETC",
@@ -411,6 +441,7 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
         }
 
         /// <summary>
@@ -704,7 +735,6 @@ namespace SPTextWinForm
             string ccRecipients = XmlHelper.Read(settingPath, str + "/sendEmailSets/sendEmailSet/ccRecipients");
             string lastEmailTime = XmlHelper.Read(settingPath, str + "/sendEmailSets/sendEmailSet/lastEmailTime");
             string sendEmailCount = XmlHelper.Read(settingPath, str + "/sendEmailSets/sendEmailSet/sendEmailCount");
-
             List<string> strEmailRecipientList = new List<string>();
             List<string> emailRecipientList = emailRecipients.Split(';').ToList();
             foreach (string emailRecipient in emailRecipientList)
@@ -1100,12 +1130,12 @@ namespace SPTextWinForm
                     }
                     else
                     {
-                        string Mat = dt.Rows[i][4].ToString();
-                        string Sty = dt.Rows[i][5].ToString();
-                        string Color = dt.Rows[i][7].ToString();
-                        string Coat = dt.Rows[i][8].ToString();
-                        string Sph = dt.Rows[i][10].ToString();
-                        string Cyl = dt.Rows[i][11].ToString();
+                        string Mat = dt.Rows[i][4].ToString().Trim();
+                        string Sty = dt.Rows[i][5].ToString().Trim();
+                        string Color = dt.Rows[i][7].ToString().Trim();
+                        string Coat = dt.Rows[i][8].ToString().Trim();
+                        string Sph = dt.Rows[i][10].ToString().Trim();
+                        string Cyl = dt.Rows[i][11].ToString().Trim();
                         string ProductDescription = string.Empty;
                         CodeContrastRange codeContrastRange = new CodeContrastRange();
 
