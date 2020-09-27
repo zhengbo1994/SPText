@@ -43,16 +43,16 @@ namespace SPMVCText.Controllers
         /// <param name="name"></param>
         public void MyWebSocket(string name)
         {
-            HttpContext.Session.Add("userName", HttpContext);
-            SPText.Common.WebSocketHelper webSocket = new SPText.Common.WebSocketHelper();
-            if (HttpContext.IsWebSocketRequest)
-            {
-                HttpContext.AcceptWebSocketRequest(webSocket.ProcessChat);
-            }
-            else
-            {
-                HttpContext.Response.Write("我不处理");
-            }
+            //HttpContext.Session.Add("userName", HttpContext);
+            //WebSocketHelper webSocket = new WebSocketHelper();
+            //if (HttpContext.IsWebSocketRequest)
+            //{
+            //    HttpContext.AcceptWebSocketRequest(webSocket.ProcessChat);
+            //}
+            //else
+            //{
+            //    HttpContext.Response.Write("我不处理");
+            //}
         }
     }
 }

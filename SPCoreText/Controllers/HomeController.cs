@@ -76,6 +76,7 @@ namespace SPCoreText.Controllers
 
         #endregion
 
+        [AllowAnonymousAttribute]
         public ActionResult Login(string name, string password, string verify)
         {
             string verifyCode = base.HttpContext.Session.GetString("CheckCode");

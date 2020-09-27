@@ -10,11 +10,6 @@ using System.Threading.Tasks;
 
 namespace SPCoreApiText.Utiltiy
 {
-    public interface IJWTService
-    {
-        string GetToken(string UserName);
-    }
-
     /// <summary>
     /// 备注下：代码演示的是对称加密，所以只有一个key，在返回的信息里面是没有的
     ///         PPT介绍时，说的是非对称的，那样是把解密key公开的，前面是后台用私钥加密的，
@@ -40,7 +35,7 @@ namespace SPCoreApiText.Utiltiy
                //new Claim
             };
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"]));
-            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);//对称可逆加密
             /**
              *  Claims (Payload)
                 Claims 部分包含了一些跟这个 token 有关的重要信息。 JWT 标准规定了一些字段，下面节选一些字段: 
@@ -59,6 +54,11 @@ namespace SPCoreApiText.Utiltiy
                 signingCredentials: creds);
             string returnToken = new JwtSecurityTokenHandler().WriteToken(token);
             return returnToken;
+        }
+
+        public string GetToken(CurrentUserModel userInfo)
+        {
+            throw new NotImplementedException();
         }
     }
 }
