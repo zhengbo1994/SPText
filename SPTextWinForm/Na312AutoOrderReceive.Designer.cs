@@ -30,6 +30,8 @@
         {
             this.rtb_logs = new System.Windows.Forms.RichTextBox();
             this.btn_run = new System.Windows.Forms.Button();
+            this.fileMigration = new System.Windows.Forms.Button();
+            this.FolderPath = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // rtb_logs
@@ -57,11 +59,29 @@
             this.btn_run.UseVisualStyleBackColor = false;
             this.btn_run.Click += new System.EventHandler(this.btn_run_Click);
             // 
+            // fileMigration
+            // 
+            this.fileMigration.AllowDrop = true;
+            this.fileMigration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.fileMigration.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.fileMigration.Location = new System.Drawing.Point(376, 26);
+            this.fileMigration.Name = "fileMigration";
+            this.fileMigration.Size = new System.Drawing.Size(154, 36);
+            this.fileMigration.TabIndex = 11;
+            this.fileMigration.Text = "文件迁移";
+            this.fileMigration.UseVisualStyleBackColor = false;
+            this.fileMigration.Click += new System.EventHandler(this.fileMigration_Click);
+            // 
+            // FolderPath
+            // 
+            this.FolderPath.ShowNewFolderButton = false;
+            // 
             // Na312AutoOrderReceive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(567, 388);
+            this.Controls.Add(this.fileMigration);
             this.Controls.Add(this.rtb_logs);
             this.Controls.Add(this.btn_run);
             this.Name = "Na312AutoOrderReceive";
@@ -74,5 +94,7 @@
 
         private System.Windows.Forms.RichTextBox rtb_logs;
         private System.Windows.Forms.Button btn_run;
+        private System.Windows.Forms.Button fileMigration;
+        private System.Windows.Forms.FolderBrowserDialog FolderPath;
     }
 }
