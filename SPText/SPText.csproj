@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\packages\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -305,6 +308,7 @@
     <Compile Include="Common\AHelper\DirectoryHelper.cs" />
     <Compile Include="Common\AHelper\EncryptHelper.cs" />
     <Compile Include="Common\AHelper\EnumHelper.cs" />
+    <Compile Include="Common\AHelper\Ext.cs" />
     <Compile Include="Common\AHelper\FileBinaryConvertHelper.cs" />
     <Compile Include="Common\AHelper\FileHelper.cs" />
     <Compile Include="Common\AHelper\HttpHelper.cs" />
@@ -313,7 +317,9 @@
     <Compile Include="Common\AHelper\LogHelper.cs" />
     <Compile Include="Common\AHelper\NetworkHelper.cs" />
     <Compile Include="Common\AHelper\ObjectHelper.cs" />
+    <Compile Include="Common\AHelper\StringActions.cs" />
     <Compile Include="Common\AHelper\StringHelper.cs" />
+    <Compile Include="Common\AHelper\TxtHelper.cs" />
     <Compile Include="Common\AlgorithmHelper.cs" />
     <Compile Include="Common\Crawler\CategorySearch.cs" />
     <Compile Include="Common\Crawler\CourseSearch.cs" />
