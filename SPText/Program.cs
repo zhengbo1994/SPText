@@ -1984,7 +1984,6 @@ namespace SPText
         }
         public static void RedisShow()
         {
-
             {
                 //事务模式 
                 using (RedisClient client = new RedisClient("127.0.0.1", 6379))

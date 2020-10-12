@@ -48,20 +48,23 @@ namespace SPText.Common.Redis.Interface
             GC.SuppressFinalize(this);
         }
 
-        public void Transcation()
+        public void Transcation(Action action)
         {
             using (IRedisTransaction irt = this.iClient.CreateTransaction())
             {
                 try
                 {
-                    irt.QueueCommand(r => r.Set("key", 20));
-                    irt.QueueCommand(r => r.Increment("key", 1));
+                    action.Invoke();
                     irt.Commit(); // 提交事务
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     irt.Rollback();
                     throw ex;
+                }
+                finally {
+                    irt.Dispose();
                 }
             }
         }
