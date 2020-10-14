@@ -12,6 +12,8 @@ namespace IOSerialize.Serialize
     /// </summary>
     public class LinqToXml
     {
+
+
         /// <summary>
         /// 创建XML文件
         /// </summary>
