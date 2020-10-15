@@ -39,6 +39,12 @@
     <Reference Include="Aspose.Cells">
       <HintPath>..\packages\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="Aspose.Words, Version=20.10.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Words.20.10.0\lib\net461\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="Aspose.Words.Pdf2Word, Version=20.10.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Words.20.10.0\lib\net461\Aspose.Words.Pdf2Word.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -408,6 +414,7 @@
     <Compile Include="Common\ValidateCodeImage.cs" />
     <Compile Include="Common\WebHelper.cs" />
     <Compile Include="Common\WebSocketHelper.cs" />
+    <Compile Include="Common\WorldToPDFHelper.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="EF\EF1\BaseService.cs" />
     <Compile Include="EF\EF0\DatabaseContext.cs" />
