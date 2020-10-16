@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -62,14 +63,15 @@ namespace SPTextWinForm
         }
 
 
+        #region  多线程配置循环读取
         //循环的线程自动接单
         private void CustomerList_Dwn()
         {
             while (b_isPickOrderRun)
             {
+                ClearLogs();
                 SelectCust();
-                Application.DoEvents();
-                Thread.Sleep(3000);
+                Delay(1000);
             }
             if (!b_isPickOrderRun)
             {
@@ -81,15 +83,50 @@ namespace SPTextWinForm
             }
         }
 
+        /// <summary>
+        /// 子线程同步调用txt控件将其清空
+        /// </summary>
+        public void ClearLogs()
+        {
+            this.Invoke(new MethodInvoker(() =>
+            {
+                this.rtb_logs.Clear();
+            }));
+        }
+
+
+        #region 毫秒延时 界面不会卡死
+        public static void Delay(int mm)
+        {
+            DateTime current = DateTime.Now;
+            while (current.AddMilliseconds(mm) > DateTime.Now)
+            {
+                Application.DoEvents();
+            }
+            return;
+        }
+        #endregion
 
         public void SelectCust()
         {
             this.Invoke(new MethodInvoker(() =>
             {
-                StartExecution();
+                DateTime now = DateTime.Now;
+                long currentTime = Convert.ToInt64(now.ToString("yyMMddHHmm", DateTimeFormatInfo.InvariantInfo), NumberFormatInfo.InvariantInfo);
+                long time11_00 = Convert.ToInt64(now.ToString("yyMMdd1100", DateTimeFormatInfo.InvariantInfo), NumberFormatInfo.InvariantInfo);
+                long time11_05 = Convert.ToInt64(now.ToString("yyMMdd1105", DateTimeFormatInfo.InvariantInfo), NumberFormatInfo.InvariantInfo);
+                if (time11_00 <= currentTime && currentTime <= time11_05)
+                {
+                    StartExecution();
+                }
+                else
+                {
+                    this.rtb_logs.AppendText("Na312 未到接单设定时间\n");
+                }
+                //StartExecution();
             }));
         }
-
+        #endregion
         /// <summary>
         /// 开始实行
         /// </summary>
@@ -107,13 +144,16 @@ namespace SPTextWinForm
             string orders_Error_LogLocalPath = Path.Combine(orders_ErrorLocalPath, "Log");//失败日志记录文件夹
             string orders_Error_FileLocalPath = Path.Combine(orders_ErrorLocalPath, "File");//失败日志记录文件夹
 
-            CreateDirectory(localPath, ordersLocalPath, orders_ErrorLocalPath, orders_Mail_AttachmentsLocalPath, orders_ProcessedLocalPath, orders_SuccessLocalPath, orders_Error_LogLocalPath, orders_Error_FileLocalPath);
-
-            this.rtb_logs.AppendText("正在从FTP获取文件 \n");
-            bool downloadOrderFlag = DownloadOrder(this.rtb_logs, orders_ProcessedLocalPath, ftpSetting);     //Ftp上传  获取文件，把文件放在指定位置
-            if (downloadOrderFlag)
-            {
-                this.rtb_logs.AppendText("FTP文件下载已完成 \n");
+            {//创建文件夹
+                CreateDirectory(localPath, ordersLocalPath, orders_ErrorLocalPath, orders_Mail_AttachmentsLocalPath, orders_ProcessedLocalPath, orders_SuccessLocalPath, orders_Error_LogLocalPath, orders_Error_FileLocalPath);
+            }
+            {//从ftp下载文件信息，并放到指定文件夹中
+                //this.rtb_logs.AppendText("正在从FTP获取文件 \n");
+                //bool downloadOrderFlag = DownloadOrder(this.rtb_logs, orders_ProcessedLocalPath, ftpSetting);     //Ftp上传  获取文件，把文件放在指定位置
+                //if (downloadOrderFlag)
+                //{
+                //    this.rtb_logs.AppendText("FTP文件下载已完成 \n");
+                //}
             }
 
             if (!Directory.Exists(templateFileLocalPath))
@@ -192,14 +232,19 @@ namespace SPTextWinForm
                             dc = errorDt.Columns.Add("error", Type.GetType("System.String"));
                         }
 
+                        //对数据进行解析dataset数据转化为集合数据，如有错误并记录
                         dataLoadByDataTableList = GetDataLoadByDataTableListByDataSet(dataLoadByDataTableList, ds, wk, errorInfo, errorDt);
 
                         if (dataLoadByDataTableList.Count > 0)
                         {
                             int productDescriptionCount = dataLoadByDataTableList.Select(p => p.ProductDescription).Distinct().Count();//镜种数量
+
+                            string a = string.Join(",", dataLoadByDataTableList.Select(p => p.ProductDescription).ToArray());
+
+
                             this.rtb_logs.AppendText("从文件名为" + fileName + "共解析到" + productDescriptionCount + "镜种信息 \n");
                             string mailPath = Path.Combine(orders_Mail_AttachmentsLocalPath, fileName.Split('.')[0] + ".xls");
-                            bool insertResultFlag = ReadExcelToList(dataLoadByDataTableList, templateFileLocalPath, mailPath, errorInfo, currentTime, fileAbsolutelyAddressPath);
+                            bool insertResultFlag = ReadExcelToList(dataLoadByDataTableList, templateFileLocalPath, mailPath, errorInfo, currentTime, fileAbsolutelyAddressPath);//数据写入
                             if (insertResultFlag)
                             {
                                 this.rtb_logs.AppendText(fileName + "文件读取成功 \n");
@@ -209,7 +254,7 @@ namespace SPTextWinForm
                         {
                             if (errorDt.Rows.Count > 0)
                             {
-                                string errorFileName = fileName.Trim().Split('.')[0] + "_Erroe_File_" + currentTime + ".xls";
+                                string errorFileName = fileName.Trim().Split('.')[0] + "_Error_File_" + currentTime + ".xls";
                                 string errorPath = Path.Combine(orders_Error_FileLocalPath, errorFileName);
                                 fileAbsolutelyAddressPath.errorFileAddress = errorPath;
                                 bool errorFile = CreateErrorTable(errorPath, errorDt);
@@ -225,15 +270,18 @@ namespace SPTextWinForm
                         }
 
                         {//发送邮件
-                            this.rtb_logs.AppendText("正在整备发送邮件 \n");
-                            bool sentEmailFlag = SentEmail(this.rtb_logs, fileAbsolutelyAddressPath, sendEmailSettingInfo);
-                            if (sentEmailFlag)
+                            if (dataLoadByDataTableList.Count > 0 || errorDt.Rows.Count > 0)
                             {
-                                Thread.Sleep(10);
-                                this.rtb_logs.AppendText("发送邮件成功 \n");
+                                this.rtb_logs.AppendText("正在准备发送邮件 \n");
+                                bool sentEmailFlag = SentEmail(this.rtb_logs, fileAbsolutelyAddressPath, sendEmailSettingInfo);
+                                if (sentEmailFlag)
+                                {
+                                    Thread.Sleep(10);
+                                    this.rtb_logs.AppendText("发送邮件成功 \n");
+                                }
                             }
-                        }//移动文件
-                        {
+                        }
+                        {//移动文件
                             string currentProcessedFile = Path.Combine(orders_ProcessedLocalPath, fileName);
                             string moveProcessedFile = Path.Combine(orders_SuccessLocalPath, fileName.Trim().Split('.')[0] + "_Success_File_" + currentTime + "." + fileName.Trim().Split('.')[1]);
                             fileAbsolutelyAddressPath.successAddress = moveProcessedFile;
@@ -263,6 +311,7 @@ namespace SPTextWinForm
         /// <param name="codeContrastList"></param>
         public void GetCodeContrastList(List<CodeContrast> codeContrastList)
         {
+            #region  1.5 Tintable HC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.5 Tintable HC",
@@ -271,7 +320,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "COT"
             });
+            #endregion
 
+            #region  1.5 ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.5 ETC",
@@ -280,7 +331,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.5 T7 Grey HMC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.5 T7 Grey HMC",
@@ -289,7 +342,9 @@ namespace SPTextWinForm
                 Color = "TGY",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.59 Revolution Tintable HC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.59 Revolution Tintable HC",
@@ -298,7 +353,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = ""
             });
+            #endregion
 
+            #region  1.59 Revolution EPC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.59 Revolution EPC",
@@ -307,7 +364,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.61ASETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.61ASETC",
@@ -316,16 +375,20 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.67ASETC
             codeContrastList.Add(new CodeContrast()
             {
-                ProductDescription = "1.61ASETC",
+                ProductDescription = "1.67ASETC",
                 Mat = "H67",
                 Sty = "ASPHERIC-SV",
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  1.74ASETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "1.74ASETC",
@@ -334,7 +397,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  Trivex HC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "Trivex HC",
@@ -343,7 +408,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = ""
             });
+            #endregion
 
+            #region  Trivex ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "Trivex ETC",
@@ -352,7 +419,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  plano 1.60 UV3G with ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "plano 1.60 UV3G with ETC",
@@ -361,7 +430,9 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
 
+            #region  plano Poly UV410 ETC
             codeContrastList.Add(new CodeContrast()
             {
                 ProductDescription = "plano Poly UV410 ETC",
@@ -370,6 +441,7 @@ namespace SPTextWinForm
                 Color = "CLR",
                 Coat = "INF"
             });
+            #endregion
         }
 
         /// <summary>
@@ -427,10 +499,18 @@ namespace SPTextWinForm
             codeContrastRangeList.Add(new CodeContrastRange()
             {
                 ProductDescription = "1.5 T7 Grey HMC",
-                SphMin = -3.75,
-                SphMax = 0.00,
-                CylMin = -1.75,
+                SphMin = -4.00,
+                SphMax = -4.00,
+                CylMin = 0.00,
                 CylMax = 0.00
+            });
+            codeContrastRangeList.Add(new CodeContrastRange()
+            {
+                ProductDescription = "1.5 T7 Grey HMC",
+                SphMin = -3.75,
+                SphMax = -2.25,
+                CylMin = -1.75,
+                CylMax = 0
             });
             codeContrastRangeList.Add(new CodeContrastRange()
             {
@@ -438,15 +518,7 @@ namespace SPTextWinForm
                 SphMin = -2.00,
                 SphMax = 0.00,
                 CylMin = -2.00,
-                CylMax = -2.00
-            });
-            codeContrastRangeList.Add(new CodeContrastRange()
-            {
-                ProductDescription = "1.5 T7 Grey HMC",
-                SphMin = -4.00,
-                SphMax = -4.00,
-                CylMin = 0.00,
-                CylMax = 0.00
+                CylMax = 0
             });
             #endregion
 
@@ -463,7 +535,7 @@ namespace SPTextWinForm
             {
                 ProductDescription = "1.59 Revolution Tintable HC",
                 SphMin = -10.00,
-                SphMax = 0.00,
+                SphMax = -8.25,
                 CylMin = -2.00,
                 CylMax = 0.00
             });
@@ -473,7 +545,7 @@ namespace SPTextWinForm
                 SphMin = -8.00,
                 SphMax = 0.00,
                 CylMin = -4.00,
-                CylMax = -2.25
+                CylMax = 0
             });
             #endregion
 
@@ -490,7 +562,7 @@ namespace SPTextWinForm
             {
                 ProductDescription = "1.59 Revolution EPC",
                 SphMin = -10.00,
-                SphMax = 0.00,
+                SphMax = -8.25,
                 CylMin = -2.00,
                 CylMax = 0.00
             });
@@ -500,7 +572,7 @@ namespace SPTextWinForm
                 SphMin = -8.00,
                 SphMax = 0.00,
                 CylMin = -4.00,
-                CylMax = -2.25
+                CylMax = 0
             });
             #endregion
 
@@ -517,7 +589,7 @@ namespace SPTextWinForm
             {
                 ProductDescription = "1.61ASETC",
                 SphMin = -10.00,
-                SphMax = 0.00,
+                SphMax = -8.25,
                 CylMin = -2.00,
                 CylMax = 0.00
             });
@@ -527,7 +599,7 @@ namespace SPTextWinForm
                 SphMin = -8.00,
                 SphMax = 0.00,
                 CylMin = -3.00,
-                CylMax = -2.25
+                CylMax = 0
             });
             #endregion
 
@@ -663,7 +735,6 @@ namespace SPTextWinForm
             string ccRecipients = XmlHelper.Read(settingPath, str + "/sendEmailSets/sendEmailSet/ccRecipients");
             string lastEmailTime = XmlHelper.Read(settingPath, str + "/sendEmailSets/sendEmailSet/lastEmailTime");
             string sendEmailCount = XmlHelper.Read(settingPath, str + "/sendEmailSets/sendEmailSet/sendEmailCount");
-
             List<string> strEmailRecipientList = new List<string>();
             List<string> emailRecipientList = emailRecipients.Split(';').ToList();
             foreach (string emailRecipient in emailRecipientList)
@@ -747,7 +818,7 @@ namespace SPTextWinForm
         /// <returns></returns>
         private bool ReadExcelToList(List<DataLoadByDataTable> list, string templateFile, string mailPathAddress, StringBuilder errorInfo, string currentTime, FileAbsolutelyAddressPath fileAbsolutelyAddressPath)
         {
-            string strSource = Path.Combine(templateFile, "NA312Model.xls");
+            string strSource = Path.Combine(templateFile, "NA312Model.xls");//拼接路径模板文件
             IWorkbook myworkbook;
             using (FileStream fs = new FileStream(strSource, FileMode.Open, FileAccess.Read))   //打开as702Model文件
             {
@@ -911,7 +982,7 @@ namespace SPTextWinForm
             }
 
             emailResult = EmailHelper.SendMail(sendEmailSetting.EmailAccount, sendEmailSetting.EmailPassword, sendEmailSetting.EmailRecipientList, sendEmailSetting.CcRecipientList,
-    "Na319来订单提醒", emailContentSb.ToString(), excelAttachmentList, sendEmailSetting.SmtpHost, sendEmailSetting.SmtpPort, false);
+    "Na312来订单提醒", emailContentSb.ToString(), excelAttachmentList, sendEmailSetting.SmtpHost, sendEmailSetting.SmtpPort, false);
 
             return emailResult;
             //return true;
@@ -1039,7 +1110,7 @@ namespace SPTextWinForm
 
         private void createErrorLog(string path, string fileName, string info, string currentTime, FileAbsolutelyAddressPath fileAbsolutelyAddressPath)
         {
-            string errorPath = Path.Combine(path, fileName + "_Erroe_Log_" + currentTime + ".txt");
+            string errorPath = Path.Combine(path, fileName + "_Error_Log_" + currentTime + ".txt");
             fileAbsolutelyAddressPath.errorLogAddress = errorPath;
             LogInfo(errorPath, info.ToString());
         }
@@ -1059,13 +1130,14 @@ namespace SPTextWinForm
                     }
                     else
                     {
-                        string Mat = dt.Rows[i][4].ToString();
-                        string Sty = dt.Rows[i][5].ToString();
-                        string Color = dt.Rows[i][7].ToString();
-                        string Coat = dt.Rows[i][8].ToString();
-                        string Sph = dt.Rows[i][10].ToString();
-                        string Cyl = dt.Rows[i][11].ToString();
+                        string Mat = dt.Rows[i][4].ToString().Trim();
+                        string Sty = dt.Rows[i][5].ToString().Trim();
+                        string Color = dt.Rows[i][7].ToString().Trim();
+                        string Coat = dt.Rows[i][8].ToString().Trim();
+                        string Sph = dt.Rows[i][10].ToString().Trim();
+                        string Cyl = dt.Rows[i][11].ToString().Trim();
                         string ProductDescription = string.Empty;
+                        CodeContrastRange codeContrastRange = new CodeContrastRange();
 
                         try
                         {
@@ -1073,8 +1145,8 @@ namespace SPTextWinForm
                             if (codeContrast == null)
                             {
                                 errorInfo.Append("第" + index + "行，找不到对应镜种 \n");
-                                DataRow erroeRow = dt.Rows[i];
-                                errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "找不到对应的镜种信息");
+                                DataRow errorRow = dt.Rows[i];
+                                errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "ProductDescription out of stock");
                                 index++;
                                 continue;
                             }
@@ -1082,9 +1154,9 @@ namespace SPTextWinForm
                         }
                         catch (Exception ex)
                         {
-                            errorInfo.Append("第" + index + "行，转化失败，转化镜种信息：" + ex.Message + " \n");
-                            DataRow erroeRow = dt.Rows[i];
-                            errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "转化镜种信息失败");
+                            errorInfo.Append("第" + index + "行，转化失败，转化镜种错误信息：" + ex.Message + " \n");
+                            DataRow errorRow = dt.Rows[i];
+                            errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "镜种 转化信息失败");
                             index++;
                             continue;
                         }
@@ -1097,86 +1169,74 @@ namespace SPTextWinForm
                         }
                         catch (Exception ex)
                         {
-                            errorInfo.Append("第" + index + "行，转化失败，错误QOrd：" + ex.Message + " \n");
-                            DataRow erroeRow = dt.Rows[i];
-                            errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "QOrd转化为小数失败");
+                            errorInfo.Append("第" + index + "行，转化失败，错误QOrd：" + ex.Message + "，镜种【" + ProductDescription + "】,Cyl/Add:【" + Cyl + "】,Sph/Grp:【" + Sph + "】 \n");
+                            DataRow errorRow = dt.Rows[i];
+                            errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "QOrd 转化为小数失败");
                             index++;
                             continue;
                         }
+
+
                         try
                         {
                             double fSph = double.Parse(Sph);
-                            bool flagSph = codeContrastRangeList.Any(p => p.ProductDescription == ProductDescription && p.SphMin <= fSph && fSph <= p.SphMax);
-                            if (flagSph == false)
+                            bool flagSph = true;
+                            codeContrastRange = codeContrastRangeList.Where(p => p.ProductDescription == ProductDescription && p.SphMin <= fSph && fSph <= p.SphMax).FirstOrDefault();
+                            if (codeContrastRange != null)
                             {
-                                errorInfo.Append("第" + index + "行，转化失败，错误Sph/Grp：超出镜种范围 \n");
-                                DataRow erroeRow = dt.Rows[i];
-                                errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "Sph/Grp超出镜种范围");
+                                flagSph = codeContrastRange.SphMin <= fSph && fSph <= codeContrastRange.SphMax;
+                            }
+                            if (flagSph == false || codeContrastRange == null)
+                            {
+                                errorInfo.Append("第" + index + "行，转化失败，错误Sph/Grp：超出镜种范围，镜种【" + ProductDescription + "】,Cyl/Add:【" + Cyl + "】,Sph/Grp:【" + Sph + "】 \n");
+                                DataRow errorRow = dt.Rows[i];
+                                errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "Sph/Grp out of stock");
                                 index++;
                                 continue;
                             }
                         }
                         catch (Exception ex)
                         {
-                            errorInfo.Append("第" + index + "行，转化失败，错误Sph/Grp：" + ex.Message + " \n");
-                            DataRow erroeRow = dt.Rows[i];
-                            errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "Sph/Grp转化为小数失败");
+                            errorInfo.Append("第" + index + "行，转化失败，错误Sph/Grp：" + ex.Message + "，镜种【" + ProductDescription + "】,Cyl/Add:【" + Cyl + "】,Sph/Grp:【" + Sph + "】 \n");
+                            DataRow errorRow = dt.Rows[i];
+                            errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "Sph/Grp 转化为小数失败");
                             index++;
                             continue;
                         }
+
                         try
                         {
                             double fcyl = double.Parse(Cyl);
                             if (fcyl > 0)
                             {
-                                errorInfo.Append("第" + index + "行，转化失败，Cyl/Add大于0 \n");
-                                DataRow erroeRow = dt.Rows[i];
-                                errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "Cyl/Add的值大于0");
+                                errorInfo.Append("第" + index + "行，转化失败，Cyl/Add大于0，镜种【" + ProductDescription + "】,Cyl/Add:【" + Cyl + "】,Sph/Grp:【" + Sph + "】 \n");
+                                DataRow errorRow = dt.Rows[i];
+                                errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "Cyl/Add out of stock");
                                 index++;
                                 continue;
                             }
-                            bool flagSph = codeContrastRangeList.Any(p => p.ProductDescription == ProductDescription && p.CylMin <= fcyl && fcyl <= p.CylMax);
-                            if (flagSph == false)
+                            bool flagCyl = codeContrastRange.CylMin <= fcyl && fcyl <= codeContrastRange.CylMax;
+                            if (flagCyl == false)
                             {
-                                errorInfo.Append("第" + index + "行，转化失败，错误Cyl/Add：超出镜种范围 \n");
-                                DataRow erroeRow = dt.Rows[i];
-                                errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "Cyl/Add超出镜种范围");
+                                errorInfo.Append("第" + index + "行，转化失败，错误Cyl/Add：超出镜种范围，镜种【" + ProductDescription + "】,Cyl/Add:【" + Cyl + "】,Sph/Grp:【" + Sph + "】 \n");
+                                DataRow errorRow = dt.Rows[i];
+                                errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "Cyl/Add out of stock");
                                 index++;
                                 continue;
                             }
                         }
                         catch (Exception ex)
                         {
-                            errorInfo.Append("第" + index + "行，转化失败，错误Cyl/Add：" + ex.Message + " \n");
-                            DataRow erroeRow = dt.Rows[i];
-                            errorDt.Rows.Add(erroeRow[0], erroeRow[1], erroeRow[2], erroeRow[3], erroeRow[4], erroeRow[5], erroeRow[6], erroeRow[7], erroeRow[8], erroeRow[9], erroeRow[10], erroeRow[11], erroeRow[12], erroeRow[13], erroeRow[14], "Cyl/Add转化为小数失败");
+                            errorInfo.Append("第" + index + "行，转化失败，错误Cyl/Add：" + ex.Message + "，镜种【" + ProductDescription + "】,Cyl/Add:【" + Cyl + "】,Sph/Grp:【" + Sph + "】 \n");
+                            DataRow errorRow = dt.Rows[i];
+                            errorDt.Rows.Add(errorRow[0], errorRow[1], errorRow[2], errorRow[3], errorRow[4], errorRow[5], errorRow[6], errorRow[7], errorRow[8], errorRow[9], errorRow[10], errorRow[11], errorRow[12], errorRow[13], errorRow[14], "Cyl/Add 转化为小数失败");
                             index++;
                             continue;
                         }
 
-                        //bool flag = dataLoadByDataTableList.Any(p => p.Mat == Mat && p.Sty == Sty && p.Color == Color && p.Coat == Coat && p.Sph == Sph && p.Cyl == Cyl);
-                        //if (flag)
-                        //{
-                        //    DataLoadByDataTable dataLoadByDataTableInfo = dataLoadByDataTableList.Where(p => p.Mat == Mat && p.Sty == Sty && p.Color == Color && p.Coat == Coat && p.Sph == Sph && p.Cyl == Cyl).First();
-                        //    dataLoadByDataTableInfo.QOrd = dataLoadByDataTableInfo.QOrd + QOrd;
-                        //}
-                        //else
-                        //{
-                        //    DataLoadByDataTable dataLoadByDataTable = new DataLoadByDataTable()
-                        //    {
-                        //        QOrd = QOrd,
-                        //        Mat = Mat,
-                        //        Sty = Sty,
-                        //        Color = Color,
-                        //        Coat = Coat,
-                        //        Sph = Sph,
-                        //        Cyl = Cyl,
-                        //        RowId = index,
-                        //        CurrentRowId = dataLoadByDataTableList.Count,
-                        //        ProductDescription = ProductDescription
-                        //    };
-                        //    dataLoadByDataTableList.Add(dataLoadByDataTable);
-                        //}
+
+
+
 
                         DataLoadByDataTable dataLoadByDataTable = new DataLoadByDataTable()
                         {
@@ -1213,6 +1273,49 @@ namespace SPTextWinForm
             ms.Close();
             return true;
         }
+        /// <summary>
+        /// 将目标文件夹文件转移至指定文件夹中
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fileMigration_Click(object sender, EventArgs e)
+        {
+            string localPath = Path.Combine(System.Windows.Forms.Application.StartupPath, "Record\\NA312\\Orders\\Processed");//NA312文件路径
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.Description = "请选择你要转移的文件夹";
+            int fileCount = 0;
+            int fileReplace = 0;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                string selectedPath = fbd.SelectedPath;
+                FileInfo[] files = new DirectoryInfo(selectedPath).GetFiles();//得到订单列表
+                foreach (FileInfo fileInfo in files)
+                {
+                    if (fileInfo.Extension.ToLower().Equals(".csv"))
+                    {
+                        string fileName = fileInfo.Name;
+                        string fileAddress = Path.Combine(localPath, fileName);
+                        if (File.Exists(fileAddress))
+                        {
+                            DialogResult dialogResult = MessageBox.Show("是否替换文件" + fileName, "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                fileInfo.CopyTo(fileAddress, true);
+                                fileReplace++;
+                            }
+                        }
+                        else
+                        {
+                            fileInfo.CopyTo(fileAddress);
+                        }
+                        fileCount++;
+                    }
+                }
+                this.rtb_logs.AppendText("文件迁移成功");
+            }
+        }
+
+
     }
 
     /// <summary>
