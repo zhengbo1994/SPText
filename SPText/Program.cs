@@ -5,6 +5,7 @@ using IOSerialize.Serialize;
 using log4net.Config;
 using Microsoft.Graph;
 using ServiceStack;
+using ServiceStack.DataAnnotations;
 using ServiceStack.Redis;
 using SPText.Common;
 using SPText.Common.DataHelper;
@@ -26,6 +27,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
@@ -38,6 +40,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Serialization;
 using Unity;
+using Unity.Lifetime;
 using static Microsoft.Graph.CoreConstants.MimeTypeNames;
 using static SPText.DesignPatternText;
 using static SPText.MediatorPattern;
@@ -106,7 +109,6 @@ namespace SPText
             #endregion
 
             #region  IOC
-
             //{
             //    IUnityContainer container = new UnityContainer();//实例化容器
             //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
@@ -116,7 +118,9 @@ namespace SPText
             //{
             //    IUnityContainer container = ContainnerFactory.GetContainer();
             //    IText text = container.Resolve<IText>();
+            //    IClassBase classBase = container.Resolve<IClassBase>();
             //    text.One();
+            //    classBase.Show();
             //}
             #endregion
 
@@ -207,7 +211,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            //DatabaseOperations();
+            DatabaseOperations();
             #endregion
 
             #region  二维码
@@ -247,8 +251,8 @@ namespace SPText
             #endregion
 
             #region  测试代码
-            TestHelper testHelper = new TestHelper();
-            testHelper.Show();
+            //TestHelper testHelper = new TestHelper();
+            //testHelper.Show();
             #endregion
 
             //dynamic  避开编译器检查
@@ -2337,20 +2341,6 @@ namespace SPText
                 }
             }
             {
-
-                //{
-                //    //IBaseServices<Company> baseServices = new BaseServices<Company>();
-                //    //List<Company> a = baseServices.QueryByWhereLambda(p => p.Id > 0).ToList();
-                //    IBaseDal<CompanyModel> baseDal = new BaseDal<CompanyModel>();
-                //    var i= baseDal.QueryByWhereLambda(p => p.Id > 0).ToList();
-                //}
-                //{
-                //    IsysCompanyModelRepository baseDal = new sysCompanyModelRepository();
-                //    IBaseCompanyModelServices iBaseCompanyModelServices = new BaseCompanyModelServices(baseDal);
-                //    List<CompanyModel> companyModels = iBaseCompanyModelServices.QueryByWhereLambda(p => p.Id > 0).ToList();
-                //}
-            }
-            {
                 SPText.EF.DatabaseContext databaseContext = new SPText.EF.DatabaseContext();
                 IBaseService baseService = new BaseService(databaseContext);
                 List<Company> textModel = baseService.Query<Company>(p => p.Id > 0).ToList();
@@ -2383,25 +2373,59 @@ namespace SPText
                 var i = database.FindList<Company>();
                 var value = database.FindTable(sql);
             }
-            {//Repository
-                //{
-                //    Common.DataHelper.Repository.RepositoryFactory repository = new Common.DataHelper.Repository.RepositoryFactory();
-                //    var database = repository.BaseRepository(connectionStrings, Common.DataHelper.DatabaseType.SqlServer);
-                //    string sql = "select * from Company";
-                //    var i = database.IQueryable<Company>(p => p.Id > 0);
-                //    var value = database.ExecuteBySql(sql);
-                //}
-                //{
-                //    Common.DataHelper.Repository.RepositoryFactoryT<Company> repositoryFactoryT = new Common.DataHelper.Repository.RepositoryFactoryT<Company>();
-                //    var repositoryT = repositoryFactoryT.BaseRepository(connectionStrings, Common.DataHelper.DatabaseType.SqlServer);
-                //    string sql = "select * from Company";
-                //    var i = repositoryT.IQueryable(p => p.Id > 0);
-                //    var value = repositoryT.ExecuteBySql(sql);
-                //}
-            }
             {//Sql
                 var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
                 var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
+            }
+            {
+                {
+                    //使用示例 SqlServer
+                    string sql = "SELECT * FROM Company order by Id desc";
+                    CurrencyDBHelper db = new CurrencyDBHelper(DbProviderType.SqlServer, connectionStrings);
+                    DataTable data = db.GetDataSet(sql, null).Tables[0];
+                    DbDataReader reader = db.ExecuteReader(sql, null);
+                    reader.Close();
+                }
+                {
+                    //使用示例 SqlServer
+                    string sql = "SELECT * FROM Company order by Id desc";
+                    DbUtility db = new DbUtility(connectionStrings, DbProviderType.SqlServer);
+                    DataTable data = db.ExecuteDataTable(sql, null);
+                    DbDataReader reader = db.ExecuteReader(sql, null);
+                    
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            var value = reader[i];
+                        }
+                    }
+                    reader.Close();
+                }
+                //{
+                //    //使用示例 SQLite
+                //    string sql = "SELECT * FROM Company order by Id desc";
+                //    DbUtility db = new DbUtility(connectionStrings, DbProviderType.SQLite);
+                //    DataTable data = db.ExecuteDataTable(sql, null);
+                //    DbDataReader reader = db.ExecuteReader(sql, null);
+                //    reader.Close();
+                //}
+                //{
+
+                //    //使用示例 MySql
+                //    string sql = "SELECT * FROM Company order by Id desc";
+                //    DbUtility db = new DbUtility(connectionStrings, DbProviderType.MySql);
+                //    DataTable data = db.ExecuteDataTable(sql, null);
+                //    DbDataReader reader = db.ExecuteReader(sql, null);
+                //    reader.Close();
+                //}
+                //{
+                //    //使用示例 Execl
+                //    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + System.Web.HttpContext.Current.Server.MapPath("~/XLS/车型.xls") + ";Extended Properties=Excel 8.0;";
+                //    string sql = "SELECT * FROM [Sheet1$]";
+                //    DbUtility db = new DbUtility(connectionStrings, DbProviderType.OleDb);
+                //    DataTable data = db.ExecuteDataTable(sql, null);
+                //}
             }
         }
         #endregion
@@ -3565,5 +3589,9 @@ namespace SPText
         }
     }
     #endregion
+    #endregion
+
+    #region
+
     #endregion
 }

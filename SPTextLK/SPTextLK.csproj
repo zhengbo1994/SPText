@@ -122,7 +122,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Text\Class1.cs" />
+    <Compile Include="Text\ClassBase.cs" />
+    <Compile Include="Text\IClassBase.cs" />
     <Compile Include="Text\IText.cs" />
     <Compile Include="Text\Text.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

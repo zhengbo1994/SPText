@@ -69,7 +69,6 @@ namespace SPTextWinForm
                 string createPath = fbd.SelectedPath;
                 File.WriteAllText(filePath, createPath);
                 string sulotionName = txtSolution.Text.Trim();
-                //CreateCode(CreateFile);
                 CreateCode((dt, tableName) =>
                 {
                     try
@@ -101,7 +100,7 @@ namespace SPTextWinForm
             string tableName = cbxTables.SelectedValue.ToString();
             if (tableName != "全选")
             {
-                DataTable dt = SqlCon($"SELECT * FROM {tableName}");
+                DataTable dt = SqlCon($"SELECT * FROM [{tableName}]");
                 createAction(dt, tableName);
             }
             else
@@ -111,7 +110,7 @@ namespace SPTextWinForm
                     DataRow dr = tables.Rows[i];
                     if (dr["TABLE_NAME"].ToString() != "全选")
                     {
-                        DataTable dt = SqlCon($"SELECT * FROM {dr["TABLE_NAME"].ToString()}");
+                        DataTable dt = SqlCon($"SELECT * FROM [{dr["TABLE_NAME"].ToString()}]");
                         createAction(dt, dr["TABLE_NAME"].ToString());
                     }
                 }

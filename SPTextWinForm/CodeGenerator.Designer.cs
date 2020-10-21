@@ -44,7 +44,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(658, 67);
+            this.btnCreate.Location = new System.Drawing.Point(668, 50);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 23;
@@ -55,7 +55,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(295, 72);
+            this.label2.Location = new System.Drawing.Point(305, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 22;
@@ -63,16 +63,16 @@
             // 
             // txtSolution
             // 
-            this.txtSolution.Location = new System.Drawing.Point(354, 67);
+            this.txtSolution.Location = new System.Drawing.Point(364, 50);
             this.txtSolution.Name = "txtSolution";
             this.txtSolution.Size = new System.Drawing.Size(217, 21);
             this.txtSolution.TabIndex = 21;
-            this.txtSolution.Text = "OnlineExamination";
+            this.txtSolution.Text = "SPTextWinForm";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(129, 72);
+            this.label1.Location = new System.Drawing.Point(139, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 20;
@@ -80,7 +80,7 @@
             // 
             // txtAutoAdd
             // 
-            this.txtAutoAdd.Location = new System.Drawing.Point(176, 66);
+            this.txtAutoAdd.Location = new System.Drawing.Point(186, 49);
             this.txtAutoAdd.Name = "txtAutoAdd";
             this.txtAutoAdd.Size = new System.Drawing.Size(100, 21);
             this.txtAutoAdd.TabIndex = 19;
@@ -88,7 +88,7 @@
             // 
             // txtBLL
             // 
-            this.txtBLL.Location = new System.Drawing.Point(539, 93);
+            this.txtBLL.Location = new System.Drawing.Point(549, 76);
             this.txtBLL.Multiline = true;
             this.txtBLL.Name = "txtBLL";
             this.txtBLL.Size = new System.Drawing.Size(265, 320);
@@ -96,7 +96,7 @@
             // 
             // txtDAL
             // 
-            this.txtDAL.Location = new System.Drawing.Point(268, 93);
+            this.txtDAL.Location = new System.Drawing.Point(278, 76);
             this.txtDAL.Multiline = true;
             this.txtDAL.Name = "txtDAL";
             this.txtDAL.Size = new System.Drawing.Size(265, 320);
@@ -104,7 +104,7 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(577, 67);
+            this.btnBrowse.Location = new System.Drawing.Point(587, 50);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 16;
@@ -114,7 +114,7 @@
             // 
             // txtModel
             // 
-            this.txtModel.Location = new System.Drawing.Point(-3, 93);
+            this.txtModel.Location = new System.Drawing.Point(7, 76);
             this.txtModel.Multiline = true;
             this.txtModel.Name = "txtModel";
             this.txtModel.Size = new System.Drawing.Size(265, 320);
@@ -123,14 +123,14 @@
             // cbxTables
             // 
             this.cbxTables.FormattingEnabled = true;
-            this.cbxTables.Location = new System.Drawing.Point(-3, 67);
+            this.cbxTables.Location = new System.Drawing.Point(7, 50);
             this.cbxTables.Name = "cbxTables";
             this.cbxTables.Size = new System.Drawing.Size(122, 20);
             this.cbxTables.TabIndex = 14;
             // 
             // btnConnection
             // 
-            this.btnConnection.Location = new System.Drawing.Point(577, 38);
+            this.btnConnection.Location = new System.Drawing.Point(587, 21);
             this.btnConnection.Name = "btnConnection";
             this.btnConnection.Size = new System.Drawing.Size(75, 23);
             this.btnConnection.TabIndex = 13;
@@ -140,17 +140,17 @@
             // 
             // txtConStr
             // 
-            this.txtConStr.Location = new System.Drawing.Point(-3, 40);
+            this.txtConStr.Location = new System.Drawing.Point(7, 23);
             this.txtConStr.Name = "txtConStr";
             this.txtConStr.Size = new System.Drawing.Size(495, 21);
             this.txtConStr.TabIndex = 12;
-            this.txtConStr.Text = "Data Source=127.0.0.1;database=GeneralTeachingPlatform;uid=sa;pwd=1qaz2wsx";
+            this.txtConStr.Text = "Data Source=.;Initial Catalog=Customers;User Id=sa;Password=123456;";
             // 
             // CodeGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(827, 412);
             this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtSolution);

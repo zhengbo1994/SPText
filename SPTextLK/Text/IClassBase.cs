@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SPTextLK.Text
 {
-    class Class1
+    public interface IClassBase
     {
+        void Show();
+        T Show<T>(T t);
     }
 }
