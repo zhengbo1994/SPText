@@ -1,7 +1,8 @@
-﻿using NPOI.SS.Formula.Functions;
-using ServiceStack;
+﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace SPText.Common
 {
@@ -280,28 +282,7 @@ namespace SPText.Common
         }
         #endregion
 
-
-
-        #region
-        //URL格式必须严格为[url=http://pan.baidu.com/share/init?shareid=xxx&uk=xxx]http://pan.baidu.com/share/init?shareid=xxx&uk=xxx[/url]
-        public void init(string url)
-        {
-            HttpGet(url);
-            info = url.Replace("http://pan.baidu.com/share/init?", "");
-        }
-
-        //尝试密码，3次后请重新建立实例（否则会有验证码）
-        public int trypwd(string pwd)
-        {
-            //取得时间戳
-            System.DateTime time = System.DateTime.Now;
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
-            long ts = (time.Ticks - startTime.Ticks) / 10000;
-            string data = HttpPost("http://pan.baidu.com/share/verify?" + info + "&t=" + ts.ToString() + "&bdstoken=null&channel=chunlei&clienttype=0&web=1&app_id=123456&logid=MTUwMTEyNDM2OTY5MzAuOTE5NTU5NjQwMTk0NDM0OA==", "pwd=" + pwd + "&vcode=&vcode_str=");
-            if (data.Contains("\"errno\":-9")) return 0;
-            else if (data.Contains("\"errno\":0")) return 1;
-            else return -1;
-        }
+        #region  Http请求
         private string HttpPost(string Url, string Data)
         {
             try
@@ -348,55 +329,103 @@ namespace SPText.Common
             return retString;
         }
 
-        //哈希类 36进制
-        //有效哈希[10000000,11679615]
-        static public string Hash2Str(int hash)
-        {
-            string ret = "";
-            hash -= 10000000;
-            while (hash > 0)
-            {
-                ret += Hash2Char(hash % 36);
-                hash /= 36;
-            }
-            if (ret.Length == 3) ret += "0";    //前导零
-            if (ret.Length == 2) ret += "00";
-            if (ret.Length == 1) ret += "000";
-            if (ret.Length == 0) ret += "0000";
-            return reverse(ret);
-        }
-        static public int Str2Hash(string str)
-        {
-            int ret = 0;
-            ret += Char2Hash(str[0]) * 46656;
-            ret += Char2Hash(str[1]) * 1296;
-            ret += Char2Hash(str[2]) * 36;
-            ret += Char2Hash(str[3]);
-            ret += 10000000;    //防止前导零
-            return ret;
-        }
-        static private int Char2Hash(char c)
-        {
-            if (c >= '0' && c <= '9') return c - '0';
-            else return c - 'a' + 10;
-        }
-        static private char Hash2Char(int hash)
-        {
-            if (hash >= 0 && hash <= 9) return (char)('0' + hash);
-            else return (char)('a' + hash - 10);
-        }
-        static private string reverse(string str)
-        {
-            char[] arr = str.ToCharArray();
-            Array.Reverse(arr);
-            return new string(arr);
-        }
 
         private CookieContainer cookie = new CookieContainer();
         private string info;
+
+        #endregion
+
+        #region  代码生成器
+        private readonly string strConn = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
+        DataTable dataTable = new DataTable();
+
+        public DataTable GetDataTable(string sqlStr)
+        {
+            using (SqlConnection conn = new SqlConnection(strConn))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(sqlStr, conn);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                int i= sda.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+
+        /// <summary>
+        /// 获取到数据库中所有表
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetSlqTables() {
+            DataTable allTableData= GetDataTable("select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_TYPE ='BASE TABLE'");
+
+            DataRow dr= allTableData.NewRow();
+            dr["TABLE_NAME"] = "全选";
+            allTableData.Rows.InsertAt(dr, 0);
+
+            return allTableData;
+
+            //绑定数据源操作
+        }
+
+        public string CreateModel(DataTable dt, string TableName) {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($@"
+                        using AROS.Model;
+                        using System;
+                        using System.Collections.Generic;
+                        using System.Data;
+                        using System.Data.SqlClient;
+                        using System.Linq;
+                        using System.Text;
+                    ");
+            sb.Append($@"namespace {AppDomain.CurrentDomain.BaseDirectory}").AppendLine();
+            sb.Append("{").AppendLine();
+            foreach (DataColumn item in dt.Columns)
+            {
+                sb.Append($"     public {GetType(item)} {item.ColumnName}").Append(" { get; set; }").AppendLine();
+            }
+            sb.Append("}").AppendLine();
+
+            return null;
+        }
+
+        public string CreateDAL(DataTable dt, string TableName)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($@"
+                        using AROS.Model;
+                        using System;
+                        using System.Collections.Generic;
+                        using System.Data;
+                        using System.Data.SqlClient;
+                        using System.Linq;
+                        using System.Text;
+                    ");
+            sb.Append($@"namespace {AppDomain.CurrentDomain.BaseDirectory}").AppendLine();
+            sb.Append("{").AppendLine();
+            foreach (DataColumn item in dt.Columns)
+            {
+                sb.Append($"     public {GetType(item)} {item.ColumnName}").Append(" { get; set; }").AppendLine();
+            }
+            sb.Append("}").AppendLine();
+
+            return null;
+        }
+
+        private string GetType(DataColumn dc) {
+            if (dc.AllowDBNull&& dc.DataType.IsValueType)
+            {
+                return dc.DataType + "?";
+            }
+            else
+            {
+                return dc.DataType.ToString();
+            }
+        }
+
+        #endregion
     }
-    #endregion
-}
 
     #region  事件
     #region 事件1

@@ -1,11 +1,14 @@
-﻿using Microsoft.Practices.Unity.Configuration;
+﻿using Autofac;
+using Microsoft.Practices.Unity.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Unity;
 
 namespace SPText.Unity
@@ -32,5 +35,4 @@ namespace SPText.Unity
             return container;
         }
     }
-
 }

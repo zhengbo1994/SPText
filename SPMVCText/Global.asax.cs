@@ -1,3 +1,4 @@
+using SPMVCText.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,10 @@ namespace SPMVCText
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            //利用autofac进行依赖注入和控制反转操作
+            //AutoFacConfig.Register();
         }
     }
 }
