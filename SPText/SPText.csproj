@@ -380,6 +380,7 @@
     <Compile Include="Common\IO\ImageHelper.cs" />
     <Compile Include="Common\IO\MyIO.cs" />
     <Compile Include="Common\IO\Recursion.cs" />
+    <Compile Include="Common\JsHelper.cs" />
     <Compile Include="Common\Json.cs" />
     <Compile Include="Common\JSONHelper.cs" />
     <Compile Include="Common\baseFn\AppFn.cs" />
@@ -408,6 +409,7 @@
     <Compile Include="Common\Serialize\SerializeHelper.cs" />
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\SFtpHelper.cs" />
+    <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
     <Compile Include="Common\UploadFileContext.cs" />
@@ -456,6 +458,7 @@
     <Content Include="Common\Public\ace\js\ace.js" />
     <Content Include="Common\Public\base\jsApp.js" />
     <Content Include="Common\Public\base\jsFn.js" />
+    <Content Include="Common\Public\base\jsHelper.js" />
     <Content Include="Common\Public\bootstrap\css\bootstrap.min.css" />
     <Content Include="Common\Public\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Common\Public\bootstrap\js\bootstrap-wysiwyg.js" />

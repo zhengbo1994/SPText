@@ -175,7 +175,7 @@
     }
 
 
-    this.regVerify = regVerify;
+    this.regVerify = regVerify;//验证
     this.jqGridAutoWidth = jqGridAutoWidth;
     this.updatePagerIcons = updatePagerIcons;
     this.setInputAsDatePlug = setInputAsDatePlug;

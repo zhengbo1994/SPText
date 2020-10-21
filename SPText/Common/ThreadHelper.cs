@@ -12,13 +12,70 @@ namespace SPText.Common
     {
         public void Show()
         {
+            AsyncAdvancedShow();
             ThreadShow();
             ThreadPoolShow();
             TaskShow();
             ParallelShow();
+            ThreadCoreShow();
             AwaitAsyncShow();
         }
 
+        public void AsyncAdvancedShow()
+        {
+            {
+                Action<string> action = this.DoSomethingLong;
+
+                //1 回调：将后续动作通过回调参数传递进去，子线程完成计算后，去调用这个回调委托
+                IAsyncResult asyncResult = null;//是对异步调用操作的描述
+                AsyncCallback callback = ar =>
+                {
+                    Console.WriteLine($"{object.ReferenceEquals(ar, asyncResult)}");
+                    Console.WriteLine($"btnAsyncAdvanced_Click计算成功了。{ar.AsyncState}。{Thread.CurrentThread.ManagedThreadId.ToString("00")}");
+                };
+                asyncResult = action.BeginInvoke("btnAsyncAdvanced_Click", callback, "花生");
+
+                //2 通过IsComplate等待，卡界面--主线程在等待，边等待边提示
+                //（ Thread.Sleep(200);位置变了，少了一句99.9999）
+                int i = 0;
+                while (!asyncResult.IsCompleted)
+                {
+                    if (i < 9)
+                    {
+                        Console.WriteLine($"中华民族复兴完成{++i * 10}%....");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"中华民族复兴完成99.999999%....");
+                    }
+                    Thread.Sleep(200);
+                }
+                Console.WriteLine("中华民族复兴已完成，沉睡的东方雄狮已觉醒！");
+
+                //3 WaitOne等待，即时等待 限时等待
+                asyncResult.AsyncWaitHandle.WaitOne();//直接等待任务完成
+                asyncResult.AsyncWaitHandle.WaitOne(-1);//一直等待任务完成
+                asyncResult.AsyncWaitHandle.WaitOne(1000);//最多等待1000ms，超时就不等了
+
+                //4 EndInvoke 即时等待, 而且可以获取委托的返回值 一个异步操作只能End一次
+                action.EndInvoke(asyncResult);//等待某次异步调用操作结束
+            }
+            {
+                Func<int> func = () =>
+                {
+                    Thread.Sleep(2000);
+                    return DateTime.Now.Hour;
+                };
+                int iResult = func.Invoke();//22
+                IAsyncResult asyncResult = func.BeginInvoke(ar =>
+                {
+                //int iEndResultIn = func.EndInvoke(ar);
+            }, null);
+                int iEndResult = func.EndInvoke(asyncResult);//22
+
+                Console.WriteLine($"****************btnAsyncAdvanced_Click End   {Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}***************");
+            }
+        }
 
         public void ThreadShow()
         {
@@ -334,10 +391,6 @@ namespace SPText.Common
                     }));
                 }
             }
-            {
-
-            }
-
 
             Console.WriteLine($"****************btnTask_Click End   {Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}***************");
         }
@@ -379,8 +432,10 @@ namespace SPText.Common
             Console.WriteLine($"****************btnParallel_Click End   {Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}***************");
         }
 
-        public void AwaitAsyncShow() {
-            var v= Test.TestShow();
+
+        public void AwaitAsyncShow()
+        {
+            var v = Test.TestShow();
         }
 
         /// 1 多异常处理和线程取消

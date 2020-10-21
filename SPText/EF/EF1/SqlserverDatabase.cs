@@ -637,7 +637,8 @@ namespace SPText.EF
         /// <returns></returns>
         public static string FormatSQL(string strsql)
         {
-            return null;
+            StringBuilder strSql = new StringBuilder(strsql);
+            return strSql.ToString();
         }
         /// <summary>
         /// 拼接删除SQL语句
