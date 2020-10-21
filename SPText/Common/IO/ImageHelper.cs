@@ -18,7 +18,7 @@ namespace IOSerialize.IO
         /// <summary>
         /// 画验证码
         /// </summary>
-        public static void Drawing()
+        public static void Drawing(string value)
         {
             Bitmap bitmapobj = new Bitmap(100, 100);
             //在Bitmap上创建一个新的Graphics对象
@@ -32,7 +32,7 @@ namespace IOSerialize.IO
             g.DrawArc(Pens.Black, new Rectangle(0, 0, 100, 100), 60, 180);//画弧线
             g.DrawLine(Pens.Black, 10, 10, 100, 100);//画直线
             g.DrawRectangle(Pens.Black, new Rectangle(0, 0, 100, 200));//画矩形
-            g.DrawString("我爱北京天安门", new Font("微软雅黑", 12), new SolidBrush(Color.Red), new PointF(10, 10));//画字符串
+            g.DrawString(value, new Font("微软雅黑", 12), new SolidBrush(Color.Red), new PointF(10, 10));//画字符串
             //g.DrawImage(
             if (!Directory.Exists(ImagePath))
                 Directory.CreateDirectory(ImagePath);
@@ -42,7 +42,11 @@ namespace IOSerialize.IO
             g.Dispose();
         }
 
-        public static void VerificationCode()
+        /// <summary>
+        /// 验证码
+        /// </summary>
+        /// <param name="strArr"></param>
+        public static void VerificationCode(string[] strArr)
         {
             Bitmap bitmapobj = new Bitmap(300, 300);
             //在Bitmap上创建一个新的Graphics对象
@@ -50,7 +54,7 @@ namespace IOSerialize.IO
             g.DrawRectangle(Pens.Black, new Rectangle(0, 0, 150, 50));//画矩形
             g.FillRectangle(Brushes.White, new Rectangle(1, 1, 149, 49));
             g.DrawArc(Pens.Blue, new Rectangle(10, 10, 140, 10), 150, 90);//干扰线
-            string[] arrStr = new string[] { "我", "们", "孝", "行", "白", "到", "国", "中", "来", "真" };
+            string[] arrStr = strArr;
             Random r = new Random();
             int i;
             for (int j = 0; j < 4; j++)

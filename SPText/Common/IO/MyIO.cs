@@ -211,6 +211,5 @@ namespace IOSerialize.IO
             }
 
         }
-
     }
 }

@@ -64,14 +64,16 @@ namespace SPText.EF
         public virtual void Update(int id)
         {
             var entity = GetById(id);
-            if (entity == null) return;
+            if (entity == null) 
+                return;
             Update(entity);
         }
 
         public virtual void Delete(int id)
         {
             var entity = GetById(id);
-            if (entity == null) return;
+            if (entity == null) 
+                return;
             Delete(entity);
         }
 
@@ -83,6 +85,11 @@ namespace SPText.EF
             //    new SqlParameter("@Id",id)
             //};
             DbSet.SqlQuery(sql, sqlParameter);
+        }
+
+        public virtual void Cimmit(int id)
+        {
+            DbContext.SaveChanges();
         }
     }
 }

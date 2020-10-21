@@ -72,6 +72,12 @@
     <Compile Include="AddStudentForm.Designer.cs">
       <DependentUpon>AddStudentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CodeGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CodeGenerator.Designer.cs">
+      <DependentUpon>CodeGenerator.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComboBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,9 @@
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="AddStudentForm.resx">
       <DependentUpon>AddStudentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeGenerator.resx">
+      <DependentUpon>CodeGenerator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComboBox.resx">
       <DependentUpon>ComboBox.cs</DependentUpon>

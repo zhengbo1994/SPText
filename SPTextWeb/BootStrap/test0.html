@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title></title>
+</head>
+<body>
+    <!--布局有关-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md">1</div>
+            <div class="col-md">2</div>
+            <div class="col-md">3</div>
+        </div>
+        <div class="row">
+            <div class="col-4">1</div>
+            <div class="col-4">2</div>
+            <div class="col-4">3</div>
+        </div>
+        <div class="row">
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="w-100">等宽多行</div>
+            <!--<div class="w-100 d-none d-md-block">等宽多行</div>-->
+            <div class="col">3</div>
+            <div class="col">4</div>
+        </div>
+        <div class="row">
+            <div class="col">1</div>
+            <div class="col-5">2</div>
+            <div class="col">3</div>
+        </div>
+        <div class="row">
+            <div class="col">1</div>
+            <div class="col-auto">2（可变宽度内容）</div>
+            <div class="col">3</div>
+        </div>
+        <!--两行两列-->
+        <div class="row row-cols-2">
+            <div class="col">1-1</div>
+            <div class="col">1-2</div>
+            <div class="col">2-1</div>
+            <div class="col">2-2</div>
+        </div>
+        <!--两行三列-->
+        <div class="row row-cols-3">
+            <div class="col">1-1</div>
+            <div class="col">1-2</div>
+            <div class="col">1-3</div>
+            <div class="col">2-1</div>
+        </div>
+        <!--对齐-->
+        <div class="row align-items-start">
+            <!--align-items-end、align-items-center、align-items-center-->
+            <div class="col align-items-start">上</div>
+            <div class="col align-items-center">中</div>
+            <div class="col align-items-end">下</div>
+        </div>
+        <div class="row">
+            <div class="col align-items-start">上</div>
+            <div class="col align-items-center">中</div>
+            <div class="col align-items-end">下</div>
+        </div>
+        <div class="row justify-content-start">
+            <!--justify-content-start（左边）、justify-content-center（中间）、justify-content-end（右边）-->
+            <!--justify-content-around（左右两边有间隙）、justify-content-between（左右两边）-->
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="col">3</div>
+        </div>
+        <!--通过order-*改变内容出现的位置-->
+        <div class="row">
+            <div class="col order-1">1</div>
+            <div class="col order-12">12</div>
+            <div class="col order-5">5</div>
+        </div>
+        <div class="row">
+            <div class="col-4 ml-auto">1</div>
+            <div class="col-4 mr-auto">2</div>
+        </div>
+    </div>
+
+    <!--表格有关-->
+    <div class="container">
+        <table class="table table-striped table-bordered table-borderless table-hover table-sm table-dark">
+            <!--table-striped（斑马条纹）、table-bordered（边框）、table-borderless（无边界）、table-hover（悬停）、table-sm（切削单元格填充一半）、table-dark(颜色加深)-->
+            <thead class="thead-dark thead-light">
+                <tr>
+                    <td>头部1-1</td>
+                    <td>头部1-2</td>
+                </tr>
+                <tr>
+                    <td>头部2-1</td>
+                    <td>头部2-2</td>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr>
+                    <td>内容1-1</td>
+                    <td>内容1-2</td>
+                </tr>
+                <tr>
+                    <td>内容2-1</td>
+                    <td>内容2-2</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="table-responsive">
+            <!--table-responsive（水平滚动）-->
+            <table class="table"></table>
+        </div>
+    </div>
+
+    <!--警告-->
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">嵌套H4</h4>
+            <p>P内容区域-自定义内容</p>
+            <hr>
+            <p class="mb-0">P内容区域-自定义内容</p>
+        </div>
+    </div>
+
+    <!--折叠-->
+    <div class="container">
+        <!--按钮的形式-->
+        <div class="row">
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">与href连结</a>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-trigger="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    DA的陈词滥调遭到批评，因为如此高的寿命谴责Terry Richardson的鱿鱼。我的灵魂没有什么keffiyeh helvetica，精酿啤酒的信誉不知道智者的劳动是如何韦斯·安德森例外的。s
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                <a class="btn btn-success" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">切换第一个元素</a>
+                <button class="btn btn-success" type="button" data-toggle="collapse" data-trigger="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">切换第二个元素</button>
+                <button class="btn btn-success" type="button" data-toggle="collapse" data-trigger=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2"></button>
+            </p>
+            <div class="row">
+                <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <div class="card card-body">
+                            内容1
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="collapse multi-collapse" id="multiCollapseExample2">
+                        <div class="card card-body">
+                            内容2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--手风琴的形式-->
+        <div class="row">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                可折叠项目组 #1
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            DA的陈词滥调遭到批评，因为如此高的寿命谴责Terry Richardson的鱿鱼。3狼月亮服务，而不是滑板消费者早午餐。奎奴亚藜的食品卡车不知道我的辛苦，这样的背景。3狼月亮早午餐的时间，但是他们在上面放了一只鸟，一些鱿鱼的原产地咖啡不会带Shoreditch。我的灵魂没有什么keffiyeh helvetica，精酿啤酒的信誉不知道智者的劳动是如何韦斯·安德森例外的。素食主义者的屠夫除外。绑腿黑人工艺啤酒从农场到餐桌，原始牛仔布美学合成器，不知道您可能没有听说过他们谴责劳动和可持续的VHS。
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                可折叠项目组 #2
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            DA的陈词滥调遭到批评，因为如此高的寿命谴责Terry Richardson的鱿鱼。3狼月亮服务，而不是滑板消费者早午餐。奎奴亚藜的食品卡车不知道我的辛苦，这样的背景。3狼月亮早午餐的时间，但是他们在上面放了一只鸟，一些鱿鱼的原产地咖啡不会带Shoreditch。我的灵魂没有什么keffiyeh helvetica，精酿啤酒的信誉不知道智者的劳动是如何韦斯·安德森例外的。素食主义者的屠夫除外。绑腿黑人工艺啤酒从农场到餐桌，原始牛仔布美学合成器，不知道您可能没有听说过他们谴责劳动和可持续的VHS。
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                可折叠项目组 #3
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            DA的陈词滥调遭到批评，因为如此高的寿命谴责Terry Richardson的鱿鱼。3狼月亮服务，而不是滑板消费者早午餐。奎奴亚藜的食品卡车不知道我的辛苦，这样的背景。3狼月亮早午餐的时间，但是他们在上面放了一只鸟，一些鱿鱼的原产地咖啡不会带Shoreditch。我的灵魂没有什么keffiyeh helvetica，精酿啤酒的信誉不知道智者的劳动是如何韦斯·安德森例外的。素食主义者的屠夫除外。绑腿黑人工艺啤酒从农场到餐桌，原始牛仔布美学合成器，不知道您可能没有听说过他们谴责劳动和可持续的VHS。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--下拉菜单-->
+    <div class="container">
+        <div class="row">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    下拉菜单
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    <button class="dropdown-item" type="button">行为</button>
+                    <button class="dropdown-item" type="button">动作</button>
+                    <button class="dropdown-item" type="button">其它</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--表单-->
+    <div class="container">
+        <div class="row">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">电子邮件</label>
+                        <input type="email" class="form-control" id="inputEmail4">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">密码</label>
+                        <input type="password" class="form-control" id="inputPassword4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">地址</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">地址2</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">市</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">州</label>
+                        <select id="inputState" class="form-control">
+                            <option selected>选择</option>
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">压缩</label>
+                        <input type="text" class="form-control" id="inputZip">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                            对我进行检查
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="customRange3">Example range</label>
+                    <input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">登录</button>
+            </form>
+        </div>
+    </div>
+
+    <!--模态框-->
+    <div class="container">
+        <div class="row">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                启动演示模态
+            </button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <!--modal-dialog-scrollable（内容滚动）、modal-dialog-centered（垂直居中）-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">模态标题</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h2>内容</h2>
+                            <h3>文字内容描述</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">保存</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--弹出框-->
+    <div class="container">
+        <div class="row">
+            <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" data-placement="right" title="可忽略弹出框" data-content="弹出内容">可忽略弹出框</a>
+        </div>
+
+        <div class="row">
+            <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="右侧的工具提示">
+                右侧的工具提示
+            </button>
+        </div>
+    </div>
+
+    <!--滚动-->
+    <div class="container">
+        <div class="row">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <nav class="nav nav-pills flex-column">
+                    <a class="nav-link" href="#item-1">Item 1</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
+                        <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
+                    </nav>
+                    <a class="nav-link" href="#item-2">Item 2</a>
+                    <a class="nav-link" href="#item-3">Item 3</a>
+                    <nav class="nav nav-pills flex-column">
+                        <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
+                        <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+                    </nav>
+                </nav>
+            </nav>
+
+            <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
+                <h4 id="item-1">Item 1</h4>
+                <p>...</p>
+                <h5 id="item-1-1">Item 1-1</h5>
+                <p>...</p>
+                <h5 id="item-1-2">Item 1-2</h5>
+                <p>...</p>
+                <h4 id="item-2">Item 2</h4>
+                <p>...</p>
+                <h4 id="item-3">Item 3</h4>
+                <p>...</p>
+                <h5 id="item-3-1">Item 3-1</h5>
+                <p>...</p>
+                <h5 id="item-3-2">Item 3-2</h5>
+                <p>...</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="list-example" class="list-group">
+                <a class="list-group-item list-group-item-action" href="#list-item-1">项目 1</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-2">项目 2</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-3">项目 3</a>
+                <a class="list-group-item list-group-item-action" href="#list-item-4">项目 4</a>
+            </div>
+            <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+                <h4 id="list-item-1">Item 1</h4>
+                <p>...</p>
+                <h4 id="list-item-2">Item 2</h4>
+                <p>...</p>
+                <h4 id="list-item-3">Item 3</h4>
+                <p>...</p>
+                <h4 id="list-item-4">Item 4</h4>
+                <p>...</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>
