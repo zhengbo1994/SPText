@@ -553,35 +553,27 @@
         return Math.abs(x - y) < Math.pow(2, -52);
     }
 
-    this.getQueryString = getQueryString;
-    this.isNull = isNull;
-
-    this.ajaxRequest = ajaxRequest;
-
-    this.newGuid = newGuid;
-
-    this.arrContext = arrContext;
-
-    this.split = split;
-
-    this.locationHref = locationHref;
-
-    this.formatDateString = formatDateString;
-
-    this.getJson = getJson;
-    // this.getForm = getForm;
-    this.getForm = getForm;
-    this.setJson = setJson;
-    this.isArray = isArray;
+    this.getQueryString = getQueryString;//获取地址栏参数
+    this.isNull = isNull;//判断是否为空 
+    this.ajaxRequest = ajaxRequest;//ajax统一请求接口
+    this.newGuid = newGuid;//创建GUID
+    this.arrContext = arrContext;//匹配数组，返回索引
+    this.split = split;//分割
+    this.locationHref = locationHref;//界面跳转
+    this.formatDateString = formatDateString;//年-月-日
+    this.getJson = getJson; //获取当前容器内有name属性的控件值，返回一个对象
+    this.getForm = getForm;//获取当前容器内有name属性的控件值，返回一个对象
+    this.setJson = setJson;//讲json值赋给容器
+    this.isArray = isArray;//是数组
     this.abortThread = abortThread;//终止进程
-    this.deepClone = deepClone;
-    this.deepPrototypeClone = deepPrototypeClone;
-    this.deepCloneConversion = deepCloneConversion;
-    this.debounce = debounce;
-    this.throttle = throttle;
-    this.epsEqu = epsEqu;
-    this.deepCopy = deepCopy;
-    this.getpage = getpage;
+    this.deepClone = deepClone;//深拷贝（自定义）
+    this.deepPrototypeClone = deepPrototypeClone;//深拷贝（递归）
+    this.deepCloneConversion = deepCloneConversion;//深拷贝（序列化方式）
+    this.debounce = debounce;//防抖
+    this.throttle = throttle;//节流
+    this.epsEqu = epsEqu;//判断小数是否相等
+    this.deepCopy = deepCopy;//数据缓存
+    this.getpage = getpage;//获取分页
 }).call(this)
 //1、find 查询数组中符合条件的第一个元素，如果没有符合条件的元素则返回undefined
 //var dogs = arr.find(v => v === 4);

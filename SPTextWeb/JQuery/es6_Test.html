@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ES6-语法</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+    <div class="top_Test" >这是一个测试div</div>
+
+    <script type="text/javascript">
+        $(function () {
+            let initES6 = function () {
+                let es6_0 = function () {
+                    {
+                        let foo = function () {
+                            return 1;
+                        }
+
+                        let foo1 = () => {
+                            return 1;
+                        }
+                    }
+                    {
+                        let nums = [1, 2, 3, 4, 5, 6, 10];
+                        let fives = [];
+                        nums.forEach(p => {
+                            if (p % 5 == 0) {
+                                fives.push(p)
+                            }
+                        })
+
+                        console.log(fives);
+                    }
+                }
+
+                let es6_1 = function () {
+                    this.a = 1;
+                    setTimeout(() => {
+                        this.a++;
+                        console.log(this.a);
+                    }, 100)
+                }
+
+                let es6_2 = function () {
+                    var a = 1;
+                    {
+                        let a = 2;
+                        console.log(a);//2
+                    }
+                    console.log(a);//1
+
+                    const A = [1, 2];
+                    A.push(3);
+                    //console.log(A);//[1,2,3]
+                    //A = 10;报错
+                }
+
+                let es6_3 = function () {
+                    class Animal {
+                        constructor() {
+                            console.log("我是一个生物！");
+                        }
+                        a = "张三";
+                        Show() {
+                            return console.log("返回这是一个自定义方法！");
+                        }
+                    }
+
+                    class Person extends Animal {
+                        constructor() {//构造函数
+                            super();//重写构造函数
+                            console.log("我是一个程序员");
+                        }
+                    }
+
+                    let person = new Person();
+                    console.log(person.a);
+                    console.log(person.Show());
+                }
+
+                let es6_4 = function () {
+                    {
+                        let [, , third] = [1, 2, 3];
+                        console.log(third); //3
+
+                        let [first, ...last] = [1, 2, 3];
+                        console.log(last); //[2,3]
+
+                        //对象解构
+                        let { name, age } = { name: "lisi", age: "20" };
+                        console.log(name); //lisi
+                        console.log(age); //20
+                    }
+                    {
+                        //Rest
+                        function f(x, ...y) {
+                            return x * y.length;
+                        }
+                        f(3, "hello", true) == 6
+
+                        //Spread
+                        function f(x, y, z) {
+                            return x + y + z;
+                        }
+                        f(...[1, 2, 3]) == 6
+                    }
+                    {
+                        let aStrat = "aaaa";
+                        let aEnd = "bbbb";
+                        console.log(`${aStrat}拼接后面的内容${aEnd}`);
+                    }
+                }
+
+                let es6_5 = function () {
+                    //通过对象字面量创建对象
+                    var human = {
+                        breathe() {
+                            console.log('breathing...');
+                        }
+                    };
+                    var worker = {
+                        __proto__: human, //设置此对象的原型为human,相当于继承human
+                        company: 'freelancer',
+                        work() {
+                            console.log('working...');
+                        }
+                    };
+                    human.breathe();//输出 ‘breathing...’
+                    //调用继承来的breathe方法
+                    worker.breathe();//输出 ‘breathing...’
+                }
+
+                let es6_6 = function () {
+                    {
+                        var arr = [11, 12, 13];
+                        var itr = arr[Symbol.iterator]();
+
+                        itr.next(); //{ value: 11, done: false }
+                        itr.next(); //{ value: 12, done: false }
+                        itr.next(); //{ value: 13, done: false }
+                        itr.next(); //{ value: undefined, done: true }
+                    }
+                    {
+                        function* foo(x) {
+                            var y = 2 * (yield (x + 1));
+                            var z = yield (y / 3);
+                            return (x + y + z);
+                        }
+
+                        var it = foo(5);
+
+                        console.log(it.next());       // { value:6, done:false }
+                        console.log(it.next(12));   // { value:8, done:false }
+                        console.log(it.next(13));   // { value:42, done:true }
+                    }
+                    {//for…of 遍历（数组）
+                        let arr = [1, 2, 3];
+                        for (let itr of arr) {
+                            console.log(itr); //1 2 3
+                        }
+                    }
+                    {//for…in 遍历对象中的属性
+                        let arr = [1, 2, 3];
+                        arr.aa = 'bb';
+                        for (let itr in arr) {
+                            console.log(itr); //0 1 2 aa
+                        }
+                    }
+                }
+
+                let es6_7 = function () {
+                    // Sets
+                    var s = new Set();
+                    s.add("hello").add("goodbye").add("hello");
+                    s.size === 2;
+                    s.has("hello") === true;
+
+                    // Maps
+                    var m = new Map();
+                    m.set("hello", 42);
+                    m.set(s, 34);
+                    m.get(s) == 34;
+
+                    // Weak Maps
+                    var wm = new WeakMap();
+                    wm.set(s, { extra: 42 });
+                    wm.size === undefined
+
+                    // Weak Sets
+                    var ws = new WeakSet();
+                    ws.add({ data: 42 });
+                }
+
+                let es6_8 = function () {
+                    //定义被侦听的目标对象
+                    var engineer = { name: 'Joe Sixpack', salary: 50 };
+                    //定义处理程序
+                    var interceptor = {
+                        set: function (receiver, property, value) {
+                            console.log(property, 'is changed to', value);
+                            receiver[property] = value;
+                        }
+                    };
+                    //创建代理以进行侦听
+                    engineer = Proxy(engineer, interceptor);
+                    //做一些改动来触发代理
+                    engineer.salary = 60;
+                    //控制台输出：salary is changed to 60
+                }
+
+                let es6_9 = function () {
+                    function timeout(duration = 0) {
+                        return new Promise((resolve, reject) => {
+                            setTimeout(resolve, duration);
+                        })
+                    }
+
+                    var p = timeout(1000).then(() => {
+                        return timeout(2000);
+                    }).then(() => {
+                        throw new Error("hmm");
+                    }).catch(err => {
+                        return Promise.all([timeout(100), timeout(200)]);
+                    })
+                }
+
+                es6_0();    //匿名方法=>箭头函数
+                es6_1();    //里面的this是指向自己本身
+                es6_2();    //const只能改变数组和对象，不能改变常量
+                es6_3();    //constructor构造函数，super构造函数重写
+                es6_4();    //...的巧妙用法/字符拼接
+                es6_5();    //原型使用
+                es6_6();    //迭代器
+                es6_7();    //新的数据类型（Map + Set + WeakMap + WeakSet） 
+                es6_8();    //Proxies(监听对象身上发生了什么事情)
+                es6_9();    //Promises是处理异步操作的一种模式
+            }
+
+            let initJquery = function () {
+                $(".top_Test").fadeIn(300, function () {
+                    //$(".top_Test").hide();
+                    $(".top_Test").toggle();
+                })
+                $(".top_Test").animate({ "height": "300px;","width": "300px;" })
+            }
+
+            $(document).ready(function () {
+                initES6();
+
+
+                //es6, es7, es8  //https://juejin.im/post/6844903651618586632
+            })
+        })
+    </script>
+</body>
+</html>

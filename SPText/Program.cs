@@ -3,6 +3,7 @@ using InfoEarthFrame.Data;
 using IOSerialize.IO;
 using IOSerialize.Serialize;
 using log4net.Config;
+using Microsoft.Graph;
 using ServiceStack;
 using ServiceStack.Redis;
 using SPText.Common;
@@ -245,9 +246,13 @@ namespace SPText
             //WebSocket();
             #endregion
 
+            #region  测试代码
+            TestHelper testHelper = new TestHelper();
+            testHelper.Show();
+            #endregion
+
             //dynamic  避开编译器检查
-            Console.WriteLine("视频代码笔记！");
-            Console.ReadLine();
+            Console.ReadKey();
 
             #region  
             //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
@@ -276,6 +281,7 @@ namespace SPText
             var min = a.Min();
             var avg = a.Average();
             var dis = c.Distinct();
+
 
             Console.WriteLine(max);
             Console.WriteLine(min);
@@ -1253,8 +1259,9 @@ namespace SPText
             }
 
             {
+                string str = "字符串";
                 //生成验证码
-                ImageHelper.Drawing();
+                ImageHelper.Drawing(str);
             }
             {
                 //序列化&反序列化
@@ -2451,15 +2458,15 @@ namespace SPText
         #region  QRCode
         public static void GetQRCode()
         {
-            string file = Directory.GetCurrentDirectory();
+            string file = System.IO.Directory.GetCurrentDirectory();
             string filePath = Path.Combine(file, "QRCode");
-            if (!Directory.Exists(filePath))
+            if (!System.IO.Directory.Exists(filePath))
             {
-                Directory.CreateDirectory(filePath);
+                System.IO.Directory.CreateDirectory(filePath);
             }
 
             QRCodeHelper qRCodeHelper = new QRCodeHelper();
-            qRCodeHelper.GetQRCODEByString("https://zhidao.baidu.com/question/504101834.html", file, 60);
+            qRCodeHelper.GetQRCODEByString("https://www.baidu.com", file, 60);
         }
 
         #endregion
