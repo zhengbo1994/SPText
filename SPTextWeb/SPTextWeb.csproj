@@ -122,8 +122,73 @@
     <Content Include="BootStrap\test3.html" />
     <Content Include="BootStrap\test4.html" />
     <Content Include="JQuery\es6_Test.html" />
+    <Content Include="JSRender\HtmlPage1.html" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.css" />    <Content Include="JQuery\js\jquery-3.4.1.min.js" />
+    <Content Include="JQuery\js\jsrender.min.js" /><<<<<<< .mine
     <Content Include="JQuery\js\jquery-3.4.1.min.js" />
     <Content Include="JQuery\js\jsrender.min.js" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+    <Content Include="JSRender\HtmlPage1.html" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="JSRender\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="JSRender\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="JSRender\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="JSRender\lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="JSRender\lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="JSRender\lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="JSRender\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="JSRender\lib\jquery\dist\jquery.js" />
+    <Content Include="JSRender\lib\jquery\dist\jquery.min.js" />
+    <Content Include="JSRender\lib\jquery\LICENSE.txt" />
+    <Content Include="JSRender\lib\lib\layer\layer.js" />
+    <Content Include="JSRender\lib\lib\layer\mobile\layer.js" />
+    <Content Include="JSRender\lib\lib\layer\mobile\need\layer.css" />
+    <Content Include="JSRender\lib\lib\layer\theme\default\icon-ext.png" />
+    <Content Include="JSRender\lib\lib\layer\theme\default\icon.png" />
+    <Content Include="JSRender\lib\lib\layer\theme\default\layer.css" />
+    <Content Include="JSRender\lib\lib\layer\theme\default\loading-0.gif" />
+    <Content Include="JSRender\lib\lib\layer\theme\default\loading-1.gif" />
+    <Content Include="JSRender\lib\lib\layer\theme\default\loading-2.gif" />
+    <Content Include="JSRender\lib\lib\vue\vue.min.js" />
+>>>>>>> .theirs
     <Content Include="Vue\First\01.html" />
     <Content Include="Vue\First\02.html" />
     <Content Include="Vue\First\03.html" />
@@ -273,6 +338,19 @@
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="BootStrap\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="JSRender\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Include="JSRender\lib\bootstrap\LICENSE" />
+    <Content Include="JSRender\lib\jquery-validation\LICENSE.md" />
+    <Content Include="JSRender\lib\jquery\dist\jquery.min.map" />
     <None Include="packages.config" />
     <Content Include="Vue\Second\README.md" />
     <Content Include="Vue\Second\user.json" />
@@ -285,6 +363,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

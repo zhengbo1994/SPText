@@ -1,0 +1,417 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JSRender-HtmlPage1.html</title>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body class="box">
+    <div class="box"></div>
+
+
+    <!--//模板-->
+    <script type="text/x-jsrender" id="jsRender1">
+        <table>
+            <tr>
+                <td>Name: {{:name}}</td>
+                <td>Age: {{:age}}</td>
+            </tr>
+        </table>
+    </script>
+
+    <script type="text/x-jsrender" id="jsRender2">
+        <table>
+            <tr>
+                <td>Name: {{:personalInfo.name}}</td>
+                <td>Age: {{:personalInfo.age}}</td>
+            </tr>
+        </table>
+
+        <p>{{:top.middle1}}</p>
+        <p>{{:top.middle.bottom}}</p>
+    </script>
+
+    <script type="text/x-jsrender" id="jsRender3">
+        <p>{{:name}}</p>
+        <p>{{>name}}</p>
+    </script>
+
+    <script type="text/x-jsrender" id="jsRender4">
+        <!--除了可以在js中定义全局变量，在模板中也是可以的-->
+        {{* window.count = 1}}
+        <p>{{*:count + 2}}</p>
+        <p>{{:name.firstName + '  ' + name.lastName + '  ' + window.describe}}</p>
+        <!-- <p>{{*:describe + '  ' + name + count}}</p> -->
+    </script>
+
+    <!--条件判断语句 {{if}} {{else}}-->
+    <script type="text/x-jsrender" id="jsRender5">
+        {{if count == 1 tmpl="#j-firstTpl5"}}
+        <p>welcome first!</p>
+        {{else count == 2 tmpl="#j-secondTpl5"}}
+        <p>welcome again</p>
+        <p>这里的else会被当做elseif count==2 使用</p>
+        {{else}}
+        <p>welcom back!</p>
+        {{/if}}
+    </script>
+    <script type="text/x-jsrender" id="j-firstTpl5">
+        <h3>this is first template</h3>
+    </script>
+    <script type="text/x-jsrender" id="j-secondTpl5">
+        <h3>this is second template</h3>
+    </script>
+
+    <!--使用{{for}}循环对数据进行循环或对对象进行遍历-->
+    <script type="text/x-jsrender" id="jsRender6">
+        {{!-- animal 对象已经被默认遍历，所以属性前不用加animal.就可访问到  --}}
+        <h3>there have {{:kind}} kinds animal</h3>
+        <p>and the cow price is {{:price.cow}}</p>
+        <p>and the cow price is {{:price.pig}}</p>
+
+        {{!--也可以这样对对象进行for循环 --}}
+        {{for price}}
+        <p>and the cow price is {{:cow}}</p>
+        <p>and the cow price is {{:pig}}</p>
+        {{/for}}
+
+        <ul>
+            {{!-- 对对象数组进行循环  --}}
+            {{for list}}
+            <li>{{:#index + 1}}. this animal call {{:name}}, and has {{:count}}, it has {{:foot}} foots</li>
+            {{/for}}
+
+            {{!-- 也可以使用模板引入作为循环的模板   --}}
+            {{for list tmpl="#j-listTpl6" /}}
+        </ul>
+
+        {{!-- 遍历的时候顺便判断merbers是否存在  --}}
+        {{for members}}
+        <div>{{:name}}</div>
+        {{else}}
+        <div>No members!</div>
+        {{/for}}
+    </script>
+    <script type="text/x-jsrender" id="j-listTpl6">
+        <li>this animal call {{:name}}, and has {{:count}}, it has {{:foot}} foots</li>
+    </script>
+
+    <!--使用{{props}}遍历对象并且获取到对象的key/value-->
+    <script type="text/x-jsrender" id="jsRender7">
+        {{!-- 简单的对象遍历 --}}
+        {{props price}}
+        <p>and the {{:key}} price is {{:prop}}</p>
+        {{/props}}
+
+        <ul>
+            {{!-- 在数据循环中再进行对象的遍历，病获取到key/prop --}}
+            {{for list}}
+            <li>
+                {{:#index + 1}}.
+                {{props #data}}
+                <b>{{:key}}</b> is {{>prop}}
+                {{/props}}
+            </li>
+            {{/for}}
+
+            {{!--也可以使用模板引入作为循环的模板   --}}
+            {{for list tmpl="#j-listTpl7" /}}
+        </ul>
+    </script>
+    <script type="text/x-jsrender" id="j-listTpl7">
+        <li>
+            {{:#index + 1}}.
+            {{props #data}}
+            <b>{{:key}}</b> is {{>prop}}
+            {{/props}}
+        </li>
+    </script>
+
+    <!--使用{{include}}引入外部模板或者改变模板的上下文-->
+    <script type="text/x-jsrender" id="jsRender8">
+        {{if case == 1}}
+        {{include tmpl="#j-case1Tpl8" /}}
+        {{else case == 2}}
+        {{include data tmpl="#j-case2Tpl8" /}}
+        {{else}}
+        <p>no data</p>
+        {{/if}}
+
+    </script>
+    <script type="text/x-jsrender" id="j-case1Tpl8">
+        {{!-- for循环会默认取到传进来的对象 使用data.title是访问不到的 --}}
+        {{!-- 传进来的对象必须手动循环 --}}
+        {{for}}
+        <h3>{{:title}}</h3>
+        <p>{{:text}}</p>
+        {{/for}}
+        {{!--或者这样使用        --}}
+        <h3>{{:#data.title}}</h3>
+        <p>{{:#data.text}}</p>
+
+    </script>
+    <script type="text/x-jsrender" id="j-case2Tpl8">
+        {{!-- :length 可以获取当前数组的长度 --}}
+        {{:length}}
+        {{!-- 传进来的数组必须手动循环 --}}
+        {{for #data}}
+        <h3>{{:title}}</h3>
+        <p>{{:text}}</p>
+        {{/for}}
+        {{!--        --}}
+        <h3>{{*:extraData.title}}</h3>
+        <p>{{*:extraData.text}}</p>
+    </script>
+
+    <!--使用{{converters:value}}把value转换成所需要的格式-->
+    <script type="text/x-jsrender" id="jsRender9">
+        <div>
+            <h3>{{upper:name}}</h3>
+            <p>{{:age}}</p>
+        </div>
+    </script>
+
+    <!--使用{{:~helper(value)}}对传入的参数value做处理-->
+    <script type="text/x-jsrender" id="jsRender10">
+        <div>
+            <h3>{{:~hello(firstName, lastName)}}</h3>
+            <p>{{:age}}</p>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        var jsRender1 = function () {
+            (function (jq, g) {
+                //传入一个简单对象
+                var data = {
+                    'name': 'alice',
+                    'age': 18
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#jsRender1'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(data);
+
+                $('.box').html(finalTpl);
+            })(jQuery, window);
+        }
+        var jsRender2 = function () {
+            (function (jq, g) {
+
+                var complexData = {
+                    'personalInfo': {
+                        'name': 'alice',
+                        'age': 18
+                    },
+                    'top': {
+                        'middle': {
+                            'bottom': 'this is bottom value'
+                        },
+                        'middle1': 'this is middle1 value'
+                    }
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#jsRender2'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(complexData);
+
+                $('.box').html(finalTpl);
+            })(jQuery, window)
+        }
+        var jsRender3 = function () {
+            (function (jq, g) {
+
+                var data = {
+                    'name': '<b style="font-size:24px;">i am alice</b><script>alert("我是注入脚本攻击")<\/script>'
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#j-specCard'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(data);
+
+                $('.box').html(finalTpl);
+
+            })(jQuery, window)
+        }
+        var jsRender4 = function () {
+            (function (jq, g) {
+
+                window.describe = " he is a basketball player";
+
+                $.views.settings.allowCode(true);
+                var data = {
+                    'name': {
+                        'firstName': 'cury',
+                        'lastName': 'steven'
+                    }
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#jsRender4'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(data);
+
+                $('.box').html(finalTpl);
+
+            })(jQuery, window)
+        }
+        var jsRender5 = function () {
+            (function (jq, g) {
+                //传入一个简单对象
+                var data = {
+                    'count': 1,
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#jsRender5'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(data);
+
+                $('.box').html(finalTpl);
+            })(jQuery, window);
+        }
+        var jsRender6 = function () {
+            (function (jq, g) {
+                var animal = {
+                    'kind': 4,
+                    'price': {
+                        'cow': 19999,
+                        'pig': 1888
+                    },
+                    'list': [
+                        {
+                            'name': 'cow',
+                            'count': 4,
+                            'foot': 4
+                        },
+                        {
+                            'name': 'chicken',
+                            'count': 5,
+                            'foot': 2
+                        }
+                    ]
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#jsRender6'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(animal);
+
+                $('.box').html(finalTpl);
+
+            })(jQuery, window)
+        }
+        var jsRender7 = function () {
+            (function (jq, g) {
+                var animal = {
+                    'kind': 4,
+                    'price': {
+                        'cow': 19999,
+                        'pig': 1888
+                    },
+                    'list': [
+                        {
+                            'name': 'cow',
+                            'count': 4,
+                            'foot': 4
+                        },
+                        {
+                            'name': 'chicken',
+                            'count': 5,
+                            'foot': 2
+                        }
+                    ]
+                },
+                    //获取模板
+                    jsRenderTpl = $.templates('#jsRender7'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(animal);
+
+                $('.box').html(finalTpl);
+
+            })(jQuery, window)
+        }
+        var jsRender8 = function () {
+            (function (jq, g) {
+                var condition = {
+                    'case': 2,
+                    'data': {
+                        'title': 'this is first case',
+                        'text': 'case one text'
+                    },
+                    'data1': [
+                        {
+                            'title': 'i am outer fisrt title',
+                            'text': 'it is me,diffrent light'
+                        },
+                        {
+                            'title': 'i am outer second title',
+                            'text': 'it is me,diffrent light'
+                        }
+                    ]
+                };
+
+
+                //获取模板
+                jsRenderTpl = $.templates('#jsRender8'),
+                    //末班与数据结合
+                    finalTpl = jsRenderTpl(animal);
+
+                $('.box').html(finalTpl);
+
+            })(jQuery, window)
+        }
+        var jsRender9 = function () {
+            (function (jq, g) {
+                var data = {
+                    'name': 'alice',
+                    'age': 18
+                };
+
+                $.views.converters({
+                    upper: function (val) {
+                        return val.toUpperCase();
+                    }
+                })
+
+                //使用jQuery选择器获取script标签声明的jsrender模板并传入数据跟一些方法渲染模板
+                var myPersonalTpl = $("#jsRender9").render(data);
+                $('.box').html(myPersonalTpl);
+            })(jQuery, window);
+        }
+        var jsRender10 = function () {
+            (function (jq, g) {
+                var info = {
+                    firstName: 'alice',
+                    lastName: 'Jogh',
+                    age: 18
+                };
+
+                $.views.helpers({
+                    hello: function (fisrtName, lastName) {
+                        return 'Hello ' + fisrtName + ' ' + lastName;
+                    }
+                })
+
+                //使用jQuery选择器获取script标签声明的jsrender模板并传入数据渲染模板
+                var finalTpl = $("#jsRender10").render(info);
+                $('.box').html(finalTpl);
+            })(jQuery, window);
+        }
+
+
+
+        $(document).ready(function () {
+            jsRender1();
+            jsRender2();
+            jsRender3();
+            jsRender4();
+            jsRender5();
+            jsRender6();
+            jsRender7();
+            jsRender8();
+            jsRender9();
+            jsRender10();
+        });
+
+
+    </script>
+</body>
+</html>
