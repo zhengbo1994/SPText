@@ -124,39 +124,9 @@
     <Content Include="JQuery\es6_Test.html" />
     <Content Include="JSRender\HtmlPage1.html" />
     <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.css" />    <Content Include="JQuery\js\jquery-3.4.1.min.js" />
-    <Content Include="JQuery\js\jsrender.min.js" /><<<<<<< .mine
+    <Content Include="JQuery\js\jsrender.min.js" />
     <Content Include="JQuery\js\jquery-3.4.1.min.js" />
     <Content Include="JQuery\js\jsrender.min.js" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
     <Content Include="JSRender\HtmlPage1.html" />
     <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
@@ -188,7 +158,6 @@
     <Content Include="JSRender\lib\lib\layer\theme\default\loading-1.gif" />
     <Content Include="JSRender\lib\lib\layer\theme\default\loading-2.gif" />
     <Content Include="JSRender\lib\lib\vue\vue.min.js" />
->>>>>>> .theirs
     <Content Include="Vue\First\01.html" />
     <Content Include="Vue\First\02.html" />
     <Content Include="Vue\First\03.html" />
