@@ -122,6 +122,8 @@
     <Content Include="BootStrap\test3.html" />
     <Content Include="BootStrap\test4.html" />
     <Content Include="JQuery\es6_Test.html" />
+    <Content Include="JQuery\js\jquery-3.4.1.min.js" />
+    <Content Include="JQuery\js\jsrender.min.js" />
     <Content Include="Vue\First\01.html" />
     <Content Include="Vue\First\02.html" />
     <Content Include="Vue\First\03.html" />

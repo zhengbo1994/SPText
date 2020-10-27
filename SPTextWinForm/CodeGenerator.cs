@@ -29,6 +29,7 @@ namespace SPTextWinForm
                 {
                     DataSet ds = new DataSet();
                     SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                    sda.FillSchema(ds,SchemaType.Source);
                     sda.Fill(ds);
                     DataTable dt = ds.Tables[0];
                     return dt;
