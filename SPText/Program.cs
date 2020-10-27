@@ -211,7 +211,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            DatabaseOperations();
+            //DatabaseOperations();
             #endregion
 
             #region  二维码
