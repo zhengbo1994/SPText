@@ -396,6 +396,7 @@ namespace SPTextCommon
             }
             catch (System.Net.Mail.SmtpException ex)
             {
+                Console.WriteLine(ex.Message);
                 message.Attachments.Clear();
                 //MessageBox.Show(ex.ToString());
                 message = null;

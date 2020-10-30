@@ -162,31 +162,77 @@
 
         <hr />
         <img :src="url" :width="w" :height="h">
+
+
+        <!--不可见的包裹元素-->
+        <template v-if="flag">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+        </template>
+
+        <!-- 阻止单击事件继续传播 -->
+        <a v-on:click.stop="doThis"></a>
+
+        <!-- 提交事件不再重载页面 -->
+        <form v-on:submit.prevent="onSubmit"></form>
+
+        <!-- 修饰符可以串联 -->
+        <a v-on:click.stop.prevent="doThat"></a>
+
+        <!-- 只有修饰符 -->
+        <form v-on:submit.prevent></form>
+
+        <!-- 添加事件监听器时使用事件捕获模式 -->
+        <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+        <div v-on:click.capture="doThis">...</div>
+
+        <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+        <!-- 即事件不是从内部元素触发的 -->
+        <div v-on:click.self="doThat">...</div>
+
+        <!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
+        <!-- 而不会等待 `onScroll` 完成  -->
+        <!-- 这其中包含 `event.preventDefault()` 的情况 -->
+        <div v-on:scroll.passive="onScroll">...</div>
+
+        <!-- 只有在 `key` 是 `Enter` 时调用 `vm.submit()` -->
+        <input v-on:keyup.enter="submit">
+        <input v-on:keyup.13="submit">
+        <!--// 可以使用 `v-on:keyup.f1` Vue.config.keyCodes.f1 = 112-->
+        <!--自定义组件-->
+        <button-counter></button-counter>
+        <my-component name="jiangjiang" come-from="guilin"></my-component>
     </div>
     <script type="text/javascript">
         //配置是否允许vue-devtools检查代码，方便调试，生产环境中需要设置为false
         //Vue.config.devtool = true;
-            window.onload = function () {
+        window.onload = function () {
             var vm = new Vue({
-                el: '#itapp', //指定关联的元素
+                //指定关联的元素
+                el: '#itapp',
+                //数据
                 data: { //存储数据
-                msg: 'Hello World',
+                    msg: 'Hello World',
                     arr: [1, 2, 3],
                     age: 21,
                     name: '',
                     test: '',
                     tag: '01',
-                    user: {id: 9527, name: '唐伯虎', age: 25 },
+                    user: { id: 9527, name: '唐伯虎', age: 25 },
                     arr2: [12, 4, 5, 34, 2, 11, 12],
                     users: [
-                        {id: 9527, name: '唐伯虎', age: 25 },
-                        {id: 1001, name: '秋香', age: 22 },
-                        {id: 1002, name: '石榴姐', age: 24 }
+                        { id: 9527, name: '唐伯虎', age: 25 },
+                        { id: 1001, name: '秋香', age: 22 },
+                        { id: 1002, name: '石榴姐', age: 24 }
                     ],
                     flag: true,
                     users6: [
-                        {name: 'tom', age: 24, email: 'tom@itany.com' },
-                        {name: 'jack', age: 23, email: 'jack@sina.com' }
+                        { name: 'tom', age: 24, email: 'tom@itany.com' },
+                        { name: 'jack', age: 23, email: 'jack@sina.com' }
                     ],
                     nowIndex: -1, //当前要删除项的索引
                     url: 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png',
@@ -194,43 +240,42 @@
                     h: '100px',
                     tag: '122'
                 },
+                //方法
                 methods: { //存储方法
-                show: function () {
-                console.log('show方法');
+                    show: function () {
+                        console.log('show方法');
                     },
                     add() {
-
-                console.log(this); //this表示当前vue实例
+                        console.log(this); //this表示当前vue实例
                         console.log(this === vm); //true
                         this.arr.push(666); //使用this访问当前实例中的成员
                         this.show();
                     },
                     print(e) {
-                // console.log(e);
-                console.log(e.target.innerHTML); //DOM对象
+                        // console.log(e);
+                        console.log(e.target.innerHTML); //DOM对象
                         console.log(this);
                     },
                     change() {
-                this.flag = !this.flag;
+                        this.flag = !this.flag;
                     },
                     addUser() {
-                this.users6.push(this.user);
+                        this.users6.push(this.user);
                         this.user = {};
                     },
                     deleteUser() {
-
                         if (this.nowIndex == -1) {
-                //删除所有
-                this.users6 = [];
+                            //删除所有
+                            this.users6 = [];
                             // this.users.length=0;
                         } else {
-                //从指定索引的位置开始删除
-                this.users6.splice(this.nowIndex, 1)
-            }
+                            //从指定索引的位置开始删除
+                            this.users6.splice(this.nowIndex, 1)
+                        }
 
                     },
                     show7() {
-                console.log(111);
+                        console.log(111);
                     },
                     print7(e) {
                         var tatget = e.target;
@@ -239,36 +284,71 @@
                         // console.log(this);
                     },
                     show8() {
-                console.log(111);
+                        console.log(111);
                         // e.stopPropagation();
                     },
                     print8() {
-                console.log(222);
+                        console.log(222);
                     },
                     write8() {
-                console.log(333);
+                        console.log(333);
                     },
                     study8() {
-                console.log(444);
+                        console.log(444);
                         // e.preventDefault();
                     },
                     show9(e) {
-                console.log(e.keyCode);
+                        console.log(e.keyCode);
                         if (e.keyCode == 13) {
-                console.log('您按了回车');
+                            console.log('您按了回车');
                         }
                     },
                     print9() {
-                console.log('向上');
+                        console.log('向上');
                         // console.log('您按了方向键上');
                         console.log('11111');
                     }
 
-                }
+                },
+                //计算属性
+                computed: {
+                    // 计算属性的 getter
+                    reversedMessage: function () {
+                        return this.message.split('').reverse().join('')
+                    }
+                },
+                //侦听属性
+                watch: {
+                    msg: function (newVlalue, oldVlalue) {
+                        console.log(newVlalue);
+                        console.log(oldVlalue);
+                    },
+                },
+                //挂载
+                mounted: {
+
+                },
+                //创建
+                create: {
+
+                },
+                components: ("my-component", function () {
+                    props: ['name', 'comeFrom'],    //在注册组件的时候通过props选项声明了要取用的多个prop
+                    template:'<p>我叫：{{name}}, 我来自：{{comeFrom}}</p>'
+                })
             });
         }
 
-    </script>
 
+        // 定义一个名为 button-counter 的新组件
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
+    </script>
 </body>
 </html>

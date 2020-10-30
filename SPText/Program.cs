@@ -2392,7 +2392,7 @@ namespace SPText
                     DbUtility db = new DbUtility(connectionStrings, DbProviderType.SqlServer);
                     DataTable data = db.ExecuteDataTable(sql, null);
                     DbDataReader reader = db.ExecuteReader(sql, null);
-                    
+
                     while (reader.Read())
                     {
                         for (int i = 0; i < reader.FieldCount; i++)
@@ -2419,13 +2419,15 @@ namespace SPText
                 //    DbDataReader reader = db.ExecuteReader(sql, null);
                 //    reader.Close();
                 //}
-                //{
-                //    //使用示例 Execl
-                //    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + System.Web.HttpContext.Current.Server.MapPath("~/XLS/车型.xls") + ";Extended Properties=Excel 8.0;";
-                //    string sql = "SELECT * FROM [Sheet1$]";
-                //    DbUtility db = new DbUtility(connectionStrings, DbProviderType.OleDb);
-                //    DataTable data = db.ExecuteDataTable(sql, null);
-                //}
+                {
+                    string path0 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"File\NA312Model.xls");
+                    //string path = System.Web.HttpContext.Current.Server.MapPath("~/File/NA312Model.xls");
+                    //使用示例 Execl
+                    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path0 + ";Extended Properties=Excel 8.0;";
+                    string sql = "SELECT * FROM [Sheet1$]";
+                    DbUtility db = new DbUtility(connectionStrings, DbProviderType.OleDb);
+                    DataTable data = db.ExecuteDataTable(sql, null);
+                }
             }
         }
         #endregion

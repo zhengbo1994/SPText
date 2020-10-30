@@ -19,7 +19,6 @@ using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
-using Microsoft.AspNetCore.Authentication;
 
 namespace SPCoreApiText.Controllers
 {

@@ -37,7 +37,7 @@ namespace SPText.EF
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         [Obsolete("尽量避免使用，using 带表达式目录树的代替")]
-        public IQueryable<T> Set<T>() where T : class
+        public new IQueryable<T> Set<T>() where T : class
         {
             return this.Context.Set<T>();
         }
@@ -200,7 +200,7 @@ namespace SPText.EF
             }
         }
 
-        public virtual void Dispose()
+        public new virtual void Dispose()
         {
             if (this.Context != null)
             {

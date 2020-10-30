@@ -1,0 +1,6 @@
+﻿@charset "utf-8";
+
+body {
+background:url("../images/indexBG.jpg") no-repeat center center;
+background-size:cover;
+}

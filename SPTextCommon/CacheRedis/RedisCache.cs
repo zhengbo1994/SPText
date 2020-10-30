@@ -108,6 +108,7 @@ namespace SPTextCommon.CacheRedis
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return default(T);
             }
         }

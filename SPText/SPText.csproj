@@ -602,6 +602,7 @@
     <None Include="Common\Public\font-awesome\font\fontawesome-webfont.ttf" />
     <None Include="Common\Public\font-awesome\font\fontawesome-webfont.woff" />
     <None Include="Common\Public\font-awesome\font\FontAwesome.otf" />
+    <None Include="File\NA312Model.xls" />
     <None Include="Unity\Unity.Config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
