@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/windows.js"></script>
+<script src="js/jquery/swfupload/swfupload.js"></script>
+<script src="js/jquery/swfupload/swfupload.queue.js"></script>
+<script src="js/jquery/upload.js"></script>
+</head>
+<body>
+<div class="wrap" style="height:1000px;">
+<h2 class="h1 mb15">窗口</h2>
+  <select name="select" id="select" class="mb15">
+    <option>测试值</option>
+  </select>
+  <div class="mb15">IE6中隐藏select</div>
+  <div class="mb15">配置类似Ext</div>
+<ul class="cc list_A">
+	<li><a href="javascript:void(0);" id="btn1">自定义框，内容来自元素el</a></li>
+    <li><a href="javascript:void(0);" id="btn2">自定义框，内容来自字符body</a></li>
+    <li><a href="javascript:void(0);" id="btn3">自定义框，内容来自页面ajax</a></li>
+    <li><a href="javascript:void(0);" id="btn4">自定义框，内容来自页面iframe</a></li>
+    <li><a href="javascript:void(0);" id="btn9">没有按钮</a></li>
+    <li><a href="javascript:void(0);" id="btn6">alert提示</a></li>
+    <li><a href="javascript:void(0);" id="btn7">confirm确认框</a></li>
+    <li><a href="javascript:void(0);" id="btn8">输入框</a></li>
+    <li><a href="javascript:void(0);" id="btn10">上传</a></li>
+</ul>
+<div style="display:none;" id="test1">
+	内容来自id为test1的元素，可<strong>隐藏display:n</strong>one,也可display:block;
+</div>
+</div>
+<script>
+if(typeof document.body.style.maxHeight === "undefined"){
+	document.execCommand("BackgroundImageCache",false,true);
+}
+$(document).ready(function(){
+	$('#btn1').bind('click',function(){
+		var win = new Asc.windows.base({
+			title:'标题<span>(标题说明)</span>',
+			el:'test1',
+			width:500,
+			height:300,
+			buttons:[
+				{
+					text:'确定',
+					cls:'bt2',
+					fn:function(){
+						this.closeWindow();
+					}
+				}	
+			]
+		})
+		//win.containeri.html('this is a new string');
+	})
+	$('#btn9').bind('click',function(){
+		var win = new Asc.windows.base({
+			title:'没有按钮组<span>(标题说明)</span>',
+			el:'test1',
+			width:500,
+			height:300
+		})
+	})
+
+	$('#btn2').bind('click',function(){
+		var win = new Asc.windows.base({
+			title:'标题',
+			body:'这是在配置body里面设置的字符创，可设置top，距离viewport头部的距离,ie7+和ff中不随滚动条滚动，ie6随其滚动,button里面调用this.closeWindow关闭窗口',
+			width:500,
+			height:300,
+			top:100,
+			buttons:[
+				{
+					text:'确定',
+					cls:'bt2',
+					fn:function(){
+						this.closeWindow();
+					}
+				}	
+			]
+		})
+	})
+	
+	$('#btn3').bind('click',function(){
+		var win = new Asc.windows.base({
+			title:'标题',
+			load:{
+				url:'load.php',
+				data:'',
+				callback:function(){}
+			},
+			width:500,
+			height:300,
+			buttons:[
+				{
+					text:'确定',
+					cls:'bt2',
+					fn:function(){
+						this.closeWindow();
+					}
+				}	
+			]
+		})
+	})
+
+	$('#btn4').bind('click',function(){
+		var win = new Asc.windows.base({
+			title:'标题iframe',
+			iframe:'info.html',
+			width:500,
+			height:300,
+			buttons:[
+				{
+					text:'确定',
+					cls:'bt2',
+					fn:function(){
+						this.closeWindow();
+					}
+				}	
+			]
+		})
+	})
+
+	$('#btn6').bind('click',function(){
+		Asc.windows.alert('提示','无法找到该企业联系人资料！');
+	})
+
+	$('#btn7').bind('click',function(){
+		Asc.windows.confirm('确认','是否要删除该会员，删除后无法恢复！',function(btn){
+			if(btn=='yes'){
+				alert('yes');
+				//this.closeWindow(); //this指向窗口对象,关闭窗口
+			}else{
+				alert('no');
+				//this.closeWindow();
+			}
+		});
+	})
+
+	$('#btn8').bind('click',function(){
+		Asc.windows.prompt('输入框','请输入你的姓名',function(btn,val){
+			if(btn=='yes'){
+				alert('你的大名是：'+val);
+				this.closeWindow(); //this指向窗口对象,关闭窗口
+			}else{
+				this.closeWindow();
+			}
+		});
+	})
+	$('#btn10').bind('click',function(){
+		var win = new Asc.windows.base({
+			title:'文件导入',
+			body:'<p style="padding:5px 0;">目前系统仅能识别使用“小木人后台管理系统企业主数据模板”编辑的文件 [<a href="javascript:void(0);">下载模板</a>]<p>',
+			width:512,
+			height:460
+		})
+		setTimeout(function(){
+			var swfup = new Asc.upload.uploadHander({pid:win.containeri});
+			//win.addCloseEvent(swfup.closeUpload,swfup);
+		},0)
+	})
+
+})
+
+</script>
+</body>
+</html>

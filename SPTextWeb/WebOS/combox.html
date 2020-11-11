@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/combox.js"></script>
+</head>
+<body>
+<div class="wrap">
+	<div class="cc">
+    	<h2 class="h1 mb20">combox下拉菜单</h2>
+ 		 <div id="combox1"></div>
+        <script>
+        	var combox1= new Asc.form.combox({
+				el:'#combox1',
+				url:'combox.php',
+				initKey:'123',
+				dataType:'local',
+				data:[
+					{key:'123',text:'测试'},
+					{key:'12',text:'测试数据'}
+				],
+				name:'text',
+				clickRequest:false,
+			});
+        </script>
+        <pre>
+        	&lt;div id=&quot;combox1&quot;&gt;&lt;/div&gt;<br />        &lt;script&gt;<br />        	var combox1= new Asc.form.combox({<br />				el:'#combox1',//关联id<br />				url:'combox.php',//数据源<br />				initKey:'123',//初始化键值<br />				name:'text',//隐藏域name属性<br />				clickRequest:false,//每次点击是否请求<br />				postParams:'cid=8'//pos数据，可删除
+              emptyText:'默认显示值' //如果不设置initKey的时候显示这个文本<br />			});<br />        &lt;/script&gt;
+        </pre>
+    </div>
+</div>
+</body>
+</html>

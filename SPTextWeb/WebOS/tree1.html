@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="js/jquery/jqtree/jquery.treeview.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/jqtree/jquery.treeview.pack.js"></script>
+<script src="js/jquery/plugin/jquery.cookie.js"></script>
+<script src="js/jquery/dtree/dtree.js"></script>
+<link href="js/jquery/dtree/dtree.css" rel="stylesheet" type="text/css" />
+<script>
+$(document).ready(function(){
+	$("#tree").treeview({
+				collapsed: true,
+				animated: "medium",
+				persist: "location"
+	});
+})
+</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="mb10">
+    <h2 class="h1">经典树1</h2>
+    <div class="cc">
+    	<ul id="tree">
+        	<li><span>一级树</span>
+            	<ul>
+                	<li><a href="#">二级树</a></li>
+                    <li>二级树</li>
+                    <li>二级树</li>
+                </ul>
+            </li>
+            <li><span>一级树</span>
+            	<ul>
+                	<li><a href="#">二级树</a></li>
+                    <li>二级树</li>
+                    <li>二级树</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+  </div>
+  <div class="mb10">
+    <h2 class="h1">经典树2</h2>
+    	<script type="text/javascript">
+		<!--
+
+		d = new dTree('d');
+
+		d.add(0,-1,'My example tree');
+		d.add(1,0,'Node 1','example01.html');
+		d.add(2,0,'Node 2','example01.html');
+		d.add(3,1,'Node 1.1','example01.html');
+		d.add(4,0,'Node 3','example01.html');
+		d.add(5,3,'Node 1.1.1','example01.html');
+		d.add(6,5,'Node 1.1.1.1','example01.html');
+		d.add(7,0,'Node 4','example01.html');
+		d.add(8,1,'Node 1.2','example01.html');
+		d.add(9,0,'My Pictures','example01.html','Pictures I\'ve taken over the years','','','js/jquery/dtree/img/imgfolder.gif');
+		d.add(10,9,'The trip to Iceland','example01.html','Pictures of Gullfoss and Geysir');
+		d.add(11,9,'Mom\'s birthday','example01.html');
+		d.add(12,0,'Recycle Bin','example01.html','','','js/jquery/dtree/img/trash.gif');
+
+		document.write(d);
+
+		//-->
+	</script>
+  </div>
+</div>
+</body>
+</html>

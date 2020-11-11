@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<style>
+	.faqlist {
+		padding:10px;
+	}
+	.faqtitle {
+		border-bottom:1px solid #DDE9F5;
+		height:22px;
+		line-height:22px;
+		font-weight:bold;
+	}
+	.faqcontent {
+		padding:10px 0;
+		line-height:1.5em;
+	}
+	.faqcontent p {
+		margin:0.5em 0;
+	}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mb15>">
+  	<h1 class="h1">js问题及提示</h1>
+    <div class="faqlist">
+    	<div class="faqtitle s1">申明</div>
+        <div class="faqcontent s1">个人建议，仅供参考。能力有限，难免出现错误，敬请谅解！本页面常更新。</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle s1">js更新</div>
+        <div class="faqcontent s1">util.js工具类,所有的类都在Asc空间里,组件样式全部放在component.css里,图片在images里，建议公用。</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">js和jquery参考手册</div>
+        <div class="faqcontent"><a href="download/help.rar">下载</a>有问题翻翻。</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">事件监听</div>
+        <div class="faqcontent">当监听的元素是一个列表的时候，建议使用委托(代理)监听，监听父对象，通过e.target属性判断监听元素，另外可以通过jquery提供的live来实现。</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">事件对象</div>
+        <div class="faqcontent">在事件的响应函数中，this对象变为监听的元素。可通过方法的call()或apply改变this的指向</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">类</div>
+        <div class="faqcontent">稍微复杂点的功能建议使用类书写，注意this的指向,prototype的使用</div>
+    </div>
+    
+    <div class="faqlist">
+    	<div class="faqtitle">作用域问题</div>
+        <div class="faqcontent">在页面中尽量避免使用全局变量,可使用闭包，匿名函数，命名空间避免（asc）</div>
+    </div>
+    
+    
+    <div class="faqlist">
+    	<div class="faqtitle">类的继承</div>
+        <div class="faqcontent">类的继承是通过prototype的方式实现的，实现方法有多种，建议使用的ext的方式实现</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">对象复制</div>
+        <div class="faqcontent">建议使用的ext的方式实现</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">原生对象的扩展</div>
+        <div class="faqcontent">尽量避免扩展原生对象，可增强array,function功能</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">dom操作</div>
+        <div class="faqcontent">大量操作使用createDocumentFragment，或者jquery的html()，dom操作耗内存，仅可能减少操作。</div>
+    </div>
+    <div class="faqlist">
+    	<div class="faqtitle">jquery性能注意</div>
+        <div class="faqcontent"><a href="http://blog.benhuoer.com/posts/10-tips-for-jquery-performance.html">地址</a>#  使用最新版本
+# 合并、最小化脚本
+# 用for替代each
+# 用ID替代class选择器
+# 给选择器指定前后文
+# 建立缓存
+# 避免DOM操作
+# 避免使用concat()，利用join()处理长字串
+# 返回false值</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<title>小木人后台管理系统</title>
+<link rel="stylesheet" type="text/css" href="images/admin/style.css" />
+<link rel="stylesheet" type="text/css" href="images/admin/menu.css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/desktop/core.js"></script>
+<script src="js/desktop/Cookie.js"></script>
+<script src="js/desktop/list.js"></script>
+<script src="js/desktop/drag.js"></script>
+<script src="js/desktop/window.js"></script>
+<script src="js/desktop/menu.js"></script>
+<script src="js/desktop/pwmenu.js"></script>
+<script src="js/desktop/panel.js"></script>
+<script src="js/desktop/wpanel.js"></script>
+<script src="js/desktop/startmenu.js"></script>
+<script src="js/desktop/button.js"></script>
+<script src="js/desktop/taskbutton.js"></script>
+<script src="js/desktop/dialog.js"></script>
+<script src="js/desktop/adminnav.js"></script>
+<script src="js/jquery/index.js"></script>
+<script>
+	window.onReady(function(){
+		PW.openHome();
+	})
+	PW.openHome = function(){
+		PW.Dialog({id:"home",name:'后台首页',url:"help.html"});
+	}
+</script>
+</head>
+<body>
+<div id="admin_header">
+  <div class="admin_head" id="admin_head">
+    <table width="100%" style="table-layout:fixed">
+      <tr class="vt">
+        <td width="145"><a href="index.html" class="admin_logo fl">
+          <h1>小木人后台管理系统</h1>
+          </a></td>
+        <td style="vertical-align:bottom;" class="admin_nav_bg"><div class="admin_topbar cc">
+            <div style="width:750px;" class="fr">
+              <div class="fr"><span class="ml20">用户名：admin&nbsp;&nbsp;&nbsp;级别：创始人&nbsp;&nbsp;&nbsp;<a href="#">[注销]</a></span></div>
+            </div>
+          </div>
+          <div class="admin_nav_left" id="navleft"><a href="javascript:;" title="上一个"></a></div>
+          <div class="admin_nav_right" id="navright"><a href="javascript:;" title="下一个"></a></div>
+          <ul class="admin_nav cc">
+            <span id="taskbar"></span>
+          </ul></td>
+      </tr>
+    </table>
+  </div>
+  <table width="100%" style="table-layout:fixed;">
+    <tr>
+      <!--<td id="admin_menubar_top"></td>-->
+      <td class="breadCrumb"><div class="fr"><span id="fullscreen" onclick="adminNavClass.fullscreen();"><i class="admin_full">全屏</i></span><a hidefocus="true" class="toppage" onclick="adminNavClass.page(this);" href="javascript:;">页面设置</a><a hidefocus="true" onclick="adminNavClass.refresh();" href="javascript:;" id="refresh">刷新</a></div>
+        <div id="breadCrumb">
+          <div>当前位置: <span depth="0" class="admenu_down">后台首页</span></div>
+        </div></td>
+    </tr>
+  </table>
+</div>
+<div id="admin_menubar">
+<div class="btn_menu"><a href="javascript:;" class="show" id="btn_menu_show">展开所有</a> <a href="javascript:;" class="hide" id="btn_menu_hide">关闭所有</a></div>
+  <dl class="menubar_dl cc" id="menulist">
+    <a href="#" onclick="PW.Dialog({id:'home1',name:'后台首页',url:'help.html'});">大厦</a>
+  </dl>
+</div>
+<div id="admin_contont">
+  <div id="x-desktop" style="height:100%;width:100%;">
+    <div id="desktopContainer" style="height:100%;float:left;width:100%;"></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上传</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/swfupload/swfupload.js"></script>
+<script src="js/jquery/upload.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <h2 class="h1 mb15">无刷新上传</h2>
+  <div class="cc mb20">
+    <div class="mb10" id="upload1"></div>
+  </div>
+</div>
+<script>
+	var upload1 = new Asc.upload.uploadSingle({
+		el:'upload1',
+		action:'upload.php',
+		num:3,
+		type:'png|jpg'
+	});
+</script>
+</body>
+</html>

@@ -29,6 +29,7 @@ namespace SPTextWinForm
         public static readonly string settingPath = System.Windows.Forms.Application.StartupPath + "\\config\\set.xml";
         FtpSetting ftpSetting = null;
         SendEmailSettingInfo sendEmailSettingInfo = null;
+        bool flagButton = false;
 
 
         public Na312AutoOrderReceive()
@@ -43,23 +44,45 @@ namespace SPTextWinForm
 
         private void btn_run_Click(object sender, EventArgs e)
         {
-            //if (this.btn_run.Text == "开始")
-            //{
-            //    this.b_isPickOrderRun = true;
-            //    this.btn_run.Text = "停止";
-            //    this.btn_run.BackColor = Color.Red;
+            {
+                //if (this.btn_run.Text == "开始")
+                //{
+                //    this.b_isPickOrderRun = true;
+                //    this.btn_run.Text = "停止";
+                //    this.btn_run.BackColor = Color.Red;
 
-            //    Thread th = new Thread(new ThreadStart(CustomerList_Dwn));//线程
-            //    th.IsBackground = true;
-            //    th.Start();
-            //}
-            //else
-            //{
-            //    this.b_isPickOrderRun = false;
-            //    this.btn_run.Text = "即将停止线程操作...";
-            //    this.btn_run.BackColor = Color.Orange;
-            //}
-            StartExecution();
+                //    Thread th = new Thread(new ThreadStart(CustomerList_Dwn));//线程
+                //    th.IsBackground = true;
+                //    th.Start();
+                //}
+                //else
+                //{
+                //    this.b_isPickOrderRun = false;
+                //    this.btn_run.Text = "即将停止线程操作...";
+                //    this.btn_run.BackColor = Color.Orange;
+                //}
+            }
+            {
+                if (flagButton == false)
+                {
+                    {
+                        ThreadStart threadStart = new ThreadStart(() =>
+                        {
+                            flagButton = true;
+                            StartExecution();
+                            flagButton = false;
+                        });
+                        System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
+                        Thread th = new Thread(threadStart);//线程
+                        th.IsBackground = true;
+                        th.Start();
+                    }
+                }
+                else
+                {
+                    this.rtb_logs.AppendText("文件正在解析，请稍等 \n");
+                }
+            }
         }
 
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>测试文档</title>
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<style>
+	html,body {
+		overflow:hidden;
+		width:100%;
+		height:100%;
+	}
+	ul li {
+		margin-left:20px;
+		height:20px;
+		line-height:20px;
+		width:300px;
+		border:solid 1px #CCCCCC;
+		margin:10px;
+		padding-left:10px;
+		cursor:pointer;
+	}
+	ul li.selected {
+		background:#FFCCFF;
+	}
+</style>
+</head>
+
+<body>
+<ul id="selectedlist">
+	<li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+<script>
+$(document).ready(function(){
+	var list = $('#selectedlist li');
+	list.each(function(i,n){
+		$(n).bind('click',function(e){
+			$this = $(this);
+			if(e.shiftKey){
+				var s = $('#selectedlist .selected');
+				if(s.length==0){
+					$this.addClass('selected');
+				}else if(s.length==1){
+					var sl = $(s[0]);
+					var index0 = list.index(sl);
+					var index1 = list.index($this);
+					if(index0!=index1){
+						var slist = index0>index1?list.slice(index1,index0):list.slice(index0,index1+1);
+						slist.addClass('selected');
+						list.data('selected',sl);
+					}
+				}else{
+					if(list.data('selected')){
+						var sl = list.data('selected');
+						var index0 = list.index(sl);
+						var index1 = list.index($this);
+						if(index0==index1){
+							$this.siblings().removeClass('selected');
+						}else{
+							$this.siblings().removeClass('selected');
+							sl.addClass('selected');
+							var slist = index0>index1?list.slice(index1,index0):list.slice(index0,index1+1);
+							slist.addClass('selected');
+						}
+						
+					}
+				}
+			}else if(e.ctrlKey){
+				if($this.hasClass('selected')){
+					$this.removeClass('selected');
+				}else{
+					$this.addClass('selected');
+				}
+			}else{
+				$this.siblings().removeClass('selected').end().addClass('selected');
+			}
+			//console.info(e);
+		})
+	})
+})
+</script>
+</body>
+</html>

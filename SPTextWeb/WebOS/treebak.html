@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/tree.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="mb20">
+    <h2 class="h1 mb15">树</h2>
+    <div class="mb20 s1">一级以上需要查看需要php环境(可查看192.168.1.73/os/treebak.html),本地搜索的算法没有弄好，暂不提供该功能，获取路径treeobj.path</div>
+    <div id="tree1"></div>
+    <div class="tac mb10"> <span class="btn" id="sub_btncate"><span>
+      <button type="submit">提 交</button>
+      </span></span> </div>
+    <script>
+    	var data1 = {
+			level:1,
+			list:[
+					{
+						txt:'农、林、牧、渔业',
+						py:'nlmy',//拼音
+						rid:1,//关联id
+						son:1//是否有子级
+					},
+					{
+						txt:'采矿业',
+						py:'cky',
+						rid:2,
+						son:1
+					},
+					{
+						txt:'制造业',
+						py:'zcy',
+						rid:1,
+						son:1
+					},
+					{
+						txt:'电力、燃气及水的生产和供应业',
+						py:'dlrqsh',
+						rid:2,
+						son:1
+					},
+					{
+						txt:'建筑业',
+						py:'jzy',
+						rid:2,
+						son:1
+					},
+					{
+						txt:'交通运输、仓储和邮政业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'信息传输、计算机服务和软件业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'批发和零售业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'住宿和餐饮业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'金融业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'房地产业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'租赁和商务服务业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'科学研究、技术服务和地质勘查业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'水利、环境和公共设施管理业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'居民服务和其他服务业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'教育',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'卫生、社会保障和社会福利业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'文化、体育和娱乐业',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'公共管理与社会组织',py:'jzy',rid:1,son:1
+					},
+					{
+						txt:'国际组织',py:'jzy',rid:10,son:1
+					}
+			]
+		};
+		
+		function getData(treeObj,id){
+			if(id==0){
+				treeObj.updateHtml(data1)
+			}else{//ajax示例
+				treeObj.addMask();
+				$.ajax({
+				   type: "POST",
+				   url: "data.php",
+				   data: "type=tree&rid="+id,
+				   dataType:'json',
+				   success: function(msg){//ajax成功后调用updateHtml
+						if(msg.list){
+							treeObj.updateHtml(msg);
+						}
+						treeObj.removeMask();
+				   },
+				   error:function(a,s,e){
+				   		alert(s);
+						treeObj.removeMask();
+				   }
+				});
+			}
+			//treeObj为tree对象
+		}
+
+			/*
+				cateTree 分类树
+				id		元素id(带#)
+				data	一级数据
+				getDate		点击响应函数(参数tree对象，返回data)
+				具体用法参见类定义文件
+				console.info(obj.path)查看path结构
+			*/
+		var tree1 = new Asc.tree.cateTree('#tree1',getData);
+		$('#sub_btncate').bind('click',function(){
+			if(tree1.end){
+				alert('可以提交');
+			}else{
+				alert('不可提交');
+			}
+		})
+    </script>
+  </div>
+</div>
+</body>
+</html>

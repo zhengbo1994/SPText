@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/leftright.js"></script>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="mb20">
+    <h2 class="h1">左右移动框(左框列表不删除)</h2>
+    <div class="cc mt5 complr mb20" id="comp2" style="height:300px;">
+      <div id="comp2_left" class="comp_left">
+      <div class="comp_txttool" id="comp2_left_tool">
+      	<a href="javascript:void(0);" class="btn_selectall">全选</a></div>
+      	<ul id="comp2_left_list" class="comp_list cc">
+        	<li val="1"><input type="checkbox" /><span class="fl">企业代码</span></li>
+            <li val="2"><input type="checkbox" /><span class="fl">客户代码</span></li>
+            <li val="3"><input type="checkbox" /><span class="fl">客户名称</span></li>
+            <li val="4"><input type="checkbox" /><span class="fl">客户省</span></li>
+            <li val="5"><input type="checkbox" /><span class="fl">客户市</span></li>
+            <li val="9"><input type="checkbox" /><span class="fl">剂型</span></li>
+            <li val="10"><input type="checkbox" /><span class="fl">生产日期</span></li>
+            <li val="11"><input type="checkbox" /><span class="fl">效期</span></li>
+            <li val="12"><input type="checkbox" /><span class="fl">含税单价</span></li>
+            <li val="13"><input type="checkbox" /><span class="fl">数量</span></li>
+            <li val="14"><input type="checkbox" /><span class="fl">含税金额</span></li>
+            <li val="15"><input type="checkbox" /><span class="fl">规格</span></li>
+            <li val="16"><input type="checkbox" /><span class="fl">批号</span></li>
+            <li val="17"><input type="checkbox" /><span class="fl">剂型</span></li>
+        </ul>
+      </div>
+      <div id="comp2_mid" class="comp_mid">
+      	<ul>
+        <li id="comp2_toright"><i class="btn_right">右</i></li>
+        <li id="comp2_toleft"><i class="btn_left">左</i></li>
+        </ul>
+      </div>
+      <div id="comp2_right" class="comp_right">
+      <div class="comp_txttool" id="comp2_right_tool">
+      	<a href="javascript:void(0);" class="btn_selectall">全选</a> <a href="javascript:void(0);" class="btn_selectdel">删除</a>  </div>
+      	<ul id="comp2_right_list" class="comp_list cc">
+        	<li val="6"><input type="checkbox" /><span class="fl">销售日期</span></li>
+            <li val="7"><input type="checkbox" /><span class="fl">销售时间</span></li>
+             <li val="8"><input type="checkbox" /><span class="fl">产品名称</span></li>
+        </ul>
+      </div>
+      <div id="comp2_righttool" class="comp_righttool">
+        	<ul>
+            	<li><i class="btn_top" id="comp2_btntop"></i></li>
+                <li><i class="btn_up" id="comp2_btnup"></i></li>
+                <li><i class="btn_down" id="comp2_btndown"></i></li>
+                <li><i class="btn_bottom" id="comp2_btnbottom"></i></li>
+            </ul>
+        </div>
+    </div>
+     <h2 class="h1">左右移动框(左框列表删除)</h2>
+    <div class="cc mt5 complr mb20" id="comp1" style="height:300px;">
+      <div id="comp1_left" class="comp_left">
+      <div class="comp_txttool" id="comp1_left_tool">
+      	<a href="javascript:void(0);" class="btn_selectall">全选</a></div>
+      	<ul id="comp1_left_list" class="comp_list cc">
+        	<li val="1"><input type="checkbox" /><span class="fl">企业代码</span></li>
+            <li val="2"><input type="checkbox" /><span class="fl">客户代码</span></li>
+            <li val="3"><input type="checkbox" /><span class="fl">客户名称</span></li>
+            <li val="4"><input type="checkbox" /><span class="fl">客户省</span></li>
+            <li val="5"><input type="checkbox" /><span class="fl">客户市</span></li>
+            <li val="9"><input type="checkbox" /><span class="fl">剂型</span></li>
+            <li val="10"><input type="checkbox" /><span class="fl">生产日期</span></li>
+            <li val="11"><input type="checkbox" /><span class="fl">效期</span></li>
+            <li val="12"><input type="checkbox" /><span class="fl">含税单价</span></li>
+            <li val="13"><input type="checkbox" /><span class="fl">数量</span></li>
+            <li val="14"><input type="checkbox" /><span class="fl">含税金额</span></li>
+            <li val="15"><input type="checkbox" /><span class="fl">规格</span></li>
+            <li val="16"><input type="checkbox" /><span class="fl">批号</span></li>
+            <li val="17"><input type="checkbox" /><span class="fl">剂型</span></li>
+        </ul>
+      </div>
+      <div id="comp1_mid" class="comp_mid">
+      	<ul>
+        <li id="comp1_toright"><i class="btn_right">右</i></li>
+        <li id="comp1_toleft"><i class="btn_left">左</i></li>
+        </ul>
+      </div>
+      <div id="comp1_right" class="comp_right">
+      <div class="comp_txttool" id="comp1_right_tool">
+      	<a href="javascript:void(0);" class="btn_selectall">全选</a> <a href="javascript:void(0);" class="btn_selectdel">删除</a>  </div>
+      	<ul id="comp1_right_list" class="comp_list cc">
+        	<li val="6"><input type="checkbox" /><span class="fl">销售日期</span></li>
+            <li val="7"><input type="checkbox" /><span class="fl">销售时间</span></li>
+             <li val="8"><input type="checkbox" /><span class="fl">产品名称</span></li>
+        </ul>
+      </div>
+      <div id="comp1_righttool" class="comp_righttool">
+        	<ul>
+            	<li><i class="btn_top" id="comp1_btntop"></i></li>
+                <li><i class="btn_up" id="comp1_btnup"></i></li>
+                <li><i class="btn_down" id="comp1_btndown"></i></li>
+                <li><i class="btn_bottom" id="comp1_btnbottom"></i></li>
+            </ul>
+        </div>
+    </div>
+  </div>
+  <div class="mb20"><a href="javascript:void(0)" id="get_left" style="margin-right:10px;">获取左框参数</a><a href="javascript:void(0)" id="get_right">获取右框参数</a></div>
+  <div class="cc">
+  	<a href="javascript:;" class="tooltip">&nbsp;可上传类型<i style="width:250px;"> gif:2000KB; png:2000KB; zip:2000KB; rar:2000KB; jpg:2000KB; txt:2000KB; </i></a>
+  </div>
+</div>
+<script>
+var comp1 = new Asc.tree.moveitem('#comp1',500,300,true);
+var comp2 = new Asc.tree.moveitem('#comp2',500,300,false);
+/*
+框参数 是一个js对象
+{
+	key:text
+}
+key可是是一个id值
+text是文本信息
+*/
+$('#get_left').bind('click',function(){
+	var str='';
+	for(var i in comp1.leftarr){
+		str+=i+':'+comp1.leftarr[i]+'\n';
+	}
+	alert(str);
+	alert(comp1.getParams(1));
+})
+$('#get_right').bind('click',function(){
+	var str='';
+	for(var i in comp1.rightarr){
+		str+=i+':'+comp1.rightarr[i]+'\n';
+	}
+	alert(str);
+})
+</script>
+</body>
+</html>

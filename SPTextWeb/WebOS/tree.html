@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="mb20">
+    <h2 class="h1">树</h2>
+    <div class="cc mt5 complr" id="comp1" style="height:300px;">
+      <div id="comp1_c1" class="comp_left">
+      	<div class="comp_toptootl cc">
+        	<i class="fr btn_del mr5" id="comp1_c1_del"></i>
+            <i class="fr btn_add1 mr5" id="comp1_c1_add"></i>
+        </div>
+      	<ul id="comp1_c1_l1" class="comp_list">
+        	<li val="1" class="selected">企业代码</li>
+            <li val="2">客户代码</li>
+            <li val="3">客户名称</li>
+            <li val="4">客户省</li>
+            <li val="5">客户市</li>
+        </ul>
+      </div>
+      <div id="comp1_c2" class="comp_right">
+      <div class="comp_toptootl cc">
+        	<i class="fr btn_del mr5" id="comp1_c2_del"></i>
+            <i class="fr btn_add1 mr5" id="comp1_c2_add"></i>
+        </div>
+      	<ul id="comp1_c1_l2" class="comp_list">
+        </ul>
+      </div>
+      <div id="comp1_c3" class="comp_right">
+      <div class="comp_toptootl cc">
+        	<i class="fr btn_del mr5" id="comp1_c3_del"></i>
+            <i class="fr btn_add1 mr5" id="comp1_c3_add"></i>
+        </div>
+      	<ul id="comp1_c1_l3" class="comp_list">
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+c1 = $('#comp1_c1_l1');
+c2 = $('#comp1_c1_l2');
+c3 = $('#comp1_c1_l3');
+c1_del = $('#comp1_c1_del');
+c1_add = $('#comp1_c1_add');
+c1.bind('click',function(e){
+	if(e.target.nodeName.toLowerCase()=='li'){
+		/*[{key:'name',value:'asc'}]*/
+		var data = [
+			{key:1,value:'新增项目1'},
+			{key:2,value:'新增项目2'},
+			{key:3,value:'新增项目3'},
+			{key:4,value:'新增项目4'}
+		]
+		var html = createHtml(data);
+		c2.html(html);
+		clearSelect(c1);
+		$(e.target).addClass('selected');
+	}
+})
+c1_del.bind('click',function(){
+	removeSelect(c1);
+})
+c1_add.bind('click',function(){
+	var data = [
+		{key:6,value:'添加的项目'}
+	]
+	html = createHtml(data);
+	c1.append(html);
+	
+})
+
+c2.bind('click',function(e){
+	if(e.target.nodeName.toLowerCase()=='li'){
+		/*[{key:'name',value:'asc'}]*/
+		var data = [
+			{key:1,value:'新增项目1'},
+			{key:2,value:'新增项目2'},
+			{key:3,value:'新增项目3'},
+			{key:4,value:'新增项目4'}
+		]
+		var html = createHtml(data);
+		c3.html(html);
+		clearSelect(c2);
+		addLoad($('#comp1_c3'));
+		removeLoad($('#comp1_c3'));
+		$(e.target).addClass('selected');
+	}
+})
+c3.bind('click',function(e){
+	if(e.target.nodeName.toLowerCase()=='li'){
+		clearSelect(c3);
+		$(e.target).addClass('selected');
+	}
+})
+
+function clearSelect(el){
+	list = el.find('li')
+	list.each(function(i,n){
+		$(n).removeClass('selected')
+	})
+}
+function removeSelect(el){
+	list = el.find('li');
+	list.each(function(i,n){
+		if($(n).attr('class').indexOf('selected')!=-1){
+			$(n).remove();
+		}
+	})
+}
+
+function createHtml(arr){
+	var len = arr.length;
+	var str='';
+	for(var i=0;i<len;i++){
+		str+='<li val="'+arr[i].key+'">'+arr[i].value+'</li>';
+	}
+	return str;
+}
+
+function addLoad(el){
+	el.css('background','url(images/loading.gif) center center no-repeat');
+}
+function removeLoad(el){
+	el.css('background','none');
+}
+</script>
+</body>
+</html>

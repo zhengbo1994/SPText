@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>企业管理</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+	<h2 class="h1">搜索</h2>
+    <div class="admin_table mb10">
+<table width="100%" cellspacing="0" cellpadding="0">
+	<tbody><tr class="tr1 vt">
+		<td class="td2">
+        	<span class="mr20">关键字:<input type="text" name="keyword" class="input input_wa"></span>
+            <span class="mr5">
+		<span class="bt2"><span><button type="submit">搜 索</button></span></span></span></td>
+	</tr>
+</tbody></table>
+</div>
+  <h2 class="h1 cc"><span class="mr10 fl">企业管理</span><span class="fr"><span class="linka fl mr5"><a class="btn_add fl" hidefocus="true" href="#"><i>新建企业</i></a></span><span class="linka fl mr5"><a class="btn_add fl" hidefocus="true" href="#"><i>删除企业</i></a></span></span></h2>
+  <script>
+  	function checkAll(el){
+		var list = $(el).find("input[type='checkbox']");
+		var num = checkNum(list);
+		if(num>0){
+			list.each(function(i,n){
+				$(n).attr('checked',false);
+			})
+		}else{
+			list.each(function(i,n){
+				$(n).attr('checked',true);
+			})
+		}
+	}
+	function checkNum(list){
+		var num=0;
+		list.each(function(i,n){
+			if($(n).attr('checked')){
+				num+=1;
+			}
+		})
+		return num;
+	}
+	
+	//展开关闭
+	function tableExpand(el){
+		var tr = $(el).parents('tr').next('tr');
+		if(tr){
+			var sty = tr.css('display');
+			if(sty=='none'){
+				tr.show();
+				$(el).addClass('btn_expandclose');
+			}else{
+				tr.hide();
+				$(el).removeClass('btn_expandclose');
+			}
+		}
+		el.blur();
+	}
+	//展开关闭所有
+	function tableExpandT(el){
+		el.blur();
+		el = $(el);
+		var table = el.parents('table');
+		var btn = table.find('.btn_expand');
+		var details = table.find('.details');
+		if(el.hasClass('btn_expandclose')){
+			el.removeClass('btn_expandclose');
+			details.hide();
+			btn.removeClass('btn_expandclose');
+		}else{
+			el.addClass('btn_expandclose');
+			details.show();
+			btn.addClass('btn_expandclose');
+		}
+	}
+  </script>
+  <form action="" name="FORM" method="post">
+    <div class="admin_table mb10">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" id="companytable">
+      <tr class="tr2 td_bgB">
+        <td width="24" class="tac"><a href="javascript:;" class="btn_expand" onclick="tableExpandT(this)">展开</a></td>
+        <td scope="col">序号</td>
+        <td scope="col" width="160">公司名称</td>
+        <td scope="col" width="150">地址</td>
+        <td scope="col">联系人</td>
+        <td scope="col">联系电话</td>
+        <td scope="col">贸易关系</td>
+        <td scope="col">企业类型</td>
+        <td scope="col">上传文件类型</td>
+        <td scope="col">上传方式</td>
+        <td scope="col">其他字段</td>
+        </tr>
+      <tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：5255552252555522525555225255552252555522525555225255552252555522525555225255552252555522525555225255552252555522525555225255552252555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr>
+     	<tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr>
+        <tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr><tr class="tr1 vt">
+        <td class="td2"><a href="javascript:;" class="btn_expand" onclick="tableExpand(this)">展开</a></td>
+        <td class="td2">1</td>
+        <td class="td2">哈药集团有限公司</td>
+        <td class="td2">xxxxxx地址</td>
+        <td class="td2">张先生</td>
+        <td class="td2">021-5123456</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">&nbsp;</td>
+        <td class="td2">xml</td>
+        <td class="td2">客户端</td>
+        <td class="td2">&nbsp;</td>
+        </tr>
+      <tr class="tr1 vt details"  style="display:none;">
+        <td colspan="11" class="td2">
+        	<ul>
+            	<li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+                <li>字段1：52555522</li>
+            </ul>        </td>
+        </tr>
+    </table>
+    </div>
+  </form>
+    <div class="mb10 cc"><div class="pages"><a class="b" href="#">«</a><b>1</b><a href="#">2</a><a class="b" href="#">»</a><span class="pagesone"><span>Pages: 1/2</span>
+  <input type="text" onkeydown="javascript: if(event.keyCode==13){ location='#';return false;}" size="3"><button onclick="javascript:location='#';return false;">Go</button></span></div></div>
+  
+</div>
+</body>
+</html>
