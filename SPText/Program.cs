@@ -296,11 +296,9 @@ namespace SPText
             var avg = a.Average();
             var dis = c.Distinct();
 
-
             Console.WriteLine(max);
             Console.WriteLine(min);
             Console.WriteLine(avg);
-   
 
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
@@ -2617,9 +2615,23 @@ namespace SPText
         #region  定时调度
         public static void Quartz()
         {
-            QuartzHelper quartzHelper = new QuartzHelper();
-            quartzHelper.Show().GetAwaiter().GetResult();
-
+            {
+                QuartzHelper quartzHelper = new QuartzHelper();
+                quartzHelper.Show().GetAwaiter().GetResult();
+            }
+            {
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timer.Enabled = true;
+                timer.Interval = 1000 * 60 * 10;
+                timer.Start();
+                timer.Elapsed += new System.Timers.ElapsedEventHandler((source, e) =>
+                {
+                    var sourcePara = source;
+                    var ePara = e;
+                    if (DateTime.Now.Hour == 10 && DateTime.Now.Minute == 30)  //如果当前时间是10点30分
+                        Console.WriteLine("OK, event fired at: " + DateTime.Now.ToString());
+                });
+            }
         }
         #endregion
 
@@ -2642,7 +2654,7 @@ namespace SPText
                 column = new DataColumn();
                 column.DataType = Type.GetType("System.String");
                 column.ColumnName = " CustLName ";
-                CustomersTable.Columns.Add(column);
+                CustomersTable.Rows.Add(column);
                 //创建新的一行并把这个行添加到Customers表中
                 for (int i = 0; i < 10; i++)
                 {
@@ -2772,7 +2784,8 @@ namespace SPText
         #endregion
 
         #region  RabbitMQ（测试未通过）
-        public static void RabbitMQ() {
+        public static void RabbitMQ()
+        {
             {//向RabbitMQ服务器发送消息
                 var factory = new ConnectionFactory();
                 factory.HostName = "localhost";//主机名，Rabbit会拿这个IP生成一个endpoint，这个很熟悉吧，就是socket绑定的那个终结点。
