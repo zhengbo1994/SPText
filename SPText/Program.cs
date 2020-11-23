@@ -1297,7 +1297,6 @@ namespace SPText
             }
 
 
-
             {
                 string jResult = JsonHelper.SerializeObject<List<Programmer>>(list);
                 List<Programmer> list1 = JsonHelper.DeserializeObject<List<Programmer>>(jResult);
