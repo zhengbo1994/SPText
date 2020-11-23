@@ -113,19 +113,19 @@ namespace SPText
             #endregion
 
             #region  IOC
-            //{
-            //    IUnityContainer container = new UnityContainer();//实例化容器
-            //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
-            //    SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
-            //    text.One();
-            //}
-            //{
-            //    IUnityContainer container = ContainnerFactory.GetContainer();
-            //    IText text = container.Resolve<IText>();
-            //    IClassBase classBase = container.Resolve<IClassBase>();
-            //    text.One();
-            //    classBase.Show();
-            //}
+            {
+                IUnityContainer container = new UnityContainer();//实例化容器
+                container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
+                SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
+                text.One();
+            }
+            {
+                IUnityContainer container = ContainnerFactory.GetContainer();
+                IText text = container.Resolve<IText>();
+                IClassBase classBase = container.Resolve<IClassBase>();
+                text.One();
+                classBase.Show();
+            }
             #endregion
 
             #region  设计模式

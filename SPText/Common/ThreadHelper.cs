@@ -307,7 +307,6 @@ namespace SPText.Common
                 //不能并发，因为有严格顺序(只有Eleven讲课)
                 Console.WriteLine("部署一下项目实战作业，需要多人合作完成");
                 //开发可以多人合作---多线程--提升性能
-
                 TaskFactory taskFactory = new TaskFactory();
                 List<Task> taskList = new List<Task>();
                 taskList.Add(taskFactory.StartNew(() => this.Coding("冰封的心", "Portal")));

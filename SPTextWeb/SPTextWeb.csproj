@@ -1117,6 +1117,7 @@
     <Content Include="BootStrap\test2.html" />
     <Content Include="BootStrap\test3.html" />
     <Content Include="BootStrap\test4.html" />
+    <Content Include="Element\html1.html" />
     <Content Include="JQuery\es6_Test.html" />
     <Content Include="JSRender\HtmlPage1.html" />
     <Content Include="JSRender\lib\bootstrap\dist\css\bootstrap-grid.css" />
