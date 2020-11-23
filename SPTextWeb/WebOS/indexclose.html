@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<title>小木人后台管理系统</title>
+<link rel="stylesheet" type="text/css" href="images/admin/styleclose.css" />
+<script src="js/desktop/Cookie.js"></script>
+<script src="js/desktop/adminnav.js"></script>
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/index.js"></script>
+</head>
+<body>
+<div id="admin_header">
+  <div class="admin_head" id="admin_head">
+    <table width="100%" style="table-layout:fixed">
+      <tr class="vt">
+        <td width="145"><a href="index.html" class="admin_logo fl">
+          <h1>小木人后台管理系统</h1>
+          </a></td>
+        <td style="vertical-align:bottom;" class="admin_nav_bg"><div class="admin_topbar cc">
+            <div style="width:750px;" class="fr">
+              <div class="fr"><span class="ml20">用户名：admin&nbsp;&nbsp;&nbsp;级别：创始人&nbsp;&nbsp;&nbsp;<a href="#">[注销]</a></span></div>
+            </div>
+          </div>
+          <ul class="admin_nav cc">
+            <span id="taskbar">
+            <li class="current"><i><a hidefocus="true" href="javascript:;">首页</a></i></li>
+            <li><i><a hidefocus="true" href="javascript:;">示例页面</a></i></li>
+            <li><i><a hidefocus="true" href="javascript:;">DPS</a></i></li>
+            <li><i><a hidefocus="true" href="javascript:;">DAS</a></i></li>
+            <li><i><a hidefocus="true" href="javascript:;">DIS</a></i></li>
+            </span>
+          </ul></td>
+      </tr>
+    </table>
+  </div>
+  <table width="100%" style="table-layout:fixed;">
+    <tr>
+      <!--<td id="admin_menubar_top"></td>-->
+      <td class="breadCrumb"><div class="fr"><span id="fullscreen" onclick="adminNavClass.fullscreen();"><i class="admin_full">全屏</i></span><a hidefocus="true" class="toppage" onclick="adminNavClass.page(this);" href="javascript:;">页面设置</a><a hidefocus="true" onclick="adminNavClass.refresh();" href="javascript:;" id="refresh">刷新</a></div>
+        <div id="breadCrumb">
+          <div>当前位置: <span depth="0" class="admenu_down">首页</span><span> » </span><span depth="1" class="admenu_down">快捷操作</span><span></span></div>
+        </div></td>
+    </tr>
+  </table>
+</div>
+<div id="admin_menubar">
+<dl class="menubar_dl cc" id="secondMenu">导航加载中</dl>
+</div>
+<div id="admin_split"><div class="admin_split_left"></div>
+</div>
+<div id="admin_contont">
+  <div id="x-desktop" style="height:100%;width:100%;">
+    <div id="desktopContainer" style="height:100%;float:left;width:100%;">
+    <iframe width="100%" height="100%" frameborder="no" scrolling="auto" style="border: 0pt none;" src="componentlist.html" id="iframe_home"></iframe>
+    </div>
+  </div>
+</div>
+<script>
+/*下面是目录数据*/
+var data =[
+	[
+		{
+			title:'快捷操作',
+			list:[
+				{text:'组件列表',url:'componentlist.html'},
+				{text:'页面(xhtml/css)问题及提示',url:'page.html'},
+				{text:'js问题及提示',url:'js.html'}
+			]
+		}
+	],
+	[
+		{
+			title:'UI页面示例',
+			list:[
+				{text:'企业管理',url:'company.html'},
+				{text:'区域管理',url:'region.html'},
+				{text:'开设新客户账号',url:'crcount.html'},
+				{text:'开设新运维人员账号',url:'crdpcount.html'}
+			]
+		},
+		{
+			title:'页面示例二',
+			list:[
+				{text:'编辑组',url:'editlist.html'},
+				{text:'左右移动框',url:'leftright.html'},
+				{text:'树',url:'treebak.html'},
+				{text:'传统树',url:'tree1.html'},
+				{text:'弹出层',url:'div.html'},
+				{text:'帮助',url:'help.html'}
+			]
+		}
+	],
+	[
+		{
+			title:'处理规则配置',
+			list:[
+				{text:'模块字段规则配置',url:'dps/regular.html'}
+			]
+		}
+	],
+	[
+		{
+			title:'二级标题',
+			list:[
+				{text:'编辑组',url:'editlist.html'}
+			]
+		}
+	],
+	[
+		{
+			title:'采集情况',
+			list:[
+				{text:'采集情况统计',url:'dis/gather_stat.html'},
+				{text:'经销商统计',url:'dis/franchiser_stat.html'},
+				{text:'明细',url:'dis/pro_details.html'}
+			]
+		}
+	]
+]
+/*目录数据结束*/
+fmenu = $('#taskbar li');
+smenuc = $('#secondMenu');
+findex=0;
+fmenu.each(function(i,n){
+	$(n).bind('click',function(){
+		if($(this).attr('class').indexOf('current')==-1){
+			clearC(fmenu);
+			$(this).addClass('current');
+			smenuc.html(createHtml(i));
+			findex = i;
+		}
+	})
+	if(i==0){
+		smenuc.html(createHtml(i));
+	}
+})
+</script>
+</body>
+</html>

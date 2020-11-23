@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../assets/css/ace.min.css" rel="stylesheet" />
+    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="../bootstrap/jquery-3.4.1.min.js"></script>
+    <script src="../bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
+            $.fn.bootstrapBtn = bootstrapButton // give $().bootstrapBtn the Bootstrap functionality
+        })
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title">查询区域</h4>
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                    <div class="widget-toolbar">
+                        <a id="btnNewsManage_Query" href="#">
+                            <i class="ace-icon fa fa-search">查询</i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="widget-body" style="display:block;">
+                    <div id="divNewsManage_QueryArea" class="widget-main form-horizontal">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <label class="control-label col-xs-5">新闻标题</label>
+                                <input name="NewsTitle" class="form-control col-xs-7" type="text" style="width:auto" />
+                            </div>
+                            <div class="col-xs-4">
+                                <label class="control-label col-xs-5">发布时间（起）</label>
+                                <input name="PublishDate_From" class="form-control col-xs-7" type="text" style="width:auto" />
+                            </div>
+                            <div class="col-xs-4">
+                                <label class="control-label col-xs-5">发布时间（止）</label>
+                                <input name="PublishDate_To" class="form-control col-xs-7" type="text" style="width:auto" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4 class="widget-title">考试结果列表</h4>
+                    <div class="widget-toolbar">
+                        <a href="#" id="btnNewsManage_Delete">
+                            <i class="ace-icon fa fa-remove">删除</i>
+                        </a>
+                    </div>
+                    <div class="widget-toolbar">
+                        <a href="#" id="btnNewsManage_Update">
+                            <i class="ace-icon fa fa-edit">修改</i>
+                        </a>
+                    </div>
+                    <div class="widget-toolbar">
+                        <a href="#" id="btnNewsManage_Insert">
+                            <i class="ace-icon fa fa-plus">新增</i>
+                        </a>
+                    </div>
+                </div>
+
+                <table id="gridNewsManage_main"></table>
+                <div id="pagerNewsManage_main"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--新闻录入-->
+    <div class="modal" id="mdlNewsManage_DetailInfo">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h3 class="modal-title">新闻录入</h3>
+                </div>
+                <div class="modal-body">
+                    <div name="content" class="form-horizontal">
+                        <input type="hidden" name="Id" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="NewsTitle">
+                                标题
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" id="NewsTitle" name="NewsTitle" placeholder="" class="form-control  width-100">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-3 control-label no-padding-right dtpicker" for="PublishDate" >
+                                发布时间
+                            </label>
+                            <div class="col-sm-7">
+                                <input type="text" id="PublishDate" name="PublishDate" placeholder="" class=" form-control width-100 dtpicker">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divNewsManage_Editor" contenteditable="true"></div>
+                </div>
+                <div class="modal-footer">
+                    <button name="save" class="btn btn-info btn-sm">保存</button>
+                    <button class="btn btn-sm" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

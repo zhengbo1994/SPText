@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using ServiceStack.Redis;
+using SPTextCommon.Cache;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -357,7 +358,8 @@ namespace SPText.Common
         /// 获取到数据库中所有表
         /// </summary>
         /// <returns></returns>
-        public DataTable GetSlqTables() {
+        public DataTable GetSlqTables()
+        {
             DataTable allTableData = GetDataTable("select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_TYPE ='BASE TABLE'");
 
             DataRow dr = allTableData.NewRow();
@@ -369,7 +371,8 @@ namespace SPText.Common
             //绑定数据源操作
         }
 
-        public string CreateModel(DataTable dt, string TableName) {
+        public string CreateModel(DataTable dt, string TableName)
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append($@"
                         using AROS.Model;
@@ -414,7 +417,8 @@ namespace SPText.Common
             return null;
         }
 
-        private string GetType(DataColumn dc) {
+        private string GetType(DataColumn dc)
+        {
             if (dc.AllowDBNull && dc.DataType.IsValueType)
             {
                 return dc.DataType + "?";
@@ -434,19 +438,21 @@ namespace SPText.Common
             System.Web.Caching.CacheDependency cacheDependency = new System.Web.Caching.CacheDependency("fileName");
             //cache.Insert("key", "你需要保存的值！", cacheDependency, DateTime.Now, TimeSpan.Parse("10"),);
         }
-        private void RedisStringSet() {
+        private void RedisStringSet()
+        {
             ServiceStack.Redis.IRedisClient iRedisClient = this.GetClient();
             iRedisClient.Set("key0", "value0");
-            iRedisClient.Set("key0", "value0",DateTime.Now);
-            var key0= iRedisClient.Get<string>("key0");
-            var keys = iRedisClient.GetAll<List<string>>(new string[] { "key0","key1"});
-            var key_1 = iRedisClient.Increment("1",0);
+            iRedisClient.Set("key0", "value0", DateTime.Now);
+            var key0 = iRedisClient.Get<string>("key0");
+            var keys = iRedisClient.GetAll<List<string>>(new string[] { "key0", "key1" });
+            var key_1 = iRedisClient.Increment("1", 0);
             var key_2 = iRedisClient.AppendToValue("key0", "0");
             var key_3 = iRedisClient.GetAndSetValue("key0", "111");
             var key_4 = iRedisClient.IncrementValueBy("key0", 1);
         }
 
-        private IRedisClient GetClient() {
+        private IRedisClient GetClient()
+        {
             //IRedisClient
             string[] readWriteHosts = new string[] { "127.0.0.1:0000" };
             string[] readOnlyHosts = new string[] { "127.0.0.1:0000" };
@@ -458,6 +464,33 @@ namespace SPText.Common
             });
             IRedisClient iRedisClient = pooledRedisClientManager.GetClient();
             return iRedisClient;
+        }
+
+        private IRedisClient GetClient1()
+        {
+            System.Web.Caching.Cache cache = new System.Web.Caching.Cache();
+            if (cache.Get("redis") != null && cache["redis"] != null)
+            {
+                return (IRedisClient)cache.Get("redis");
+            }
+            else
+            {
+                PooledRedisClientManager pooledRedisClientManager = new PooledRedisClientManager(new string[] { "127.0.0.1:0000" }, new string[] { "127.0.0.1:0000" }, new RedisClientManagerConfig()
+                {
+                    AutoStart = true,
+                    MaxReadPoolSize = 60,
+                    MaxWritePoolSize = 60,
+                    DefaultDb = 1
+                });
+
+                IRedisClient redisClient = pooledRedisClientManager.GetClient();
+                if (cache.Get("redis") == null && cache["redis"] == null)
+                {
+                    cache.Insert("redis", redisClient);
+                }
+
+                return redisClient;
+            }
         }
         #endregion
     }

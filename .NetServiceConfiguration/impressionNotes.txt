@@ -47,8 +47,7 @@ bootstrap引导步骤				https://www.cnblogs.com/tracyjfly/p/5856911.html
 在windows 上面安装使用docker			https://blog.csdn.net/freewebsys/article/details/80562351
 免费后台管理UI界面、html源码推荐		https://www.cnblogs.com/dmyao/p/7194795.html
 GitHub开源的10个超棒后台管理面板		https://handsome-man.blog.csdn.net/article/details/101050788
-
-
+C#调用RabbitMQ实现消息队列			https://www.cnblogs.com/mq0036/p/11726733.html
 
 
 

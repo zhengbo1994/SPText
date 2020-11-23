@@ -4,6 +4,9 @@ using IOSerialize.IO;
 using IOSerialize.Serialize;
 using log4net.Config;
 using Microsoft.Graph;
+using Microsoft.Office.Interop.Word;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using ServiceStack;
 using ServiceStack.DataAnnotations;
 using ServiceStack.Redis;
@@ -35,6 +38,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Policy;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -250,6 +254,10 @@ namespace SPText
             //WebSocket();
             #endregion
 
+            #region  RabbitMQ
+            //RabbitMQ();
+            #endregion
+
             #region  测试代码
             //TestHelper testHelper = new TestHelper();
             //testHelper.Show();
@@ -267,6 +275,8 @@ namespace SPText
             //4.延迟加载
             #endregion
         }
+
+
         #region  linq交叉并补
         public static void linqUse()
         {
@@ -286,10 +296,12 @@ namespace SPText
             var avg = a.Average();
             var dis = c.Distinct();
 
-
             Console.WriteLine(max);
             Console.WriteLine(min);
             Console.WriteLine(avg);
+
+            List<string> strList = new List<string>();
+            strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
             Console.ReadKey();
         }
         #endregion
@@ -557,7 +569,7 @@ namespace SPText
         public static int GetSum(int startCount, int endCount)
         {
             // 1、开始线程来计算
-            Task<int> taskSum = Task.Run<int>(() =>
+            Task<int> taskSum = System.Threading.Tasks.Task.Run<int>(() =>
             {
                 int num = 0;
                 for (int i = startCount; i <= endCount; i++)
@@ -1305,12 +1317,12 @@ namespace SPText
             }
             {
                 Action action = new Action(Show);
-                Task task = new Task(action);
+                System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(action);
                 task.Start();
-                Task.Delay(2000);//不足塞
+                System.Threading.Tasks.Task.Delay(2000);//不足塞
             }
             {
-                Task task = new Task(() => Console.WriteLine("线程启动！"));
+                System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(() => Console.WriteLine("线程启动！"));
                 task.Start();
             }
             //有返回值
@@ -1322,7 +1334,7 @@ namespace SPText
                 Console.WriteLine($"线程返回值{i}");
             }
             {
-                Task<int> taskSum = Task.Run<int>(() =>
+                Task<int> taskSum = System.Threading.Tasks.Task.Run<int>(() =>
                 {
                     int sum = 0;
                     for (int i = 0; i < 100; i++)
@@ -1340,15 +1352,15 @@ namespace SPText
                     Thread.Sleep(2000);
                     Console.WriteLine($"这是一个Task线程 End{Thread.CurrentThread.ManagedThreadId}");
                 };
-                Task task = new Task(action);
+                System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(action);
                 task.Start();
             }
             {
-                List<Task> tasks = new List<Task>();
+                List<System.Threading.Tasks.Task> tasks = new List<System.Threading.Tasks.Task>();
 
-                tasks.Add(Task.Run(() => Console.WriteLine("1", "9")));
-                tasks.Add(Task.Run(() => Console.WriteLine("2", "9")));
-                tasks.Add(Task.Run(() => Console.WriteLine("3", "9")));
+                tasks.Add(System.Threading.Tasks.Task.Run(() => Console.WriteLine("1", "9")));
+                tasks.Add(System.Threading.Tasks.Task.Run(() => Console.WriteLine("2", "9")));
+                tasks.Add(System.Threading.Tasks.Task.Run(() => Console.WriteLine("3", "9")));
                 TaskFactory taskFactory = new TaskFactory();
                 taskFactory.ContinueWhenAny(tasks.ToArray(), p =>
                 {
@@ -1359,8 +1371,8 @@ namespace SPText
                     Console.WriteLine($"指令！，{Thread.CurrentThread.ManagedThreadId}");
                 });
 
-                Task.WaitAny(tasks.ToArray());//阻塞当前线程，直到任意一个任务结束
-                Task.WaitAll(tasks.ToArray());//阻塞当前线程，直到全部任务结束
+                System.Threading.Tasks.Task.WaitAny(tasks.ToArray());//阻塞当前线程，直到任意一个任务结束
+                System.Threading.Tasks.Task.WaitAll(tasks.ToArray());//阻塞当前线程，直到全部任务结束
             }
             //Async
             {
@@ -1422,7 +1434,7 @@ namespace SPText
         {
             Console.WriteLine("方法调用开始");
             int ireturn = 0;
-            await Task.Run(() =>//启动新线程完成任务
+            await System.Threading.Tasks.Task.Run(() =>//启动新线程完成任务
             {
                 Console.WriteLine("子线程调用进行中");
                 for (int i = 0; i < 100_000_000; i++)
@@ -1446,7 +1458,7 @@ namespace SPText
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Task.Run(() =>
+                    System.Threading.Tasks.Task.Run(() =>
                     {
                         SingletonPattern singletonPattern = SingletonPattern.SingletonPatternCreate0();
                         singletonPattern.Show();
@@ -1457,7 +1469,7 @@ namespace SPText
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Task.Run(() =>
+                    System.Threading.Tasks.Task.Run(() =>
                     {
                         PrototypePattern singletonPattern = PrototypePattern.PrototypePatternCreate();
                         singletonPattern.Show();
@@ -2240,7 +2252,7 @@ namespace SPText
                 #endregion
 
                 #region 发布订阅:观察者，一个数据源，多个接受者，只要订阅了就可以收到的，能被多个数据源共享
-                Task.Run(() =>
+                System.Threading.Tasks.Task.Run(() =>
                 {
                     using (RedisListService service = new RedisListService())
                     {
@@ -2252,7 +2264,7 @@ namespace SPText
                         });//blocking
                     }
                 });
-                Task.Run(() =>
+                System.Threading.Tasks.Task.Run(() =>
                 {
                     using (RedisListService service = new RedisListService())
                     {
@@ -2264,7 +2276,7 @@ namespace SPText
                         });//blocking
                     }
                 });
-                Task.Run(() =>
+                System.Threading.Tasks.Task.Run(() =>
                 {
                     using (RedisListService service = new RedisListService())
                     {
@@ -2382,7 +2394,7 @@ namespace SPText
                     //使用示例 SqlServer
                     string sql = "SELECT * FROM Company order by Id desc";
                     CurrencyDBHelper db = new CurrencyDBHelper(DbProviderType.SqlServer, connectionStrings);
-                    DataTable data = db.GetDataSet(sql, null).Tables[0];
+                    System.Data.DataTable data = db.GetDataSet(sql, null).Tables[0];
                     DbDataReader reader = db.ExecuteReader(sql, null);
                     reader.Close();
                 }
@@ -2390,7 +2402,7 @@ namespace SPText
                     //使用示例 SqlServer
                     string sql = "SELECT * FROM Company order by Id desc";
                     DbUtility db = new DbUtility(connectionStrings, DbProviderType.SqlServer);
-                    DataTable data = db.ExecuteDataTable(sql, null);
+                    System.Data.DataTable data = db.ExecuteDataTable(sql, null);
                     DbDataReader reader = db.ExecuteReader(sql, null);
 
                     while (reader.Read())
@@ -2419,15 +2431,15 @@ namespace SPText
                 //    DbDataReader reader = db.ExecuteReader(sql, null);
                 //    reader.Close();
                 //}
-                {
-                    string path0 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"File\NA312Model.xls");
-                    //string path = System.Web.HttpContext.Current.Server.MapPath("~/File/NA312Model.xls");
-                    //使用示例 Execl
-                    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path0 + ";Extended Properties=Excel 8.0;";
-                    string sql = "SELECT * FROM [Sheet1$]";
-                    DbUtility db = new DbUtility(connectionStrings, DbProviderType.OleDb);
-                    DataTable data = db.ExecuteDataTable(sql, null);
-                }
+                //{
+                //    string path0 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"File\NA312Model.xls");
+                //    //string path = System.Web.HttpContext.Current.Server.MapPath("~/File/NA312Model.xls");
+                //    //使用示例 Execl
+                //    string connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path0 + ";Extended Properties=Excel 8.0;";
+                //    string sql = "SELECT * FROM [Sheet1$]";
+                //    DbUtility db = new DbUtility(connectionStrings, DbProviderType.OleDb);
+                //    System.Data.DataTable data = db.ExecuteDataTable(sql, null);
+                //}
             }
         }
         #endregion
@@ -2603,9 +2615,23 @@ namespace SPText
         #region  定时调度
         public static void Quartz()
         {
-            QuartzHelper quartzHelper = new QuartzHelper();
-            quartzHelper.Show().GetAwaiter().GetResult();
-
+            {
+                QuartzHelper quartzHelper = new QuartzHelper();
+                quartzHelper.Show().GetAwaiter().GetResult();
+            }
+            {
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timer.Enabled = true;
+                timer.Interval = 1000 * 60 * 10;
+                timer.Start();
+                timer.Elapsed += new System.Timers.ElapsedEventHandler((source, e) =>
+                {
+                    var sourcePara = source;
+                    var ePara = e;
+                    if (DateTime.Now.Hour == 10 && DateTime.Now.Minute == 30)  //如果当前时间是10点30分
+                        Console.WriteLine("OK, event fired at: " + DateTime.Now.ToString());
+                });
+            }
         }
         #endregion
 
@@ -2614,7 +2640,7 @@ namespace SPText
         {
             {//DataTable
              //创建一个数据表
-                DataTable CustomersTable = new DataTable();
+                System.Data.DataTable CustomersTable = new System.Data.DataTable();
                 CustomersTable.TableName = "Customers";
                 //声明数据表的行和列变量
                 DataColumn column;
@@ -2628,7 +2654,7 @@ namespace SPText
                 column = new DataColumn();
                 column.DataType = Type.GetType("System.String");
                 column.ColumnName = " CustLName ";
-                CustomersTable.Columns.Add(column);
+                CustomersTable.Rows.Add(column);
                 //创建新的一行并把这个行添加到Customers表中
                 for (int i = 0; i < 10; i++)
                 {
@@ -2753,6 +2779,63 @@ namespace SPText
             else
             {
                 HttpContext.Current.Response.Write("我不处理");
+            }
+        }
+        #endregion
+
+        #region  RabbitMQ（测试未通过）
+        public static void RabbitMQ()
+        {
+            {//向RabbitMQ服务器发送消息
+                var factory = new ConnectionFactory();
+                factory.HostName = "localhost";//主机名，Rabbit会拿这个IP生成一个endpoint，这个很熟悉吧，就是socket绑定的那个终结点。
+                factory.UserName = "guest";//默认用户名,用户可以在服务端自定义创建，有相关命令行
+                factory.Password = "guest";//默认密码
+
+                using (var connection = factory.CreateConnection())//连接服务器，即正在创建终结点。
+                {
+                    //创建一个通道，这个就是Rabbit自己定义的规则了，如果自己写消息队列，这个就可以开脑洞设计了
+                    //这里Rabbit的玩法就是一个通道channel下包含多个队列Queue
+                    using (var channel = connection.CreateModel())
+                    {
+                        channel.QueueDeclare("kibaQueue", false, false, false, null);//创建一个名称为kibaqueue的消息队列
+                        var properties = channel.CreateBasicProperties();
+                        properties.DeliveryMode = 1;
+                        string message = "I am Kiba518"; //传递的消息内容
+                        channel.BasicPublish("", "kibaQueue", properties, Encoding.UTF8.GetBytes(message)); //生产消息
+                        Console.WriteLine($"Send:{message}");
+                    }
+                }
+            }
+            {//去RabbitMQ的服务器查看当前消息队列
+                var factory = new ConnectionFactory();
+                factory.HostName = "localhost";
+                factory.UserName = "guest";
+                factory.Password = "guest";
+
+                using (var connection = factory.CreateConnection())
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        channel.QueueDeclare("kibaQueue", false, false, false, null);
+
+                        /* 这里定义了一个消费者，用于消费服务器接受的消息
+                         * C#开发需要注意下这里，在一些非面向对象和面向对象比较差的语言中，是非常重视这种设计模式的。
+                         * 比如RabbitMQ使用了生产者与消费者模式，然后很多相关的使用文章都在拿这个生产者和消费者来表述。
+                         * 但是，在C#里，生产者与消费者对我们而言，根本算不上一种设计模式，他就是一种最基础的代码编写规则。
+                         * 所以，大家不要复杂的名词吓到，其实，并没那么复杂。
+                         * 这里，其实就是定义一个EventingBasicConsumer类型的对象，然后该对象有个Received事件，
+                         * 该事件会在服务接收到数据时触发。
+                         */
+                        var consumer = new EventingBasicConsumer(channel);//消费者
+                        channel.BasicConsume("kibaQueue", true, consumer);//消费消息
+                        consumer.Received += (model, ea) =>
+                        {
+                            var body = ea.Body;
+                            var message = Encoding.UTF8.GetString(body.ToArray());
+                        };
+                    }
+                }
             }
         }
         #endregion
@@ -3058,7 +3141,7 @@ namespace SPText
         /// </summary>
         static CustomCache()
         {
-            Task.Run(() =>
+            System.Threading.Tasks.Task.Run(() =>
             {
                 while (true)
                 {

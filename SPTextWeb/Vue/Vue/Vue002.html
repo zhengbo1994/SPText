@@ -226,5 +226,27 @@
     })
     //}, 3000)
     </script>
+
+    <script>
+        Vue.component("my-component", function () {
+            template:"<h1>这是自定义组件</h1>"
+        })
+        let vm = new Vue({
+            el:"",
+            data:{
+                
+            },
+            components: {
+                "my-component":{
+                    template: "<h1>这是自定义组件</h1>",
+                    data: ()=>{
+                        return {
+                            count:0
+                        }
+                    }
+                }
+            }
+        })
+    </script>
 </body>
 </html>

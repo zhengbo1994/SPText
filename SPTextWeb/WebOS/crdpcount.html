@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<style>
+.hide_btn {
+	padding-left:1em;
+	display:none;
+}
+</style>
+<script>
+	$(document).ready(function(){
+		list = $(".list_200 li")
+		list.each(function(i,n){
+			$(n).hover(function(){
+				$(this).find('.hide_btn').css('display','inline')
+			},
+			function(){
+				$(this).find('.hide_btn').css('display','none')
+			}
+			)
+		})
+		$('.hide_btn').each(function(i,n){
+			$(n).bind('click',function(){
+				$('#pw_box').show();
+			})
+		})
+	})
+</script>
+</head><body>
+<div class="wrap">
+  <h2 class="h1 cc"><span class="mr10 fl">开设新运维人员账号</span><span class="fr"><span class="linka fl mr5"><a class="btn_add fl" hidefocus="true" href="#"><i>新建组</i></a></span><span class="linka fl mr5"><a class="btn_add fl" hidefocus="true" href="#"><i>新建人</i></a></span></span></h2>
+  <div class="admin_table">
+  	<table width="100%" cellspacing="0" cellpadding="0">
+    	<tbody>
+        	<tr class="tr2 td_bgB">
+            	<td><span class="mr10">维护组</span><span class="mr10">[<a href="#">权限配置</a>]</span><span>[<a href="#">删除</a>]</span></td>
+            </tr>
+            <tr class="tr1 vt">
+            	<td class="td2">
+                	<ul class="list_200">
+                    	<li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+        	<tr class="tr2 td_bgB">
+            	<td><span class="mr10">客户组</span><span class="mr10">[<a href="#">权限配置</a>]</span><span>[<a href="#">删除</a>]</span></td>
+            </tr>
+            <tr class="tr1 vt">
+            	<td class="td2">
+                	<ul class="list_200">
+                    	<li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+        <tbody>
+        	<tr class="tr2 td_bgB">
+            	<td><span class="mr10">技术支持组</span><span class="mr10">[<a href="#">权限配置</a>]</span><span>[<a href="#">删除</a>]</span></td>
+            </tr>
+            <tr class="tr1 vt">
+            	<td class="td2">
+                	<ul class="list_200">
+                    	<li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                        <li>张媛媛<span class="hide_btn"><a href="#" class="mr10">移动</a><a href="#">删除</a></span></span></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+<div id="pw_box" class="menu_level" style=" background:#FFFFFF;position: absolute; z-index: 10; left: 367px; visibility: visible; top: 168px; display:none;">
+<h2 class="h1" style="cursor: move;"><a onclick="$('#pw_box').hide()" class="del_img fr" href="javascript:;">关闭</a>移动成员</h2>
+<div style="padding:10px;">
+<select name="select" id="select" class="select_wa mb10">
+  <option>维护组</option>
+  <option>客户组</option>
+  <option>技术支持组</option>
+</select>
+<div class="tal mb10"> <span class="btn" onclick="$('#pw_box').hide()"><span>
+      <button type="submit">提 交</button>
+      </span></span> </div>
+ </div>
+</div>
+</body>
+</html>

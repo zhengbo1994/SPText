@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,46 +14,46 @@ namespace SPText.Common
         #region  DynamicPlanningDemo
         public static void Show0()
         {
-            #region Fibonacci
-            //int n = 5;
-            //{
-            //    {
-            //        Stopwatch stopwatch = new Stopwatch();
-            //        stopwatch.Start();
-            //        long lResult = RecursionFibonacci(n);
-            //        stopwatch.Stop();
-            //        Console.WriteLine($"RecursionFibonacci {n}  Time{stopwatch.ElapsedMilliseconds}");
-            //    }
-            //    {
-            //        Stopwatch stopwatch = new Stopwatch();
-            //        stopwatch.Start();
-            //        long lResult = DynamicFibonacci(n);
-            //        stopwatch.Stop();
-            //        Console.WriteLine($"DynamicFibonacci {n}  Time{stopwatch.ElapsedMilliseconds}");
-            //    }
-            //    {
-            //        Stopwatch stopwatch = new Stopwatch();
-            //        stopwatch.Start();
-            //        long lResult = DynamicFibonacciWithoutArray(n);
-            //        stopwatch.Stop();
-            //        Console.WriteLine($"DynamicFibonacciWithoutArray {n}  Time{stopwatch.ElapsedMilliseconds}");
-            //    }
-            //}
+            #region 斐波那契
+            int n = 5;
+            {
+                {
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    long lResult = RecursionFibonacci(n);
+                    stopwatch.Stop();
+                    Console.WriteLine($"RecursionFibonacci {n}  Time{stopwatch.ElapsedMilliseconds}");
+                }
+                {
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    long lResult = DynamicFibonacci(n);
+                    stopwatch.Stop();
+                    Console.WriteLine($"DynamicFibonacci {n}  Time{stopwatch.ElapsedMilliseconds}");
+                }
+                {
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+                    long lResult = DynamicFibonacciWithoutArray(n);
+                    stopwatch.Stop();
+                    Console.WriteLine($"DynamicFibonacciWithoutArray {n}  Time{stopwatch.ElapsedMilliseconds}");
+                }
+            }
             #endregion
 
             #region 公共字符串
-            //string wordLeft = "eleven";
-            //string wordRight = "seven";// "secen";// "sevem";
-            //string result = FindLongCommonSubString(wordLeft, wordRight);
+            string wordLeft = "eleven";
+            string wordRight = "seven";// "secen";// "sevem";
+            string result = FindLongCommonSubString(wordLeft, wordRight);
 
-            //if (string.IsNullOrWhiteSpace(result))
-            //{
-            //    Console.WriteLine("没有共同字符串");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("最长共同字符串: " + result);
-            //}
+            if (string.IsNullOrWhiteSpace(result))
+            {
+                Console.WriteLine("没有共同字符串");
+            }
+            else
+            {
+                Console.WriteLine("最长共同字符串: " + result);
+            }
             #endregion
 
             #region MyRegion
@@ -60,7 +61,7 @@ namespace SPText.Common
             #endregion
         }
 
-        #region Fibonacci
+        #region 斐波那契
         /// <summary>
         /// 递归--0 1 1 2 3 5 8
         /// </summary>
@@ -668,10 +669,10 @@ namespace SPText.Common
             Console.WriteLine("before AdvancedSort");
             array.Show();
             Console.WriteLine("start AdvancedSort");
-            //array.ShellSort();
-            //array.MergeSort();
-            //array.HeapSort();
-            //array.QuickSort();
+            array.ShellSort();
+            array.MergeSort();
+            array.HeapSort();
+            array.QuickSort();
             Console.WriteLine("  end AdvancedSort");
             array.Show();
         }
@@ -694,7 +695,7 @@ namespace SPText.Common
                     inner -= 1;
                 }
                 arr[inner] = temp;
-                //arr.Show();
+                arr.Show();
             }
         }
         private static void ShellSort(this int[] arr)
@@ -922,7 +923,7 @@ namespace SPText.Common
         #endregion
         #endregion
 
-        #region  BasicSearchDemo
+        #region  基本搜索演示
         public static void Show4()
         {
             int[] array = new int[10];
@@ -1119,7 +1120,7 @@ namespace SPText.Common
         #endregion
         #endregion
 
-        #region  BasicSortDemo
+        #region  基本分类演示
         public static void Show5()
         {
             int[] array = new int[10];

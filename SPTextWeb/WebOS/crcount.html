@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<title>小木人后台管理系统</title>
+<link href="images/admin/admin_style1.css" rel="stylesheet" type="text/css" />
+</head><body>
+<div class="wrap">
+  <h2 class="h1">开设新客户账号</h2>
+  <form id="form1" name="form1" method="post" action="">
+    <div class="admin_table mb10">
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tbody>
+          <tr class="tr1 vt">
+            <td class="td1">公司名称</td>
+            <td class="td2" id="bbsifopen"><input name="c_name" type="text" class="input input_wa" /></td>
+            <td class="td2"><div class="help_a" style="display: block;">这里是帮助信息</div></td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">地址</td>
+            <td class="td2" id="bbsifopen2"><input type="text" name="textfield" id="textfield" class="input_wa" /></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">联系人</td>
+            <td class="td2" id="bbsifopen3"><input type="text" name="textfield2" id="textfield2" class="input_wa" /></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">时间</td>
+            <td class="td2" id="bbsifopen4"><div class="input_img"><i title="选择时间" class="input_time">选择时间</i>
+                <input type="text" onclick="WdatePicker()" value="2010-08-09" id="starttime" name="advert[stime]">
+              </div></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">手机号码</td>
+            <td class="td2" id="bbsifopen5"><input type="text" name="textfield4"  class="input_wa mr10 fl" id="sj" />
+              <span id="sjTip"></span></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">登录名</td>
+            <td class="td2" id="bbsifopen5"><input type="text" name="textfield4" id="textfield4" class="input_wa" /></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">密码</td>
+            <td class="td2" id="bbsifopen6"><input type="password" name="textfield5" id="textfield5" class="input_wa" /></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">贸易关系</td>
+            <td class="td2" id="bbsifopen7"><select name="select" id="select" class="select_wa">
+                <option>贸易关系一</option>
+                <option>贸易关系二</option>
+              </select>
+            </td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">企业类型</td>
+            <td class="td2" id="bbsifopen8"><ul class="list_A list_120 cc">
+                <li>
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  快消 </li>
+                <li>
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  金融 </li>
+                <li>
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  汽车 </li>
+                <li>
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  服务 </li>
+                <li>
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  化工 </li>
+                <li>
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  机械 </li>
+              </ul></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">上传文件类型</td>
+            <td class="td2" id="bbsifopen9"><ul class="list_A cc">
+                <li>
+                  <input type="radio" name="radio" id="radio" value="radio" />
+                  xml</li>
+                <li>
+                  <input type="radio" name="radio" id="radio" value="radio" />
+                  xls </li>
+                <li>
+                  <input type="radio" name="radio" id="radio" value="radio" />
+                  xlsx </li>
+              </ul></td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">上传方式</td>
+            <td class="td2" id="bbsifopen10"><select name="select" id="select" class="select_wa">
+                <option>ftp</option>
+                <option>ws</option>
+              </select>
+            </td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">编辑器</td>
+            <td class="td2"><textarea cols="90" id="area1" rows="20"></textarea>
+            </td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">其他字段</td>
+            <td class="td2"> 略 </td>
+            <td class="td2">&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tac mb10"> <span class="btn"><span>
+      <button type="submit">提 交</button>
+      </span></span> </div>
+  </form>
+</div>
+</body>
+</html>

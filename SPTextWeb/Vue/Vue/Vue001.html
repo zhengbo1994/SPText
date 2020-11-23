@@ -206,6 +206,8 @@
         <!--自定义组件-->
         <button-counter></button-counter>
         <my-component name="jiangjiang" come-from="guilin"></my-component>
+        <!--自定义指令-->
+        <input v-focus>
     </div>
     <script type="text/javascript">
         //配置是否允许vue-devtools检查代码，方便调试，生产环境中需要设置为false
@@ -332,10 +334,29 @@
                 create: {
 
                 },
-                components: ("my-component", function () {
+                //组件
+                components: {
                     props: ['name', 'comeFrom'],    //在注册组件的时候通过props选项声明了要取用的多个prop
-                    template:'<p>我叫：{{name}}, 我来自：{{comeFrom}}</p>'
-                })
+                    "my-component": {
+                        template: '<p>我叫：{{name}}, 我来自：{{comeFrom}}</p>',
+                        data: function() {
+                            return {
+                                count: 0
+                            }
+                        }
+                    }
+                },
+                //自定义指令（注册一个局部的自定义指令 v-focus）
+                directives: {
+                    focus: {
+                        inserted: function (el, binding) {// 指令的定义
+                            el.focus();// 聚焦元素
+                        },
+                        inserted: function (el, binding) {
+                            //do something
+                        },
+                    }
+                }
             });
         }
 

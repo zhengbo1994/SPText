@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrap">
+  <div id="notice"></div>
+  <style type="text/css">
+.admin_table .td1,.admin_table .td2{padding:4px 5px 4px 15px;line-height:22px;}
+</style>
+  <div class="admin_info mb10">
+    <h4 class="h1">安全提示</h4>
+    <div class="legend">
+      <ol>
+        <li>强烈建议您将 data/sql_config.php 文件属性设置为644（linux/unix）或只读（NT） </li>
+        <li>强烈建议您使用 data目录隐藏功能，此功能可大大提高网站安全性，设置方法请参照相关帮助文档或联系官方寻求帮助 </li>
+        <li>强烈建议您将 admin.php 文件重新命名，您可以通过“核心设置-安全与优化-安全控制”将 admin.php 重新命名，如:abc.php，然后使用 abc.php 登录后台管理 </li>
+        <li>强烈建议您开启 安全问题功能（“核心设置-安全与优化-安全控制”），并在 强制使用安全问题用户组设置 中选择管理员、总版主、版主等具有较高管理权限的用户组 </li>
+      </ol>
+    </div>
+  </div>
+  <div class="cc">
+    <div>
+      <h4 class="h1">您的资料</h4>
+      <div class="admin_table mb10">
+        <table width="100%">
+          <tr class="tr1 vt">
+            <td class="td1">用户名</td>
+            <td class="td2">admin</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">级别</td>
+            <td class="td2">创始人</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">上次登录时间</td>
+            <td class="td2">2010-08-05 13:55</td>
+          </tr>
+          <tr class="tr1 vt">
+            <td class="td1">上次登录IP</td>
+            <td class="td2">127.0.0.1</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <h2 class="h1">最新管理操作记录</h2>
+  <div class="admin_table mb10">
+    <table width="100%">
+      <tr class="tr2">
+        <td width="10%">用户名</td>
+        <td width="10%">IP</td>
+        <td width="15%">操作时间</td>
+        <td width="30%">操作理由</td>
+      </tr>
+    </table>
+  </div>
+  <div id="system" style="display:none;"></div>
+  <div class="c"></div>
+</div>
+</body>
+</html>

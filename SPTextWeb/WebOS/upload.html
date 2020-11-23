@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上传</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/swfupload/swfupload.js"></script>
+<script src="js/jquery/swfupload/swfupload.queue.js"></script>
+<script src="js/jquery/upload.js"></script>
+</head>
+<body>
+<div class="wrap">
+<h2 class="h1 mb15">flash上传方式</h2>
+<p style="line-height:30px;">原理是检测是否支持flash支持用flash方式上传，支持进度，不支持flash，就用普通html一个个选择文件，交互上都是一次添加多个文件，然后逐个上传，暂时不支持htmll5的多选multiple和拖拽。</p>
+<div id="upload2" style="margin-bottom:50px;"></div>
+<script>
+
+	var swfup1 = new Asc.upload.uploadHander({
+		pid:'#upload2'
+	});
+
+</script>
+<div class="comp-swf-upload">
+	<div class="comp-swf-utool">
+    	<div class="comp-swf-btn add"><span class="bt2 addfiles"><span><button type="submit">添加文件</button></span></span></div>
+      <div class="comp-swf-btn delall"><a href="javascript:void(0);">清空列表</a></div>
+    </div>
+    <div class="comp-swf-list">
+      <div class="comp-swf-l"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploading"></b><span>文件名.png</span></div>
+        <div class="comp-swf-ldetails"><span class="comp-swf-proc"><span class="comp-swf-prob" style="width:10%;"></span></span><span class="comp-swf-pron">3%</span></div>
+        <div class="comp-swf-lstate"><span>已上传：160K</span><span class="p_lr_10">共：1.5M</span></div>
+      </div>
+      <div class="comp-swf-l"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploadwait"></b><span>文件名.png</span></div>
+        <div class="comp-swf-ldetails"><span class="comp-swf-proc"><span class="comp-swf-prob" style="width:60%;"></span></span><span class="comp-swf-pron">3%</span></div>
+        <div class="comp-swf-lstate"><span>已上传：160K</span><span class="p_lr_10">共：1.5M</span></div>
+      </div>
+      <div class="comp-swf-l"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploadok"></b><span>文件名.png</span></div>
+        <div class="comp-swf-ldetails"><span class="comp-swf-proc"><span class="comp-swf-prob" style="width:10%;"></span></span><span class="comp-swf-pron">3%</span></div>
+        <div class="comp-swf-lstate"><span>已上传：160K</span><span class="p_lr_10">共：1.5M</span></div>
+      </div>
+      <div class="comp-swf-l last"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploaderror"></b><span>文件名.png</span></div>
+        <div class="comp-swf-lstate"><span>等待上传中，请稍后……</span></div>
+      </div>
+    </div>
+<div class="comp-swf-total">
+    	<span>上传总进度:</span><span class="comp-swf-proc"><span class="comp-swf-prob" style="width:10%;"></span></span><span class="comp-swf-pron">3%</span><span>，已上传<strong class="comp-swf-prou">160K</strong>，总文件大小<strong class="comp-swf-prot">800K</strong></span>
+    </div>
+    <div class="comp-swf-ctrl">
+    	<span class="btn2 startupload"><span><button type="submit">开始上传</button></span></span>
+        <span class="btn2 cancelupload"><span><button type="submit">取消上传</button></span></span>
+    </div>
+</div>
+
+<div class="comp-swf-upload" style="margin-top:50px;">
+	<div class="comp-swf-utool">
+    	<div class="comp-swf-btn add">
+        <span class="bt2 addfiles"><span><button type="submit">添加文件</button></span></span></div>
+      <div class="comp-swf-btn delall"><a href="javascript:void(0);">清空列表</a></div>
+    </div>
+    <div class="comp-swf-list">
+    	<div class="comp-swf-listip s1">重复添加</div>
+      <div class="comp-swf-l"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploading"></b><span>文件名.png</span></div>
+        <div class="comp-swf-lstate"><span>正在上传</span></div>
+      </div>
+      <div class="comp-swf-l"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploading"></b><span>文件名.png</span></div>
+        <div class="comp-swf-lstate"><span>上传完成</span></div>
+      </div>
+      <div class="comp-swf-l"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploadok"></b><span>文件名.png</span></div>
+        <div class="comp-swf-ldetails"><span class="comp-swf-proc"><span class="comp-swf-prob" style="width:10%;"></span></span><span class="comp-swf-pron">3%</span></div>
+        <div class="comp-swf-lstate"><span>已上传：160K</span><span class="p_lr_10">共：1.5M</span></div>
+      </div>
+      <div class="comp-swf-l last"> <a href="javascript:void(0);">删除</a>
+          <div class="comp-swf-lname"><b class="comp-swf-files uploaderror"></b><span>文件名.png</span></div>
+        <div class="comp-swf-lstate"><span>等待上传中，请稍后……</span></div>
+      </div>
+    </div>
+<div class="comp-swf-total">
+    	<span>上传总进度:</span><span class="comp-swf-proc"><span class="comp-swf-prob" style="width:10%;"></span></span><span class="comp-swf-pron">3%</span><span>，已上传<strong class="comp-swf-prou">160K</strong>，总文件大小<strong class="comp-swf-prot">800K</strong></span>
+    </div>
+    <div class="comp-swf-ctrl">
+    	<span class="btn2 startupload"><span><button type="submit">开始上传</button></span></span>
+        <span class="btn2 cancelupload"><span><button type="submit">取消上传</button></span></span>
+    </div>
+</div>
+</div>
+</body>
+</html>

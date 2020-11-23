@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>小木人后台管理系统</title>
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link href="images/admin/admin_style.css" rel="stylesheet" type="text/css" />
+<link href="images/admin/component.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery/jquery-1.4.2.min.js"></script>
+<script src="js/jquery/util.js"></script>
+<script src="js/jquery/windows.js"></script>
+<script src="js/jquery/opttree.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="cc">
+    <h2 class="h1 mb20">编辑树</h2>
+    <div id="opttree1"></div>
+    <script>
+    	var otree1 = new Asc.tree.optTree({
+			el:'opttree1',
+			url:'opttree.php',
+			tiptext:'你已选择的区域',
+			delFn:function(data){
+				//{text:'安徽',pid:0,iid:'1',son:1}
+				//pid父id iid自身id,son是否有子节点0无1有
+				//this指向otree1
+				//console.info(data);
+				var me = this;
+				Asc.windows.confirm('确认','是否要删除，删除后无法恢复！',function(btn){
+					if(btn=='yes'){
+						//do
+						me.delItem(data);
+						this.closeWindow(); //this指向窗口对象,关闭窗口
+					}else{
+						this.closeWindow();
+					}
+				});
+				
+			},
+			editFn:function(index,data){
+				var me = this;
+				data.text="新编辑数据";
+				var win = new Asc.windows.base({
+					title:'标题',
+					body:'这里放编辑html',
+					width:500,
+					height:300,
+					top:100,
+					buttons:[
+						{
+							text:'确定',
+							cls:'bt2',
+							fn:function(){
+								me.updateItem(index,data);
+								this.closeWindow();
+							}
+						},
+						{
+							text:'取消',
+							cls:'bt2',
+							fn:function(){
+								this.closeWindow();
+							}
+						}
+					]
+				})
+			},
+			addFn:function(e){
+				var level = this.cLevel;
+				var pid = level==1?0:this.pathData[level-1]['pid'];
+				var data = {};
+				data.text='文本';
+				data.pid=pid;
+				data.son=0;
+				data.iid=20;
+				var me = this;
+				var win = new Asc.windows.base({
+					title:'添加',
+					body:'<p>请输入省份名称</p>',
+					width:500,
+					height:200,
+					top:100,
+					buttons:[
+						{
+							text:'确定',
+							cls:'bt2',
+							fn:function(){
+								this.closeWindow();
+								me.addItem(data);
+							}
+						},
+						{
+							text:'取消',
+							cls:'bt2',
+							fn:function(){
+								this.closeWindow();
+							}
+						}
+					]
+				})
+			}
+		});
+
+
+    </script>
+    <div class="asc-opt-tree cc" style="margin-top:20px; display:none;">
+      <div class="aot-top cc">
+        <div class="aot-topath"><span class="aot-cate">你已选择的区域：</span><span class="aot-pathitem"><a href="javascript:void(0);">安徽</a></span></div>
+        <div class="aot-topsearch"><span class="mr5">
+          <input class="input_wa" type="text" />
+          </span><span class="bt2"><span>
+          <button type="submit">搜 索</button>
+          </span></span></div>
+      </div>
+      <div class="aot-content cc">
+        <div class="aot-slist"><span class="pre">上海</span><span class="pre">长宁</span><span class="current parent">中山公园</span></div> <div class="aot-slist"><span class="pre">上海</span><span class="pre">长宁</span><span class="current">中山公园</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
