@@ -1,4 +1,5 @@
 ﻿using CLSLibrary;
+using Dapper;
 using InfoEarthFrame.Data;
 using IOSerialize.IO;
 using IOSerialize.Serialize;
@@ -113,19 +114,19 @@ namespace SPText
             #endregion
 
             #region  IOC
-            {
-                IUnityContainer container = new UnityContainer();//实例化容器
-                container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
-                SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
-                text.One();
-            }
-            {
-                IUnityContainer container = ContainnerFactory.GetContainer();
-                IText text = container.Resolve<IText>();
-                IClassBase classBase = container.Resolve<IClassBase>();
-                text.One();
-                classBase.Show();
-            }
+            //{
+            //    IUnityContainer container = new UnityContainer();//实例化容器
+            //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
+            //    SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
+            //    text.One();
+            //}
+            //{
+            //    IUnityContainer container = ContainnerFactory.GetContainer();
+            //    IText text = container.Resolve<IText>();
+            //    IClassBase classBase = container.Resolve<IClassBase>();
+            //    text.One();
+            //    classBase.Show();
+            //}
             #endregion
 
             #region  设计模式
@@ -2346,6 +2347,7 @@ namespace SPText
                     SPText.EF.IDatabase database = new SqlserverDatabase(connectionStrings);
                     string sql = "select * from Company";
                     var i = database.FindTable(sql);
+                    i.Columns.RemoveAt(1);
                 }
                 {
                     SPText.EF.IDatabase database = new SqlserverDatabase(connectionStrings);
@@ -2374,10 +2376,10 @@ namespace SPText
                 var i = dBHelper.DataSet(sql, CommandType.Text, new SqlParameter[] { });
             }
             {//Dapper
-                //Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
-                //string sql = "select * from Company";
-                //var i = database.FindList<Company>();
-                //var value = database.FindTable(sql);
+                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
+                string sql = "select * from Company";
+                var i = database.FindList<Company>();
+                var value = database.FindTable(sql);
             }
             {//EF
                 Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
@@ -2396,6 +2398,13 @@ namespace SPText
                     CurrencyDBHelper db = new CurrencyDBHelper(DbProviderType.SqlServer, connectionStrings);
                     System.Data.DataTable data = db.GetDataSet(sql, null).Tables[0];
                     DbDataReader reader = db.ExecuteReader(sql, null);
+                    while (reader.Read())
+                    {
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            var value = reader[i];
+                        }
+                    }
                     reader.Close();
                 }
                 {
