@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SPTextCommon.EFBaseServices
 {
     using LinqKit;
+    using Microsoft.EntityFrameworkCore;
     using SPTextCommon.EFBaseServices.Model;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -20,9 +21,9 @@ namespace SPTextCommon.EFBaseServices
     /// <summary>
     /// 自定义EF上下文容器类
     /// </summary>
-    public class BaseDBContext : DbContext
+    public class BaseDBContext : System.Data.Entity.DbContext
     {
-        protected DbContext Context { get; private set; }
+        protected System.Data.Entity.DbContext Context { get; private set; }
         public BaseDBContext() : base("name=DataContext")
         {
             CreateBaseService("name=DataContext");
@@ -34,7 +35,7 @@ namespace SPTextCommon.EFBaseServices
 
         public void CreateBaseService(string connection)
         {
-            this.Context = new DbContext(connection);//连接数据库字符串
+            this.Context = new System.Data.Entity.DbContext(connection);//连接数据库字符串
             this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
             this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
             this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
@@ -75,7 +76,7 @@ namespace SPTextCommon.EFBaseServices
         }
 
         //2.0 定义泛型的DbSet<T> 字段
-        protected DbSet<T> _dbset;
+        protected System.Data.Entity.DbSet<T> _dbset;
         public BaseDal()
         {
             _dbset = db.Set<T>();
@@ -96,20 +97,22 @@ namespace SPTextCommon.EFBaseServices
 
         public virtual List<T> QueryJoin(Expression<Func<T, bool>> where, string[] tableNames)
         {
-            //1.0 参数合法性判断
-            if (tableNames.Any() == false)
-            {
-                throw new Exception("tableNames至少要有一个数据");
-            }
+            ////1.0 参数合法性判断
+            //if (tableNames.Any() == false)
+            //{
+            //    throw new Exception("tableNames至少要有一个数据");
+            //}
 
-            DbQuery<T> query = _dbset;
-            //2.0 连表带条件查询
-            foreach (var tableName in tableNames)
-            {
-                query = query.Include(tableName);
-            }
+            //DbQuery<T> query = _dbset;
+            ////2.0 连表带条件查询
+            //foreach (var tableName in tableNames)
+            //{
+            //    query = query.Include(tableName);
+            //}
 
-            return query.Where(where).ToList();
+            //return query.Where(where).ToList();
+
+            return null;
         }
 
         #endregion
@@ -213,23 +216,25 @@ namespace SPTextCommon.EFBaseServices
         {
 
 
-            //1.0 计算跳过的总行数
-            int skipCount = (pageindex - 1) * pagesize;
+            ////1.0 计算跳过的总行数
+            //int skipCount = (pageindex - 1) * pagesize;
 
-            //2.0 获取满足条件的总行数
-            totalcount = _dbset.AsExpandable().Where(whereLambda).Count();
-
-
-            DbQuery<T> query = _dbset;
-            //2.0 连表带条件查询
-            foreach (var tableName in tableNames)
-            {
-                query = query.Include(tableName);
-            }
+            ////2.0 获取满足条件的总行数
+            //totalcount = _dbset.AsExpandable().Where(whereLambda).Count();
 
 
-            //totalcount = _dbset.Count(whereLambda);
-            return query.AsExpandable().Where(whereLambda).AsQueryable().OrderByDescending(order).Skip(skipCount).Take(pagesize).ToList();
+            //DbQuery<T> query = _dbset;
+            ////2.0 连表带条件查询
+            //foreach (var tableName in tableNames)
+            //{
+            //    query = query.Include(tableName);
+            //}
+
+
+            ////totalcount = _dbset.Count(whereLambda);
+            //return query.AsExpandable().Where(whereLambda).AsQueryable().OrderByDescending(order).Skip(skipCount).Take(pagesize).ToList();
+            totalcount = 0;
+            return null;
         }
         #endregion
 
@@ -244,14 +249,16 @@ namespace SPTextCommon.EFBaseServices
         #region 3.0.8 负责多条件的普通查询+外表連接的方法
         public virtual List<T> QueryByWhereJoin(Expression<Func<T, bool>> whereLambda, string[] tableNames)
         {
-            DbQuery<T> query = _dbset;
-            //2.0 连表带条件查询
-            foreach (var tableName in tableNames)
-            {
-                query = query.Include(tableName);
-            }
+            //DbQuery<T> query = _dbset;
+            ////2.0 连表带条件查询
+            //foreach (var tableName in tableNames)
+            //{
+            //    query = query.Include(tableName);
+            //}
 
-            return query.AsExpandable().Where(whereLambda).AsQueryable().ToList();
+            //return query.AsExpandable().Where(whereLambda).AsQueryable().ToList();
+
+            return null;
         }
         #endregion
 
@@ -284,7 +291,7 @@ namespace SPTextCommon.EFBaseServices
         {
             //1.0 将model追加到EF容器中
             var entry = db.Entry(model);
-            entry.State = EntityState.Unchanged;
+            entry.State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in propertys)
             {
@@ -298,7 +305,7 @@ namespace SPTextCommon.EFBaseServices
 
         public virtual void Edit(T model)
         {
-            db.Entry(model).State = EntityState.Modified;
+            db.Entry(model).State = System.Data.Entity.EntityState.Modified;
         }
 
         #endregion

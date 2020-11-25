@@ -2374,10 +2374,10 @@ namespace SPText
                 var i = dBHelper.DataSet(sql, CommandType.Text, new SqlParameter[] { });
             }
             {//Dapper
-                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
-                string sql = "select * from Company";
-                var i = database.FindList<Company>();
-                var value = database.FindTable(sql);
+                //Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
+                //string sql = "select * from Company";
+                //var i = database.FindList<Company>();
+                //var value = database.FindTable(sql);
             }
             {//EF
                 Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
