@@ -45,5 +45,10 @@ namespace SPTextWinForm
                 this.notifyIcon1.Visible = true;//托盘显示
             }
         }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

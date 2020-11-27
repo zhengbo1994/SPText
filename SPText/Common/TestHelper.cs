@@ -184,9 +184,6 @@ namespace SPText.Common
                     }
 
                 }
-
-
-
             }
 
         }

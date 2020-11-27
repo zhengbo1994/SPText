@@ -275,7 +275,11 @@ namespace Common
                 }
             }
         }
-
+        /// <summary>
+        /// 删除旧文件
+        /// </summary>
+        /// <param name="folderPath"></param>
+        /// <param name="dt"></param>
         private void DeleteOldFiles(string folderPath, DateTime dt)
         {
             try

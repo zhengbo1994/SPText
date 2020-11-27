@@ -74,6 +74,8 @@ namespace SPText
 
             #region  常见算法
             //sf();
+            //int[] intArray = new int[] { 2, 5, 4, 1, 3 };
+            //QuickSort(intArray, 0, intArray.Length - 1);
             #endregion
 
             #region  泛型
@@ -114,19 +116,7 @@ namespace SPText
             #endregion
 
             #region  IOC
-            //{
-            //    IUnityContainer container = new UnityContainer();//实例化容器
-            //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
-            //    SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
-            //    text.One();
-            //}
-            //{
-            //    IUnityContainer container = ContainnerFactory.GetContainer();
-            //    IText text = container.Resolve<IText>();
-            //    IClassBase classBase = container.Resolve<IClassBase>();
-            //    text.One();
-            //    classBase.Show();
-            //}
+            //IOCShow();
             #endregion
 
             #region  设计模式
@@ -318,7 +308,7 @@ namespace SPText
             deleGate -= insert;
             deleGate += delete;
 
-            ret = deleGate(10, 20);
+            ret = deleGate.Invoke(10, 20);
 
             Console.WriteLine("10-20={0}", ret);
 
@@ -1278,7 +1268,7 @@ namespace SPText
             {
                 string str = "字符串";
                 //生成验证码
-                ImageHelper.Drawing(str);
+                IOSerialize.IO.ImageHelper.Drawing(str);
             }
             {
                 //序列化&反序列化
@@ -1451,6 +1441,25 @@ namespace SPText
         }
         #endregion
 
+
+        #region  IOC
+        public static void IOCShow()
+        {
+            {
+                IUnityContainer container = new UnityContainer();//实例化容器
+                container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
+                SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
+                text.One();
+            }
+            {
+                IUnityContainer container = ContainnerFactory.GetContainer();
+                IText text = container.Resolve<IText>();
+                IClassBase classBase = container.Resolve<IClassBase>();
+                text.One();
+                classBase.Show();
+            }
+        }
+        #endregion
         #region  设计模式（桥接模式、单例模式、简单工厂、建设工厂方法、抽象工厂、建造者模式、原型模式、适配器模式、享元模式、组合模式、装饰器模式、门面模式、代理模式、解释器模式、模板方法设计模式、责任链模式、命令模式、迭代器模式、中介者模式、备忘录模式、状态模式、策略模式、访问者模式）
         public static void DesignPattern()
         {
@@ -2627,6 +2636,10 @@ namespace SPText
             {
                 QuartzHelper quartzHelper = new QuartzHelper();
                 quartzHelper.Show().GetAwaiter().GetResult();
+            }
+            {
+                QuartzHelper quartzHelper = new QuartzHelper();
+                quartzHelper.Show1();
             }
             {
                 System.Timers.Timer timer = new System.Timers.Timer();

@@ -13,9 +13,11 @@ namespace SPText.Common
     public class QuartzHelper
     {
 
-        public async Task Show() {
+        public async Task Show()
+        {
             IScheduler scheduler = await ScheduleManager.BuildScheduler();
-
+            //2.启动 scheduler
+            await scheduler.Start();
 
             #region JobDetail
             IJobDetail jobDetail = JobBuilder.Create<SendMessage>()
@@ -63,6 +65,30 @@ namespace SPText.Common
 
 
             await scheduler.ScheduleJob(jobDetail, trigger);
+        }
+
+        public async Task Show1()
+        {
+            // 1.创建scheduler的引用
+            ISchedulerFactory schedFact = new StdSchedulerFactory();
+            IScheduler sched = await schedFact.GetScheduler();
+
+            //2.启动 scheduler
+            await sched.Start();
+
+            // 3.创建 job
+            IJobDetail job = JobBuilder.Create<SimpleJob>()
+                    .WithIdentity("job1", "group1")
+                    .Build();
+
+            // 4.创建 trigger
+            ITrigger trigger = TriggerBuilder.Create()
+                .WithIdentity("trigger1", "group1")
+                .WithSimpleSchedule(x => x.WithIntervalInSeconds(5).RepeatForever())
+                .Build();
+
+            // 5.使用trigger规划执行任务job
+            await sched.ScheduleJob(job, trigger);
         }
     }
 
@@ -141,5 +167,17 @@ namespace SPText.Common
             IScheduler _scheduler = await schedulerFactory.GetScheduler();
             return _scheduler;
         }
+    }
+
+    /// <summary>
+    /// 任务
+    /// </summary>
+    public class SimpleJob : IJob
+    {
+        public virtual Task Execute(IJobExecutionContext context)
+        {
+            return Console.Out.WriteLineAsync($"job工作了 在{DateTime.Now}");
+        }
+
     }
 }

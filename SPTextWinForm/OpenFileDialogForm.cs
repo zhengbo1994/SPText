@@ -108,10 +108,7 @@ namespace SPTextWinForm
                                                         {
                                                             sheets.AddMergedRegion(new CellRangeAddress(i, i, 5, 5 + 5));
                                                         }
-                                                        //sheets.AddMergedRegion(new CellRangeAddress(i, i, 5, 5 + 5));
                                                     }
-
-                                                    //sheets.AddMergedRegion(new CellRangeAddress(i, i, 8, 8 + 7));
                                                     cell.SetCellValue(strCell_Row2);
                                                 }
                                                 else
@@ -145,8 +142,6 @@ namespace SPTextWinForm
                                                                     sheets.AddMergedRegion(new CellRangeAddress(i, i, 5, 5 + 5));
                                                                 }
                                                             }
-
-                                                            //sheets.AddMergedRegion(new CellRangeAddress(i, i, 8, 8 + 7));
                                                             cell8.SetCellValue(strCell_Row2);
                                                         }
                                                     }

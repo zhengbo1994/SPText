@@ -365,7 +365,9 @@
     <Compile Include="Common\DataHelper\Repository\RepositoryFactoryT.cs" />
     <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
+    <Compile Include="Common\DataHelper\Sql\DbHelperSQL.cs" />
     <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
+    <Compile Include="Common\ExpdalHelper.cs" />
     <Compile Include="Common\FtpHelper.cs" />
     <Compile Include="Common\IO\DirFileHelper.cs" />
     <Compile Include="Common\ExcelAdoDotNetHelper.cs" />
@@ -418,6 +420,7 @@
     <Compile Include="Common\Redis\Service\RedisSetService.cs" />
     <Compile Include="Common\Redis\Service\RedisStringService.cs" />
     <Compile Include="Common\Redis\Service\RedisZSetService.cs" />
+    <Compile Include="Common\ReflectHelper.cs" />
     <Compile Include="Common\Serialize\JsonHelper.cs" />
     <Compile Include="Common\Serialize\LinqToXml.cs" />
     <Compile Include="Common\Serialize\SerializeHelper.cs" />

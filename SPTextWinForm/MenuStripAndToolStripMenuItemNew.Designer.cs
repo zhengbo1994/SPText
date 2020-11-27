@@ -73,7 +73,7 @@
             // 新增班级ToolStripMenuItem
             // 
             this.新增班级ToolStripMenuItem.Name = "新增班级ToolStripMenuItem";
-            this.新增班级ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.新增班级ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.新增班级ToolStripMenuItem.Text = "新增班级";
             // 
             // MenuStripAndToolStripMenuItemNew
