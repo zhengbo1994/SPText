@@ -89,5 +89,11 @@ namespace SPTextCommon
         public string product { get; set; }
 
     }
+
+
+    public class FanXing<T1,T2> {
+        public T1 key { get; set; }
+        public T2 value { get; set; }
+    }
     #endregion
 }
