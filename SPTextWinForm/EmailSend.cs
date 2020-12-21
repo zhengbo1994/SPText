@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -14,6 +15,8 @@ namespace SPTextWinForm
 {
     public partial class EmailSend : Form
     {
+        string strSendEmailTO = ConfigurationManager.AppSettings["SendEmailTO"].ToString();
+        string strSendEmailCC = ConfigurationManager.AppSettings["SendEmailCC"].ToString();
         public EmailSend()
         {
             InitializeComponent();
@@ -27,8 +30,10 @@ namespace SPTextWinForm
         {
             string title = this.txtTitle.Text;
             string mailContent = this.txtContent.Text;
-            List<string> emailTO = new List<string> { "179720610@qq.com;" };
-            List<string> emailCC = new List<string> { "white@hkolens.com;", "1146863619@qq.com;" };
+            List<string> strSendEmailTOList = strSendEmailTO.Replace("；", ";").Split(';').ToList();
+            List<string> strSendEmailCCList = strSendEmailCC.Replace("；", ";").Split(';').ToList();
+            List<string> emailTO = strSendEmailTOList;
+            List<string> emailCC = strSendEmailCCList;
             this.SendEmail(title, mailContent, emailTO, emailCC);
         }
 
@@ -67,9 +72,12 @@ namespace SPTextWinForm
                     {
                         msg.To.Add(to.Substring(0, IndexOfTo));
                     }
+                    else
+                    {
+                        msg.To.Add(to.Substring(0));
+                    }
 
                 }
-
             }
             foreach (var cc in emailCC)
             {
@@ -80,6 +88,10 @@ namespace SPTextWinForm
                     {
 
                         msg.CC.Add(cc.Substring(0, IndexOfTo));
+                    }
+                    else
+                    {
+                        msg.CC.Add(cc.Substring(0));
                     }
 
                 }
@@ -106,7 +118,7 @@ namespace SPTextWinForm
             SmtpClient client = new SmtpClient();
             client.UseDefaultCredentials = true;
             // client.Credentials = new System.Net.NetworkCredential("it-service@hkolens.com", "IT2016@"); //注册的邮箱和密码   
-            client.Credentials = new System.Net.NetworkCredential("no_reply@hkoptlens.com", "xfs34ss12"); //注册的邮箱和密码   
+            client.Credentials = new System.Net.NetworkCredential("no_reply@hkoptlens.com", "a@T1sG5xa977"); //注册的邮箱和密码   
             //client.Host = "smtp.qiye.163.com";
             client.Host = "mail.hkoptlens.com";
             // client.Port = 25;
