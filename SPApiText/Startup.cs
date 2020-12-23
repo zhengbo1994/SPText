@@ -48,7 +48,7 @@ namespace SPCoreApiText
         {
             services.AddControllers();
 
-    
+
             services.AddScoped<IUserService, UserService>();
 
             #region  EF
@@ -224,6 +224,18 @@ namespace SPCoreApiText
             //    };
             //});
             #endregion
+            #endregion
+
+            #region  ·´ÉäÒÀÀµ×¢Èë
+            var assembly = Assembly.Load("");
+            var types = assembly.GetTypes().Where(p => !p.GetTypeInfo().IsInterface&& !p.GetTypeInfo().IsEnum);
+            foreach (var itemType in types)
+            {
+                foreach (var itemInterface in itemType.GetInterfaces())
+                {
+                    services.AddScoped(itemInterface, itemType);
+                }
+            }
             #endregion
         }
 

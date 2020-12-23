@@ -354,6 +354,12 @@
     <Compile Include="Common\CustomCache\MemoryCacheCache.cs" />
     <Compile Include="Common\DataFactory.cs" />
     <Compile Include="Common\DataHelper\Dapper\SqlDatabase.cs" />
+    <Compile Include="Common\DataHelper\Data\ColumnAttribute.cs" />
+    <Compile Include="Common\DataHelper\Data\GetMapping.cs" />
+    <Compile Include="Common\DataHelper\Data\IRepository.cs" />
+    <Compile Include="Common\DataHelper\Data\Repository.cs" />
+    <Compile Include="Common\DataHelper\Data\SqlHelperBase.cs" />
+    <Compile Include="Common\DataHelper\Data\TableAttribute.cs" />
     <Compile Include="Common\DataHelper\DbHelper.cs" />
     <Compile Include="Common\DataHelper\EF\SqlserverDatabase.cs" />
     <Compile Include="Common\DataHelper\EF\SqlServerDbContext.cs" />
