@@ -84,6 +84,9 @@
     <Compile Include="ComboBox.Designer.cs">
       <DependentUpon>ComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataGridView\AddProductForm.cs">
       <SubType>Form</SubType>
     </Compile>

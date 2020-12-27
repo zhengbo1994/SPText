@@ -370,6 +370,7 @@
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\DbHelperSQL.cs" />
     <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
+    <Compile Include="Common\DesignPatternHelper.cs" />
     <Compile Include="Common\ExpdalHelper.cs" />
     <Compile Include="Common\FtpHelper.cs" />
     <Compile Include="Common\IO\DirFileHelper.cs" />

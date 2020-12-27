@@ -110,6 +110,42 @@ namespace SPText.Common.DataHelper.Sql
 
 
 
+        /// <summary>
+        /// 使用SqlBulkCopy类批量复制大数据
+        /// </summary>
+        /// <param name="connectionString">目标连接字符</param>
+        /// <param name="TableName">目标表</param>
+        /// <param name="dt">源数据</param>
+        private static void SqlBulkCopyByDatatable(string conStr, string TableName, DataTable dt)
+        {
+            using (SqlConnection conn = new SqlConnection(conStr))
+            {
+                using (SqlBulkCopy sqlbulkcopy = new SqlBulkCopy(conStr, SqlBulkCopyOptions.UseInternalTransaction))
+                {
+                    try
+                    {
+                        sqlbulkcopy.DestinationTableName = TableName;//服务器上目标表的名称。
+                        //sqlbulkcopy.BulkCopyTimeout = 100;//超时之前操作完成所允许的秒数。
+                        //sqlbulkcopy.BatchSize = 0;//每一批次中的行数。在每一批次结束时，将该批次中的行发送到服务器。
+                        //sqlbulkcopy.NotifyAfter = 8000;  //每8千条事件触发一次
+                        //sqlbulkcopy.SqlRowsCopied += new SqlRowsCopiedEventHandler((object sender, SqlRowsCopiedEventArgs e) =>
+                        //{
+                        //    Console.Write("已导入完毕八千条数据！");
+                        //});
+                        for (int i = 0; i < dt.Columns.Count; i++)
+                        {
+                            sqlbulkcopy.ColumnMappings.Add(dt.Columns[i].ColumnName, dt.Columns[i].ColumnName);
+                        }
+                        sqlbulkcopy.WriteToServer(dt);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+        }
+
     }
 
 
@@ -138,9 +174,10 @@ namespace SPText.Common.DataHelper.Sql
                 command2.ExecuteNonQuery();
                 committran.Commit();
             }
-            catch (Exception err) { 
-                Console.WriteLine(err); 
-                committran.Rollback(); 
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+                committran.Rollback();
             }
         }
     }
