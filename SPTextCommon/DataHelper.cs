@@ -11,7 +11,7 @@ namespace SPTextCommon
     /// <summary>
     /// 数据源转换
     /// </summary>
-    public class DataHelper1
+    public partial class DataHelper
     {
         #region IList如何转成List<T>
         /// <summary>
@@ -37,7 +37,7 @@ namespace SPTextCommon
         /// <returns></returns>
         public static DataTable DataFilter(DataTable dt, string condition)
         {
-            if (DataHelper1.IsExistRows(dt))
+            if (DataHelper.IsExistRows(dt))
             {
                 if (condition.Trim() == "")
                 {
@@ -62,7 +62,7 @@ namespace SPTextCommon
         }
         public static DataTable DataFilter(DataTable dt, string condition, string sort)
         {
-            if (DataHelper1.IsExistRows(dt))
+            if (DataHelper.IsExistRows(dt))
             {
                 DataTable newdt = new DataTable();
                 newdt = dt.Clone();
@@ -279,6 +279,8 @@ namespace SPTextCommon
         }
         
         #endregion
+
+
         #region DataSet转换成Json格式
         /// <summary>  
         /// DataSet转换成Json格式  

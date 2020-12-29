@@ -313,6 +313,9 @@
     <Reference Include="Unity.Interception.Configuration, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.Interception.Configuration.5.11.1\lib\net47\Unity.Interception.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="WinSCPnet">
+      <HintPath>..\packages\WinSCP.5.17.9\lib\net40\WinSCPnet.dll</HintPath>
+    </Reference>
     <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Zstandard.Net.dll</HintPath>
     </Reference>
@@ -440,6 +443,7 @@
     <Compile Include="Common\WebHelper.cs" />
     <Compile Include="Common\WebSocketHelper.cs" />
     <Compile Include="Common\WorldToPDFHelper.cs" />
+    <Compile Include="Common\ZipHelper.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="EF\EF1\BaseService.cs" />
     <Compile Include="EF\EF0\DatabaseContext.cs" />
