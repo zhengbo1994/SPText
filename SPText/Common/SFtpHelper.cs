@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Tamir.SharpSsh.jsch;
+using WinSCP;
 
 namespace SPText.Common
 {
+    /// <summary>
+    /// 通过用户名和密码的方式连接SFTP
+    /// </summary>
     public partial class SFtpHelper
     {
-        private static Session m_session;
+        private static Tamir.SharpSsh.jsch.Session m_session;
         private static Channel m_channel;
         private static ChannelSftp m_sftp;
 
@@ -242,6 +247,129 @@ namespace SPText.Common
             public bool promptPassword(String message) { return true; }
             public bool promptYesNo(String message) { return true; }
             public void showMessage(String message) { }
+        }
+    }
+
+    /// <summary>
+    /// 通过秘钥的方式进行连接SFTP
+    /// </summary>
+    public partial class SftpWinScpHelper {
+        private SessionOptions _sessionOptions;
+        private WinSCP.Session _session;
+
+        public SftpWinScpHelper(string host, string user, string pwd, string key)
+        {
+            _sessionOptions = new SessionOptions
+            {
+                Protocol = Protocol.Sftp,
+                HostName = host,
+                UserName = user,
+                Password = pwd,
+                SshHostKeyFingerprint = key
+            };
+            _session = new WinSCP.Session();
+        }
+
+        public bool Connected { get { return _session.Opened; } }
+
+        public bool Connect()
+        {
+            try
+            {
+                if (!Connected)
+                {
+                    _session.Open(_sessionOptions);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public void Disconnect()
+        {
+            if (Connected)
+            {
+                _session.Close();
+            }
+        }
+
+        ~SftpWinScpHelper()
+        {
+            if (Connected)
+            {
+                _session.Close();
+            }
+
+            _session.Dispose();
+            _session = null;
+            _sessionOptions = null;
+        }
+
+        public bool Put(string localPath, string remoteDir)
+        {
+            try
+            {
+                //TransferOperationResult transferOperationResult = _session.PutFiles(localPath, remoteDir, false);
+                //return transferOperationResult.IsSuccess;
+
+
+                var args = _session.PutFileToDirectory(localPath, remoteDir, false);
+                return args.Error == null;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Get(string remotePath, string localDir)
+        {
+            try
+            {
+                var result = _session.GetFiles(remotePath, localDir, false);
+                return result.IsSuccess;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool Delete(string remoteFile)
+        {
+            try
+            {
+                var result = _session.RemoveFile(remoteFile);
+                return result.Error is null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public ArrayList GetFileList(string fTP_ORDER_PATH, string fileType)
+        {
+            try
+            {
+                var list = _session.ListDirectory(fTP_ORDER_PATH);
+                ArrayList objList = new ArrayList();
+                foreach (var fileInfo in list.Files.ToList())
+                {
+                    if (Path.GetExtension(fileInfo.Name) == fileType)
+                    {
+                        objList.Add(fileInfo.Name);
+                    }
+                }
+                return objList;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
