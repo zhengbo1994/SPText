@@ -58,7 +58,7 @@ namespace SPCoreText
 
 
             // 添加对Razor Pages和最小控制器的支持
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 
             // 这里是ASP.NET CORE 2.X 
 
