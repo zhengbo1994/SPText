@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace SPTextWinForm
 {
@@ -1338,7 +1339,50 @@ namespace SPTextWinForm
             }
         }
 
+        public List<DatabaseSetSettingInfo> GetDatabaseSetSettingInfoList(string settingPath)
+        {
+            List<DatabaseSetSettingInfo> databaseSetSettingInfoList = new List<DatabaseSetSettingInfo>();
 
+            XmlHelper xmlHelper = new XmlHelper(settingPath);
+            string str = "/set/customers/customer";
+            XmlNodeList xmlNodedata = xmlHelper.ReadAllChild(str);
+            for (int i = 0; i < xmlNodedata.Count; i++)
+            {
+                var xmlData = xmlNodedata[i];
+                if (xmlData.Name == "databaseSets")
+                {
+                    for (int j = 0; j < xmlData.ChildNodes.Count; j++)
+                    {
+                        XmlNode databaseSet = xmlData.ChildNodes[j];
+                        DatabaseSetSettingInfo databaseSetSettingInfo = new DatabaseSetSettingInfo();
+                        foreach (XmlNode item in databaseSet)
+                        {
+                            var subXmlNode = item.InnerText;
+                            switch (item.Name)
+                            {
+                                case "dataSource":
+                                    databaseSetSettingInfo.dbHost = subXmlNode;
+                                    break;
+                                case "database":
+                                    databaseSetSettingInfo.dbName = subXmlNode;
+                                    break;
+                                case "user":
+                                    databaseSetSettingInfo.dbUser = subXmlNode;
+                                    break;
+                                case "pwd":
+                                    databaseSetSettingInfo.dbPwd = subXmlNode;
+                                    break;
+                                default:
+                                    throw new Exception("出现错误");
+                            }
+                        }
+                        databaseSetSettingInfoList.Add(databaseSetSettingInfo);
+                    }
+                }
+            }
+
+            return databaseSetSettingInfoList;
+        }
     }
 
     /// <summary>
@@ -1598,5 +1642,14 @@ namespace SPTextWinForm
         public string successAddress { get; set; }//成功单地址
     }
 
-
+    /// <summary>
+    /// 数据库配置
+    /// </summary>
+    public class DatabaseSetSettingInfo
+    {
+        public string dbHost { get; set; }
+        public string dbName { get; set; }
+        public string dbUser { get; set; }
+        public string dbPwd { get; set; }
+    }
 }

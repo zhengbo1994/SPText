@@ -480,6 +480,7 @@
     <Content Include="BootStrap\Public\moment\js\moment.js" />
     <Content Include="BootStrap\test0.html" />
     <Content Include="BootStrap\test10.html" />
+    <Content Include="BootStrap\test11.html" />
     <Content Include="BootStrap\test5.html" />
     <Content Include="BootStrap\test6.html" />
     <Content Include="BootStrap\test7.html" />
