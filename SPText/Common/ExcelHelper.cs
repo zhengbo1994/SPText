@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 namespace Common
 {
-    public class ExcelHelper
+    public partial class ExcelHelper
     {
         private string fileName = null; //文件名
         private IWorkbook workbook = null;
@@ -882,6 +882,4 @@ namespace Common
         }
         #endregion
     }
-
-
 }

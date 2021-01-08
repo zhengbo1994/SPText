@@ -15,29 +15,29 @@ namespace SPText.Common
 
         public void Show()
         {
-            SingletonPatternShow();//单例模式
-            SimpleFactoryFactoryShow();//简单工厂
-            ApproachFactoryShow(); //工厂方法
-            AbstractFactoryPatternShow();//抽象工厂
+            //SingletonPatternShow();//单例模式
+            //SimpleFactoryFactoryShow();//简单工厂
+            //ApproachFactoryShow(); //工厂方法
+            //AbstractFactoryPatternShow();//抽象工厂
             BuilderPatternShow();//建造者模式（*难理解）
-            PrototypePatternShow();//原型模式
-            AdapterPatternShow();//适配器模式
-            BridgePatternShow();//桥梁模式
-            DecoratorPatternShow();//装饰者模式（*难理解）
-            CompositePatternShow();//组合模式
-            FacadePatternShow();//外观模式
-            FlyweightPatternShow();//享元模式
-            ProxyPatternShow();//代理模式
-            TemplateMethodPatternShow();//模板方法模式
-            CommandPatternShow(); //命令模式
-            IteratorPatternShow();//迭代器模式
-            ObserverPatternShow();//观察者模式
-            MediatorPatternShow();//中介者模式
-            StatePatternShow();//状态者模式（*难理解）
-            StragetyPatternShow();//策略者模式
-            ChainOfResponsibityShow();//责任链模式
-            VistorPatternShow();//访问者模式
-            MementoPatternShow();//备忘录模式
+            //PrototypePatternShow();//原型模式
+            //AdapterPatternShow();//适配器模式
+            //BridgePatternShow();//桥梁模式
+            //DecoratorPatternShow();//装饰者模式（*难理解）
+            //CompositePatternShow();//组合模式
+            //FacadePatternShow();//外观模式
+            //FlyweightPatternShow();//享元模式
+            //ProxyPatternShow();//代理模式
+            //TemplateMethodPatternShow();//模板方法模式
+            //CommandPatternShow(); //命令模式
+            //IteratorPatternShow();//迭代器模式
+            //ObserverPatternShow();//观察者模式
+            //MediatorPatternShow();//中介者模式
+            //StatePatternShow();//状态者模式（*难理解）
+            //StragetyPatternShow();//策略者模式
+            //ChainOfResponsibityShow();//责任链模式
+            //VistorPatternShow();//访问者模式
+            //MementoPatternShow();//备忘录模式
         }
         #region  调用
         #region  单例模式
