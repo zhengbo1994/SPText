@@ -445,7 +445,6 @@
     <Compile Include="Common\WebHelper.cs" />
     <Compile Include="Common\WebSocketHelper.cs" />
     <Compile Include="Common\WorldToPDFHelper.cs" />
-    <Compile Include="Common\ZipHelper.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="EF\EF1\BaseService.cs" />
     <Compile Include="EF\EF0\DatabaseContext.cs" />

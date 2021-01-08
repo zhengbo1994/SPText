@@ -23,7 +23,7 @@ namespace SPText.Common.DataHelper.Dapper
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+        private static readonly string connectionString = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
 
         /// <summary>
         /// 查询列表
@@ -267,7 +267,7 @@ namespace SPText.Common.DataHelper.Dapper
         private DapperHelper()
         {
             // 这里为了方便演示直接写的字符串，实例项目中可以将连接字符串放在配置文件中，再进行读取。
-            _connection = @"server=.;uid=sa;pwd=sasasa;database=Dapper";
+            _connection = @"data source=.;initial catalog=Customers;persist security info=True;user id=sa;password=123456;MultipleActiveResultSets=True;App=EntityFramework";
         }
 
         /// <summary>

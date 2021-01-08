@@ -115,7 +115,7 @@ namespace SPText
             #endregion
 
             #region  设计模式
-            DesignPattern();
+            //DesignPattern();
             #endregion
 
             #region  xml
@@ -244,10 +244,17 @@ namespace SPText
             //RabbitMQ();
             #endregion
 
+            #region  文件压缩
+            ZipShow();
+            #endregion
+
             #region  测试代码
             //TestHelper testHelper = new TestHelper();
             //testHelper.Show();
             #endregion
+
+
+
 
             //dynamic  避开编译器检查
             Console.ReadKey();
@@ -2007,6 +2014,10 @@ namespace SPText
                 var i = database.FindList<Company>();
                 var value = database.FindTable(sql);
             }
+            { //Dapper
+                string sql = "select * from Company";
+                var datatabel = Common.DataHelper.Dapper.DbContext.Query<Company>(sql, "where 1=1 and [Name]='王五'");
+            }
             {//EF
                 Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
                 string sql = "select * from Company";
@@ -2076,6 +2087,7 @@ namespace SPText
                 //    System.Data.DataTable data = db.ExecuteDataTable(sql, null);
                 //}
             }
+
         }
         #endregion
 
@@ -2476,6 +2488,20 @@ namespace SPText
                     }
                 }
             }
+        }
+        #endregion
+
+        #region  文件压缩
+        public static void ZipShow()
+        {
+            {
+                ZipHelper.ZipDirectory("E:\\test", "E:\\test1.zip");   //压缩文件夹，无密码
+                ZipHelper.ZipDirectory("E:\\test", "E:\\test1.zip", "123456");  //压缩文件夹，有密码
+            }
+            //{
+            //    SPTextCommon.HelperCommon.ImageUpload imageUpload = new SPTextCommon.HelperCommon.ImageUpload();
+            //    imageUpload.Upload();
+            //}
         }
         #endregion
     }

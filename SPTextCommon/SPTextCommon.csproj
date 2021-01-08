@@ -37,6 +37,9 @@
       <HintPath>..\packages\Aspose.Cells.20.10.0\lib\net40\Aspose.Cells.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -50,8 +53,23 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.1.1.11\lib\net46\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.Streams.1.1.11\lib\net46\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
     <Reference Include="LinqKit, Version=1.1.21.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -59,6 +77,9 @@
     </Reference>
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Mail, Version=3.0.21008.1129, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mail.dll.3.0.21008.1129\lib\net45\Mail.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
@@ -127,8 +148,26 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=5.0.0.0, Culture=neutral, PublicKeyToken=02c12cbda47e6587, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceStack.Common.5.8.0\lib\net45\ServiceStack.Common.dll</HintPath>
@@ -155,11 +194,13 @@
     <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
@@ -174,6 +215,8 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -186,12 +229,14 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -212,6 +257,7 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -220,6 +266,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="Tamir.SharpSSH">
       <HintPath>..\.NetServiceConfiguration\AAAcustom\Tamir.SharpSSH.dll</HintPath>
+    </Reference>
+    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Ubiety.Dns.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Zstandard.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +292,7 @@
     <Compile Include="ConvertHzToPyHelper.cs" />
     <Compile Include="CookieHelper.cs" />
     <Compile Include="DataHelper.cs" />
+    <Compile Include="DBHelperExcel.cs" />
     <Compile Include="DynamicMethodFactory.cs" />
     <Compile Include="EFBaseServices\BaseDal.cs" />
     <Compile Include="EFBaseServices\BaseServices.cs" />
@@ -256,6 +309,75 @@
     <Compile Include="FlashLoggerHelper.cs" />
     <Compile Include="FTPUpFileHelper.cs" />
     <Compile Include="GeneralHelper.cs" />
+    <Compile Include="HelperCommon\BarCode\BarCodeHelper.cs" />
+    <Compile Include="HelperCommon\Cache\CacheHelper.cs" />
+    <Compile Include="HelperCommon\Config\ConfigHelper.cs" />
+    <Compile Include="HelperCommon\Convert\ConvertHelper.cs" />
+    <Compile Include="HelperCommon\Cookie\CookieHelper.cs" />
+    <Compile Include="HelperCommon\CSV\CsvHelper.cs" />
+    <Compile Include="HelperCommon\Date\ChineseCalHelper.cs" />
+    <Compile Include="HelperCommon\Date\TimeHelper.cs" />
+    <Compile Include="HelperCommon\DEncrypt\Base64DEncrypt.cs" />
+    <Compile Include="HelperCommon\DEncrypt\DESDEncrypt.cs" />
+    <Compile Include="HelperCommon\DEncrypt\FileDEncrypt.cs" />
+    <Compile Include="HelperCommon\DEncrypt\HashDEncrypt.cs" />
+    <Compile Include="HelperCommon\DEncrypt\MD5Encrypt.cs" />
+    <Compile Include="HelperCommon\DEncrypt\RSADEncrypt.cs" />
+    <Compile Include="HelperCommon\DEncrypt\TripleDESDEncrypt.cs" />
+    <Compile Include="HelperCommon\Email\MailHelper.cs" />
+    <Compile Include="HelperCommon\Email\MailSmtpHelper.cs" />
+    <Compile Include="HelperCommon\Email\SmtpConfig.cs" />
+    <Compile Include="HelperCommon\Email\SmtpSetting.cs" />
+    <Compile Include="HelperCommon\Excel\DataToExcel.cs" />
+    <Compile Include="HelperCommon\Excel\ExcelHelper.cs" />
+    <Compile Include="HelperCommon\Excel\GridViewExport.cs" />
+    <Compile Include="HelperCommon\File\DirectoryHelper.cs" />
+    <Compile Include="HelperCommon\File\FileDownHelper.cs" />
+    <Compile Include="HelperCommon\File\FileHelper.cs" />
+    <Compile Include="HelperCommon\File\FileUpHelper.cs" />
+    <Compile Include="HelperCommon\File\INIFileHelper.cs" />
+    <Compile Include="HelperCommon\Formula\FormulaHelper.cs" />
+    <Compile Include="HelperCommon\FTP\FTPClient.cs" />
+    <Compile Include="HelperCommon\FTP\FTPHelper.cs" />
+    <Compile Include="HelperCommon\Html\HtmlHelper.cs" />
+    <Compile Include="HelperCommon\Html\JavaScriptHelper.cs" />
+    <Compile Include="HelperCommon\Image\ImageDown.cs" />
+    <Compile Include="HelperCommon\Image\ImageHelper.cs" />
+    <Compile Include="HelperCommon\Image\ImageUpload.cs" />
+    <Compile Include="HelperCommon\Json\JsonHelper.cs" />
+    <Compile Include="HelperCommon\Media\MediaHelper.cs" />
+    <Compile Include="HelperCommon\Message\MessageBoxHelper.cs" />
+    <Compile Include="HelperCommon\Net\IpHelper.cs" />
+    <Compile Include="HelperCommon\Net\NetHelper.cs" />
+    <Compile Include="HelperCommon\Net\WebClientHelper.cs" />
+    <Compile Include="HelperCommon\NPOI\NPOIHelper.cs" />
+    <Compile Include="HelperCommon\Page\BindDataControl.cs" />
+    <Compile Include="HelperCommon\Page\GridViewHelper.cs" />
+    <Compile Include="HelperCommon\Page\PageHelper.cs" />
+    <Compile Include="HelperCommon\Page\PageValidate.cs" />
+    <Compile Include="HelperCommon\Page\ValidateImgPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HelperCommon\Path\WebSitePathHelper.cs" />
+    <Compile Include="HelperCommon\PDF\PDFOperation.cs" />
+    <Compile Include="HelperCommon\Random\RandomHelper.cs" />
+    <Compile Include="HelperCommon\Regex\RegexHelper.cs" />
+    <Compile Include="HelperCommon\Register\RegisterHelper.cs" />
+    <Compile Include="HelperCommon\RMB\RMBHelper.cs" />
+    <Compile Include="HelperCommon\Serialize\SerializeHelper.cs" />
+    <Compile Include="HelperCommon\Session\SessionHelper.cs" />
+    <Compile Include="HelperCommon\String\StringHelper.cs" />
+    <Compile Include="HelperCommon\System\SysHelper.cs" />
+    <Compile Include="HelperCommon\Url\UrlHelper.cs" />
+    <Compile Include="HelperCommon\Validator\ValidatorHelper.cs" />
+    <Compile Include="HelperCommon\VerifyCode\VerifyCodeHelper.cs" />
+    <Compile Include="HelperCommon\VerifyCode\VerifyCodeRand.cs" />
+    <Compile Include="HelperCommon\Video\VideoHelper.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HelperCommon\XML\XmlHelper.cs" />
+    <Compile Include="HelperCommon\XML\XmlHelperExt.cs" />
+    <Compile Include="HelperCommon\Zip\ZipHelper.cs" />
     <Compile Include="Helper\DataTableListHelper.cs" />
     <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Html\ControlsExtensionsHelper.cs" />
@@ -296,6 +418,32 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HelperCommon\Lib\COM.Excel.dll" />
+    <Content Include="HelperCommon\Lib\Excel.dll" />
+    <Content Include="HelperCommon\Lib\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="HelperCommon\Lib\itextsharp.dll" />
+    <Content Include="HelperCommon\Lib\LTP.Accounts.dll" />
+    <Content Include="HelperCommon\Lib\LTP.Accounts.txt" />
+    <Content Include="HelperCommon\Lib\LtpPageControl.dll" />
+    <Content Include="HelperCommon\Lib\Microsoft.Office.Interop.Owc11.dll" />
+    <Content Include="HelperCommon\Lib\Microsoft.Web.UI.WebControls.dll" />
+    <Content Include="HelperCommon\Lib\NPOI\.net 2.0\Ionic.Zip.dll" />
+    <Content Include="HelperCommon\Lib\NPOI\.net 2.0\NPOI.dll" />
+    <Content Include="HelperCommon\Lib\NPOI\.net 2.0\NPOI.XML" />
+    <Content Include="HelperCommon\Lib\NPOI\.net 4.0\Ionic.Zip.dll" />
+    <Content Include="HelperCommon\Lib\NPOI\.net 4.0\NPOI.dll" />
+    <Content Include="HelperCommon\Lib\NPOI\.net 4.0\NPOI.XML" />
+    <Content Include="HelperCommon\Lib\NPOI\Ionic_Utils_Zip_license.txt" />
+    <Content Include="HelperCommon\Lib\NPOI\License.txt" />
+    <Content Include="HelperCommon\Lib\NPOI\Read Me.txt" />
+    <Content Include="HelperCommon\Lib\NPOI\Release Notes.txt" />
+    <Content Include="HelperCommon\Lib\OpenSmtp.dll" />
+    <Content Include="HelperCommon\Lib\OWC10Chart.dll" />
+    <Content Include="HelperCommon\Lib\PinYin\ChnCharInfo.dll" />
+    <Content Include="Js\CheckFunction.js" />
+    <Content Include="Js\CommonJS.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
