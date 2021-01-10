@@ -240,7 +240,7 @@ namespace SPText.Common.DataHelper.Dapper
         }
     }
 
-
+    #region  DapperHelper
     public partial class DapperHelper
     {
         /// 数据库连接名
@@ -389,7 +389,7 @@ namespace SPText.Common.DataHelper.Dapper
             return Db.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
         }
     }
-
+    #endregion
 
     public partial class DBHelper
     {
@@ -878,6 +878,7 @@ namespace SPText.Common.DataHelper.Dapper
     }
 
 
+    #region  DapperHelper
     public static partial class BMACache
     {
         private static object _locker = new object();//锁对象
@@ -1134,5 +1135,7 @@ namespace SPText.Common.DataHelper.Dapper
         /// </summary>
         ViewColumn = 2
     }
+
+    #endregion
 
 }
