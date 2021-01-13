@@ -162,5 +162,34 @@ namespace SPCoreText.Controllers
             #endregion
             return RedirectToAction("Index", "Home");
         }
+
+        [AllowAnonymous]
+        public IActionResult Login(string name, string password)
+        {
+            if ("Eleven".Equals(name, StringComparison.CurrentCultureIgnoreCase)
+                 && password.Equals("123456"))
+            {
+                #region Filter
+                base.HttpContext.Response.Cookies.Append("CurrentUser", "Eleven", new Microsoft.AspNetCore.Http.CookieOptions()
+                {
+                    Expires = DateTime.UtcNow.AddMinutes(30)
+                });
+                #endregion
+
+                return new JsonResult(new
+                {
+                    Result = true,
+                    Message = "登录成功"
+                });
+            }
+            else
+            {
+                return new JsonResult(new
+                {
+                    Result = false,
+                    Message = "登录失败"
+                });
+            }
+        }
     }
 }

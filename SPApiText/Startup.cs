@@ -153,6 +153,7 @@ namespace SPCoreApiText
             //        //}//自定义校验规则
             //    };
             //});
+
             //services.AddAuthorization(options =>
             //{
             //    options.AddPolicy("AdminPolicy",
