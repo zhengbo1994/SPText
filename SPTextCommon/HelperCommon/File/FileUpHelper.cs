@@ -3,6 +3,9 @@ using System.IO;
 using System.Web.UI.WebControls;
 using System.Web;
 using System.Web.UI.HtmlControls;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace SPTextCommon.HelperCommon
 {
@@ -286,7 +289,7 @@ namespace SPTextCommon.HelperCommon
             DateTime time = DateTime.Now;
             Result += time.Year.ToString() + FormatNum(time.Month.ToString(), 2) + FormatNum(time.Day.ToString(), 2) + FormatNum(time.Hour.ToString(), 2) + FormatNum(time.Minute.ToString(), 2) + FormatNum(time.Second.ToString(), 2) + FormatNum(time.Millisecond.ToString(), 3);
             return (Result);
-        } 
+        }
         #endregion
 
         #region 字符串前补0
@@ -303,7 +306,7 @@ namespace SPTextCommon.HelperCommon
                 Num = "0" + Num;
             }
             return Num;
-        } 
+        }
         #endregion
 
         #region 转换为字节数组
@@ -335,7 +338,7 @@ namespace SPTextCommon.HelperCommon
             {
                 return new byte[0];
             }
-        } 
+        }
         #endregion
 
         #region 流转化为字节数组
@@ -364,8 +367,190 @@ namespace SPTextCommon.HelperCommon
             {
                 tempStream.Close();
             }
-        } 
+        }
         #endregion
+
+
+        /// <summary>
+        /// 无参数的上传文件
+        /// </summary>
+        /// <returns></returns>
+        public string GetSqlFile()
+        {
+
+            string sqlfile = "";
+            string path = HttpContext.Current.Request.PhysicalApplicationPath.ToString() + "/upload";
+            if (Directory.Exists(path))
+            {
+
+            }
+            else
+            {
+                Directory.CreateDirectory(path);
+            }
+            HttpFileCollection files = HttpContext.Current.Request.Files;
+            if (files[0].FileName.ToString().Length > 0)
+            {
+                string filename = files[0].FileName.ToString();
+                string datestr = DateTime.Now.ToString("yyyyMMddHmmss") + DateTime.Now.Millisecond;
+                string ext = filename.Substring(filename.LastIndexOf("."));
+                files[0].SaveAs(path + "file://" + datestr + ext);
+                sqlfile = datestr + ext;
+            }
+            else
+            {
+
+            }
+            return sqlfile;
+        }
+        public string GetSqlFile(string dir)
+        {
+            string sqlfile = "";
+            string path = HttpContext.Current.Request.PhysicalApplicationPath.ToString() + "/upload/";
+            path += "file://" + dir;
+            if (Directory.Exists(path))
+            {
+
+            }
+            else
+            {
+                Directory.CreateDirectory(path);
+            }
+            HttpFileCollection files = HttpContext.Current.Request.Files;
+
+
+            if (files[0].FileName.ToString().Length > 0)
+            {
+                string filename = files[0].FileName.ToString();
+                string datestr = DateTime.Now.ToString("yyyyMMddHmmss") + DateTime.Now.Millisecond;
+                string ext = filename.Substring(filename.LastIndexOf("."));
+                files[0].SaveAs(path + "/" + datestr + ext);
+                sqlfile = datestr + ext;
+            }
+            else
+            {
+
+            }
+            return sqlfile;
+        }
+
+
+        /// <summary>
+        /// 指定路径 图片大小
+        /// </summary>
+        /// <param name="dir">目录</param>
+        /// <param name="width">宽度</param>
+        /// <param name="height">高度</param>
+        /// <returns></returns>
+        public string GetSqlFile(string dir, int width, int height)
+        {
+            string sqlfile = "";
+            string path = HttpContext.Current.Request.PhysicalApplicationPath.ToString() + "/upload/";
+            path += "file://" + dir;
+            if (Directory.Exists(path))
+            {
+
+            }
+            else
+            {
+                Directory.CreateDirectory(path);
+            }
+            if (Directory.Exists(path + "/small"))
+            {
+
+            }
+            else
+            {
+                Directory.CreateDirectory(path + "/small");
+            }
+            HttpFileCollection files = HttpContext.Current.Request.Files;
+
+
+            if (files[0].FileName.ToString().Length > 0)
+            {
+                string filename = files[0].FileName.ToString();
+                string datestr = DateTime.Now.ToString("yyyyMMddHmmss") + DateTime.Now.Millisecond;
+                string ext = filename.Substring(filename.LastIndexOf("."));
+                if (ext != ".bmp" && ext != ".jpg" && ext != ".gif" && ext != ".jpeg")
+                {
+                    HttpContext.Current.Response.Write("<script>alert('上传的文件不是.gif,jpg,jpeg,bmp格式')</script>");
+                    return "";
+                }
+                files[0].SaveAs(path + "/" + datestr + ext);
+                #region 生成小图
+                string originalFilename = path + "file://" + datestr + ext;
+                //生成的高质量图片名称
+                string strGoodFile = path + "file://" + datestr + ext;
+                //生成的低质量图片名称
+                //string strBadFile = mPath + "\\" + newname;
+                //缩小的倍数
+                int iScale = 1;
+                //从文件取得图片对象
+                System.Drawing.Image image = System.Drawing.Image.FromFile(originalFilename);
+                //取得图片大小
+                //Size size = new Size(image.Width/iScale, image.Height/iScale);
+                int hi = 0;
+                int wi = 0;
+                //if(image.Width>100)
+                //{
+                wi = width;
+                //}
+                //else
+                //{
+
+                //}
+                //if(image.Height>55)
+                //{
+                hi = height;
+                //}
+                //else
+                //{
+
+                //}
+                Size size = new Size(wi, hi);
+                //新建一个bmp图片
+                System.Drawing.Image bitmap = new System.Drawing.Bitmap(size.Width, size.Height);
+                //新建一个画板
+                Graphics g = Graphics.FromImage(bitmap);
+                //设置高质量插值法
+                g.InterpolationMode = InterpolationMode.High;
+                //设置高质量,低速度呈现平滑程度
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                //清空一下画布
+                g.Clear(Color.Blue);
+                //在指定位置画图
+                g.DrawImage(image, new Rectangle(0, 0, bitmap.Width, bitmap.Height), new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
+                if (ext == ".jpg" || ext == ".jpeg")
+                    bitmap.Save(path + "/small/" + datestr + ext, ImageFormat.Jpeg);
+                if (ext == ".gif")
+                    bitmap.Save(path + "/small/" + datestr + ext, ImageFormat.Gif);
+                if (ext == ".bmp")
+                    bitmap.Save(path + "/small/" + datestr + ext, ImageFormat.Bmp);
+                image.Dispose();
+                bitmap.Dispose();
+                g.Dispose();
+                #endregion
+                sqlfile = datestr + ext;
+
+                try
+                {
+                    image.Dispose();
+                    bitmap.Dispose();
+                    g.Dispose();
+
+                }
+                catch (Exception ex)
+                {
+                    string exc = ex.Message.ToString();
+                    HttpContext.Current.Response.Write("<script>alert('" + exc + "');</script>");
+                }
+            }
+            else
+            {
+
+            }
+            return sqlfile;
+        }
 
     }
 }

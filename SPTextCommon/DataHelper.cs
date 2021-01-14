@@ -242,7 +242,7 @@ namespace SPTextCommon
             jsonBuilder.Append("]");
             jsonBuilder.Append("}");
             return jsonBuilder.ToString();
-        }     
+        }
 
         /// <summary>
         /// Msdn
@@ -277,7 +277,7 @@ namespace SPTextCommon
             Json.Append("]}");
             return Json.ToString();
         }
-        
+
         #endregion
 
 
@@ -298,8 +298,113 @@ namespace SPTextCommon
                 json.Append("\":");
                 json.Append(DataTable2Json(dt));
                 json.Append("}");
-            } return json.ToString();
+            }
+            return json.ToString();
         }
+        #endregion
+
+
+        #region  List和DataTable互转
+        #region  ListToDataTable
+        public static DataTable ListToDataTable1<T>(List<T> list)
+        {
+            Type tp = typeof(T);
+            PropertyInfo[] proInfos = tp.GetProperties();
+            DataTable dt = new DataTable();
+            foreach (var item in proInfos)
+            {
+                //解决DataSet不支持System.Nullable<>问题
+                Type colType = item.PropertyType;
+                if ((colType.IsGenericType) && (colType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                {
+                    colType = colType.GetGenericArguments()[0];
+                }
+                //添加列明及对应类型 
+                dt.Columns.Add(item.Name, colType);
+            }
+            foreach (var item in list)
+            {
+                DataRow dr = dt.NewRow();
+                foreach (var proInfo in proInfos)
+                {
+                    object obj = proInfo.GetValue(item);
+                    if (obj == null)
+                    {
+                        continue;
+                    }
+                    if (proInfo.PropertyType == typeof(DateTime) && Convert.ToDateTime(obj) < Convert.ToDateTime("1753-01-01"))
+                    {
+                        continue;
+                    }
+                    dr[proInfo.Name] = obj;
+                }
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+        #endregion
+
+        #region  DataTableToList
+        public static IList<T> DataTableToList<T>(DataTable table)
+        {
+            if (table == null)
+            {
+                return null;
+            }
+
+            List<DataRow> rows = new List<DataRow>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                rows.Add(row);
+            }
+
+            return ConvertTo<T>(rows);
+        }
+
+        public static IList<T> ConvertTo<T>(IList<DataRow> rows)
+        {
+            IList<T> list = null;
+
+            if (rows != null)
+            {
+                list = new List<T>();
+
+                foreach (DataRow row in rows)
+                {
+                    T item = CreateItem<T>(row);
+                    list.Add(item);
+                }
+            }
+
+            return list;
+        }
+
+        public static T CreateItem<T>(DataRow row)
+        {
+            T obj = default(T);
+            if (row != null)
+            {
+                obj = Activator.CreateInstance<T>();
+
+                foreach (DataColumn column in row.Table.Columns)
+                {
+                    PropertyInfo prop = obj.GetType().GetProperty(column.ColumnName);
+                    try
+                    {
+                        object value = row[column.ColumnName];
+                        prop.SetValue(obj, value, null);
+                    }
+                    catch
+                    {  //You can log something here     
+                       //throw;    
+                    }
+                }
+            }
+
+            return obj;
+        }
+        #endregion
         #endregion
     }
 }
