@@ -108,7 +108,7 @@ namespace Common.Offices
                         headerRow.CreateCell(0).SetCellValue(strHeaderText);
 
                         HSSFCellStyle headStyle = (HSSFCellStyle)workbook.CreateCellStyle();
-                        headStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+                        headStyle.Alignment = HorizontalAlignment.Center;
                         HSSFFont font = (HSSFFont)workbook.CreateFont();
                         font.FontHeightInPoints = 20;
                         font.Boldweight = 700;
@@ -124,7 +124,7 @@ namespace Common.Offices
                     {
                         HSSFRow headerRow = (HSSFRow)sheet.CreateRow(1);
                         HSSFCellStyle headStyle = (HSSFCellStyle)workbook.CreateCellStyle();
-                        headStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;
+                        headStyle.Alignment = HorizontalAlignment.Center;
                         HSSFFont font = (HSSFFont)workbook.CreateFont();
                         font.FontHeightInPoints = 10;
                         font.Boldweight = 700;
@@ -795,7 +795,7 @@ namespace Common.Offices
                 case "distributed":
                     return HorizontalAlignment.Distributed;
             }
-            return NPOI.SS.UserModel.HorizontalAlignment.General;
+            return HorizontalAlignment.General;
 
 
         }

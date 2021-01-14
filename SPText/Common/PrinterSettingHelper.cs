@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SPText.Common
 {
+    /// <summary>
+    /// 打印
+    /// </summary>
     public class PrinterSettingHelper
     {
         public string printerName = System.Configuration.ConfigurationSettings.AppSettings["PrinterName"];

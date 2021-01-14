@@ -66,23 +66,23 @@ namespace System
 			return Encoding.Unicode.GetString(MStream.ToArray());       //返回解密后的字符串  
 		}
 
-		//加密
-		//public static byte[] Encrypt(byte[] byteArray, int offset, int len)
-		//{
-		//	byte[] bytes = new byte[byteArray.Length];
-		//	for (int i = 0; i < len; i++)
-		//	{
-		//		bytes[i] = (byte)(byteArray[i + offset] ^ 0xa7);
-		//	}
-		//	return bytes;
-		//}
+        //加密
+        public static byte[] Encrypt(byte[] byteArray, int offset, int len)
+        {
+            byte[] bytes = new byte[byteArray.Length];
+            for (int i = 0; i < len; i++)
+            {
+                bytes[i] = (byte)(byteArray[i + offset] ^ 0xa7);
+            }
+            return bytes;
+        }
 
-		/// <summary>
-		/// 加密
-		/// </summary>
-		/// <param name="byteArray"></param>
-		/// <returns></returns>
-		public static byte[] Encrypt(byte[] byteArray)
+        /// <summary>
+        /// 加密
+        /// </summary>
+        /// <param name="byteArray"></param>
+        /// <returns></returns>
+        public static byte[] Encrypt(byte[] byteArray)
 		{
 			byte[] bytes = new byte[byteArray.Length];
 			for (int i = 0; i < byteArray.Length; i++)
@@ -91,13 +91,6 @@ namespace System
 			}
 			return bytes;
 		}
-		//解密
-		//public static void Decrypt(byte[] byteArray, int offset, int len)
-		//{
-		//	for (int i = 0; i < len; i++)
-		//		byteArray[i + offset] ^= 0xa7;
-
-		//}
 
 		/// <summary>
 		/// 解密
