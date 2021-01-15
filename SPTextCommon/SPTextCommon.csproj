@@ -276,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\EntityAttribute.cs" />
-    <Compile Include="Attributes\EnumAttribute.cs" />
     <Compile Include="CacheRedis\Cache.cs" />
     <Compile Include="CacheRedis\RedisCache.cs" />
     <Compile Include="CacheRedis\RedisConfigInfo.cs" />
@@ -285,7 +284,6 @@
     <Compile Include="Cache\WebDataCache.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="Comparint.cs" />
-    <Compile Include="Compress\GZip.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Const.cs" />
     <Compile Include="ConvertExt.cs" />
@@ -301,7 +299,6 @@
     <Compile Include="EFBaseServices\Model\CompanyModel.cs" />
     <Compile Include="EmailHelper.cs" />
     <Compile Include="EncryptHelper.cs" />
-    <Compile Include="Enums\DataType.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="File\DirFileHelper.cs" />
     <Compile Include="File\FileDownHelper.cs" />

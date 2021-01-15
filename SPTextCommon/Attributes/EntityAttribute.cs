@@ -38,7 +38,7 @@ namespace SPTextCommon.Attributes
         ///  获取实体对象表名
         /// </summary>
         /// <returns></returns>
-        public static string GetEntityTable<T>()
+        public static string GetTableName<T>()
         {
             Type objTye = typeof(T);
             string entityName = "";
@@ -51,6 +51,26 @@ namespace SPTextCommon.Attributes
                 entityName = objTye.Name;
             }
             return entityName;
+        }
+
+
+        /// <summary>
+        ///  获取实体属性名
+        /// </summary>
+        /// <returns></returns>
+        public static string GetColumnName<T>()
+        {
+            Type objTye = typeof(T);
+            string columnName = "";
+            var columnAttribute = objTye.GetCustomAttributes(true).OfType<ColumnAttribute>();
+            var descriptionAttributes = columnAttribute as ColumnAttribute[] ?? columnAttribute.ToArray();
+            if (descriptionAttributes.Any())
+                columnName = descriptionAttributes.ToList()[0].Name;
+            else
+            {
+                columnName = objTye.Name;
+            }
+            return columnName;
         }
 
         /// <summary>

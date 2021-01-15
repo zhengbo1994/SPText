@@ -18,7 +18,7 @@ namespace SPTextCommon.Cache
         /// <returns></returns>
         public static object GetCache(string CacheKey)
         {
-            System.Web.Caching.Cache objCache = HttpRuntime.Cache;
+            System.Web.Caching.Cache objCache =System.Web.HttpRuntime.Cache;
             return objCache[CacheKey];
         }
         /// <summary>

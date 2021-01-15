@@ -57,7 +57,6 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
-
             #region  linq交叉并补
             //linqUse();
 
@@ -245,7 +244,7 @@ namespace SPText
             #endregion
 
             #region  文件压缩
-            ZipShow();
+            //ZipShow();
             #endregion
 
             #region  测试代码

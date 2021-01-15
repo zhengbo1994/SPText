@@ -10,7 +10,7 @@ namespace System
 		private static readonly ILog logger = LogManager.GetLogger(typeof(LogHelper));
 
 		/// <summary>
-		/// 
+		/// 失败
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="e"></param>
@@ -20,7 +20,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 
+		/// 错误
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="e"></param>
@@ -30,7 +30,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 
+		/// 日志
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="e"></param>
@@ -40,7 +40,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 
+		/// 调试
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="e"></param>
@@ -50,7 +50,7 @@ namespace System
 		}
 
 		/// <summary>
-		/// 
+		/// 警告
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="e"></param>
