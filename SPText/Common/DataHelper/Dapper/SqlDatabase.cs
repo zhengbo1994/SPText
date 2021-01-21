@@ -238,7 +238,7 @@ namespace SPText.Common.DataHelper.Dapper
         }
         public int Delete<T>() where T : class
         {
-            return ExecuteBySql(DatabaseCommon.DeleteSql(EntityAttribute.GetEntityTable<T>()).ToString());
+            return ExecuteBySql(DatabaseCommon.DeleteSql(EntityAttribute.GetTableName<T>()).ToString());
         }
         public int Delete<T>(T entity) where T : class
         {
@@ -272,7 +272,7 @@ namespace SPText.Common.DataHelper.Dapper
                 BeginTrans();
                 isTrans = false;
             }
-            IEnumerable<T> entities = dbTransaction.Connection.Query<T>(new SQLinq<T>(EntityAttribute.GetEntityTable<T>()).Where(condition), null, true, CommandTimeout);
+            IEnumerable<T> entities = dbTransaction.Connection.Query<T>(new SQLinq<T>(EntityAttribute.GetTableName<T>()).Where(condition), null, true, CommandTimeout);
             Delete<T>(entities);
             if (!isTrans)
             {
@@ -282,7 +282,7 @@ namespace SPText.Common.DataHelper.Dapper
         }
         public int Delete<T>(object keyValue) where T : class
         {
-            T entity = dbTransaction.Connection.Query<T>(string.Format("select * from {0} where {1}=@primarykey", EntityAttribute.GetEntityTable<T>(), EntityAttribute.GetEntityKey<T>()), new { primarykey = keyValue }, null, true, CommandTimeout).FirstOrDefault();
+            T entity = dbTransaction.Connection.Query<T>(string.Format("select * from {0} where {1}=@primarykey", EntityAttribute.GetTableName<T>(), EntityAttribute.GetEntityKey<T>()), new { primarykey = keyValue }, null, true, CommandTimeout).FirstOrDefault();
             return Delete<T>(entity);
         }
         public int Delete<T>(object[] keyValue) where T : class
@@ -348,7 +348,7 @@ namespace SPText.Common.DataHelper.Dapper
                 BeginTrans();
                 isTrans = false;
             }
-            IEnumerable<T> entities = dbTransaction.Connection.Query<T>(new SQLinq<T>(EntityAttribute.GetEntityTable<T>()).Where(condition), null, true, CommandTimeout);
+            IEnumerable<T> entities = dbTransaction.Connection.Query<T>(new SQLinq<T>(EntityAttribute.GetTableName<T>()).Where(condition), null, true, CommandTimeout);
             Update<T>(entities);
             if (!isTrans)
             {

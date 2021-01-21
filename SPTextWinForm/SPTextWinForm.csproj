@@ -55,6 +55,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -119,6 +120,12 @@
       <DependentUpon>ExcelDataImport.cs</DependentUpon>
     </Compile>
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="JDOrderSplitFlow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JDOrderSplitFlow.Designer.cs">
+      <DependentUpon>JDOrderSplitFlow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +165,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public\DataHelper.cs" />
+    <Compile Include="Public\InitialConfiguration.cs" />
+    <Compile Include="Public\JDScanOrder.cs" />
+    <Compile Include="Public\OrderAddress.cs" />
+    <Compile Include="Public\SqlHelper.cs" />
+    <Compile Include="Public\WP_ORDERS.cs" />
     <Compile Include="TabControlAndToolStripMenuItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +226,9 @@
     <EmbeddedResource Include="ExcelDataImport.resx">
       <DependentUpon>ExcelDataImport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="JDOrderSplitFlow.resx">
+      <DependentUpon>JDOrderSplitFlow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListView.resx">
       <DependentUpon>ListView.cs</DependentUpon>
     </EmbeddedResource>
@@ -254,7 +270,9 @@
     <EmbeddedResource Include="TreeViewAndDataGridView.resx">
       <DependentUpon>TreeViewAndDataGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <Content Include="config\set.xml" />
+    <Content Include="config\set.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

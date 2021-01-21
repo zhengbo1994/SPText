@@ -14,10 +14,26 @@ namespace SPTextCommon
 {
     public class FTPUpFileHelper
     {
-        string Filetype = ConfigurationManager.AppSettings["FileType"];
-        string ipaddress = ConfigurationManager.AppSettings["IPaddress"];
-        string Username = ConfigurationManager.AppSettings["UserName"];
-        string Password = ConfigurationManager.AppSettings["Password"];
+        string Filetype = null;
+        string ipaddress = null;
+        string Username = null;
+        string Password = null;
+        public FTPUpFileHelper()
+        {
+            this.Filetype = ConfigurationManager.AppSettings["FileType"];
+            this.ipaddress = ConfigurationManager.AppSettings["IPaddress"];
+            this.Username = ConfigurationManager.AppSettings["UserName"];
+            this.Password = ConfigurationManager.AppSettings["Password"];
+        }
+
+        public FTPUpFileHelper(string fileType, string ipAddress, string userName, string passWord)
+        {
+            this.Filetype = fileType;
+            this.ipaddress = ipAddress;
+            this.Username = userName;
+            this.Password = passWord;
+        }
+
 
 
         /// <summary>

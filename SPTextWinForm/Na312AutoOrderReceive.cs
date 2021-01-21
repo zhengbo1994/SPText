@@ -3,7 +3,6 @@ using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using SPText.Common;
 using SPTextCommon;
-using SPTextCommon.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
