@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace SPTextWinForm
 {
+    /// <summary>
+    /// 分页案列参考
+    /// </summary>
     public partial class UserPagingControlFrom : UserControl
     {
         #region  初始化

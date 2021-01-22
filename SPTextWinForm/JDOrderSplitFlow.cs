@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -105,7 +106,10 @@ namespace SPTextWinForm
                 {
                     if (jdScanOrder.IsNumeric(crn))
                     {
-                        jdScanOrder.DeleteButton(crn, true, db, this.dgvGoodsTable, ref AlloAList);
+                        this.Invoke(new Action(delegate {
+                            jdScanOrder.DeleteButton(crn, true, db, this.dgvGoodsTable, ref AlloAList);
+                        }));
+                        
 
                     }
                     else
@@ -116,7 +120,9 @@ namespace SPTextWinForm
                 }
                 else
                 {
-                    jdScanOrder.DeleteButton(crn, false, db, this.dgvGoodsTable, ref AlloAList);
+                    this.Invoke(new Action(delegate {
+                        jdScanOrder.DeleteButton(crn, true, db, this.dgvGoodsTable, ref AlloAList);
+                    }));
                 }
             }
         }
@@ -130,7 +136,16 @@ namespace SPTextWinForm
         {
             try
             {
-                jdScanOrder.RenewLastData(db, dgvGoodsTable, ref AlloAList);
+                //ThreadStart threadStart = new ThreadStart(()=> {
+                //    jdScanOrder.RenewLastData(db, dgvGoodsTable, ref AlloAList);
+                //});
+                //Thread thread = new Thread(threadStart);
+                //thread.Start();
+
+                this.Invoke(new Action(delegate {
+                    jdScanOrder.RenewLastData(db, dgvGoodsTable, ref AlloAList);
+                }));
+
                 MessageBox.Show("订单已恢复上次修改记录！");
             }
             catch (Exception ex)
@@ -225,7 +240,10 @@ namespace SPTextWinForm
         {
             try
             {
-                jdScanOrder.RenewLastData(db, dgvGoodsTable, ref AlloAList);
+                this.Invoke(new Action(delegate {
+                    jdScanOrder.RenewLastData(db, dgvGoodsTable, ref AlloAList);
+                }));
+           
                 MessageBox.Show("订单已恢复上次修改记录！");
             }
             catch (Exception ex)

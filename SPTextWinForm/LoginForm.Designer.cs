@@ -36,6 +36,9 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.userPagingControlFrom1 = new SPTextWinForm.UserPagingControlFrom();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -101,11 +104,28 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.userPagingControlFrom1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 241);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(438, 50);
+            this.panel1.TabIndex = 12;
+            // 
+            // userPagingControlFrom1
+            // 
+            this.userPagingControlFrom1.Location = new System.Drawing.Point(3, 3);
+            this.userPagingControlFrom1.Name = "userPagingControlFrom1";
+            this.userPagingControlFrom1.Size = new System.Drawing.Size(432, 44);
+            this.userPagingControlFrom1.TabIndex = 0;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(438, 293);
+            this.ClientSize = new System.Drawing.Size(438, 291);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPassword);
@@ -116,6 +136,7 @@
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "QQ登录";
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,6 +152,8 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Panel panel1;
+        private UserPagingControlFrom userPagingControlFrom1;
     }
 }
 

@@ -2,12 +2,14 @@
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -347,6 +349,7 @@ namespace SPTextWinForm.Public
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 List<OrderAddress> orderList = DataHelper<OrderAddress>.DataModel(ds.Tables[0]).ToList();
+                int i = 0;
                 foreach (var item in orderList)
                 {
                     if (alloAList.Any(p => p.Sequence_Num == item.Sequence_Num))
@@ -365,8 +368,35 @@ namespace SPTextWinForm.Public
                         CreationTime = item.CreationTime
                     };
                     alloAList.Add(orderAddress);
-                    //插入至表格
-                    InsertDataGridView(orderAddress, dgvGoodsTable);
+                    {
+                        InsertDataGridView(orderAddress, dgvGoodsTable);
+                        dgvGoodsTable.ResumeLayout();
+                        dgvGoodsTable.Update();
+                    }
+
+                    Thread.Sleep(1);
+
+                }
+
+                {//绑定的方式，但不能一条条插入
+                    //dgvGoodsTable.DataSource = ds.Tables[0];
+                    //dgvGoodsTable.Columns[0].HeaderText = "Id";
+                    //dgvGoodsTable.Columns[0].DataPropertyName = "Id";
+                    //dgvGoodsTable.Columns[1].HeaderText = "流水号";
+                    //dgvGoodsTable.Columns[1].DataPropertyName = "Sequence_Num";
+                    //dgvGoodsTable.Columns[2].HeaderText = "患者名称";
+                    //dgvGoodsTable.Columns[2].DataPropertyName = "PatientName";
+                    //dgvGoodsTable.Columns[3].HeaderText = "学校编码";
+                    //dgvGoodsTable.Columns[3].DataPropertyName = "SchoolCode";
+                    //dgvGoodsTable.Columns[4].HeaderText = "分箱编号";
+                    //dgvGoodsTable.Columns[4].DataPropertyName = "ZoneItemsId";
+                    //dgvGoodsTable.Columns[5].HeaderText = "创建时间";
+                    //dgvGoodsTable.Columns[5].DataPropertyName = "CreationTime";
+
+                    //dgvGoodsTable.DataSource = new BindingList<OrderAddress>(alloAList.ToList());
+                    //dgvGoodsTable.AutoGenerateColumns = false;
+
+
                 }
             }
             return true;
@@ -415,6 +445,45 @@ namespace SPTextWinForm.Public
             {
                 MessageBox.Show(ex.Message);
                 throw ex;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 将dataGridView数据转成DataTable
+        /// </summary>
+        /// <param name="dgv"></param>
+        /// <returns></returns>
+        public DataTable GetDgvToTable(System.Windows.Forms.DataGridView dgv)
+        {
+            {
+                //如已绑定过数据源：
+                DataTable dt = (dgv.DataSource as DataTable);
+            }
+
+            {
+                DataTable dt = new DataTable();
+
+                // 列强制转换
+                for (int count = 0; count < dgv.Columns.Count; count++)
+                {
+                    DataColumn dc = new DataColumn(dgv.Columns[count].Name.ToString());
+                    dt.Columns.Add(dc);
+                }
+
+                // 循环行
+                for (int count = 0; count < dgv.Rows.Count; count++)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (int countsub = 0; countsub < dgv.Columns.Count; countsub++)
+                    {
+                        dr[countsub] = Convert.ToString(dgv.Rows[count].Cells[countsub].Value);
+                    }
+                    dt.Rows.Add(dr);
+                }
+                return dt;
             }
         }
     }

@@ -25,7 +25,7 @@ namespace SPTextWinForm
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new JDOrderSplitFlow());
+                Application.Run(new LoginForm());
             }
 
 

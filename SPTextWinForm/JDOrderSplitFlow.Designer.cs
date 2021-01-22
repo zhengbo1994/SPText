@@ -33,13 +33,6 @@ namespace SPTextWinForm
             this.radioNum = new System.Windows.Forms.RadioButton();
             this.radioCRN = new System.Windows.Forms.RadioButton();
             this.CRN_TextBox = new System.Windows.Forms.TextBox();
-            this.dgvGoodsTable = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sequence_Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SchoolCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ZoneItemsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CreationTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtAddGoodsByNum = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnRecoverData = new System.Windows.Forms.Button();
@@ -50,9 +43,16 @@ namespace SPTextWinForm
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.EditEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmtRenewLastData = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvGoodsTable = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sequence_Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SchoolCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ZoneItemsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CreationTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGoodsTable)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGoodsTable)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -94,67 +94,6 @@ namespace SPTextWinForm
             this.CRN_TextBox.Name = "CRN_TextBox";
             this.CRN_TextBox.Size = new System.Drawing.Size(161, 21);
             this.CRN_TextBox.TabIndex = 18;
-            // 
-            // dgvGoodsTable
-            // 
-            this.dgvGoodsTable.AllowUserToAddRows = false;
-            this.dgvGoodsTable.AllowUserToDeleteRows = false;
-            this.dgvGoodsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvGoodsTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.Sequence_Num,
-            this.PatientName,
-            this.SchoolCode,
-            this.ZoneItemsId,
-            this.CreationTime});
-            this.dgvGoodsTable.Location = new System.Drawing.Point(10, 82);
-            this.dgvGoodsTable.Name = "dgvGoodsTable";
-            this.dgvGoodsTable.RowHeadersVisible = false;
-            this.dgvGoodsTable.RowTemplate.Height = 23;
-            this.dgvGoodsTable.Size = new System.Drawing.Size(655, 350);
-            this.dgvGoodsTable.TabIndex = 22;
-            // 
-            // Id
-            // 
-            this.Id.HeaderText = "ID";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Id.Width = 50;
-            // 
-            // Sequence_Num
-            // 
-            this.Sequence_Num.HeaderText = "流水号";
-            this.Sequence_Num.Name = "Sequence_Num";
-            this.Sequence_Num.ReadOnly = true;
-            this.Sequence_Num.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Sequence_Num.Width = 80;
-            // 
-            // PatientName
-            // 
-            this.PatientName.HeaderText = "患者名称";
-            this.PatientName.Name = "PatientName";
-            this.PatientName.Width = 230;
-            // 
-            // SchoolCode
-            // 
-            this.SchoolCode.HeaderText = "学校编码";
-            this.SchoolCode.Name = "SchoolCode";
-            this.SchoolCode.ReadOnly = true;
-            this.SchoolCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.SchoolCode.Width = 90;
-            // 
-            // ZoneItemsId
-            // 
-            this.ZoneItemsId.HeaderText = "分箱编号";
-            this.ZoneItemsId.Name = "ZoneItemsId";
-            this.ZoneItemsId.Width = 80;
-            // 
-            // CreationTime
-            // 
-            this.CreationTime.HeaderText = "创建时间";
-            this.CreationTime.Name = "CreationTime";
-            this.CreationTime.Width = 130;
             // 
             // txtAddGoodsByNum
             // 
@@ -245,15 +184,77 @@ namespace SPTextWinForm
             // tsmtRenewLastData
             // 
             this.tsmtRenewLastData.Name = "tsmtRenewLastData";
-            this.tsmtRenewLastData.Size = new System.Drawing.Size(180, 22);
+            this.tsmtRenewLastData.Size = new System.Drawing.Size(148, 22);
             this.tsmtRenewLastData.Text = "恢复上次修改";
             this.tsmtRenewLastData.Click += new System.EventHandler(this.tsmtRenewLastData_Click);
+            // 
+            // dgvGoodsTable
+            // 
+            this.dgvGoodsTable.AllowUserToAddRows = false;
+            this.dgvGoodsTable.AllowUserToDeleteRows = false;
+            this.dgvGoodsTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvGoodsTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Sequence_Num,
+            this.PatientName,
+            this.SchoolCode,
+            this.ZoneItemsId,
+            this.CreationTime});
+            this.dgvGoodsTable.Location = new System.Drawing.Point(13, 69);
+            this.dgvGoodsTable.Name = "dgvGoodsTable";
+            this.dgvGoodsTable.RowHeadersVisible = false;
+            this.dgvGoodsTable.RowTemplate.Height = 23;
+            this.dgvGoodsTable.Size = new System.Drawing.Size(655, 375);
+            this.dgvGoodsTable.TabIndex = 30;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "ID";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Id.Width = 50;
+            // 
+            // Sequence_Num
+            // 
+            this.Sequence_Num.HeaderText = "流水号";
+            this.Sequence_Num.Name = "Sequence_Num";
+            this.Sequence_Num.ReadOnly = true;
+            this.Sequence_Num.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Sequence_Num.Width = 80;
+            // 
+            // PatientName
+            // 
+            this.PatientName.HeaderText = "患者名称";
+            this.PatientName.Name = "PatientName";
+            this.PatientName.Width = 230;
+            // 
+            // SchoolCode
+            // 
+            this.SchoolCode.HeaderText = "学校编码";
+            this.SchoolCode.Name = "SchoolCode";
+            this.SchoolCode.ReadOnly = true;
+            this.SchoolCode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.SchoolCode.Width = 90;
+            // 
+            // ZoneItemsId
+            // 
+            this.ZoneItemsId.HeaderText = "分箱编号";
+            this.ZoneItemsId.Name = "ZoneItemsId";
+            this.ZoneItemsId.Width = 80;
+            // 
+            // CreationTime
+            // 
+            this.CreationTime.HeaderText = "创建时间";
+            this.CreationTime.Name = "CreationTime";
+            this.CreationTime.Width = 130;
             // 
             // JDOrderSplitFlow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 488);
+            this.Controls.Add(this.dgvGoodsTable);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.btnRecoverData);
             this.Controls.Add(this.btnDelete);
@@ -261,7 +262,6 @@ namespace SPTextWinForm
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnClearWhiteOrder);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.dgvGoodsTable);
             this.Controls.Add(this.txtAddGoodsByNum);
             this.Controls.Add(this.label1);
             this.Name = "JDOrderSplitFlow";
@@ -269,9 +269,9 @@ namespace SPTextWinForm
             this.Text = "JDOrderSplitFlow";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvGoodsTable)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGoodsTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -283,13 +283,6 @@ namespace SPTextWinForm
         private System.Windows.Forms.RadioButton radioNum;
         private System.Windows.Forms.RadioButton radioCRN;
         private System.Windows.Forms.TextBox CRN_TextBox;
-        private System.Windows.Forms.DataGridView dgvGoodsTable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Sequence_Num;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PatientName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SchoolCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ZoneItemsId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CreationTime;
         private System.Windows.Forms.TextBox txtAddGoodsByNum;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnRecoverData;
@@ -300,5 +293,12 @@ namespace SPTextWinForm
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem EditEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmtRenewLastData;
+        private System.Windows.Forms.DataGridView dgvGoodsTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sequence_Num;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PatientName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SchoolCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ZoneItemsId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CreationTime;
     }
 }
