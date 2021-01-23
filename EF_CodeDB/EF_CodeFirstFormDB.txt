@@ -1,1 +1,30 @@
-﻿
+﻿DbFirst:
+Microsoft.EntityFrameworkCore 
+Microsoft.EntityFrameworkCore.Design 
+Microsoft.EntityFrameworkCore.SqlServer 
+Microsoft.EntityFrameworkCore.SqlServer.Design 
+Microsoft.EntityFrameworkCore.Tools 
+
+生成：
+Scaffold-DbContext -Connection "Server=.;Database=WriteAspNetCoreDataBase;uid=sa;pwd=123456" Microsoft.EntityFrameworkCore.SqlServer -OutputDir "Models"
+
+Migration:
+context.Database.EnsureDeleted(); //删除数据库
+context.Database.EnsureCreated(); //创建数据库和表
+
+add-migration Init02
+update-database
+
+dotnet ef migrations add Init07
+dotnet ef database update
+
+
+
+
+
+
+
+Install-Package EntityFramework -ProjectName 'DAL'
+Enable-Migrations -ContextTypeName 'DatabaseContext' -ProjectName 'DAL' -StartUpProjectName 'ETesting'  -ConnectionStringName 'DefaultConnection' -Force
+Add-Migration -Name "Update"  -ProjectName "DAL" -StartUpProjectName "ETesting"  -ConnectionStringName 'DefaultConnection'
+Update-Database -ProjectName "DAL" -StartUpProjectName "ETesting"  -ConnectionStringName 'DefaultConnection'

@@ -14,5 +14,8 @@ namespace EF_CodeDB
         public int SysUserId { get; set; }
 
         public int SysRoleId { get; set; }
+        public virtual SysUser SysUser { get; set; }
+
+        public virtual SysRole SysRole { get; set; }
     }
 }

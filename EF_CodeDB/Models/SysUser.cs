@@ -49,5 +49,7 @@ namespace EF_CodeDB
         public DateTime? LastModifyTime { get; set; }
 
         public int? LastModifyId { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual ICollection<SysUserRoleMapping> SysUserRoleMapping { get; set; }
     }
 }
