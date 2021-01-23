@@ -8,16 +8,41 @@ using System.Threading.Tasks;
 
 namespace SPTextCommon
 {
+    /// <summary>
+    /// Ctor委托
+    /// </summary>
+    /// <returns></returns>
     internal delegate object CtorDelegate();
-
+    /// <summary>
+    /// 方法委托
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="args"></param>
+    /// <returns></returns>
     internal delegate object MethodDelegate(object target, object[] args);
-
+    /// <summary>
+    /// 获取值委托
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
     internal delegate object GetValueDelegate(object target);
-
+    /// <summary>
+    /// 设置值委托
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="arg"></param>
     internal delegate void SetValueDelegate(object target, object arg);
 
+    /// <summary>
+    /// 动态方法工厂
+    /// </summary>
     internal static class DynamicMethodFactory
     {
+        /// <summary>
+        /// 创建构造函数
+        /// </summary>
+        /// <param name="constructor"></param>
+        /// <returns></returns>
         public static CtorDelegate CreateConstructor(ConstructorInfo constructor)
         {
             if (constructor == null)
@@ -38,7 +63,11 @@ namespace SPTextCommon
 
             return (CtorDelegate)dm.CreateDelegate(typeof(CtorDelegate));
         }
-
+        /// <summary>
+        /// 创建方法
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public static MethodDelegate CreateMethod(MethodInfo method)
         {
             ParameterInfo[] pi = method.GetParameters();
@@ -104,7 +133,11 @@ namespace SPTextCommon
 
             return (MethodDelegate)dm.CreateDelegate(typeof(MethodDelegate));
         }
-
+        /// <summary>
+        /// 创建属性生成器
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
         public static GetValueDelegate CreatePropertyGetter(PropertyInfo property)
         {
             if (property == null)
@@ -136,7 +169,11 @@ namespace SPTextCommon
 
             return (GetValueDelegate)dm.CreateDelegate(typeof(GetValueDelegate));
         }
-
+        /// <summary>
+        /// 创建属性设置器
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns></returns>
         public static SetValueDelegate CreatePropertySetter(PropertyInfo property)
         {
             if (property == null)
@@ -171,7 +208,11 @@ namespace SPTextCommon
 
             return (SetValueDelegate)dm.CreateDelegate(typeof(SetValueDelegate));
         }
-
+        /// <summary>
+        /// 创建字段生成器
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
         public static GetValueDelegate CreateFieldGetter(FieldInfo field)
         {
             if (field == null)
@@ -201,7 +242,11 @@ namespace SPTextCommon
 
             return (GetValueDelegate)dm.CreateDelegate(typeof(GetValueDelegate));
         }
-
+        /// <summary>
+        /// 创建字段设置器
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
         public static SetValueDelegate CreateFieldSetter(FieldInfo field)
         {
             if (field == null)
@@ -229,7 +274,11 @@ namespace SPTextCommon
 
             return (SetValueDelegate)dm.CreateDelegate(typeof(SetValueDelegate));
         }
-
+        /// <summary>
+        /// 投影到引用
+        /// </summary>
+        /// <param name="il"></param>
+        /// <param name="type"></param>
         private static void EmitCastToReference(ILGenerator il, Type type)
         {
             if (type.IsValueType)

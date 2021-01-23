@@ -555,7 +555,7 @@ namespace SPText.Common.DataHelper
             Type type = entity.GetType();
             StringBuilder sb = new StringBuilder();
             sb.Append(" Insert Into ");
-            sb.Append(EntityAttribute.GetEntityTable<T>());
+            sb.Append(EntityAttribute.GetTableName<T>());
             sb.Append("(");
             StringBuilder sp = new StringBuilder();
             StringBuilder sb_prame = new StringBuilder();
@@ -623,7 +623,7 @@ namespace SPText.Common.DataHelper
             PropertyInfo[] props = type.GetProperties();
             StringBuilder sb = new StringBuilder();
             sb.Append(" Update ");
-            sb.Append(EntityAttribute.GetEntityTable<T>());
+            sb.Append(EntityAttribute.GetTableName<T>());
             sb.Append(" Set ");
             bool isFirstValue = true;
             foreach (PropertyInfo prop in props)
@@ -660,7 +660,7 @@ namespace SPText.Common.DataHelper
             PropertyInfo[] props = type.GetProperties();
             StringBuilder sb = new StringBuilder();
             sb.Append("Update ");
-            sb.Append(EntityAttribute.GetEntityTable<T>());
+            sb.Append(EntityAttribute.GetTableName<T>());
             sb.Append(" Set ");
             bool isFirstValue = true;
             foreach (PropertyInfo prop in props)
@@ -732,7 +732,7 @@ namespace SPText.Common.DataHelper
         {
             Type type = entity.GetType();
             PropertyInfo[] props = type.GetProperties();
-            StringBuilder sb = new StringBuilder("Delete From " + EntityAttribute.GetEntityTable<T>() + " Where 1=1");
+            StringBuilder sb = new StringBuilder("Delete From " + EntityAttribute.GetTableName<T>() + " Where 1=1");
             foreach (PropertyInfo prop in props)
             {
                 if (prop.GetValue(entity, null) != null)

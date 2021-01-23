@@ -25,7 +25,7 @@ namespace SPTextWinForm
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new EmailSend());
+                Application.Run(new LoginForm());
             }
 
 

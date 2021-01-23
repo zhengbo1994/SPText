@@ -8,11 +8,11 @@ using System.Transactions;
 
 namespace SPText.EF
 {
-    public class Uow:IDisposable
+    public class Uow : IDisposable
     {
         private DatabaseContext DBContext { get; set; }
 
-        public Uow(string connection) 
+        public Uow(string connection)
         {
             CreateDatabaseContext(connection);
         }
@@ -22,14 +22,16 @@ namespace SPText.EF
             CreateDatabaseContext("DataContext");
         }
 
-        public void CreateDatabaseContext(string connection) {
+        public void CreateDatabaseContext(string connection)
+        {
             DBContext = new DatabaseContext(connection);
             DBContext.Configuration.ProxyCreationEnabled = false;
             DBContext.Configuration.LazyLoadingEnabled = false;
             DBContext.Configuration.ValidateOnSaveEnabled = false;
         }
 
-        public void Commit() {
+        public void Commit()
+        {
             DBContext.SaveChanges();
         }
         public void Dispose()
@@ -38,17 +40,19 @@ namespace SPText.EF
             GC.SuppressFinalize(DBContext);
         }
 
-        public  virtual void Dispose(bool dispose) {
+        public virtual void Dispose(bool dispose)
+        {
             if (dispose)
             {
-                if (DBContext!=null)
+                if (DBContext != null)
                 {
                     DBContext.Dispose();
                 }
             }
         }
 
-        public void CreateTransactions(List<Uow> uows) {
+        public void CreateTransactions(List<Uow> uows)
+        {
             TransactionScope transactionScope = new TransactionScope();
             foreach (var uow in uows)
             {
