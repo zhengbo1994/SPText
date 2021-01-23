@@ -75,19 +75,20 @@ namespace SPText.Common
         }
         #endregion
 
-        public static void show2() {
+        public static void show2()
+        {
             string path = $"E:\\A-CompanyProject\\SPText\\SPText\bin\\Debug\\前台日志(20200630 042526).xls";
             DataTable dt = ImportExcelFile(path);
             WriteExcel(dt, path);
-            
+
         }
 
 
-     
+
         #region   Asp.Net导入代码
 
         /// <summary>
-        /// 通过路径获取DataTable
+        /// 通过路径获取DataTable（导入Excel文件）
         /// </summary>
         /// <param name="filePath">传入的路径</param>
         /// <returns></returns>
@@ -114,7 +115,7 @@ namespace SPText.Common
             DataTable dt = new DataTable();
             for (int j = 0; j < (sheet.GetRow(0).LastCellNum); j++)
             {
-                var tochar= Convert.ToChar((int)'A' + j).ToString();
+                var tochar = Convert.ToChar((int)'A' + j).ToString();
                 dt.Columns.Add(tochar);
             }
             while (rows.MoveNext())
@@ -139,7 +140,7 @@ namespace SPText.Common
         }
 
         /// <summary>
-        /// 通过DataTable将数据转化为Excel
+        /// 通过DataTable将数据转化为Excel（编写Excel）
         /// </summary>
         /// <param name="dt">数据源</param>
         /// <param name="filePath">保存的路径</param>
@@ -150,9 +151,9 @@ namespace SPText.Common
             if (!string.IsNullOrEmpty(filePath) && null != dt && dt.Rows.Count > 0)
             {
                 NPOI.HSSF.UserModel.HSSFWorkbook book = new NPOI.HSSF.UserModel.HSSFWorkbook();
-                NPOI.SS.UserModel.ISheet sheet = book.CreateSheet(dt.TableName);
+                ISheet sheet = book.CreateSheet(dt.TableName);
 
-                NPOI.SS.UserModel.IRow row = sheet.CreateRow(0);
+                IRow row = sheet.CreateRow(0);
                 //写入第一行数据（一般这行数据可以删除）
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
@@ -160,7 +161,7 @@ namespace SPText.Common
                 }
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    NPOI.SS.UserModel.IRow row2 = sheet.CreateRow(i + 1);
+                    IRow row2 = sheet.CreateRow(i + 1);
                     for (int j = 0; j < dt.Columns.Count; j++)
                     {
                         row2.CreateCell(j).SetCellValue(Convert.ToString(dt.Rows[i][j]));
@@ -185,7 +186,7 @@ namespace SPText.Common
         #region  NPOI操作
 
         /// <summary>
-        /// DataTable转换成Excel文档流(导出数据量超出65535条,分sheet)
+        /// DataTable转换成Excel文档流(导出数据量超出65535条,分sheet)（将数据表导出到Excel）
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
@@ -642,8 +643,12 @@ namespace SPText.Common
         #endregion
         #endregion
 
-        #region
-
+        #region  Excel操作
+        /// <summary>
+        /// 将DataTable呈现到Excel
+        /// </summary>
+        /// <param name="SourceTable"></param>
+        /// <returns></returns>
         public static Stream RenderDataTableToExcel(DataTable SourceTable)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
@@ -713,7 +718,11 @@ namespace SPText.Common
             return ms;
         }
 
-
+        /// <summary>
+        /// 将DataTable呈现到Excel
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         public static Stream RenderDataTableToExcelMore(DataTable dt)
         {
 
@@ -809,7 +818,11 @@ namespace SPText.Common
         }
 
 
-
+        /// <summary>
+        /// 将DataSet呈现到Excel
+        /// </summary>
+        /// <param name="ds"></param>
+        /// <returns></returns>
         public static Stream RenderDataSetToExcel(DataSet ds)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
@@ -881,7 +894,11 @@ namespace SPText.Common
             return ms;
         }
 
-
+        /// <summary>
+        /// 将数据表呈现为Excel XLSX
+        /// </summary>
+        /// <param name="SourceTable"></param>
+        /// <returns></returns>
         public static Stream RenderDataTableToExcelXLSX(DataTable SourceTable)
         {
             XSSFWorkbook workbook = new XSSFWorkbook();
@@ -948,7 +965,7 @@ namespace SPText.Common
 
 
         /// <summary>
-        /// xlsx 可以超过6万多条数据
+        /// xlsx 可以超过6万多条数据（将数据表呈现为Excel类型XLSX）
         /// </summary>
         /// <param name="SourceTable"></param>
         /// <returns></returns>
@@ -1023,7 +1040,11 @@ namespace SPText.Common
         }
 
 
-
+        /// <summary>
+        /// 将数据表呈现为Excel类型
+        /// </summary>
+        /// <param name="SourceTable"></param>
+        /// <returns></returns>
         public static Stream RenderDataTableToExcelType(DataTable SourceTable)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
@@ -1094,7 +1115,12 @@ namespace SPText.Common
             return ms;
         }
 
-
+        /// <summary>
+        /// 将数据表呈现为Excel类型
+        /// </summary>
+        /// <param name="SourceTable"></param>
+        /// <param name="sheetName"></param>
+        /// <returns></returns>
         public static Stream RenderDataTableToExcelType(DataTable SourceTable, string sheetName)
         {
             HSSFWorkbook workbook = new HSSFWorkbook();
@@ -1159,7 +1185,12 @@ namespace SPText.Common
             return ms;
         }
 
-
+        /// <summary>
+        /// 将类型转换为单元格
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="dataRow"></param>
+        /// <param name="column"></param>
         private static void ConvertTypeToCell(DataRow row, IRow dataRow, DataColumn column)
         {
 
@@ -1200,12 +1231,15 @@ namespace SPText.Common
         }
 
 
-
+        /// <summary>
+        /// 将数据表呈现到Excel
+        /// </summary>
+        /// <param name="SourceTable"></param>
+        /// <param name="FileName"></param>
         public static void RenderDataTableToExcel(DataTable SourceTable, string FileName)
         {
             MemoryStream ms = RenderDataTableToExcel(SourceTable) as MemoryStream;
-            FileStream fs = new FileStream(FileName, FileMode.Create,
-            FileAccess.Write);
+            FileStream fs = new FileStream(FileName, FileMode.Create,FileAccess.Write);
             byte[] data = ms.ToArray();
             fs.Write(data, 0, data.Length);
             fs.Flush();
@@ -1215,6 +1249,13 @@ namespace SPText.Common
             fs = null;
         }
 
+        /// <summary>
+        /// 从Excel呈现数据表
+        /// </summary>
+        /// <param name="ExcelFileStream"></param>
+        /// <param name="SheetName"></param>
+        /// <param name="HeaderRowIndex"></param>
+        /// <returns></returns>
         public static DataTable RenderDataTableFromExcel(Stream ExcelFileStream, string SheetName, int HeaderRowIndex)
         {
             HSSFWorkbook workbook = new HSSFWorkbook(ExcelFileStream);
@@ -1244,9 +1285,13 @@ namespace SPText.Common
         }
 
 
-        //       它的方法很簡單，若是要將 DataTable 輸出到 Excel 檔案，只要將 DataTable 丟給
-        //RenderDataTableToExcel() 方法即可
-
+        /// <summary>
+        /// 从Excel呈现数据表
+        /// </summary>
+        /// <param name="ExcelFileStream"></param>
+        /// <param name="SheetIndex"></param>
+        /// <param name="HeaderRowIndex"></param>
+        /// <returns></returns>
         public static DataTable RenderDataTableFromExcel(Stream ExcelFileStream, int SheetIndex, int HeaderRowIndex)
         {
             HSSFWorkbook workbook = new HSSFWorkbook(ExcelFileStream);
@@ -1279,9 +1324,13 @@ namespace SPText.Common
             return table;
         }
 
-
-
-
+        /// <summary>
+        /// 从Excel XLS呈现数据表
+        /// </summary>
+        /// <param name="ExcelFileStream"></param>
+        /// <param name="SheetIndex"></param>
+        /// <param name="HeaderRowIndex"></param>
+        /// <returns></returns>
         public static DataTable RenderDataTableFromExcelXLS(Stream ExcelFileStream, int SheetIndex, int HeaderRowIndex)
         {
             XSSFWorkbook workbook = new XSSFWorkbook(ExcelFileStream);
@@ -1519,11 +1568,16 @@ namespace SPText.Common
             ffont.Color = HSSFColor.Red.Index;
             fCellStyle.SetFont(ffont);
 
-            fCellStyle.VerticalAlignment = NPOI.SS.UserModel.VerticalAlignment.Center;//垂直对齐
-            fCellStyle.Alignment = NPOI.SS.UserModel.HorizontalAlignment.Center;//水平对齐
+            fCellStyle.VerticalAlignment = VerticalAlignment.Center;//垂直对齐
+            fCellStyle.Alignment = HorizontalAlignment.Center;//水平对齐
             cell.CellStyle = fCellStyle;
         }
 
+        /// <summary>
+        /// DataTable到服务器
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="tableName"></param>
         public static void DataTableToServer(DataTable dt, string tableName)
         {
             string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
@@ -1590,7 +1644,205 @@ namespace SPText.Common
         }
 
         #endregion
+
+
+        #region  将excel文件内容读取到DataTable数据表中/将文件流读取到DataTable数据表中
+        /// <summary>
+        /// 将文件流读取到DataTable数据表中
+        /// </summary>
+        /// <param name="fileStream">文件流</param>
+        /// <param name="sheetName">指定读取excel工作薄sheet的名称</param>
+        /// <param name="isFirstRowColumn">第一行是否是DataTable的列名：true=是，false=否</param>
+        /// <returns>DataTable数据表</returns>
+        public static DataTable ReadStreamToDataTable(Stream fileStream, string sheetName = null, bool isFirstRowColumn = true)
+        {
+            //定义要返回的datatable对象
+            DataTable data = new DataTable();
+            //excel工作表
+            ISheet sheet = null;
+            //数据开始行(排除标题行)
+            int startRow = 0;
+            try
+            {
+                //根据文件流创建excel数据结构,NPOI的工厂类WorkbookFactory会自动识别excel版本，创建出不同的excel数据结构
+                IWorkbook workbook = WorkbookFactory.Create(fileStream);
+                //如果有指定工作表名称
+                if (!string.IsNullOrEmpty(sheetName))
+                {
+                    sheet = workbook.GetSheet(sheetName);
+                    //如果没有找到指定的sheetName对应的sheet，则尝试获取第一个sheet
+                    if (sheet == null)
+                    {
+                        sheet = workbook.GetSheetAt(0);
+                    }
+                }
+                else
+                {
+                    //如果没有指定的sheetName，则尝试获取第一个sheet
+                    sheet = workbook.GetSheetAt(0);
+                }
+                if (sheet != null)
+                {
+                    IRow firstRow = sheet.GetRow(0);
+                    //一行最后一个cell的编号 即总的列数
+                    int cellCount = firstRow.LastCellNum;
+                    //如果第一行是标题列名
+                    if (isFirstRowColumn)
+                    {
+                        for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
+                        {
+                            ICell cell = firstRow.GetCell(i);
+                            if (cell != null)
+                            {
+                                string cellValue = cell.StringCellValue;
+                                if (cellValue != null)
+                                {
+                                    DataColumn column = new DataColumn(cellValue);
+                                    data.Columns.Add(column);
+                                }
+                            }
+                        }
+                        startRow = sheet.FirstRowNum + 1;
+                    }
+                    else
+                    {
+                        startRow = sheet.FirstRowNum;
+                    }
+                    //最后一列的标号
+                    int rowCount = sheet.LastRowNum;
+                    for (int i = startRow; i <= rowCount; ++i)
+                    {
+                        IRow row = sheet.GetRow(i);
+                        if (row == null || row.FirstCellNum < 0) continue; //没有数据的行默认是null
+
+                        DataRow dataRow = data.NewRow();
+                        for (int j = row.FirstCellNum; j < cellCount; ++j)
+                        {
+                            //同理，没有数据的单元格都默认是null
+                            ICell cell = row.GetCell(j);
+                            if (cell != null)
+                            {
+                                if (cell.CellType == CellType.Numeric)
+                                {
+                                    //判断是否日期类型
+                                    if (DateUtil.IsCellDateFormatted(cell))
+                                    {
+                                        dataRow[j] = row.GetCell(j).DateCellValue;
+                                    }
+                                    else
+                                    {
+                                        dataRow[j] = row.GetCell(j).ToString().Trim();
+                                    }
+                                }
+                                else
+                                {
+                                    dataRow[j] = row.GetCell(j).ToString().Trim();
+                                }
+                            }
+                        }
+                        data.Rows.Add(dataRow);
+                    }
+                }
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
+        /// 将excel文件内容读取到DataTable数据表中
+        /// </summary>
+        /// <param name="fileName">文件完整路径名</param>
+        /// <param name="sheetName">指定读取excel工作薄sheet的名称</param>
+        /// <param name="isFirstRowColumn">第一行是否是DataTable的列名：true=是，false=否</param>
+        /// <returns>DataTable数据表</returns>
+        public static DataTable ReadExcelToDataTable(string fileName, string sheetName = null, bool isFirstRowColumn = true)
+        {
+            //定义要返回的datatable对象
+            DataTable data = new DataTable();
+            //excel工作表
+            ISheet sheet = null;
+            //数据开始行(排除标题行)
+            int startRow = 0;
+            try
+            {
+                if (!File.Exists(fileName))
+                {
+                    return null;
+                }
+                //根据指定路径读取文件
+                FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                //根据文件流创建excel数据结构
+                IWorkbook workbook = WorkbookFactory.Create(fs);
+                //IWorkbook workbook = new HSSFWorkbook(fs);
+                //如果有指定工作表名称
+                if (!string.IsNullOrEmpty(sheetName))
+                {
+                    sheet = workbook.GetSheet(sheetName);
+                    //如果没有找到指定的sheetName对应的sheet，则尝试获取第一个sheet
+                    if (sheet == null)
+                    {
+                        sheet = workbook.GetSheetAt(0);
+                    }
+                }
+                else
+                {
+                    //如果没有指定的sheetName，则尝试获取第一个sheet
+                    sheet = workbook.GetSheetAt(0);
+                }
+                if (sheet != null)
+                {
+                    IRow firstRow = sheet.GetRow(0);
+                    //一行最后一个cell的编号 即总的列数
+                    int cellCount = firstRow.LastCellNum;
+                    //如果第一行是标题列名
+                    if (isFirstRowColumn)
+                    {
+                        for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
+                        {
+                            ICell cell = firstRow.GetCell(i);
+                            if (cell != null)
+                            {
+                                string cellValue = cell.StringCellValue;
+                                if (cellValue != null)
+                                {
+                                    DataColumn column = new DataColumn(cellValue);
+                                    data.Columns.Add(column);
+                                }
+                            }
+                        }
+                        startRow = sheet.FirstRowNum + 1;
+                    }
+                    else
+                    {
+                        startRow = sheet.FirstRowNum;
+                    }
+                    //最后一列的标号
+                    int rowCount = sheet.LastRowNum;
+                    for (int i = startRow; i <= rowCount; ++i)
+                    {
+                        IRow row = sheet.GetRow(i);
+                        if (row == null) continue; //没有数据的行默认是null
+
+                        DataRow dataRow = data.NewRow();
+                        for (int j = row.FirstCellNum; j < cellCount; ++j)
+                        {
+                            if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null
+                                dataRow[j] = row.GetCell(j).ToString();
+                        }
+                        data.Rows.Add(dataRow);
+                    }
+                }
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
-
-
 }

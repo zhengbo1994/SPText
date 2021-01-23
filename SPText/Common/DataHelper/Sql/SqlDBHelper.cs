@@ -146,6 +146,53 @@ namespace SPText.Common.DataHelper.Sql
             }
         }
 
+        /// <summary>
+        /// DataTable到服务器
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="tableName"></param>
+        public static void DataTableToServer(DataTable dt, string tableName)
+        {
+            string connStr = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            using (SqlConnection destinationConnection = new SqlConnection(connStr))
+            {
+                destinationConnection.Open();
+
+                using (SqlTransaction transaction = destinationConnection.BeginTransaction())
+                {
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(destinationConnection, SqlBulkCopyOptions.Default,
+                               transaction))
+                    {
+                        SqlCommand cmd = new SqlCommand(); //第四:声明 SqlCommand
+                        cmd.Connection = destinationConnection;
+                        cmd.Transaction = transaction;
+                        //string strCmdDel = "";
+                        //先删除之前的表数据
+                        //strCmdDel = string.Format("truncate table {0}", tableName);
+                        //cmd.CommandText = strCmdDel.ToString();
+                        //cmd.Parameters.Clear();
+                        //cmd.ExecuteScalar();
+                        bulkCopy.BatchSize = dt.Rows.Count;
+                        bulkCopy.DestinationTableName = tableName;
+
+                        try
+                        {
+                            bulkCopy.WriteToServer(dt);
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            throw new Exception(ex.Message);
+                        }
+                        finally
+                        {
+                            dt.Clear();
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

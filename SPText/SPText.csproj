@@ -322,7 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheText.cs" />
-    <Compile Include="Common\AHelper\ConfigurationHelper.cs" />
     <Compile Include="Common\AHelper\CookieHelper.cs" />
     <Compile Include="Common\AHelper\CsvHelper.cs" />
     <Compile Include="Common\AHelper\DataTableHelper.cs" />
