@@ -260,6 +260,201 @@ namespace SPCoreText
             //services.AddSingleton<IAuthorizationHandler, ZhaoxiMailHandler>();
             //services.AddSingleton<IAuthorizationHandler, QQMailHandler>();
             #endregion
+
+
+            #region jwt校验  HS
+            //JWTTokenOptions tokenOptions = new JWTTokenOptions();
+            //Configuration.Bind("JWTTokenOptions", tokenOptions);
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)//Scheme
+            //.AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        //JWT有一些默认的属性，就是给鉴权时就可以筛选了
+            //        ValidateIssuer = true,//是否验证Issuer
+            //        ValidateAudience = true,//是否验证Audience
+            //        ValidateLifetime = true,//是否验证失效时间
+            //        ValidateIssuerSigningKey = true,//是否验证SecurityKey
+            //        ValidAudience = tokenOptions.Audience,//
+            //        ValidIssuer = tokenOptions.Issuer,//Issuer，这两项和前面签发jwt的设置一致
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey)),//拿到SecurityKey
+            //        //AudienceValidator = (m, n, z) =>
+            //        //{
+            //        //    //等同于去扩展了下Audience的校验规则---鉴权
+            //        //    return m != null && m.FirstOrDefault().Equals(this.Configuration["audience"]);
+            //        //},
+            //        //LifetimeValidator = (notBefore, expires, securityToken, validationParameters) =>
+            //        //{
+            //        //    return notBefore <= DateTime.Now
+            //        //    && expires >= DateTime.Now;
+            //        //    //&& validationParameters
+            //        //}//自定义校验规则
+            //    };
+            //});
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AdminPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireRole("Admin")//Claim的Role是Admin
+            //        .RequireUserName("Eleven")//Claim的Name是Eleven
+            //        .RequireClaim("EMail")//必须有某个Cliam
+            //         .RequireClaim("Account")
+            //        //.Combine(qqEmailPolicy)
+            //        .AddRequirements(new CustomExtendRequirement())
+            //        );//内置
+
+            //    //options.AddPolicy("QQEmail", policyBuilder => policyBuilder.Requirements.Add(new QQEmailRequirement()));
+            //    options.AddPolicy("DoubleEmail", policyBuilder => policyBuilder
+            //    .AddRequirements(new CustomExtendRequirement())
+            //    .Requirements.Add(new DoubleEmailRequirement()));
+            //});
+            //services.AddSingleton<IAuthorizationHandler, ZhaoxiMailHandler>();
+            //services.AddSingleton<IAuthorizationHandler, QQMailHandler>();
+            //services.AddSingleton<IAuthorizationHandler, CustomExtendRequirementHandler>();
+            #endregion
+
+            #region jwt校验  RS
+
+            //#region 读取公钥
+            //string path = Path.Combine(Directory.GetCurrentDirectory(), "key.public.json");
+            //string key = File.ReadAllText(path);//this.Configuration["SecurityKey"];
+            //Console.WriteLine($"KeyPath:{path}");
+
+            //var keyParams = JsonConvert.DeserializeObject<RSAParameters>(key);
+            //foreach (var item in keyParams.GetType().GetFields())
+            //{
+            //    Console.WriteLine($"{item.Name}:{item.GetValue(keyParams)}");
+            //}
+            ////var credentials = new SigningCredentials(new RsaSecurityKey(keyParams), SecurityAlgorithms.RsaSha256Signature);
+            //#endregion
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,//是否验证Issuer
+            //        ValidateAudience = true,//是否验证Audience
+            //        ValidateLifetime = true,//是否验证失效时间
+            //        ValidateIssuerSigningKey = true,//是否验证SecurityKey
+            //        #region MyRegion
+            //        //ValidAudience = this.Configuration["Audience"],//Audience
+            //        //ValidIssuer = this.Configuration["Issuer"],//Issuer，这两项和前面签发jwt的设置一致
+            //        #endregion
+            //        ValidAudience = this.Configuration["JWTTokenOptions:Audience"],//Audience
+            //        ValidIssuer = this.Configuration["JWTTokenOptions:Issuer"],//Issuer，这两项和前面签发jwt的设置一致
+            //        IssuerSigningKey = new RsaSecurityKey(keyParams),
+            //        IssuerSigningKeyValidator = (m, n, z) =>
+            //         {
+            //             Console.WriteLine("This is IssuerSigningKeyValidator");
+            //             return true;
+            //         },
+            //        //IssuerValidator = (m, n, z) =>
+            //        // {
+            //        //     Console.WriteLine($"This is IssuerValidator {this.Configuration["JWTTokenOptions:Issuer"]}");
+            //        //     return "http://localhost:5726";
+            //        // },
+            //        AudienceValidator = (m, n, z) =>
+            //        {
+            //            Console.WriteLine("This is AudienceValidator");
+            //            return true;
+            //            //return m != null && m.FirstOrDefault().Equals(this.Configuration["Audience"]);
+            //        },//自定义校验规则，可以新登录后将之前的无效
+            //    };
+            //});
+            #endregion
+
+            #region IdentityServer4--Client
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:7200";//ids4的地址
+            //        options.ApiName = "UserApi";
+            //        options.RequireHttpsMetadata = false;
+            //    });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("eMailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == "client_eMail")
+            //        && context.User.Claims.First(c => c.Type.Equals("client_eMail")).Value.EndsWith("@qq.com")));//Client
+            //});
+            #endregion
+
+            #region IdentityServer4--Password
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:7200";
+            //        options.ApiName = "TestApi";
+            //        options.RequireHttpsMetadata = false;
+            //    });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("eMailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == "eMail")
+            //        && context.User.Claims.First(c => c.Type.Equals("eMail")).Value.EndsWith("@qq.com")));//Client
+            //});
+            #endregion
+
+            #region IdentityServer4--Implicit
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:7200";
+            //        options.ApiName = "UserApi";
+            //        options.RequireHttpsMetadata = false;
+            //    });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("eMailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == "eMail")
+            //        && context.User.Claims.First(c => c.Type.Equals("eMail")).Value.EndsWith("@qq.com")));//Client
+            //});
+            #endregion
+
+            #region IdentityServer4--Code
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:7200";
+            //        options.ApiName = "UserApi";
+            //        options.RequireHttpsMetadata = false;
+            //    });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("eMailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == "eMail")
+            //        && context.User.Claims.First(c => c.Type.Equals("eMail")).Value.EndsWith("@qq.com")));//Client
+            //});
+            #endregion
+
+            #region IdentityServer4--Hybrid
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:7200";
+            //        options.ApiName = "UserApi";
+            //        options.RequireHttpsMetadata = false;
+            //    });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("eMailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == "eMail")
+            //        && context.User.Claims.First(c => c.Type.Equals("eMail")).Value.EndsWith("@qq.com")));//Client
+            //});
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -309,7 +504,7 @@ namespace SPCoreText
             app.UseCors("AllowCors");
             #endregion
 
-            #region 通过中间件来支持鉴权授权
+            #region 通过中间件来支持鉴权授权(鉴权、JWT、Ids4)
             //app.UseAuthentication(); //告诉框架 要使用权限认证
             #endregion
 

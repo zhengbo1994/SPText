@@ -18,6 +18,7 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Consul" Version="1.6.1.1" />
     <PackageReference Include="IdentityModel" Version="5.0.0" />
+    <PackageReference Include="IdentityServer4" Version="4.1.1" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="log4net.AspNetCore" Version="1.0.0" />
     <PackageReference Include="log4net.Extensions.AspNetCore" Version="1.0.0" />
@@ -53,6 +54,12 @@
   <ItemGroup>
     <Folder Include="Areas\First\Data\" />
     <Folder Include="Areas\First\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IdentityServer4.AccessTokenValidation">
+      <HintPath>C:\Users\ZhengBo\.nuget\packages\identityserver4.accesstokenvalidation\3.0.1\lib\netcoreapp3.0\IdentityServer4.AccessTokenValidation.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
