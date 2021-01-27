@@ -30,5 +30,13 @@ namespace EF_CodeDB
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        public string Description { get; set; }
+
+        /// <summary> 
+        /// 指定某个属性为另个实体的结合或者实体对象 
+        /// 导航属性 
+        /// 配置了导航属性以后，生成数据库默认会生成对应的主外键关系；
+        /// </summary>
+        public virtual ICollection<SysUser> SysUser { get; set; }
     }
 }

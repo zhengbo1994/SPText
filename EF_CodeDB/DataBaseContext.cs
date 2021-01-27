@@ -14,6 +14,18 @@ namespace EF_CodeDB
     /// </summary>
     public partial class DataBaseContext : DbContext
     {
+        ///记录控制台日志：
+        ///1.  Microsoft.Extensions.Logging
+        ///Microsoft.Extensions.Logging.Console 
+        ///2. 定义日志工厂
+        ///3. OnConfiguring配置使用日志工厂 
+        /// <summary>
+        /// 指定静态ILoggerFactory
+        /// </summary>
+        public static readonly ILoggerFactory MyLoggerFactory= LoggerFactory.Create(builder => { builder.AddConsole(); });
+
+
+
         //public DataBaseContext()
         //{
         //    Console.WriteLine("This is JDDbContext");
@@ -52,6 +64,16 @@ namespace EF_CodeDB
             //optionsBuilder.UseSqlServer(StaticConstraint.JDDbContext);
 
             //optionsBuilder.UseSqlServer("Server=.;Database=advanced11;User id=sa;password=Passw0rd");
+
+            #region  日志
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseLoggerFactory(MyLoggerFactory)
+            //         .UseLazyLoadingProxies()
+            //        .UseSqlServer(Conn);
+            //}
+            //optionsBuilder.UseLoggerFactory(MyLoggerFactory);
+            #endregion
 
         }
 

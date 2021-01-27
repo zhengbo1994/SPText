@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SPCoreApiText.Utiltiy
 {
+    /// <summary>
+    /// 自定义校验规则
+    /// </summary>
     public class CustomExtendRequirement : IAuthorizationRequirement
     {
     }

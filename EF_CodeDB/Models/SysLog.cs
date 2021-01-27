@@ -31,5 +31,6 @@ namespace EF_CodeDB
         public DateTime? LastModifyTime { get; set; }
 
         public int? LastModifierId { get; set; }
+        public virtual SysLogDetail SysLogDetail { get; set; }
     }
 }

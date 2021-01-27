@@ -27,6 +27,7 @@ namespace EF_CodeDB
         public DateTime? LastModifyTime { get; set; }
 
         public int? LastModifierId { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<SysRoleMenuMapping> SysRoleMenuMappingList { get; set; }
     }
