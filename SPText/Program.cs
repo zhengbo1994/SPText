@@ -59,7 +59,6 @@ namespace SPText
         {
             #region  linq交叉并补
             //linqUse();
-
             #endregion
 
             #region  委托
@@ -287,6 +286,14 @@ namespace SPText
             var min = a.Min();
             var avg = a.Average();
             var dis = c.Distinct();
+
+
+            var a1 = a.Join(b, p => p.ToString(), q => q.ToString(), (p, q) => p).ToList();//连接
+            var a2 = a.Zip(c, (p, q) => p + q).ToList();//合并
+            //var a3 = a.ToLookup(p => p == 1).ToList();
+            var a4 = c.Concat(a); //连接
+
+
 
             Console.WriteLine(max);
             Console.WriteLine(min);

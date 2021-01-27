@@ -26,6 +26,9 @@ namespace SPText.Common
             //this.Tshow();
             //this.ReflectionShow();
             //this.TheardShow();
+
+
+            this.TestShow();
         }
 
         #region  事件代码测试
@@ -490,6 +493,22 @@ namespace SPText.Common
             }
         }
         #endregion
+
+        public void TestShow() {
+            //SqlHelper sqlHelper = new SqlHelper(na319SettingInfo.DatabaseSetting.DataSource, na319SettingInfo.DatabaseSetting.Database, na319SettingInfo.DatabaseSetting.User, na319SettingInfo.DatabaseSetting.Password);
+            //DataSet dataSet = sqlHelper.StoreProcedure("ARO.dbo.p_na319_trc");    //新上线
+            //if (dataSet.Tables[0].Rows[0][0].ToString() != "Failed to insert Order Status into table.")
+            //{
+            //    for (int i = 0; i < dataSet.Tables[0].Rows.Count; i++)//系统中的最新状态放进去
+            //    {
+            //        stringBuilder.AppendLine(dataSet.Tables[0].Rows[i]["TRC"].ToString());
+            //    }
+            //}
+            //if (!stringBuilder.ToString().Equals(""))
+            //{
+            //    TxtHelper.Write(trcFileName, stringBuilder.ToString());
+            //}
+        }
     }
 
     #region  事件
