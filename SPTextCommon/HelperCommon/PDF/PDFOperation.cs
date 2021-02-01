@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -229,4 +232,6 @@ namespace SPTextCommon.HelperCommon
         }
         #endregion
     }
+
+
 }

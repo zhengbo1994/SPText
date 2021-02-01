@@ -247,8 +247,8 @@ namespace SPText
             #endregion
 
             #region  测试代码
-            //TestHelper testHelper = new TestHelper();
-            //testHelper.Show();
+            TestHelper testHelper = new TestHelper();
+            testHelper.Show();
             #endregion
 
 
@@ -1385,7 +1385,7 @@ namespace SPText
                 Action action = new Action(Show);
                 System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(action);
                 task.Start();
-                System.Threading.Tasks.Task.Delay(2000);//不足塞
+                System.Threading.Tasks.Task.Delay(2000);//不阻塞
             }
             {
                 System.Threading.Tasks.Task task = new System.Threading.Tasks.Task(() => Console.WriteLine("线程启动！"));

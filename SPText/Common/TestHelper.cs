@@ -1,6 +1,9 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Grpc.Core;
+using Microsoft.Data.SqlClient;
 using ServiceStack.Redis;
+using SPTextCommon;
 using SPTextCommon.Cache;
+using SPTextCommon.HelperCommon;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,7 +31,9 @@ namespace SPText.Common
             //this.TheardShow();
 
 
-            this.TestShow();
+            //this.TestShow();
+
+            this.PrintShow();
         }
 
         #region  事件代码测试
@@ -494,7 +499,37 @@ namespace SPText.Common
         }
         #endregion
 
-        public void TestShow() {
+        #region  打印
+        public void PrintShow() {
+    
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("姓名", typeof(string));   //新建第一列
+            dt.Columns.Add("年龄", typeof(int));      //新建第二列
+            dt.Rows.Add("张三", 23);                 //新建第一行，并赋值
+            dt.Rows.Add("李四", 25);                 //新建第二行，并赋值
+
+            {
+                PrintService ps = new PrintService();
+                string name = "打印示例";
+                ps.Titles = new string[] { name };//给打印的表格赋值名字
+                ps.PrintDataTable(dt);
+            }
+
+            {
+                PrintHelper ph = new PrintHelper();
+                string name = "打印示例";
+         
+                ph.PrintPriview(dt, name);
+                ph.PrintSetting();
+            }
+
+
+        }
+        #endregion
+
+        public void TestShow()
+        {
             //SqlHelper sqlHelper = new SqlHelper(na319SettingInfo.DatabaseSetting.DataSource, na319SettingInfo.DatabaseSetting.Database, na319SettingInfo.DatabaseSetting.User, na319SettingInfo.DatabaseSetting.Password);
             //DataSet dataSet = sqlHelper.StoreProcedure("ARO.dbo.p_na319_trc");    //新上线
             //if (dataSet.Tables[0].Rows[0][0].ToString() != "Failed to insert Order Status into table.")

@@ -69,8 +69,8 @@ namespace SPText.Common
                 int iResult = func.Invoke();//22
                 IAsyncResult asyncResult = func.BeginInvoke(ar =>
                 {
-                //int iEndResultIn = func.EndInvoke(ar);
-            }, null);
+                    //int iEndResultIn = func.EndInvoke(ar);
+                }, null);
                 int iEndResult = func.EndInvoke(asyncResult);//22
 
                 Console.WriteLine($"****************btnAsyncAdvanced_Click End   {Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}***************");
@@ -335,6 +335,8 @@ namespace SPText.Common
                 //列表页：核心数据可能来自数据库/接口服务/分布式搜索引擎/缓存，多线程并发请求，哪个先完成就用哪个结果，其他的就不管了
             }
             {
+                TaskFactory taskFactory1 = new TaskFactory();
+                List<Task> tasks = new List<Task>();
                 TaskFactory taskFactory = new TaskFactory();
                 List<Task> taskList = new List<Task>();
                 taskList.Add(taskFactory.StartNew(o => this.Coding("冰封的心", "Portal"), "冰封的心"));
@@ -370,7 +372,6 @@ namespace SPText.Common
                 {
                     //int i = result.Result;//会阻塞
                 });
-
             }
             {
                 //假如说我想控制下Task的并发数量，该怎么做？  20个
