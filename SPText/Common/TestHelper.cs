@@ -34,6 +34,8 @@ namespace SPText.Common
             //this.TestShow();
 
             this.PrintShow();
+
+            
         }
 
         #region  事件代码测试

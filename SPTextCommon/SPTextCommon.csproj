@@ -393,7 +393,6 @@
     <Compile Include="Html\ControlsExtensionsHelper.cs" />
     <Compile Include="HttpMethods.cs" />
     <Compile Include="ImageHelper.cs" />
-    <Compile Include="ImageHelperBarCode.cs" />
     <Compile Include="INIFileHelper.cs" />
     <Compile Include="IPLocation.cs" />
     <Compile Include="Json.cs" />

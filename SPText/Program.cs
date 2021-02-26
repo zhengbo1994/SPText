@@ -247,8 +247,8 @@ namespace SPText
             #endregion
 
             #region  测试代码
-            TestHelper testHelper = new TestHelper();
-            testHelper.Show();
+            //TestHelper testHelper = new TestHelper();
+            //testHelper.Show();
             #endregion
 
 
