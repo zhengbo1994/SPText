@@ -15,6 +15,7 @@ using SPText.Common;
 using SPText.Common.DataHelper;
 using SPText.Common.DataHelper.Sql;
 using SPText.Common.ExpressionExtend;
+using SPText.Common.RabbitMQ;
 using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
 using SPText.EF;
@@ -2441,6 +2442,16 @@ namespace SPText
         #region  RabbitMQ（测试未通过）
         public static void RabbitMQ()
         {
+            {
+                {
+                    RabbitMQHelper rabbitMQ = new RabbitMQHelper();
+                    rabbitMQ.Show();
+                }
+                {
+                    RabbitMQExecuteHelper rabbitMQExecuteHelper = new RabbitMQExecuteHelper();
+                    rabbitMQExecuteHelper.Show();
+                }
+            }
             {//向RabbitMQ服务器发送消息（推送）
                 var factory = new ConnectionFactory();
                 factory.HostName = "localhost";//主机名，Rabbit会拿这个IP生成一个endpoint，这个很熟悉吧，就是socket绑定的那个终结点。

@@ -14,7 +14,7 @@ namespace SPText.Common.RabbitMQ
 {
     public class RabbitMQHelper
     {
-        public void show()
+        public void Show()
         {
             ProductionConsumerShow();           ////生产者消费者
             MultiProductionConsumerShow();      ////多生产者多消费者
