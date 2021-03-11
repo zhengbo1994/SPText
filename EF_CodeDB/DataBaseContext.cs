@@ -24,8 +24,6 @@ namespace EF_CodeDB
         /// </summary>
         public static readonly ILoggerFactory MyLoggerFactory= LoggerFactory.Create(builder => { builder.AddConsole(); });
 
-
-
         //public DataBaseContext()
         //{
         //    Console.WriteLine("This is JDDbContext");

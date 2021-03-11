@@ -36,7 +36,6 @@ namespace SPCoreText.Controllers
         {
             try
             {
-
             
             this._logger.LogInformation("12345667789");
             this._loggerFactory.CreateLogger<FirstController>().LogInformation("12345667789");

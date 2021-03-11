@@ -1,5 +1,9 @@
 ﻿using Grpc.Core;
+using LumenWorks.Framework.IO.Csv;
 using Microsoft.Data.SqlClient;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using ServiceStack.Redis;
 using SPTextCommon;
 using SPTextCommon.Cache;
@@ -17,6 +21,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
+
+
 namespace SPText.Common
 {
     //委托的声明
@@ -31,11 +37,11 @@ namespace SPText.Common
             //this.TheardShow();
 
 
-            //this.TestShow();
+            this.TestShow();
 
-            this.PrintShow();
+            //this.PrintShow();
 
-            
+            //this.NopiHelper();
         }
 
         #region  事件代码测试
@@ -502,8 +508,9 @@ namespace SPText.Common
         #endregion
 
         #region  打印
-        public void PrintShow() {
-    
+        public void PrintShow()
+        {
+
 
             DataTable dt = new DataTable();
             dt.Columns.Add("姓名", typeof(string));   //新建第一列
@@ -521,7 +528,7 @@ namespace SPText.Common
             {
                 PrintHelper ph = new PrintHelper();
                 string name = "打印示例";
-         
+
                 ph.PrintPriview(dt, name);
                 ph.PrintSetting();
             }
@@ -546,15 +553,42 @@ namespace SPText.Common
             //    TxtHelper.Write(trcFileName, stringBuilder.ToString());
             //}
         }
-    }
 
+        public void NopiHelper()
+        {
+            {
+                var fileName = @"D:\Users\user\Desktop\NA332订单\2021-03-03\第二批\原始单\20210302_171701_650566.csv";
+                FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                var util = TransferDataFactory.GetUtil(fileName);
+                var data = util.GetData(stream);
+                var mStream = util.GetStream(data);
+            }
+            {
+                var fileName = @"D:\Users\user\Desktop\NA332订单\2021-03-03\第二批\原始单\20210302_171701_650566.csv";
+                FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                var util = TransferDataFactory.GetUtil(fileName);
+                var data = new CsvTransferData().GetDataTitle(stream);
+            }
+            {
+                var fileName = @"D:\Users\user\Desktop\NA332订单\2021-03-03\第二批\原始单\20210302_171701_650566.csv";
+                FileInfo fileInfo = new FileInfo(fileName);
+                Stream stream1 = fileInfo.Open(FileMode.Open, FileAccess.Read);
+                var data1 = new CsvTransferData().GetDataTitle(stream1);
+            }
+            {
+                var fileName = @"D:\Users\user\Desktop\NA332订单\2021-03-03\第二批\原始单\eGGHK_stk_lens_Order_20210104to20210104.xls";
+                FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                var util = TransferDataFactory.GetUtil(fileName);
+                var data = util.GetDataTitle(stream);
+            }
+        }
+    }
     #region  事件
     #region 事件1
     public class MyEvent
     {
         public DoSometing doSometingDelegate;
         public event DoSometing doSometingEvent;
-
         public void Invoke()
         {
             if (this.doSometingEvent != null)
@@ -564,7 +598,6 @@ namespace SPText.Common
         }
     }
     #endregion
-
     #region 事件2
     //新郎官，充当事件发布者角色
     public class Bridegroom
@@ -573,7 +606,6 @@ namespace SPText.Common
         public delegate void MarryHandler(string msg);
         //定义事件
         public event MarryHandler MarryEvent;
-
         //发布事件
         public void OnMarriageComing(string msg)
         {
@@ -583,7 +615,6 @@ namespace SPText.Common
             }
         }
     }
-
     public class Friend
     {
         //属性
@@ -604,7 +635,6 @@ namespace SPText.Common
     }
     #endregion
     #endregion
-
     #region  泛型
     public class Bird
     {
@@ -614,9 +644,330 @@ namespace SPText.Common
     {
         public string Name { get; set; }
     }
-
     #endregion
+    #region  Nopi
+    public enum DataFileType
+    {
+        CSV,
+        XLS,
+        XLSX
+    }
+    public class TransferDataFactory
+    {
+        public static ITransferData GetUtil(string fileName)
+        {
+            var array = fileName.Split('.');
+            var dataType = (DataFileType)Enum.Parse(typeof(DataFileType), array[array.Length - 1], true);
+            return GetUtil(dataType);
+        }
+        public static ITransferData GetUtil(DataFileType dataType)
+        {
+            switch (dataType)
+            {
+                case DataFileType.CSV: return new CsvTransferData();
+                case DataFileType.XLS: return new XlsTransferData();
+                case DataFileType.XLSX: return new XlsxTransferData();
+                default: return new CsvTransferData();
+            }
+        }
+    }
+    public interface ITransferData
+    {
+        Stream GetStream(DataTable table);
+        DataTable GetData(Stream stream);
+        DataTable GetDataTitle(Stream stream);
+    }
+    public class CsvTransferData : ITransferData
+    {
+        private Encoding _encode;
+        public CsvTransferData()
+        {
+            this._encode = Encoding.GetEncoding("utf-8");
+        }
+        public Stream GetStream(DataTable table)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (table != null && table.Columns.Count > 0 && table.Rows.Count > 0)
+            {
+                foreach (DataRow item in table.Rows)
+                {
+                    for (int i = 0; i < table.Columns.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            sb.Append(",");
+                        }
+                        if (item[i] != null)
+                        {
+                            sb.Append("\"").Append(item[i].ToString().Replace("\"", "\"\"")).Append("\"");
+                        }
+                    }
+                    sb.Append("\n");
+                }
+            }
+            MemoryStream stream = new MemoryStream(_encode.GetBytes(sb.ToString()));
+            return stream;
+        }
 
-    #region  
+
+        public DataTable GetData(Stream stream)
+        {
+            using (stream)
+            {
+                using (StreamReader input = new StreamReader(stream, _encode))
+                {
+                    using (CsvReader csv = new CsvReader(input, false))
+                    {
+                        DataTable dt = new DataTable();
+                        int columnCount = csv.FieldCount;
+                        for (int i = 0; i < columnCount; i++)
+                        {
+                            dt.Columns.Add("col" + i.ToString());
+                        }
+                        while (csv.ReadNextRecord())
+                        {
+                            DataRow dr = dt.NewRow();
+                            for (int i = 0; i < columnCount; i++)
+                            {
+                                if (!string.IsNullOrWhiteSpace(csv[i]))
+                                {
+                                    dr[i] = csv[i];
+                                }
+                            }
+                            dt.Rows.Add(dr);
+                        }
+                        return dt;
+                    }
+                }
+            }
+        }
+
+        public DataTable GetDataTitle(Stream stream)
+        {
+            using (stream)
+            {
+                using (StreamReader input = new StreamReader(stream, _encode))
+                {
+                    using (CsvReader csv = new CsvReader(input, false))
+                    {
+                        DataTable dt = new DataTable();
+                        int columnCount = csv.FieldCount;
+
+                        while (csv.ReadNextRecord())
+                        {
+                            if (csv.CurrentRecordIndex == 0)
+                            {
+                                for (int i = 0; i < columnCount; i++)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(csv[i]))
+                                    {
+                                        dt.Columns.Add(csv[i]);
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                DataRow dr = dt.NewRow();
+                                for (int i = 0; i < columnCount; i++)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(csv[i]))
+                                    {
+                                        dr[i] = csv[i];
+                                    }
+                                }
+                                dt.Rows.Add(dr);
+                            }
+                        }
+                        return dt;
+                    }
+                }
+            }
+        }
+
+    }
+    public class XlsTransferData : ExcelTransferData
+    {
+        public override Stream GetStream(DataTable table)
+        {
+            base._workBook = new HSSFWorkbook();
+            return base.GetStream(table);
+        }
+        public override DataTable GetData(Stream stream)
+        {
+            base._workBook = new HSSFWorkbook(stream);
+            return base.GetData(stream);
+        }
+        public override DataTable GetDataTitle(Stream stream)
+        {
+            base._workBook = new HSSFWorkbook(stream);
+            return base.GetDataTitle(stream);
+        }
+    }
+    public class XlsxTransferData : ExcelTransferData
+    {
+        public override Stream GetStream(DataTable table)
+        {
+            base._workBook = new XSSFWorkbook();
+            return base.GetStream(table);
+        }
+        public override DataTable GetData(Stream stream)
+        {
+            base._workBook = new XSSFWorkbook(stream);
+            return base.GetData(stream);
+        }
+        public override DataTable GetDataTitle(Stream stream)
+        {
+            base._workBook = new XSSFWorkbook(stream);
+            return base.GetDataTitle(stream);
+        }
+    }
+    public abstract class ExcelTransferData : ITransferData
+    {
+        protected IWorkbook _workBook;
+        public virtual Stream GetStream(DataTable table)
+        {
+            var sheet = _workBook.CreateSheet();
+            if (table != null)
+            {
+                var rowCount = table.Rows.Count;
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    var row = sheet.CreateRow(i);
+                    for (int j = 0; j < table.Columns.Count; j++)
+                    {
+                        var cell = row.CreateCell(j);
+                        if (table.Rows[i][j] != null)
+                        {
+                            cell.SetCellValue(table.Rows[i][j].ToString());
+                        }
+                    }
+                }
+            }
+            MemoryStream ms = new MemoryStream();
+            _workBook.Write(ms);
+            return ms;
+        }
+        /// <summary>
+        /// 获取没有标题的DataTable
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public virtual DataTable GetData(Stream stream)
+        {
+            using (stream)
+            {
+                var sheet = _workBook.GetSheetAt(0);
+                if (sheet != null)
+                {
+                    var headerRow = sheet.GetRow(0);
+                    DataTable dt = new DataTable();
+                    int columnCount = headerRow.Cells.Count;
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        dt.Columns.Add("col_" + i.ToString());
+                    }
+                    var row = sheet.GetRowEnumerator();
+                    while (row.MoveNext())
+                    {
+                        var dtRow = dt.NewRow();
+                        var excelRow = row.Current as IRow;
+                        for (int i = 0; i < columnCount; i++)
+                        {
+                            var cell = excelRow.GetCell(i);
+                            if (cell != null)
+                            {
+                                dtRow[i] = GetValue(cell);
+                            }
+                        }
+                        dt.Rows.Add(dtRow);
+                    }
+                    return dt;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 获取没有标题的DataTable
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public virtual DataTable GetDataTitle(Stream stream)
+        {
+            using (stream)
+            {
+                var sheet = _workBook.GetSheetAt(0);
+                if (sheet != null)
+                {
+                    var headerRow = sheet.GetRow(0);
+                    DataTable dt = new DataTable();
+                    int columnCount = headerRow.Cells.Count;
+                    //for (int i = 0; i < columnCount; i++)
+                    //{
+                    //    dt.Columns.Add("col_" + i.ToString());
+                    //}
+                    bool flag = true;
+                    var row = sheet.GetRowEnumerator();
+                    while (row.MoveNext())
+                    {
+                        if (flag)
+                        {
+                            var excelRow = row.Current as IRow;
+                            for (int i = 0; i < columnCount; i++)
+                            {
+                                var cell = excelRow.GetCell(i);
+                                if (cell != null)
+                                {
+                                    dt.Columns.Add(GetValue(cell).ToString());
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var dtRow = dt.NewRow();
+                            var excelRow = row.Current as IRow;
+                            for (int i = 0; i < columnCount; i++)
+                            {
+                                var cell = excelRow.GetCell(i);
+                                if (cell != null)
+                                {
+                                    dtRow[i] = GetValue(cell);
+                                }
+                            }
+                            dt.Rows.Add(dtRow);
+                        }
+
+                        flag = false;
+                    }
+
+                    return dt;
+                }
+            }
+            return null;
+        }
+
+        private object GetValue(ICell cell)
+        {
+            object value = null;
+            switch (cell.CellType)
+            {
+                case CellType.Blank:
+                    break;
+                case CellType.Boolean:
+                    value = cell.BooleanCellValue ? "1" : "0"; break;
+                case CellType.Error:
+                    value = cell.ErrorCellValue; break;
+                case CellType.Formula:
+                    value = "=" + cell.CellFormula; break;
+                case CellType.Numeric:
+                    value = cell.NumericCellValue.ToString(); break;
+                case CellType.String:
+                    value = cell.StringCellValue; break;
+                case CellType.Unknown:
+                    break;
+            }
+            return value;
+        }
+    }
     #endregion
 }

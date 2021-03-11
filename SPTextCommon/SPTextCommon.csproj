@@ -288,6 +288,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\Attribute\ValidateAttribute.cs" />
     <Compile Include="Attributes\EntityAttribute.cs" />
     <Compile Include="CacheRedis\Cache.cs" />
     <Compile Include="CacheRedis\RedisCache.cs" />
@@ -338,7 +339,6 @@
     <Compile Include="HelperCommon\Email\MailSmtpHelper.cs" />
     <Compile Include="HelperCommon\Email\SmtpConfig.cs" />
     <Compile Include="HelperCommon\Email\SmtpSetting.cs" />
-    <Compile Include="HelperCommon\Excel\DataToExcel.cs" />
     <Compile Include="HelperCommon\Excel\ExcelHelper.cs" />
     <Compile Include="HelperCommon\Excel\GridViewExport.cs" />
     <Compile Include="HelperCommon\File\DirectoryHelper.cs" />
