@@ -26,9 +26,9 @@ namespace SPText.Common.RabbitMQ
             FanoutExchangeShow();
             TopicExchangeShow();
             HeaderExchangeShow();
-            ProductionMessageTxShow();
-            ProductionMessageConfirmShow();
-            ConsumptionACKConfirmShow();
+            ProductionMessageTxShow();          ////事务模式
+            ProductionMessageConfirmShow();     ////消息确认
+            ConsumptionACKConfirmShow();        ////消息ACK自动确认
             ProductionColonyConsumerShow();     ////集群
         }
 
@@ -63,10 +63,7 @@ namespace SPText.Common.RabbitMQ
                             //basicProperties.DeliveryMode = 2;
                             string message = $"消息{i}";
                             byte[] body = Encoding.UTF8.GetBytes(message);
-                            channel.BasicPublish(exchange: "OnlyProducerMessageExChange",
-                                            routingKey: string.Empty,
-                                            basicProperties: basicProperties,
-                                            body: body);
+                            channel.BasicPublish(exchange: "OnlyProducerMessageExChange", routingKey: string.Empty, basicProperties: basicProperties, body: body);
                             Console.WriteLine($"消息消息消息消息消息消息消息消息消息消息消息消息消息消息：{message} 已发送~");
                             i++;
                             //Thread.Sleep(10);
@@ -110,10 +107,7 @@ namespace SPText.Common.RabbitMQ
                                 {
                                     string message = $"生产者{No}：消息{i}";
                                     byte[] body = Encoding.UTF8.GetBytes(message);
-                                    channel.BasicPublish(exchange: "MultiProducerMessageExChange",
-                                                    routingKey: string.Empty,
-                                                    basicProperties: null,
-                                                    body: body);
+                                    channel.BasicPublish(exchange: "MultiProducerMessageExChange", routingKey: string.Empty, basicProperties: null, body: body);
                                     Console.WriteLine($"消息：{message} 已发送~");
                                     i++;
                                     Thread.Sleep(200);
@@ -379,14 +373,10 @@ namespace SPText.Common.RabbitMQ
 
                     foreach (string logtype in logtypes)
                     {
-                        channel.QueueBind(queue: "DirectExchangeLogAllQueue",
-                                exchange: "DirectExChange",
-                                routingKey: logtype);
+                        channel.QueueBind(queue: "DirectExchangeLogAllQueue", exchange: "DirectExChange", routingKey: logtype);
                     }
 
-                    channel.QueueBind(queue: "DirectExchangeErrorQueue",
-                              exchange: "DirectExChange",
-                              routingKey: "error");
+                    channel.QueueBind(queue: "DirectExchangeErrorQueue", exchange: "DirectExChange", routingKey: "error");
 
                     List<LogMsgModel> logList = new List<LogMsgModel>();
                     for (int i = 1; i <= 100; i++)
@@ -413,10 +403,7 @@ namespace SPText.Common.RabbitMQ
                     //发送日志信息
                     foreach (var log in logList)
                     {
-                        channel.BasicPublish(exchange: "DirectExChange",
-                                            routingKey: log.LogType,
-                                            basicProperties: null,
-                                            body: log.Msg);
+                        channel.BasicPublish(exchange: "DirectExChange", routingKey: log.LogType, basicProperties: null, body: log.Msg);
                         Console.WriteLine($"{Encoding.UTF8.GetString(log.Msg)}  已发送~~");
                     }
 
@@ -456,10 +443,7 @@ namespace SPText.Common.RabbitMQ
                         var message = $"通知{i}";
                         var body = Encoding.UTF8.GetBytes(message);
                         //基本发布
-                        channel.BasicPublish(exchange: "FanoutExchange",
-                                             routingKey: string.Empty,
-                                             basicProperties: null,
-                                             body: body);
+                        channel.BasicPublish(exchange: "FanoutExchange", routingKey: string.Empty, basicProperties: null, body: body);
                         Console.WriteLine($"通知【{message}】已发送到队列");
                         Thread.Sleep(2000);
                         i++;
@@ -610,8 +594,9 @@ namespace SPText.Common.RabbitMQ
         }
         #endregion
 
-        #region ProductionMessageTx
-        public void ProductionMessageTxShow() {
+        #region ProductionMessageTx（事务模式）
+        public void ProductionMessageTxShow()
+        {
             ConnectionFactory factory = new ConnectionFactory();
             factory.HostName = "localhost";//RabbitMQ服务在本地运行
             factory.UserName = "guest";//用户名
@@ -669,8 +654,9 @@ namespace SPText.Common.RabbitMQ
         }
         #endregion
 
-        #region ProductionMessageConfirm
-        public void ProductionMessageConfirmShow() {
+        #region ProductionMessageConfirm（消息确认）
+        public void ProductionMessageConfirmShow()
+        {
             ConnectionFactory factory = new ConnectionFactory();
             factory.HostName = "localhost";//RabbitMQ服务在本地运行
             factory.UserName = "guest";//用户名
@@ -725,7 +711,8 @@ namespace SPText.Common.RabbitMQ
         #endregion
 
         #region ConsumptionACKConfirm
-        public void ConsumptionACKConfirmShow() {
+        public void ConsumptionACKConfirmShow()
+        {
             var factory = new ConnectionFactory();
             factory.HostName = "localhost";//RabbitMQ服务在本地运行
             factory.UserName = "guest";//用户名
@@ -762,7 +749,8 @@ namespace SPText.Common.RabbitMQ
         #endregion
 
         #region ProductionColonyConsumer(集群)
-        public void ProductionColonyConsumerShow() {
+        public void ProductionColonyConsumerShow()
+        {
             ConnectionFactory factory = new ConnectionFactory();
             //factory.HostName = "192.168.3.211";//RabbitMQ服务在本地运行 
 
@@ -808,6 +796,47 @@ namespace SPText.Common.RabbitMQ
                             Thread.Sleep(10);
                         }
                     }
+                }
+            }
+        }
+        #endregion
+
+        #region  测试
+        public void CreateRabbitMQ()
+        {
+            ConnectionFactory connectionFactory = new ConnectionFactory();
+            connectionFactory.HostName = "localhost";
+            connectionFactory.UserName = "guest";
+            connectionFactory.Password = "guest";
+            using (IConnection connection = connectionFactory.CreateConnection())
+            {
+                using (IModel model = connection.CreateModel())
+                {
+                    model.QueueDeclare(queue: "queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
+                    model.ExchangeDeclare(exchange: "exchange", type: "type", durable: true, autoDelete: false, arguments: null);
+                    model.QueueBind(queue: "queue", exchange: "exchange", routingKey: string.Empty, arguments: null);
+                    IBasicProperties basicProperties = model.CreateBasicProperties();
+                    int i = 1;
+                    while (true)
+                    {
+                        {
+                            basicProperties.Priority = 9;
+                            string message = $"生产者，生产消息{i}";
+                            byte[] body = Encoding.UTF8.GetBytes(message);
+                            model.BasicPublish(exchange: "exchange", routingKey: string.Empty, basicProperties: null, body: body);
+                        }
+                        {
+                            var consumer = new EventingBasicConsumer(model);
+                            consumer.Received += (p, q) =>
+                            {
+                                var str = q.Body;
+                                var message = Encoding.UTF8.GetString(str.ToArray());
+                                Console.WriteLine($"消费者{i}，消费消息{message}");
+                            };
+                            model.BasicConsume(queue: "queue", autoAck: false, consumer: consumer);
+                        }
+                    }
+
                 }
             }
         }

@@ -50,7 +50,6 @@ namespace SPText.Common.RabbitMQ
 
                                 channel.QueueBind(queue: "OnlyProducerMessage", exchange: "OnlyProducerMessageExChange", routingKey: string.Empty, arguments: null);
 
-
                                 var consumer = new EventingBasicConsumer(channel);
                                 consumer.Received += (model, ea) =>
                                 {

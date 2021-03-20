@@ -18,6 +18,7 @@ using SPText.Common.ExpressionExtend;
 using SPText.Common.RabbitMQ;
 using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
+using SPText.Common.ReportPrintingHelper;
 using SPText.EF;
 using SPText.EF.EF2;
 using SPText.Unity;
@@ -245,6 +246,10 @@ namespace SPText
 
             #region  文件压缩
             //ZipShow();
+            #endregion
+
+            #region  rdlc打印成Pdf
+            ReportPrint();
             #endregion
 
             #region  测试代码
@@ -2092,7 +2097,11 @@ namespace SPText
                 //    System.Data.DataTable data = db.ExecuteDataTable(sql, null);
                 //}
             }
-
+            //{
+            //    //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
+            //    //IBaseDal<SPTextCommon.EFBaseServices.Model.CompanyModel> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.CompanyModel>();
+            //    //baseServices.QueryWhere(p => 1 == 1).ToList();
+            //}
         }
         #endregion
 
@@ -2517,6 +2526,16 @@ namespace SPText
             //    SPTextCommon.HelperCommon.ImageUpload imageUpload = new SPTextCommon.HelperCommon.ImageUpload();
             //    imageUpload.Upload();
             //}
+        }
+        #endregion
+
+        #region  rdlc打印成Pdf
+        public static void ReportPrint()
+        {
+            ReportPrintShow reportPrint = new ReportPrintShow();
+            reportPrint.Show1();
+            reportPrint.Show2();
+
         }
         #endregion
     }

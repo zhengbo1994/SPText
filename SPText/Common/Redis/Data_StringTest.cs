@@ -115,8 +115,54 @@ namespace SPText.Common.Redis
                 //Console.WriteLine(client.Get<string>("name"));
                 #endregion
 
+                #region  分布式锁
+                TimeSpan timeSpan = new TimeSpan(100);
+                /*
+                    分布式锁的面试宝典
+                    阻塞锁原理：
+                    尝试在redis中创建一个字符串结构缓存，方法传入的key，value为锁的过期时间timeout的时间戳。
+                    ***若redis中没有这个key，则创建成功（即抢到锁），然后立即返回。
+                    若已经有这个key，则先watch，然后校验value中的时间戳是否已经超过当前时间。
+                    若已超过，则尝试使用提交事务的方式覆盖新的时间戳，事务提交成功（即抢到锁），
+                    然后立即返回；若未超过当前时间或事务提交失败（即被别人抢到锁），
+                    ***则进入  一个内部优化过的微循环，不断重试。
+                    
+                    传入的timeout还有一个作用，就是控制重试时间，重试超时后则抛异常。
+                    using完成方法调用或者显式调用dispose，都会直接清除key。
+                    注意：
+                    timeout有两个意思，一是如果成功加锁后锁的过期时间， 二是未成功加锁后阻塞等待的时间
+                    数据锁服务通过检查value中时间戳来判断是否过期，并不是利用redis在key上设置expire time来通过key的过期实现。
+                    
+                    100
+                    -- 切记，代码非常非常简单，原理非常非常重要，听不懂，不明白，多听听，面试的记住，把=
+                 */
+                {
+                    //using (client.AcquireLock("Lock", timeSpan))
+                    //{
 
+                    //};//锁
+                }
 
+                /*
+                    非阻塞锁原理
+                    尝试在redis中创建一个字符串结构缓存项,方法传入的key，value无意义，过期时间为传入的timeout。
+                    若redis中没有这个key，则创建成功（即抢到锁），然后立即返回true。若已经有这个key，则立即返回false。
+                    以上过程为全局单线程原子操作，整个过程为独占式操作。
+                    IsLock可以检测key是否存在。
+                    注意：
+                    
+                    timeout即成功加锁后锁的过期时间
+                    利用redis在key上设置expire time来通过key的过期实现。
+                    不要先用IsLock判断是否有锁再用Add加锁，因为这两个操作非原子性操作，期间会被其他操作干
+                 */
+                {
+                    //bool block = client.Add("Lock",, true, timeSpan);
+                    //if (block)
+                    //{
+
+                    //}
+                }
+                #endregion
             }
 
 

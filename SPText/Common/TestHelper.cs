@@ -1,6 +1,7 @@
 ﻿using Grpc.Core;
 using LumenWorks.Framework.IO.Csv;
 using Microsoft.Data.SqlClient;
+using Microsoft.Reporting.WinForms;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -37,11 +38,14 @@ namespace SPText.Common
             //this.TheardShow();
 
 
-            this.TestShow();
+            //this.TestShow();
 
             //this.PrintShow();
 
             //this.NopiHelper();
+
+
+            //使用 LocalReport 对象进行打印(https://blog.csdn.net/weixin_30325971/article/details/99996453)
         }
 
         #region  事件代码测试
@@ -581,6 +585,63 @@ namespace SPText.Common
                 var util = TransferDataFactory.GetUtil(fileName);
                 var data = util.GetDataTitle(stream);
             }
+        }
+
+
+        public void NopiShowText()
+        {
+            string path = "";
+            FileInfo fileInfo = new FileInfo(path);
+            NOPIShow(fileInfo,true);
+        }
+        public DataTable NOPIShow(FileInfo fileInfo, bool isFirstRowColumn)
+        {
+            DataTable dataTable = new DataTable();
+
+            IWorkbook workbook = null;
+
+            Stream stream = new FileStream(fileInfo.FullName, FileMode.Open);
+            if (Path.GetExtension(fileInfo.FullName).ToLower()==".xlsx")
+            {
+                if (workbook==null)
+                {
+                    try
+                    {
+                        workbook = new XSSFWorkbook(stream);
+                    }
+                    catch
+                    {
+                        workbook = new HSSFWorkbook(stream);
+                    }
+           
+                }
+            }
+            else if (Path.GetExtension(fileInfo.FullName).ToLower()==".xls")
+            {
+                if (workbook == null)
+                {
+                    try
+                    {
+                        workbook = new HSSFWorkbook(stream);
+                    }
+                    catch
+                    {
+                        workbook = new XSSFWorkbook(stream);
+                    }
+                }
+            }
+
+            if (workbook!=null)
+            {
+                var sheet = workbook.GetSheetAt(0);
+                if (sheet!=null)
+                {
+
+                }
+            }
+
+
+            return dataTable;
         }
     }
     #region  事件
