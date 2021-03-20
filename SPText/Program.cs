@@ -15,8 +15,10 @@ using SPText.Common;
 using SPText.Common.DataHelper;
 using SPText.Common.DataHelper.Sql;
 using SPText.Common.ExpressionExtend;
+using SPText.Common.RabbitMQ;
 using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
+using SPText.Common.ReportPrintingHelper;
 using SPText.EF;
 using SPText.EF.EF2;
 using SPText.Unity;
@@ -246,9 +248,13 @@ namespace SPText
             //ZipShow();
             #endregion
 
+            #region  rdlc打印成Pdf
+            ReportPrint();
+            #endregion
+
             #region  测试代码
-            TestHelper testHelper = new TestHelper();
-            testHelper.Show();
+            //TestHelper testHelper = new TestHelper();
+            //testHelper.Show();
             #endregion
 
 
@@ -287,13 +293,10 @@ namespace SPText
             var avg = a.Average();
             var dis = c.Distinct();
 
-
             var a1 = a.Join(b, p => p.ToString(), q => q.ToString(), (p, q) => p).ToList();//连接
             var a2 = a.Zip(c, (p, q) => p + q).ToList();//合并
             //var a3 = a.ToLookup(p => p == 1).ToList();
             var a4 = c.Concat(a); //连接
-
-
 
             Console.WriteLine(max);
             Console.WriteLine(min);
@@ -301,6 +304,7 @@ namespace SPText
 
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
+
             Console.ReadKey();
         }
         #endregion
@@ -2031,8 +2035,8 @@ namespace SPText
                 var value = database.FindTable(sql);
             }
             {//Sql
-                var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
-                var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
+                //var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
+                //var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
             }
             {
                 {
@@ -2093,7 +2097,11 @@ namespace SPText
                 //    System.Data.DataTable data = db.ExecuteDataTable(sql, null);
                 //}
             }
-
+            //{
+            //    //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
+            //    //IBaseDal<SPTextCommon.EFBaseServices.Model.CompanyModel> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.CompanyModel>();
+            //    //baseServices.QueryWhere(p => 1 == 1).ToList();
+            //}
         }
         #endregion
 
@@ -2443,7 +2451,17 @@ namespace SPText
         #region  RabbitMQ（测试未通过）
         public static void RabbitMQ()
         {
-            {//向RabbitMQ服务器发送消息
+            {
+                {
+                    RabbitMQHelper rabbitMQ = new RabbitMQHelper();
+                    rabbitMQ.Show();
+                }
+                {
+                    RabbitMQExecuteHelper rabbitMQExecuteHelper = new RabbitMQExecuteHelper();
+                    rabbitMQExecuteHelper.Show();
+                }
+            }
+            {//向RabbitMQ服务器发送消息（推送）
                 var factory = new ConnectionFactory();
                 factory.HostName = "localhost";//主机名，Rabbit会拿这个IP生成一个endpoint，这个很熟悉吧，就是socket绑定的那个终结点。
                 factory.UserName = "guest";//默认用户名,用户可以在服务端自定义创建，有相关命令行
@@ -2464,7 +2482,7 @@ namespace SPText
                     }
                 }
             }
-            {//去RabbitMQ的服务器查看当前消息队列
+            {//去RabbitMQ的服务器查看当前消息队列（查看）
                 var factory = new ConnectionFactory();
                 factory.HostName = "localhost";
                 factory.UserName = "guest";
@@ -2508,6 +2526,16 @@ namespace SPText
             //    SPTextCommon.HelperCommon.ImageUpload imageUpload = new SPTextCommon.HelperCommon.ImageUpload();
             //    imageUpload.Upload();
             //}
+        }
+        #endregion
+
+        #region  rdlc打印成Pdf
+        public static void ReportPrint()
+        {
+            ReportPrintShow reportPrint = new ReportPrintShow();
+            reportPrint.Show1();
+            reportPrint.Show2();
+
         }
         #endregion
     }

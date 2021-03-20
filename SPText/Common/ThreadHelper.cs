@@ -154,6 +154,7 @@ namespace SPText.Common
                     else
                     {
                         Thread.Sleep(200);
+                        System.Windows.Forms.Application.DoEvents();
                     }
                 }
             }
@@ -320,7 +321,6 @@ namespace SPText.Common
                 //实战作业完成后，一起庆祝一下
                 taskList.Add(taskFactory.ContinueWhenAll(taskList.ToArray(), rArray => Console.WriteLine($"开发都完成，一起庆祝一下{Thread.CurrentThread.ManagedThreadId.ToString("00")}")));
                 //ContinueWhenAny  ContinueWhenAll 非阻塞式的回调；而且使用的线程可能是新线程，也可能是刚完成任务的线程，唯一不可能是主线程
-
 
                 //阻塞当前线程，等着任意一个任务完成
                 Task.WaitAny(taskList.ToArray());//也可以限时等待

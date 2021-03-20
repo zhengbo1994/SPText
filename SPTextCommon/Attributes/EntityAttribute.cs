@@ -90,7 +90,7 @@ namespace SPTextCommon.Attributes
                 if (fieldInfo != null)
                 {
                     // 获取描述的属性。
-                    DescriptionAttribute attr = Attribute.GetCustomAttribute(fieldInfo,
+                    DescriptionAttribute attr = System.Attribute.GetCustomAttribute(fieldInfo,
                         typeof(DescriptionAttribute), false) as DescriptionAttribute;
                     if (attr != null)
                     {

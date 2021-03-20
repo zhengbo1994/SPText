@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -459,5 +460,102 @@ namespace SPTextCommon
         {
             return SendMail(emailAcount, emailPassword, emailRecipientList, null, title, content, null, null, null);
         }
+    }
+
+
+
+    public class UowDBContext : DbContext
+    {
+        public DbContext _DbContext { get; set; }
+        public UowDBContext() : base("name=DBContext")
+        {
+            CreateDbContext("DBContext");
+        }
+
+        public UowDBContext(string connection) : base(connection)
+        {
+            CreateDbContext(connection);
+        }
+
+        public void CreateDbContext(string connetion)
+        {
+            this._DbContext = new DbContext(connetion);
+            this._DbContext.Configuration.ProxyCreationEnabled = false;
+            this._DbContext.Configuration.ValidateOnSaveEnabled = false;
+        }
+
+        public IQueryable<T> GetAll<T>() where T : class
+        {
+            return _DbContext.Set<T>();
+        }
+
+        public T GetById<T>(int Id) where T : class
+        {
+            return _DbContext.Set<T>().Find(Id);
+        }
+
+        public T GetById<T>(params int[] Ids) where T : class
+        {
+            return _DbContext.Set<T>().Find(Ids);
+        }
+
+        public void Add<T>(T t) where T : class
+        {
+            var entry = _DbContext.Entry(t);
+            if (entry.State == EntityState.Detached)
+            {
+                entry.State = EntityState.Added;
+            }
+            else
+            {
+                _DbContext.Set<T>().Attach(t);
+                _DbContext.Set<T>().Add(t);
+            }
+        }
+
+        public void Update<T>(T t) where T : class
+        {
+            var entry = _DbContext.Entry(t);
+            _DbContext.Set<T>().Attach(t);
+            entry.State = EntityState.Modified;
+        }
+
+        public void Delete<T>(T t) where T : class
+        {
+            var entry = _DbContext.Entry(t);
+            if (entry.State == EntityState.Detached)
+            {
+                _DbContext.Set<T>().Attach(t);
+                entry.State = EntityState.Deleted;
+            }
+            else
+            {
+                _DbContext.Set<T>().Attach(t);
+                _DbContext.Set<T>().Remove(t);
+            }
+        }
+
+        public int ExecuteSqlCommand<T>(string sql, params object[] parameters)
+        {
+            return _DbContext.Database.ExecuteSqlCommand(sql, parameters);
+        }
+
+        public IQueryable<T> SqlQuery<T>(string sql, params object[] parameters)
+        {
+            return _DbContext.Database.SqlQuery<T>(sql, parameters).AsQueryable();
+        }
+
+        public void Commit()
+        {
+            _DbContext.SaveChanges();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            GC.SuppressFinalize(_DbContext);
+            base.Dispose(disposing);
+        }
+
+        public DbSet<EmailHelper> emailHelpers { get; set; }
     }
 }

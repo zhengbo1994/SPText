@@ -15,11 +15,11 @@ namespace SPText.Common
 
         public void Show()
         {
-            //SingletonPatternShow();//单例模式
+            SingletonPatternShow();//单例模式
             //SimpleFactoryFactoryShow();//简单工厂
             //ApproachFactoryShow(); //工厂方法
             //AbstractFactoryPatternShow();//抽象工厂
-            BuilderPatternShow();//建造者模式（*难理解）
+            //BuilderPatternShow();//建造者模式（*难理解）
             //PrototypePatternShow();//原型模式
             //AdapterPatternShow();//适配器模式
             //BridgePatternShow();//桥梁模式

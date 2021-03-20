@@ -465,6 +465,9 @@ namespace System
             }
             return dt;
         }
+
+
+
         /// <summary>
         /// 解析字符串 获取 该行的数据 已经处理,及"号
         /// </summary>
@@ -562,5 +565,178 @@ namespace System
             }
             return list.ToArray();
         }
+
+        #region  数据（正式上面bug修改备份）
+        /// <summary>
+        /// 新的TXT读取方法，读取csv文件到DataTable
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public static DataTable ReadCsv2(string filepath)
+        {
+            DataTable dt = new DataTable("NewTable");
+            DataRow row;
+
+            string str = File.ReadAllText(filepath);
+            string[] lines = str.Split(new string[] { "\n" }, StringSplitOptions.None);
+            lines = lines.Where(s => !string.IsNullOrEmpty(s)).ToArray();
+
+            string[] lines3 = File.ReadAllLines(filepath);
+
+            List<string> lineList = new List<string>();
+            int iCount = 0;
+            for (int i = 0; i < lines.Count(); i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("NA332"))//列如已NA332开头，中间出现换行
+                {
+                    lineList.Add(line);
+                    iCount++;
+                }
+                else
+                {
+                    if (i == 0)
+                    {
+                        lineList.Add(line);
+                    }
+                    else
+                    {
+                        lineList[iCount] = lineList[iCount] + "\n" + line;
+                    }
+                }
+            }
+
+            string[] head = lineList[0].Split(',');
+            int cnt = head.Length;
+            for (int i = 0; i < cnt; i++)
+            {
+                dt.Columns.Add(head[i].Replace("\"", "").Trim());
+            }
+            for (int i = 1; i < lineList.Count; i++)
+            {
+                if ((lineList[i].Trim() == ""))
+                {
+                    continue;
+                }
+                try
+                {
+                    row = dt.NewRow();
+                    row.ItemArray = GetRow(lineList[i], cnt);
+                    dt.Rows.Add(row);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// 解析字符串 获取 该行的数据 已经处理,及"号
+        /// </summary>
+        /// <param name="line">该行的内容</param>
+        /// <param name="cnt">总的条目数</param>
+        /// <returns></returns>
+        static private string[] GetRow2(string line, int cnt)
+        {
+            line.Replace("\"\"", "\"");
+            string[] strs = line.Split(',');
+            if (strs.Length == cnt)
+            {
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    if (strs[i].Length > 0 && strs[i][0] == '\"' && strs[i][strs[i].Length - 1] == '\"')
+                    {
+                        strs[i] = strs[i].Remove(0, 1);
+                        strs[i] = strs[i].Remove(strs[i].Length - 1, 1);
+                    }
+                    if (strs[i].EndsWith("\r"))
+                    {
+                        strs[i] = strs[i].Replace("\r", "");
+                    }
+                }
+                return strs;
+            }
+            List<string> list = new List<string>();
+            int n = 0, begin = 0;
+            bool flag = false;
+
+            for (int i = 0; i < strs.Length; i++)
+            {
+                //没有引号 或者 中间有引号 直接添加
+                if (strs[i].IndexOf("\"") == -1
+                    || (flag == false && strs[i][0] != '\"'))
+                {
+                    if (strs[i].EndsWith("\r"))
+                    {
+                        strs[i] = strs[i].Replace("\r", "");
+                    }
+                    list.Add(strs[i]);
+                    continue;
+                }
+                //其实有引号，但该段没有,号，直接添加
+                n = 0;
+                foreach (char ch in strs[i])
+                {
+                    if (ch == '\"')
+                    {
+                        n++;
+                    }
+                }
+                if (n % 2 == 0)
+                {
+                    if (strs[i][0] == '\"')
+                    {
+                        strs[i] = strs[i].Remove(0, 1);
+                    }
+                    if (strs[i][strs[i].Length - 1] == '\"')
+                    {
+                        strs[i] = strs[i].Remove(strs[i].Length - 1, 1);
+                    }
+                    list.Add(strs[i]);
+                    continue;
+                }
+                //该段有引号 有 ,号，下一段增加后添加
+                flag = true;
+                begin = i;
+                i++;
+                for (i = begin + 1; i < strs.Length; i++)
+                {
+                    foreach (char ch in strs[i])
+                    {
+                        if (ch == '\"')
+                        {
+                            n++;
+                        }
+                    }
+                    if (strs[i].Length > 0 && strs[i][strs[i].Length - 1] == '\"' && n % 2 == 0)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        for (; begin <= i; begin++)
+                        {
+                            sb.Append(strs[begin]);
+                            if (begin != i)
+                            {
+                                sb.Append(",");
+                            }
+                        }
+                        string content = sb.ToString();
+                        if (content[0] == '\"')
+                        {
+                            content = content.Remove(0, 1);
+                        }
+                        if (content[content.Length - 1] == '\"')
+                        {
+                            content = content.Remove(content.Length - 1, 1);
+                        }
+                        list.Add(content);
+                        break;
+                    }
+                }
+            }
+            return list.ToArray();
+        }
+        #endregion
     }
 }

@@ -40,6 +40,10 @@ namespace System
 			}
 		}
 
+        /// <summary>
+        /// 删除文件目录下的所有文件
+        /// </summary>
+        /// <param name="srcPath"></param>
         public static void DelectDir(string srcPath)
         {
             try
@@ -76,6 +80,11 @@ namespace System
         public const int OF_READWRITE = 2;
         public const int OF_SHARE_DENY_NONE = 0x40;
         public static readonly IntPtr HFILE_ERROR = new IntPtr(-1);
+        /// <summary>
+        /// 文件已打开
+        /// </summary>
+        /// <param name="vFileName"></param>
+        /// <returns></returns>
         public static int FileIsOpen(string vFileName)
         {
             if (!File.Exists(vFileName))
