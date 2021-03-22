@@ -249,7 +249,7 @@ namespace SPText
             #endregion
 
             #region  rdlc打印成Pdf
-            ReportPrint();
+            //ReportPrint();
             #endregion
 
             #region  测试代码
