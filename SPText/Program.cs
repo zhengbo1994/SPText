@@ -2312,22 +2312,24 @@ namespace SPText
                 DataRow row;
                 //创建一个新列，设置列的数据列性和列名，并把这个新列添加到Customers表中
                 column = new DataColumn();
-                column.DataType = System.Type.GetType("System.Int32");
-                column.ColumnName = " CustID ";
+                column.DataType = System.Type.GetType("System.String");
+                column.ColumnName = "CustID";
                 CustomersTable.Columns.Add(column);
                 //再创建一个新列
                 column = new DataColumn();
                 column.DataType = Type.GetType("System.String");
-                column.ColumnName = " CustLName ";
-                CustomersTable.Rows.Add(column);
+                column.ColumnName = "CustLName";
+                CustomersTable.Columns.Add(column);
                 //创建新的一行并把这个行添加到Customers表中
                 for (int i = 0; i < 10; i++)
                 {
                     row = CustomersTable.NewRow();
-                    row["CustID "] = i;
-                    row["CustLName "] = "item " + i.ToString();
+                    row["CustID"] = i.ToString();
+                    row["CustLName"] = "item " + i.ToString();
                     CustomersTable.Rows.Add(row);
                 }
+                var a = CustomersTable.AsDataView();
+                var b = CustomersTable.AsEnumerable().Where(p => p.Field<string>("CustID") == "1").ToList();
             }
             {//Hashtable
                 Hashtable ht = new Hashtable(); //创建一个Hashtable实例
@@ -2357,7 +2359,6 @@ namespace SPText
                     Console.Write(skey + ":");
                     Console.WriteLine(ht[skey]); //排序后输出
                 }
-
             }
             {//Dictionary
              //创建泛型哈希表,Key类型为int,Value类型为string

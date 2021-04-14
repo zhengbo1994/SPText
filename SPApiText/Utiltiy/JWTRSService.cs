@@ -22,8 +22,6 @@ namespace SPCoreApiText.Utiltiy
         }
         #endregion
 
-
-
         public string GetToken(CurrentUserModel userModel)
         {
             string jtiCustom = Guid.NewGuid().ToString();//用来标识 Token

@@ -140,7 +140,7 @@ namespace ReportPrinting.Model
             m_Code128.Rows.Add("73", "HT", "i", "73", "142112");
             m_Code128.Rows.Add("74", "LF", "j", "74", "142211");
             m_Code128.Rows.Add("75", "VT", "k", "75", "241211");
-            m_Code128.Rows.Add("76", "FF", "I", "76", "221114");
+            m_Code128.Rows.Add("76", "FF", "l", "76", "221114");
             m_Code128.Rows.Add("77", "CR", "m", "77", "413111");
             m_Code128.Rows.Add("78", "SO", "n", "78", "241112");
             m_Code128.Rows.Add("79", "SI", "o", "79", "134111");

@@ -82,15 +82,20 @@ namespace SPText.Common.ReportPrintingHelper
             PrintDocument pd = new PrintDocument();
             StandardPrintController controler = new StandardPrintController();
 
+            pd.DefaultPageSettings.PaperSize = new PaperSize("LMS", 850, 550);   //1/100英寸為1單位   1毫米=3.93   52mm 33mm
+
             try
             {
                 pd.PrintPage += new PrintPageEventHandler(this.DrawLabelPic);
                 pd.PrinterSettings.Copies = (short)1;
                 //选择默认的打印机
                 //pd.PrinterSettings.PrinterName = pd.PrinterSettings.PrinterName; //System.Configuration.ConfigurationManager.AppSettings["PrinterName"].ToString();
-                pd.PrinterSettings.PrinterName = "Microsoft Print to PDF";
+                pd.PrinterSettings.PrinterName = System.Configuration.ConfigurationManager.AppSettings["PrinterName"].ToString();
                 pd.PrintController = controler;
-
+                PaperSize paperSize = new PaperSize("Custom Size 1", 294, 294);
+                pd.DefaultPageSettings.PaperSize = paperSize;
+                //pd.OriginAtMargins = false;
+                //pd.PrinterSettings.DefaultPageSettings.PaperSize = paperSize;
                 pd.Print();
                 return true;
             }
@@ -116,52 +121,57 @@ namespace SPText.Common.ReportPrintingHelper
             if (currentPageIndex == 0)   //当为第一页时
             {
                 #region page2
-                av.Graphics.TranslateTransform(320, 110);
+                //av.Graphics.TranslateTransform(330, 245);
+                av.Graphics.TranslateTransform(280, 140);
                 av.Graphics.RotateTransform(180F);
                 av.Graphics.DrawString(labelInfo.page2Info.row1, new Font("Arial", 10, FontStyle.Bold), brush, 0, 0);
 
-                av.Graphics.DrawString(labelInfo.page2Info.row2, new Font("Arial", 8, FontStyle.Regular), brush, 12, 10);
-                av.Graphics.DrawString(labelInfo.page2Info.row3, new Font("Arial", 8, FontStyle.Regular), brush, 12, 20);
-                av.Graphics.DrawString(labelInfo.page2Info.row4, new Font("Arial", 10, FontStyle.Bold), brush, 300, 40);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_1, new Font("Arial", 8, FontStyle.Regular), brush, 10, 60);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_2, new Font("Arial", 8, FontStyle.Regular), brush, 60, 60);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_3, new Font("Arial", 8, FontStyle.Regular), brush, 100, 60);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_4, new Font("Arial", 8, FontStyle.Regular), brush, 150, 60);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_5, new Font("Arial", 8, FontStyle.Regular), brush, 200, 60);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_6, new Font("Arial", 8, FontStyle.Regular), brush, 250, 60);
+                av.Graphics.DrawString(labelInfo.page2Info.row2, new Font("Arial", 8, FontStyle.Regular), brush, 12, 15);
+                av.Graphics.DrawString(labelInfo.page2Info.row3, new Font("Arial", 8, FontStyle.Regular), brush, 12, 30);
+                av.Graphics.DrawString(labelInfo.page2Info.row4, new Font("Arial", 10, FontStyle.Bold), brush, 240, 45);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_1, new Font("Arial", 8, FontStyle.Regular), brush, 10, 70);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_2, new Font("Arial", 8, FontStyle.Regular), brush, 60, 70);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_3, new Font("Arial", 8, FontStyle.Regular), brush, 100, 70);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_4, new Font("Arial", 8, FontStyle.Regular), brush, 140, 70);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_5, new Font("Arial", 8, FontStyle.Regular), brush, 180, 70);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[0].row_6, new Font("Arial", 8, FontStyle.Regular), brush, 220, 70);
 
-                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_1, new Font("Arial", 8, FontStyle.Bold), brush, 10, 70);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_2, new Font("Arial", 8, FontStyle.Bold), brush, 60, 70);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_3, new Font("Arial", 8, FontStyle.Bold), brush, 100, 70);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_4, new Font("Arial", 8, FontStyle.Bold), brush, 150, 70);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_5, new Font("Arial", 8, FontStyle.Bold), brush, 200, 70);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_6, new Font("Arial", 8, FontStyle.Bold), brush, 250, 70);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_1, new Font("Arial", 8, FontStyle.Bold), brush, 10, 85);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_2, new Font("Arial", 8, FontStyle.Bold), brush, 60, 85);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_3, new Font("Arial", 8, FontStyle.Bold), brush, 100, 85);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_4, new Font("Arial", 8, FontStyle.Bold), brush, 140, 85);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_5, new Font("Arial", 8, FontStyle.Bold), brush, 180, 85);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[1].row_6, new Font("Arial", 8, FontStyle.Bold), brush, 220, 85);
 
-                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_1, new Font("Arial", 8, FontStyle.Regular), brush, 10, 80);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_2, new Font("Arial", 8, FontStyle.Regular), brush, 60, 80);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_3, new Font("Arial", 8, FontStyle.Regular), brush, 100, 80);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_4, new Font("Arial", 8, FontStyle.Regular), brush, 150, 80);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_5, new Font("Arial", 8, FontStyle.Regular), brush, 200, 80);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_6, new Font("Arial", 8, FontStyle.Regular), brush, 250, 80);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_1, new Font("Arial", 8, FontStyle.Regular), brush, 10, 100);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_2, new Font("Arial", 8, FontStyle.Regular), brush, 60, 100);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_3, new Font("Arial", 8, FontStyle.Regular), brush, 100, 100);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_4, new Font("Arial", 8, FontStyle.Regular), brush, 140, 100);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_5, new Font("Arial", 8, FontStyle.Regular), brush, 180, 100);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[2].row_6, new Font("Arial", 8, FontStyle.Regular), brush, 220, 100);
 
-                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_1, new Font("Arial", 8, FontStyle.Regular), brush, 10, 90);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_2, new Font("Arial", 8, FontStyle.Regular), brush, 60, 90);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_3, new Font("Arial", 8, FontStyle.Regular), brush, 100, 90);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_4, new Font("Arial", 8, FontStyle.Regular), brush, 150, 90);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_5, new Font("Arial", 8, FontStyle.Regular), brush, 200, 90);
-                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_6, new Font("Arial", 8, FontStyle.Regular), brush, 250, 90);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_1, new Font("Arial", 8, FontStyle.Regular), brush, 10, 115);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_2, new Font("Arial", 8, FontStyle.Regular), brush, 60, 115);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_3, new Font("Arial", 8, FontStyle.Regular), brush, 100, 115);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_4, new Font("Arial", 8, FontStyle.Regular), brush, 140, 115);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_5, new Font("Arial", 8, FontStyle.Regular), brush, 180, 115);
+                av.Graphics.DrawString(labelInfo.page2Info.row5[3].row_6, new Font("Arial", 8, FontStyle.Regular), brush, 220, 115);
                 av.Graphics.ResetTransform();
                 #endregion
 
-                int height = 120;
                 #region  page3
+                int height = 120;
+                //av.Graphics.TranslateTransform(30, 110);
+                av.Graphics.TranslateTransform(-20, 15);
                 av.Graphics.DrawString(labelInfo.page3Info.row1, new Font("Arial", 8, FontStyle.Bold), brush, 30, 40 + height);
-                av.Graphics.DrawString(labelInfo.page3Info.row2, new Font("Arial", 8, FontStyle.Regular), brush, 160, 70 + height);
-                av.Graphics.DrawString(labelInfo.page3Info.row3, new Font("Arial", 8, FontStyle.Regular), brush, 180, 80 + height);
-                av.Graphics.DrawImage(BarcodeHelper.GetBarcodeImage(labelInfo.page3Info.row4), 80, 90 + height, 200, 30);
-                av.Graphics.DrawString(labelInfo.page3Info.row4, new Font("Arial", 7, FontStyle.Bold), brush, 170, 90 + height + 30);
+                av.Graphics.DrawString(labelInfo.page3Info.row2, new Font("Arial", 8, FontStyle.Regular), brush, 110, 70 + height);
+                av.Graphics.DrawString(labelInfo.page3Info.row3, new Font("Arial", 8, FontStyle.Regular), brush, 130, 85 + height);
+                av.Graphics.DrawImage(BarcodeHelper.GetBarcodeImage(labelInfo.page3Info.row4), 30, 100 + height, 260, 30);
+                av.Graphics.DrawString(labelInfo.page3Info.row4, new Font("Arial", 7, FontStyle.Bold), brush, 140, 100 + height + 30);
+                av.Graphics.ResetTransform();
                 #endregion
             }
+            av.HasMorePages = false; //停止增加新的页数
         }
 
         #region  将数据组装

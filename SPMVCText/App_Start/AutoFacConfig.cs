@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using AutoMapper;
 using SPMVCText.Public;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,59 @@ namespace SPMVCText.App_Start
             //6.0 告诉MVC将DefaultControllerFactory替换成autofac中的控制器创建工厂
             //将来所有的接口使用container去进行传递
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+        }
+
+        public IContainer Register1()
+        {
+            var builder = new ContainerBuilder();
+            AddApplicationDI(builder);
+
+
+            builder.RegisterType<AutoMapperProfiles>().As<Profile>();
+            builder.Register(c => new MapperConfiguration(cfg =>
+            {
+                foreach (var profile in c.Resolve<IEnumerable<Profile>>())
+                {
+                    cfg.AddProfile(profile);
+                }
+            })).AsSelf().SingleInstance();
+            builder.Register(c => c.Resolve<MapperConfiguration>().CreateMapper(c.Resolve)).As<IMapper>().InstancePerLifetimeScope();
+
+            IContainer Container = builder.Build(Autofac.Builder.ContainerBuildOptions.None);
+            return Container;
+        }
+
+        public void AddApplicationDI(ContainerBuilder builder)
+        {
+            //builder.RegisterType<UserService>().As<IUserService>();
+            //builder.RegisterType<SubUserService>().As<ISubUserService>();
+            //builder.RegisterType<SubDbUserService>().As<ISubDbUserService>();
+
+            AddDomainDI(builder);
+        }
+
+        public void AddDomainDI(ContainerBuilder builder)
+        {
+            //builder.RegisterType<UserRepository>().As<IUserRepository>();
+            //builder.RegisterType<SubUserRepository>().As<ISubUserRepository>();
+            //builder.RegisterType<SubDbUserRepository>().As<ISubDbUserRepository>();
+        }
+    }
+    public class AutoMapperProfiles : Profile
+    {
+        public AutoMapperProfiles()
+        {
+            #region Input
+            //CreateMap<UserPostModel, UserEntity>();
+            //CreateMap<UserPostModel, SubUserEntity>();
+            //CreateMap<UserPostModel, SubDbUserEntity>();
+            #endregion
+
+            #region Output
+            //CreateMap<UserEntity, UserModel>();
+            //CreateMap<SubUserEntity, UserModel>();
+            //CreateMap<SubDbUserEntity, UserModel>();
+            #endregion
         }
     }
 }
