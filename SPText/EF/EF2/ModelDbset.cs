@@ -28,6 +28,23 @@ namespace SPText.EF.EF2
             DBContext.Configuration.ValidateOnSaveEnabled = false;
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(DBContext);
+        }
+
+
+        public void Dispose(bool disposing)
+        {
+            if (disposing==true)
+            {
+                if (DBContext!=null)
+                {
+                    DBContext = null;
+                }
+            }
+        }
 
         public DbSet<Company> Company { get; set; }
         public DbSet<User> User { get; set; }

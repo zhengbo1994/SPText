@@ -37,8 +37,90 @@
 <article style="">
     中间
     <aside>关联部分</aside>
-    
+
 </article>
 <footer>
     尾部
 </footer>
+
+
+
+
+
+
+
+<h3>WebSocket</h3>
+<form id="form1" runat="server">
+    <div>
+        <input id="userName" type="text" />
+        <input id="conn" type="button" value="连接" />
+        <input id="close" type="button" value="关闭" />
+        <span id="tips"></span>
+        <input id="content" type="text" />
+        <input id="send" type="button" value="发送" />
+    </div>
+    <div id="view">
+        <ul></ul>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function () {
+        // http://  https://
+        // ws 开头， 也可以wss开头
+        var socket;
+        var url = "ws://localhost:57211/Home/MyWebSocket";
+        function connect() {
+            var socketurl = url + "?name=" + $("#userName").val();
+            socket = new WebSocket(socketurl);// 就是用来建立即时通信同道 Socket长链接
+            // 会有一个握手的过程
+            // 去链接的后台方法可以是MVC控制器里的方法，也可以是WebApi，还可以支持一般处理程序，也可以支持aspx
+
+            //链接打开的时候触发
+            socket.onopen = function () {
+                $("#tips").text("链接已打开");
+
+
+                // 定时发送一个消息给服务器发送心跳包 服务器接收到心跳包以后马上就再回复一个消息给客户端
+                // 如果我发现十秒钟或者在间隔时间内 接受不到服务器回复的心跳消息 我就认为连接掉线
+                // 这时候就需要断线 connect();
+
+            }
+            // 接受服务器发送过来的消息
+            socket.onmessage = function (evt) {
+                $("#view ul").append("<li>" + evt.data + "</li>");
+            }
+            // 异常的时候触发方法
+            socket.onerror = function (evt) {
+                $("#tips").text(JSON.stringify(evt));
+            }
+            // 链接关闭的时候触发
+            socket.onclose = function () {
+                $("#tips").text("连接关闭了");
+            }
+
+
+
+        }
+
+        // 点击"连接"按钮
+        $("#conn").on("click", function () {
+            connect();
+        })
+        //点击“关闭”按钮
+        $("#close").on("click", function () {
+            socket.close();
+
+        })
+
+        //点击“发送”按钮
+        $("#send").on("click", function () {
+            if (socket.readyState == WebSocket.OPEN) {
+                socket.send($("#content").val());
+            }
+            else {
+                alert("链接已经断开");
+            }
+        })
+
+    })
+</script>

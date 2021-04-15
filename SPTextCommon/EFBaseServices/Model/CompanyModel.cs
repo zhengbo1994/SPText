@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SPTextCommon.EFBaseServices.Model
 {
-    public class CompanyModel
+    public partial class Company
     {
         public int Id { get; set; }
 
@@ -23,18 +23,18 @@ namespace SPTextCommon.EFBaseServices.Model
 
 
 
-    public partial class sysCompanyModelRepository : BaseDal<CompanyModel>, IsysCompanyModelRepository
+    public partial class sysCompanyModelRepository : BaseDal<Company>, IsysCompanyModelRepository
     {
     }
 
-    public partial interface IsysCompanyModelRepository : IBaseDal<CompanyModel>
+    public partial interface IsysCompanyModelRepository : IBaseDal<Company>
     {
     }
-    public partial interface IBaseCompanyModelServices : IBaseServices<CompanyModel>
+    public partial interface IBaseCompanyModelServices : IBaseServices<Company>
     {
 
     }
-    public partial class BaseCompanyModelServices : BaseServices<CompanyModel>, IBaseCompanyModelServices
+    public partial class BaseCompanyModelServices : BaseServices<Company>, IBaseCompanyModelServices
     {
         IsysCompanyModelRepository subdal;
 

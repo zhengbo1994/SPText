@@ -80,7 +80,7 @@ namespace SPTextCommon
         private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {
             return true; //总是接受  
-        }  
+        }
         public static string BuildRequest(string strUrl, Dictionary<string, string> dicPara, string fileName)
         {
             string contentType = "image/jpeg";
@@ -327,7 +327,7 @@ namespace SPTextCommon
             }
             return responseStr;
         }
-        public static string HttpGet(string url,Encoding encodeing, Hashtable headht = null)
+        public static string HttpGet(string url, Encoding encodeing, Hashtable headht = null)
         {
             HttpWebRequest request;
 
@@ -527,6 +527,70 @@ namespace SPTextCommon
                 httpclient = new HttpClient();
             }
             return httpclient;
+        }
+        #endregion
+
+
+        #region  Api
+        public ResultMessage RequestApi(string url, HttpMethodEnum httpMethod)
+        {
+            ResultMessage resultMessage = new ResultMessage { IsSuccess = true, Code = 0, Data = null, ErrMessage = string.Empty };
+            using (HttpClient httpClient = new HttpClient())
+            {
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+                HttpMethod method = null;
+                switch (httpMethod)
+                {
+                    case HttpMethodEnum.Get:
+                        method = HttpMethod.Get;
+                        break;
+                    case HttpMethodEnum.Post:
+                        method = HttpMethod.Post;
+                        break;
+                    case HttpMethodEnum.Delete:
+                        method = HttpMethod.Delete;
+                        break;
+                    case HttpMethodEnum.Put:
+                        method = HttpMethod.Put;
+                        break;
+                    default:
+                        throw new Exception("不存在的类型");
+                }
+                httpRequestMessage.RequestUri = new Uri(url);
+                httpRequestMessage.Method =method;
+                httpRequestMessage.Headers.Add("Access-Control-Allow-Origin", "*");//支持跨域
+                var result= httpClient.SendAsync(httpRequestMessage).Result;
+                try
+                {
+                    var context = result.Content.ReadAsStringAsync().Result;
+                    resultMessage.Data = context;
+                    resultMessage.Code = result.StatusCode;
+                    return resultMessage;
+                }
+                catch (Exception ex)
+                {
+                    resultMessage.IsSuccess = false;
+                    resultMessage.ErrMessage = ex.Message;
+                    resultMessage.Code = result.StatusCode;
+                    return resultMessage;
+                }
+            }
+        }
+
+        public enum HttpMethodEnum
+        {
+            Get,
+            Post,
+            Delete,
+            Put
+        }
+
+        public class ResultMessage
+        {
+            public bool IsSuccess { get; set; }
+            public HttpStatusCode Code { get; set; }
+            public object Data { get; set; }
+            public string ErrMessage { get; set; }
         }
         #endregion
     }

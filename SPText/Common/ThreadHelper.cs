@@ -69,8 +69,8 @@ namespace SPText.Common
                 int iResult = func.Invoke();//22
                 IAsyncResult asyncResult = func.BeginInvoke(ar =>
                 {
-                //int iEndResultIn = func.EndInvoke(ar);
-            }, null);
+                    //int iEndResultIn = func.EndInvoke(ar);
+                }, null);
                 int iEndResult = func.EndInvoke(asyncResult);//22
 
                 Console.WriteLine($"****************btnAsyncAdvanced_Click End   {Thread.CurrentThread.ManagedThreadId.ToString("00")} {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")}***************");
@@ -154,6 +154,7 @@ namespace SPText.Common
                     else
                     {
                         Thread.Sleep(200);
+                        System.Windows.Forms.Application.DoEvents();
                     }
                 }
             }
@@ -321,7 +322,6 @@ namespace SPText.Common
                 taskList.Add(taskFactory.ContinueWhenAll(taskList.ToArray(), rArray => Console.WriteLine($"开发都完成，一起庆祝一下{Thread.CurrentThread.ManagedThreadId.ToString("00")}")));
                 //ContinueWhenAny  ContinueWhenAll 非阻塞式的回调；而且使用的线程可能是新线程，也可能是刚完成任务的线程，唯一不可能是主线程
 
-
                 //阻塞当前线程，等着任意一个任务完成
                 Task.WaitAny(taskList.ToArray());//也可以限时等待
                 Console.WriteLine("Eleven准备环境开始部署");
@@ -335,6 +335,8 @@ namespace SPText.Common
                 //列表页：核心数据可能来自数据库/接口服务/分布式搜索引擎/缓存，多线程并发请求，哪个先完成就用哪个结果，其他的就不管了
             }
             {
+                TaskFactory taskFactory1 = new TaskFactory();
+                List<Task> tasks = new List<Task>();
                 TaskFactory taskFactory = new TaskFactory();
                 List<Task> taskList = new List<Task>();
                 taskList.Add(taskFactory.StartNew(o => this.Coding("冰封的心", "Portal"), "冰封的心"));
@@ -370,7 +372,6 @@ namespace SPText.Common
                 {
                     //int i = result.Result;//会阻塞
                 });
-
             }
             {
                 //假如说我想控制下Task的并发数量，该怎么做？  20个

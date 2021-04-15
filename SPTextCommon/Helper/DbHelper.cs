@@ -11,10 +11,35 @@ using System.Threading.Tasks;
 
 namespace SPTextCommon.Helper
 {
+    public class DbConnectionHelper
+    {
+        private string DbHost;
+        private string DbName;
+        private string DbUser;
+        private string DbPwd;
+        private string ConnectionString;
+
+        public DbConnectionHelper(string dbHost, string dbName, string dbUser, string dbPwd)
+        {
+            this.DbHost = dbHost;
+            this.DbName = dbName;
+            this.DbUser = dbUser;
+            this.DbPwd = dbPwd;
+        }
+
+        public string resultConnection()
+        {
+            if (string.IsNullOrEmpty(ConnectionString))
+            {
+                ConnectionString = "Data Source=" + this.DbHost + ";Initial Catalog=" + this.DbName + ";User Id=" + this.DbUser + ";Password=" + this.DbPwd + ";";
+            }
+            return ConnectionString;
+        }
+    }
+
+
     internal static class DbHelper
     {
-
-
         internal static int ExecuteNonQuery(string strCon, string strSQL, object param)
         {
             using (SQLiteConnection con = new SQLiteConnection(strCon))

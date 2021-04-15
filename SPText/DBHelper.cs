@@ -373,6 +373,135 @@ namespace SPText
 
     }
 
+    public partial class SqlHelper
+    {
+        public SqlHelper(string dbHost, string dbName, string dbUser, string dbPwd)
+        {
+            connectionString = "Data Source=" + dbHost + ";Initial Catalog=" + dbName + ";User Id=" + dbUser + ";Password=" + dbPwd + ";";
+            this.DbHost = dbHost;
+            this.DbName = dbName;
+            this.DbUser = dbUser;
+            this.DbPwd = dbPwd;
+        }
+
+        public string connectionString;
+        public string DbHost { get; set; }
+        public string DbName { get; set; }
+        public string DbUser { get; set; }
+        public string DbPwd { get; set; }
+
+        public DataSet Query(string sql, params SqlParameter[] parameters)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.Parameters.AddRange(parameters);
+                        cmd.CommandTimeout = 0;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataSet dataSet = new DataSet();
+                            adapter.Fill(dataSet);
+                            return dataSet;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+                //    if (ex.Message == "在向服务器发送请求时发生传输级错误。 (provider: TCP Provider, error: 0 - 远程主机强迫关闭了一个现有的连接。)" || ex.Message.ToString() == "A transport-level error has occurred when receiving results from the server. (provider: TCP Provider, error: 0 - The semaphore timeout period has expired.)")
+                //    {
+                //        return Query(sql, parameters);
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
+            }
+        }
+
+        public DataSet StoreProcedure(string spName, params SqlParameter[] parameters)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(spName, conn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddRange(parameters);
+                        cmd.CommandTimeout = 0;
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataSet dataSet = new DataSet();
+                            adapter.Fill(dataSet);
+                            cmd.Parameters.Clear();
+
+                            return dataSet;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public int ExecuteNonQuery(string sql, params SqlParameter[] sp)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        if (sp != null)
+                        {
+                            cmd.Parameters.AddRange(sp);
+                        }
+                        cmd.CommandTimeout = 0;
+                        conn.Open();
+                        return cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public object ExecuteScalar(string sql, params SqlParameter[] sp)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        if (sp != null)
+                        {
+                            cmd.Parameters.AddRange(sp);
+                        }
+                        cmd.CommandTimeout = 0;
+                        conn.Open();
+                        return cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+    }
+
     #region  手写ORM
     public class CustomDBHelper
     {

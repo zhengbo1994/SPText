@@ -45,6 +45,8 @@ namespace SPCoreText
         {
             services.AddControllers();
 
+            //services.AddControllersWithViews().AddRazorRuntimeCompilation();//动态编译
+
             //// 添加对控制器\API\视图相关功能的支持。（全局注册）（调试有错误）
             //services.AddControllersWithViews(
             //    options =>

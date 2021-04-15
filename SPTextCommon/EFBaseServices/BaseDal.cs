@@ -36,11 +36,11 @@ namespace SPTextCommon.EFBaseServices
         public void CreateBaseService(string connection)
         {
             this.Context = new System.Data.Entity.DbContext(connection);//连接数据库字符串
-            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
-            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
-            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+            //this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+            //this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+            //this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
         }
-        //public virtual DbSet<CompanyModel> CompanyModel { get; set; }
+        public virtual System.Data.Entity.DbSet<Company> Company { get; set; }
     }
 
     /// <summary>

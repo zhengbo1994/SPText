@@ -554,6 +554,32 @@
         return Math.abs(x - y) < Math.pow(2, -52);
     }
 
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+        if (arr = document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+
+    function setCookie(name, value) {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    //删除cookies
+    function delCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+    }
+
     this.getQueryString = getQueryString;//获取地址栏参数
     this.isNull = isNull;//判断是否为空 
     this.ajaxRequest = ajaxRequest;//ajax统一请求接口
@@ -575,6 +601,9 @@
     this.epsEqu = epsEqu;//判断小数是否相等
     this.deepCopy = deepCopy;//数据缓存
     this.getpage = getpage;//获取分页
+    this.getCookie = getCookie;//获取缓存
+    this.setCookie = setCookie;//设置缓存
+    this.delCookie = delCookie;//删除缓存
 }).call(this)
 //1、find 查询数组中符合条件的第一个元素，如果没有符合条件的元素则返回undefined
 //var dogs = arr.find(v => v === 4);
