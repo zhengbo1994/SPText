@@ -23,7 +23,7 @@ namespace SPTextCommon.EFBaseServices
     /// </summary>
     public class BaseDBContext : System.Data.Entity.DbContext
     {
-        protected System.Data.Entity.DbContext Context { get; private set; }
+        public System.Data.Entity.DbContext Context { get; private set; }
         public BaseDBContext() : base("name=DataContext")
         {
             CreateBaseService("name=DataContext");
@@ -36,9 +36,12 @@ namespace SPTextCommon.EFBaseServices
         public void CreateBaseService(string connection)
         {
             this.Context = new System.Data.Entity.DbContext(connection);//连接数据库字符串
-            //this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
-            //this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
-            //this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+            this.Context.Configuration.AutoDetectChangesEnabled = false;//上下文跟踪
+            this.Context.Configuration.UseDatabaseNullSemantics = false;//上下文跟踪
+            this.Context.Configuration.EnsureTransactionsForFunctionsAndCommands = false;//上下文跟踪
         }
         public virtual System.Data.Entity.DbSet<Company> Company { get; set; }
     }
@@ -65,7 +68,7 @@ namespace SPTextCommon.EFBaseServices
                 {
                     //实例化ef容器对象
                     efInstance = new BaseDBContext();
-                    ((IObjectContextAdapter)efInstance).ObjectContext.CommandTimeout = 180;//设置超时时间
+                    //((IObjectContextAdapter)efInstance).ObjectContext.CommandTimeout = 180;//设置超时时间
                     //将efInstance存入线程缓存中
                     CallContext.SetData(threadCacheKey, efInstance);
                 }
@@ -79,7 +82,7 @@ namespace SPTextCommon.EFBaseServices
         protected System.Data.Entity.DbSet<T> _dbset;
         public BaseDal()
         {
-            _dbset = db.Set<T>();
+            _dbset = db.Context.Set<T>();
         }
 
         #region 3.0 查询方法的封装

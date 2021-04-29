@@ -208,10 +208,6 @@ namespace SPText
             //GetQRCode();
             #endregion
 
-            #region  SFtp
-            //SharpSSH();
-            #endregion
-
             #region  加密
             //Encrypt();
             #endregion
@@ -257,7 +253,9 @@ namespace SPText
             //testHelper.Show();
             #endregion
 
-
+            #region  SFTP
+            //SFTPAndFTPShow();
+            #endregion
 
 
             //dynamic  避开编译器检查
@@ -304,6 +302,14 @@ namespace SPText
 
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
+
+
+            var strList1 = a.GroupJoin(b, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(p => new { }).ToList();
+            var strList2 = a.GroupBy(p => p.ToString()).Select(p => new { ziduan1 = p.Key.ToString() }).ToList();
+            //linQ怎么合并同一列的数据   http://www.myexceptions.net/linq/1013611.html
+            //var query = db.YourTable.ToList().GroupBy(t => new { t.FROM, t.To, t.Time })
+            //.Select(g => new { FROM = g.Key.From, TO = g.Key.To, NUM = g.Count(), Time = g.Key.Time, Body = string.Join(",", g.Select(s => s.Body).ToArray()) });
+
 
             Console.ReadKey();
         }
@@ -2038,6 +2044,13 @@ namespace SPText
                 //var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
                 //var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
             }
+            {//力软EF框架
+             //SPTextCommon.Helper.IDatabase database = new SPTextCommon.Helper.Database("Server=.;Initial Catalog=Customers;User ID=sa;Password=123456;");
+
+                //string sql = "select * from Company";
+                //var data= database.FindEntity<Company>(sql, null);
+                //var data1 = database.FindEntity<Company>(2);
+            }
             {
                 {
                     //使用示例 SqlServer
@@ -2099,8 +2112,8 @@ namespace SPText
             }
             //{
             //    //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
-            //    //IBaseDal<SPTextCommon.EFBaseServices.Model.CompanyModel> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.CompanyModel>();
-            //    //baseServices.QueryWhere(p => 1 == 1).ToList();
+            //    IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
+            //    baseServices.QueryWhere(p => 1 == 1).ToList();
             //}
         }
         #endregion
@@ -2171,27 +2184,47 @@ namespace SPText
         #endregion
 
         #region  SFtp
-        public static void SharpSSH()
+        public static void SFTPAndFTPShow()
         {
-
-            string SftpIp = "192.168.3.3";
-            string SftpPort = "23";
-            string SftpUser = "user";
-            string SftpPwd = "user";
-            //上传至FTP
-            SFtpHelper sftpHelper = new SFtpHelper(SftpIp, Convert.ToInt32(SftpPort), SftpUser, SftpPwd);
-            if (sftpHelper.Connect())
             {
-                if (SFtpHelper.Put("本地路径", "远程路径"))
+                string SftpIp = "192.168.3.3";
+                string SftpPort = "23";
+                string SftpUser = "user";
+                string SftpPwd = "user";
+                //上传至FTP
+                SFtpHelper sftpHelper = new SFtpHelper(SftpIp, Convert.ToInt32(SftpPort), SftpUser, SftpPwd);
+                if (sftpHelper.Connect())
                 {
-                    Console.WriteLine("操作完成");
+                    if (sftpHelper.Put("本地路径", "远程路径"))
+                    {
+                        Console.WriteLine("操作完成");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("SFTP连接失败");
+                }
+                sftpHelper.Disconnect();
+            }
+            {
+                //string host = "192.168.43.221";
+                //int port = 1919;
+                //string user = "hkosftp";
+                //string privateKey = @"D:\ASFTP\hkosftp\hkosftp.ppk";
+                //string passPhrase = "mdwpsftp";
+                //SFtpRSAHelper sftpRSAHelper = new SFtpRSAHelper(host, port, user, privateKey, passPhrase);
+                //if (sftpRSAHelper.Connect())
+                //{
+                //    var files = sftpRSAHelper.ListFiles(@"/upload/Orders");
+                //}
+                //SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "mdwpsftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1");
+                SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", @"hkosftp.ppk", "mdwpsftp");
+                _sftp.Connect();
+                if (_sftp.Connected)
+                {
+                    var paths = _sftp.GetFileList("/", "");
                 }
             }
-            else
-            {
-                Console.WriteLine("SFTP连接失败");
-            }
-            sftpHelper.Disconnect();
         }
         #endregion
 

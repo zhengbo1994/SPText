@@ -1,11 +1,13 @@
 ﻿//using Asp.NetCore.EFCore.Models.Extend;
 //using Asp.NetCore.EFCore.Models.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace EF_CodeDB
 {
@@ -230,6 +232,11 @@ namespace EF_CodeDB
             }
             return base.SaveChanges();
         }
+
+
+
+
+
     }
 
      

@@ -172,6 +172,7 @@ namespace SPText.Common
                         row2.CreateCell(j).SetCellValue(Convert.ToString(dt.Rows[i][j]));
                     }
                 }
+
                 // 写入到客户端  
                 using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
                 {
@@ -1244,7 +1245,7 @@ namespace SPText.Common
         public static void RenderDataTableToExcel(DataTable SourceTable, string FileName)
         {
             MemoryStream ms = RenderDataTableToExcel(SourceTable) as MemoryStream;
-            FileStream fs = new FileStream(FileName, FileMode.Create,FileAccess.Write);
+            FileStream fs = new FileStream(FileName, FileMode.Create, FileAccess.Write);
             byte[] data = ms.ToArray();
             fs.Write(data, 0, data.Length);
             fs.Flush();

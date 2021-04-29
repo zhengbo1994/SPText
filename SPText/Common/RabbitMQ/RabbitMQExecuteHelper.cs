@@ -24,7 +24,6 @@ namespace SPText.Common.RabbitMQ
             TopicExchangeShow();
             ConsumptionACKConfirmShow();
         }
-
         public void ProductionConsumerShow()
         {
             var factory = new ConnectionFactory();
@@ -42,7 +41,6 @@ namespace SPText.Common.RabbitMQ
                             Console.ForegroundColor = ConsoleColor.Green;
                             try
                             {
-
                                 channel.QueueDeclare(queue: "OnlyProducerMessage", durable: true, exclusive: false, autoDelete: false, arguments: null);
 
 
@@ -481,7 +479,32 @@ namespace SPText.Common.RabbitMQ
 
             }
         }
+        public void TopicExchangeShow1()
+        {
+            var connectionFactory = new ConnectionFactory();
+            connectionFactory.HostName = "localhost";
+            connectionFactory.UserName = "guust";
+            connectionFactory.Password = "guest";
+            using (IConnection connection = connectionFactory.CreateConnection())
+            {
+                using (IModel model = connection.CreateModel())
+                {
+                    model.QueueDeclare(queue: "queue", durable: true, exclusive: true, autoDelete: true, arguments: null);
+                    model.ExchangeDeclare(exchange: "exchange", type: ExchangeType.Direct, durable: true, autoDelete: true, arguments: null);
+                    model.QueueBind(queue: "queue", exchange: "exchange", routingKey: string.Empty, arguments: null);
+                    var consumer= new EventingBasicConsumer(model: model);
+                    consumer.Received += (a, b) =>
+                    {
+                        var body= b.Body;
+                        var message = Encoding.UTF8.GetString(body.ToArray());
+                        Console.WriteLine($"这是消息：{message}");
+                    };
 
+                    model.BasicConsume(queue: "queue", autoAck: true, consumer: consumer);
+                }
+            }
+
+        }
         public void TopicExchangeShow()
         {
             var factory = new ConnectionFactory();

@@ -390,6 +390,7 @@
     <Compile Include="HelperCommon\XML\XmlHelper.cs" />
     <Compile Include="HelperCommon\XML\XmlHelperExt.cs" />
     <Compile Include="HelperCommon\Zip\ZipHelper.cs" />
+    <Compile Include="Helper\Database.cs" />
     <Compile Include="Helper\DataTableListHelper.cs" />
     <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Html\ControlsExtensionsHelper.cs" />

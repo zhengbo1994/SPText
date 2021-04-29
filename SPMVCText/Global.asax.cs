@@ -21,6 +21,16 @@ namespace SPMVCText
 
             //利用autofac进行依赖注入和控制反转操作
             //AutoFacConfig.Register();
+
+
+            #region  EF预热（EF性能提升）
+            //using (var dbcontext = new BingFaTestEntities())
+            //{
+            //    var objectContext = ((IObjectContextAdapter)dbcontext).ObjectContext;
+            //    var mappingCollection = (StorageMappingItemCollection)objectContext.MetadataWorkspace.GetItemCollection(DataSpace.CSSpace);
+            //    mappingCollection.GenerateViews(new List<EdmSchemaError>());
+            //}
+            #endregion
         }
     }
 }
