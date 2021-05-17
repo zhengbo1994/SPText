@@ -283,14 +283,12 @@ namespace SPText.Common
             };
             _session = new WinSCP.Session();
         }
-
-        public SftpWinScpHelper(string host, int port, string user, string pwd, string key)
+        public SftpWinScpHelper(string host, string user, string pwd, string key)
         {
             _sessionOptions = new SessionOptions
             {
                 Protocol = Protocol.Sftp,
                 HostName = host,
-                PortNumber = port,
                 UserName = user,
                 Password = pwd,
                 SshHostKeyFingerprint = key
@@ -307,7 +305,7 @@ namespace SPText.Common
         /// <param name="sshHostKeyFingerprint">ssh主机密钥指纹</param>
         /// <param name="sshPrivateKeyPath">ssh私钥路径</param>
         /// <param name="sshPrivateKeyPassphrase">ssh私钥密码短语</param>
-        public SftpWinScpHelper(string host, int port, string user, string sshHostKeyFingerprint, string sshPrivateKeyPath, string privateKeyPassphrase)
+        public SftpWinScpHelper(string host, int port, string user, string sshHostKeyFingerprint=null, string sshPrivateKeyPath=null, string privateKeyPassphrase=null)
         {
             _sessionOptions = new SessionOptions
             {
@@ -441,7 +439,43 @@ namespace SPText.Common
     public class SFtpRSAHelper : ISFTPHelper
     {
         SftpClient sftp = null;
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="host">sftp服务器名或IP</param>
+        /// <param name="port">端口，默认22</param>
+        /// <param name="user">用户名</param>
+        /// <param name="privateKey">私钥</param>
+        /// <param name="passPhrase">通行短语</param>
+        public SFtpRSAHelper(string host, int? port, string user, Stream privateKey, string passPhrase)
+        {
+            PrivateKeyFile keyFile = null;
 
+            if (string.IsNullOrEmpty(passPhrase))
+            {
+                keyFile = new PrivateKeyFile(privateKey);
+            }
+            else
+            {
+                keyFile = new PrivateKeyFile(privateKey, passPhrase);
+            }
+
+            if (port.HasValue)
+            {
+                sftp = new SftpClient(host, port.Value, user, keyFile);
+            }
+            else
+            {
+                sftp = new SftpClient(host, user, keyFile);
+            }
+
+
+            if (sftp != null)
+            {
+                sftp.ConnectionInfo.RetryAttempts = 5;
+                sftp.ConnectionInfo.Timeout = new TimeSpan(0, 3, 0);
+            }
+        }
         /// <summary>
         /// 构造函数
         /// </summary>

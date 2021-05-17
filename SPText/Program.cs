@@ -36,6 +36,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -245,7 +246,7 @@ namespace SPText
             #endregion
 
             #region  rdlc打印成Pdf
-            //ReportPrint();
+            ReportPrint();
             #endregion
 
             #region  测试代码
@@ -2187,6 +2188,31 @@ namespace SPText
         public static void SFTPAndFTPShow()
         {
             {
+                //{
+                //    string host = "192.168.43.221";
+                //    int port = 1919;
+                //    string user = "hkosftp";
+                //    string passwork = "mdwpsftp";
+                //    string privateKey = @"D:\ASFTP\wpsftpkey_mdwpsftp\wp_rsa";
+                //    string passPhrase = "mdwpsftp";
+
+                //    SFtpRSAHelper sftpRSAHelper = new SFtpRSAHelper(host, port, user, privateKey, passPhrase);
+                //    if (sftpRSAHelper.Connect())
+                //    {
+                //        var files = sftpRSAHelper.ListFiles(@"/upload/Orders");
+                //    }
+                //}
+                {
+                    //SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", @"hkosftp.ppk", "mdwpsftp");
+                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", "hkosftp", "mdwpsftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1");
+                    _sftp.Connect();
+                    if (_sftp.Connected)
+                    {
+                        var paths = _sftp.GetFileList("/", "");
+                    }
+                }
+            }
+            {
                 string SftpIp = "192.168.3.3";
                 string SftpPort = "23";
                 string SftpUser = "user";
@@ -2206,25 +2232,7 @@ namespace SPText
                 }
                 sftpHelper.Disconnect();
             }
-            {
-                //string host = "192.168.43.221";
-                //int port = 1919;
-                //string user = "hkosftp";
-                //string privateKey = @"D:\ASFTP\hkosftp\hkosftp.ppk";
-                //string passPhrase = "mdwpsftp";
-                //SFtpRSAHelper sftpRSAHelper = new SFtpRSAHelper(host, port, user, privateKey, passPhrase);
-                //if (sftpRSAHelper.Connect())
-                //{
-                //    var files = sftpRSAHelper.ListFiles(@"/upload/Orders");
-                //}
-                //SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "mdwpsftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1");
-                SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", @"hkosftp.ppk", "mdwpsftp");
-                _sftp.Connect();
-                if (_sftp.Connected)
-                {
-                    var paths = _sftp.GetFileList("/", "");
-                }
-            }
+
         }
         #endregion
 
@@ -2569,7 +2577,21 @@ namespace SPText
             ReportPrintShow reportPrint = new ReportPrintShow();
             reportPrint.Show1();
             reportPrint.Show2();
+            SettingConfiguration.GetLocalPrinters();
 
+            string filePath = @"E:\AAAA\new-sgerp\TWERPWeb\TemporaryFile\AO21005810.pdf";
+            string printer = @"pr-730";
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.Arguments = printer;
+            info.Verb = "PrintTo";
+            info.FileName = filePath;
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+
+            System.Diagnostics.Process p = new System.Diagnostics.Process();
+            p.StartInfo = info;
+            p.Start();
+            p.WaitForInputIdle();
         }
         #endregion
     }

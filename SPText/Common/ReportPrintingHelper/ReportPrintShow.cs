@@ -1,14 +1,21 @@
-﻿using Microsoft.Reporting.WebForms;
+﻿using IOSerialize.Serialize;
+using Microsoft.Reporting.WebForms;
+using PdfiumViewer;
 using ReportPrinting.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SPText.Common.ReportPrintingHelper
 {
@@ -281,5 +288,11 @@ namespace SPText.Common.ReportPrintingHelper
             return pageInfo;
         }
         #endregion
+    }
+
+    class Externs
+    {
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(String Name); //调用win api将指定名称的打印机设置为默认打印机
     }
 }

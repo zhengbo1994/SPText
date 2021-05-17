@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -297,5 +298,446 @@ namespace SPTextCommon
         }
 
         #endregion
+
+
+    }
+
+    /// <summary>
+    /// 字符串扩展方法
+    /// </summary>
+    public static class StringExtension
+    {
+        #region 空判断
+        public static bool IsNullOrEmpty(this string inputStr)
+        {
+            return string.IsNullOrEmpty(inputStr);
+        }
+
+        public static bool IsNullOrWhiteSpace(this string inputStr)
+        {
+            return string.IsNullOrWhiteSpace(inputStr);
+        }
+
+        public static string Format(this string inputStr, params object[] obj)
+        {
+            return string.Format(inputStr, obj);
+        }
+        #endregion
+
+        #region 常用正则表达式
+        private static readonly Regex EmailRegex = new Regex(@"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", RegexOptions.IgnoreCase);
+
+        private static readonly Regex MobileRegex = new Regex("^1[0-9]{10}$");
+
+        private static readonly Regex PhoneRegex = new Regex(@"^(\d{3,4}-?)?\d{7,8}$");
+
+        private static readonly Regex IpRegex = new Regex(@"^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$");
+
+        private static readonly Regex DateRegex = new Regex(@"(\d{4})-(\d{1,2})-(\d{1,2})");
+
+        private static readonly Regex NumericRegex = new Regex(@"^[-]?[0-9]+(\.[0-9]+)?$");
+
+        private static readonly Regex ZipcodeRegex = new Regex(@"^\d{6}$");
+
+        private static readonly Regex IdRegex = new Regex(@"^[1-9]\d{16}[\dXx]$");
+
+        /// <summary>
+        /// 是否中文
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsChinese(this string str)
+        {
+            return Regex.IsMatch(@"^[\u4e00-\u9fa5]+$", str);
+        }
+
+        /// <summary>
+        /// 是否为邮箱名
+        /// </summary>
+        public static bool IsEmail(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+            return EmailRegex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 是否为手机号
+        /// </summary>
+        public static bool IsMobile(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+            return MobileRegex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 是否为固话号
+        /// </summary>
+        public static bool IsPhone(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+            return PhoneRegex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 是否为IP
+        /// </summary>
+        public static bool IsIp(this string s)
+        {
+            return IpRegex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 是否是身份证号
+        /// </summary>
+        public static bool IsIdCard(this string idCard)
+        {
+            if (string.IsNullOrEmpty(idCard))
+                return false;
+            return IdRegex.IsMatch(idCard);
+        }
+
+        /// <summary>
+        /// 是否为日期
+        /// </summary>
+        public static bool IsDate(this string s)
+        {
+            return DateRegex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 是否是数值(包括整数和小数)
+        /// </summary>
+        public static bool IsNumeric(this string numericStr)
+        {
+            return NumericRegex.IsMatch(numericStr);
+        }
+
+        /// <summary>
+        /// 是否为邮政编码
+        /// </summary>
+        public static bool IsZipCode(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return true;
+            return ZipcodeRegex.IsMatch(s);
+        }
+
+        /// <summary>
+        /// 是否是图片文件名
+        /// </summary>
+        /// <returns> </returns>
+        public static bool IsImgFileName(this string fileName)
+        {
+            if (fileName.IndexOf(".", StringComparison.Ordinal) == -1)
+                return false;
+
+            string tempFileName = fileName.Trim().ToLower();
+            string extension = tempFileName.Substring(tempFileName.LastIndexOf(".", StringComparison.Ordinal));
+            return extension == ".png" || extension == ".bmp" || extension == ".jpg" || extension == ".jpeg" || extension == ".gif";
+        }
+
+        #endregion
+
+        #region 字符串截取
+        /// <summary>
+        /// 截取字符串
+        /// </summary>
+        /// <param name="inputStr">输入</param>
+        /// <param name="length">截取长度</param>
+        /// <returns></returns>
+        public static string Sub(this string inputStr, int length)
+        {
+            if (inputStr.IsNullOrEmpty())
+                return null;
+
+            return inputStr.Length >= length ? inputStr.Substring(0, length) : inputStr;
+        }
+
+        public static string TryReplace(this string inputStr, string oldStr, string newStr)
+        {
+            return inputStr.IsNullOrEmpty() ? inputStr : inputStr.Replace(oldStr, newStr);
+        }
+
+        public static string RegexReplace(this string inputStr, string pattern, string replacement)
+        {
+            return inputStr.IsNullOrEmpty() ? inputStr : Regex.Replace(inputStr, pattern, replacement);
+        }
+
+        #endregion
+
+        #region 字符格式化
+        /// <summary>
+        /// 字符格式化
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public static string Fmt(this string input, params object[] param)
+        {
+            if (input.IsNullOrWhiteSpace())
+                return null;
+
+            var result = string.Format(input, param);
+            return result;
+        }
+
+        #endregion
+
+        #region 格式化文本
+        /// <summary>
+        /// 格式化电话
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <returns></returns>
+        public static string FmtMobile(this string mobile)
+        {
+            if (!mobile.IsNullOrEmpty() && mobile.Length > 7)
+            {
+                var regx = new Regex(@"(?<=\d{3}).+(?=\d{4})", RegexOptions.IgnoreCase);
+                mobile = regx.Replace(mobile, "****");
+            }
+
+            return mobile;
+        }
+
+        /// <summary>
+        /// 格式化证件号码
+        /// </summary>
+        /// <param name="idCard"></param>
+        /// <returns></returns>
+        public static string FmtIdCard(this string idCard)
+        {
+            if (!idCard.IsNullOrEmpty() && idCard.Length > 10)
+            {
+                var regx = new Regex(@"(?<=\w{6}).+(?=\w{4})", RegexOptions.IgnoreCase);
+                idCard = regx.Replace(idCard, "********");
+            }
+
+            return idCard;
+        }
+
+        /// <summary>
+        /// 格式化银行卡号
+        /// </summary>
+        /// <param name="bankCard"></param>
+        /// <returns></returns>
+        public static string FmtBankCard(this string bankCard)
+        {
+            if (!bankCard.IsNullOrEmpty() && bankCard.Length > 4)
+            {
+                var regx = new Regex(@"(?<=\d{4})\d+(?=\d{4})", RegexOptions.IgnoreCase);
+                bankCard = regx.Replace(bankCard, " **** **** ");
+            }
+
+            return bankCard;
+        }
+
+        #endregion     
+    }
+
+    public static class TryConvertExtension
+    {
+        #region 类型转换
+
+        /// <summary>
+        /// string转int
+        /// </summary>
+        /// <param name="input">输入</param>
+        /// <param name="defaultNum">转换失败默认</param>
+        /// <returns></returns>
+        public static int TryInt(this object input, int defaultNum = 0)
+        {
+            if (input == null)
+                return defaultNum;
+
+            return int.TryParse(input.ToString(), out var num) ? num : defaultNum;
+        }
+
+        /// <summary>
+        /// string转long
+        /// </summary>
+        /// <param name="input">输入</param>
+        /// <param name="defaultNum">转换失败默认</param>
+        /// <returns></returns>
+        public static long TryLong(this object input, long defaultNum = 0)
+        {
+            if (input == null)
+                return defaultNum;
+
+            return long.TryParse(input.ToString(), out var num) ? num : defaultNum;
+        }
+
+        /// <summary>
+        /// string转double
+        /// </summary>
+        /// <param name="input">输入</param>
+        /// <param name="defaultNum">转换失败默认值</param>
+        /// <returns></returns>
+        public static double TryDouble(this object input, double defaultNum = 0)
+        {
+            if (input == null)
+                return defaultNum;
+
+            return double.TryParse(input.ToString(), out var num) ? num : defaultNum;
+        }
+
+        /// <summary>
+        /// string转decimal
+        /// </summary>
+        /// <param name="input">输入</param>
+        /// <param name="defaultNum">转换失败默认值</param>
+        /// <returns></returns>
+        public static decimal TryDecimal(this object input, decimal defaultNum = 0)
+        {
+            if (input == null)
+                return defaultNum;
+
+            return decimal.TryParse(input.ToString(), out var num) ? num : defaultNum;
+        }
+
+        /// <summary>
+        /// string转decimal
+        /// </summary>
+        /// <param name="input">输入</param>
+        /// <param name="defaultNum">转换失败默认值</param>
+        /// <returns></returns>
+        public static float TryFloat(this object input, float defaultNum = 0)
+        {
+            if (input == null)
+                return defaultNum;
+
+            return float.TryParse(input.ToString(), out var num) ? num : defaultNum;
+        }
+
+        /// <summary>
+        /// string转bool
+        /// </summary>
+        /// <param name="input">输入</param>
+        /// <param name="falseVal"></param>
+        /// <param name="defaultBool">转换失败默认值</param>
+        /// <param name="trueVal"></param>
+        /// <returns></returns>
+        public static bool TryBool(this object input, bool defaultBool = false, string trueVal = "1", string falseVal = "0")
+        {
+            if (input == null)
+                return defaultBool;
+
+            var str = input.ToString();
+            if (bool.TryParse(str, out var outBool))
+                return outBool;
+
+            outBool = defaultBool;
+
+            if (trueVal == str)
+                return true;
+            if (falseVal == str)
+                return false;
+
+            return outBool;
+        }
+
+        /// <summary>
+        /// 值类型转string
+        /// </summary>
+        /// <param name="inputObj">输入</param>
+        /// <param name="defaultStr">转换失败默认值</param>
+        /// <returns></returns>
+        public static string TryString(this ValueType inputObj, string defaultStr = "")
+        {
+            var output = inputObj.IsNull() ? defaultStr : inputObj.ToString();
+            return output;
+        }
+
+        /// <summary>
+        /// 字符串转时间
+        /// </summary>
+        /// <param name="inputStr">输入</param>
+        /// <param name="defaultValue">默认值</param>
+        /// <returns></returns>
+        public static DateTime TryDateTime(this string inputStr, DateTime defaultValue = default(DateTime))
+        {
+            if (inputStr.IsNullOrEmpty())
+                return defaultValue;
+
+            return DateTime.TryParse(inputStr, out var outPutDateTime) ? outPutDateTime : defaultValue;
+        }
+
+        /// <summary>
+        /// 字符串转时间
+        /// </summary>
+        /// <param name="inputStr">输入</param>
+        /// <param name="formater"></param>
+        /// <param name="defaultValue">默认值</param>
+        /// <returns></returns>
+        public static DateTime TryDateTime(this string inputStr, string formater, DateTime defaultValue = default(DateTime))
+        {
+            if (inputStr.IsNullOrEmpty())
+                return defaultValue;
+
+            return DateTime.TryParseExact(inputStr, formater, CultureInfo.InvariantCulture, DateTimeStyles.None, out var outPutDateTime) ? outPutDateTime : defaultValue;
+        }
+
+        /// <summary>
+        /// 字符串去空格
+        /// </summary>
+        /// <param name="inputStr">输入</param>
+        /// <returns></returns>
+        public static string TryTrim(this string inputStr)
+        {
+            var output = inputStr.IsNullOrEmpty() ? inputStr : inputStr.Trim();
+            return output;
+        }
+
+        /// <summary>
+        /// 字符串转枚举
+        /// </summary>
+        /// <typeparam name="T">输入</typeparam>
+        /// <param name="str"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static T TryEnum<T>(this string str, T t = default(T)) where T : struct
+        {
+            return Enum.TryParse<T>(str, out var result) ? result : t;
+        }
+        #endregion
+    }
+
+    public static class ObjectExtension
+    {
+        /// <summary>
+        /// 对象是空
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsNull(this object obj)
+        {
+            return obj == null;
+        }
+
+        /// <summary>
+        /// 对象不为空
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsNotNull(this object obj)
+        {
+            return obj != null;
+        }
+
+        public static string ToStr(this object input)
+        {
+            return input.IsNull() ? null : input.ToString();
+        }
+
+        public static void ThrowIfNull(this object obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+        }
     }
 }

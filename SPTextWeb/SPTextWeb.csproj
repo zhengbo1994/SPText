@@ -479,6 +479,8 @@
     <Content Include="BootStrap\Public\js-plug\js\respond.js" />
     <Content Include="BootStrap\Public\md5\js\md5.js" />
     <Content Include="BootStrap\Public\moment\js\moment.js" />
+    <Content Include="BootStrap\Public\print\print.html" />
+    <Content Include="BootStrap\Public\print\print.js" />
     <Content Include="BootStrap\test0.html" />
     <Content Include="BootStrap\test10.html" />
     <Content Include="BootStrap\test11.html" />

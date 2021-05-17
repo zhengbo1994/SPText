@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace SPText
 {
-    public class DBHelper
+    public partial class DBHelper
     {
         public static string strConn = ConfigurationManager.ConnectionStrings["DataContext"].ConnectionString;
 
@@ -37,7 +37,7 @@ namespace SPText
         }
 
         //insert into 表(列1, 列2,...) values(value1, value2,...) SELECT SCOPE_IDENTITY();  //返回主键Id
-        public object ExecuteScalar(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
+        public object ExecuteScalarA(string sql, CommandType commandType, params SqlParameter[] sqlParameters)
         {
             using (SqlConnection conn = new SqlConnection(strConn))
             {
@@ -892,4 +892,1020 @@ namespace SPText
     }
     #endregion
     #endregion
+
+
+    /// <summary>
+    /// 数据库操作类
+    /// </summary>
+    public partial class DBHelper
+    {
+
+        //static Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //private static string ConnectionString { get { return cfg.ConnectionStrings.ConnectionStrings["sqlConnection"].ConnectionString; } }
+        public static string ConnectionString { get { return ConfigurationManager.ConnectionStrings["sqlConnectionTWERPDB"].ConnectionString; } }
+        //private static SqlConnection sqlConnection = null;
+
+
+        /// <summary>
+        /// 获得查询对象.
+        /// </summary>
+        private static SqlCommand GetCommand(SqlConnection sqlConnection)
+        {
+            SqlCommand sqlCommand = null;
+            try
+            {
+                //if (sqlConnection == null) { sqlConnection = new SqlConnection(ConnectionString); }
+                //if (sqlConnection.State == ConnectionState.Closed) { sqlConnection.Open(); }
+                //if (sqlConnection.State == ConnectionState.Broken)
+                //{ sqlConnection.Close(); sqlConnection.Open(); }
+                if (sqlCommand == null)
+                {
+                    sqlCommand = new SqlCommand(string.Empty, sqlConnection);
+                    sqlCommand.CommandTimeout = 200;
+                }
+                sqlCommand.Parameters.Clear();
+                sqlCommand.Connection = sqlConnection;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return sqlCommand;
+        }
+
+
+        #region ExecuteCommand 增,删,改
+
+        /// <summary>
+        /// 增,删,改
+        /// </summary>
+        /// <param name="sql">SQL语句,或存储过程</param>
+        /// <param name="commandType">语句类型</param>
+        /// <param name="parameters">参数,只限用存储过程</param>
+        /// <returns></returns>
+        public static bool ExecuteCommand(string sql, CommandType commandType, params SqlParameter[] parameters)
+        {
+            bool flag = false;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand sqlCommand = null;
+                    using (sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = commandType;
+                        if (parameters != null) { sqlCommand.Parameters.AddRange(parameters); }
+                        sqlConnection.Open();
+                        flag = sqlCommand.ExecuteNonQuery() > 0;
+                        sqlConnection.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("发生错误SQL语句:" + sql + "\r\n");
+                if (parameters != null)
+                {
+                    foreach (SqlParameter sp in parameters)
+                    { sb.Append(sp.ParameterName + "  " + sp.Value + "\r\n"); }
+                }
+                sb.Append("系统提示错误信息：" + ex.ToString() + "\r\n");
+
+            }
+            return flag;
+        }
+
+        /// <summary>
+        /// 增,删,改
+        /// </summary>
+        /// <param name="sql">SQL语句</param>
+        public static bool ExecuteCommand(string sql)
+        { return ExecuteCommand(sql, CommandType.Text, null); }
+
+        /// <summary>
+        /// 增,删,改
+        /// </summary>
+        /// <param name="sql">SQL语句,或存储过程</param>
+        /// <param name="commandType">语句类型</param>
+        /// <returns></returns>
+        public static bool ExecuteCommand(string sql, CommandType commandType)
+        { return ExecuteCommand(sql, commandType, null); }
+
+        /// <summary>
+        /// 增,删,改
+        /// </summary>
+        /// <param name="sql">SQL语句,或存储过程</param>
+        /// <param name="commandType">语句类型</param>
+        /// <returns></returns>
+        private static bool ExecuteCommand(SqlConnection conn, SqlTransaction tran, string sql, CommandType commandType, SqlParameter[] parameters)
+        {
+
+            bool flag = false;
+            try
+            {
+                SqlCommand sqlCommand = null;
+                using (sqlCommand = GetCommand(conn))
+                {
+                    sqlCommand.Transaction = tran;
+                    sqlCommand.CommandText = sql;
+                    sqlCommand.CommandType = commandType;
+                    if (parameters != null) { sqlCommand.Parameters.AddRange(parameters); }
+                    flag = sqlCommand.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("发生错误SQL语句:" + sql + "\r\n");
+                if (parameters != null)
+                {
+                    foreach (SqlParameter sp in parameters)
+                    { sb.Append(sp.ParameterName + "  " + sp.Value + "\r\n"); }
+                }
+                sb.Append("系统提示错误信息：" + ex.ToString() + "\r\n");
+            }
+            return flag;
+        }
+
+        #endregion
+
+
+
+        #region ExecuteScalar 返回第一行第一列的值,null
+
+        /// <summary>
+        /// 返回第一行第一列的值.无返回值,反回null
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <param name="parameters">传给该语句的传数</param>
+        /// <returns>object</returns>
+        public static object ExecuteScalar(string sql, CommandType commandType, params SqlParameter[] parameters)
+        {
+            object flag = null;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand sqlCommand = null;
+                    using (sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = commandType;
+                        if (parameters != null) { sqlCommand.Parameters.AddRange(parameters); }
+                        sqlConnection.Open();
+                        flag = sqlCommand.ExecuteScalar();
+                        sqlConnection.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("发生错误SQL语句:" + sql + "\r\n");
+                if (parameters != null)
+                {
+                    foreach (SqlParameter sp in parameters)
+                    { sb.Append(sp.ParameterName + "  " + sp.Value + "\r\n"); }
+                }
+                sb.Append("系统提示错误信息：" + ex.ToString() + "\r\n");
+            }
+            return flag;
+        }
+
+        /// <summary>
+        /// 返回第一行第一列的值.无返回值,反回null
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <returns>object</returns>
+        public static object ExecuteScalar(string sql)
+        { return ExecuteScalar(sql, CommandType.Text, null); }
+
+        /// <summary>
+        /// 返回第一行第一列的值.无返回值,反回null
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <returns>object</returns>
+        public static object ExecuteScalar(string sql, CommandType commandType)
+        { return ExecuteScalar(sql, commandType, null); }
+
+
+        #endregion
+
+
+
+        #region GetDataTable   执行查询命令,返回 DataTable .
+
+
+        /// <summary>
+        /// 执行查询命令,返回 DataTable .
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <param name="parameters">传给该语句的传数</param>
+        /// <returns></returns>
+        public static DataTable GetDataTable(string sql, CommandType commandType, params SqlParameter[] parameters)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand sqlCommand = null;
+                    DataSet dataSet = new DataSet();
+                    using (sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = commandType;
+                        if (parameters != null) { sqlCommand.Parameters.AddRange(parameters); }
+                        SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
+                        dataAdapter.Fill(dataSet, "dataSet");
+                        dataAdapter.Dispose();
+                    }
+
+                    return dataSet.Tables.Count <= 0 ? new DataTable() : dataSet.Tables[0];
+                }
+            }
+            catch (Exception ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("发生错误SQL语句:" + sql + "\r\n");
+                if (parameters != null)
+                {
+                    foreach (SqlParameter sp in parameters)
+                    { sb.Append(sp.ParameterName + "  " + sp.Value + "\r\n"); }
+                }
+                sb.Append("系统提示错误信息：" + ex.ToString() + "\r\n");
+            }
+
+            return new DataTable(DateTime.Now.ToString("T_HHmmss"));
+        }
+
+
+
+        /// <summary>
+        /// 执行查询命令,返回 DataTable .
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <param name="parameters">传给该语句的传数</param>
+        /// <returns></returns>
+        public static DataTable GetDataTable(string sql)
+        { return GetDataTable(sql, CommandType.Text, null); }
+        /// <summary>
+        /// 执行查询命令,返回 DataTable .
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <param name="parameters">传给该语句的传数</param>
+        /// <returns></returns>
+        public static DataTable GetDataTable(string sql, CommandType commandType)
+        { return GetDataTable(sql, commandType, null); }
+
+
+
+        #endregion
+
+        #region 返回数据集
+        public static DataSet GetDataSet(string sql, CommandType commandType, params SqlParameter[] parameters)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand sqlCommand = null;
+                    DataSet dataSet = new DataSet();
+                    using (sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = commandType;
+                        if (parameters != null) { sqlCommand.Parameters.AddRange(parameters); }
+                        SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
+                        dataAdapter.Fill(dataSet, "dataSet");
+                    }
+
+                    return dataSet == null ? new DataSet() : dataSet;
+                }
+            }
+            catch (Exception ex)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("发生错误SQL语句:" + sql + "\r\n");
+                if (parameters != null)
+                {
+                    foreach (SqlParameter sp in parameters)
+                    { sb.Append(sp.ParameterName + "  " + sp.Value + "\r\n"); }
+                }
+                sb.Append("系统提示错误信息：" + ex.ToString() + "\r\n");
+            }
+
+            return new DataSet(DateTime.Now.ToString("T_HHmmss"));
+        }
+
+        /// <summary>
+        /// 执行查询命令,返回 DataTable .
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <param name="parameters">传给该语句的传数</param>
+        /// <returns></returns>
+        public static DataSet GetDataSet(string sql)
+        { return GetDataSet(sql, CommandType.Text, null); }
+        /// <summary>
+        /// 执行查询命令,返回 DataTable .
+        /// </summary>
+        /// <param name="sql">sql语句或存储过程</param>
+        /// <param name="commandType">解释语句的方式</param>
+        /// <param name="parameters">传给该语句的传数</param>
+        /// <returns></returns>
+        public static DataSet GetDataSet(string sql, CommandType commandType)
+        { return GetDataSet(sql, commandType, null); }
+
+        #endregion
+
+        #region 对象操作
+
+        /// <summary>
+        /// 为指定类型对象赋值,并反回赋值后的数组.
+        /// </summary>
+        /// <param name="obj">指定类型对象</param>
+        /// <returns></returns>
+        private static SqlParameter[] GetParameter(object obj)
+        {
+            //获得当前对象所有属性.
+            System.Reflection.PropertyInfo[] propertys = obj.GetType().GetProperties();
+            SqlParameter[] parameters = new SqlParameter[propertys.Length];//申明该属性长度的数组.
+            for (int i = 0; i < propertys.Length; i++)//循环赋值.
+            {
+                string parameterName = '@' + propertys[i].Name;
+                parameters[i] = new SqlParameter(parameterName, propertys[i].GetValue(obj, null));
+            }
+            return parameters;
+        }
+
+
+
+        /// <summary>
+        /// 给指定对象里的属性赋值,并返回赋值后的对象.
+        /// </summary>
+        /// <param name="obj">类的实例</param>
+        /// <param name="dataReader">SqlDataReader 对象</param>
+        /// <returns>反回赋值后的对象.</returns>
+        private static object GetAttribute(object obj, SqlDataReader dataReader)
+        {
+            //System.Reflection.Assembly tempAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            //string s=obj.GetType().ToString();
+            //object o = tempAssembly.CreateInstance(s, true);
+
+            //复制对象.
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            System.IO.MemoryStream stream = new System.IO.MemoryStream();
+            bFormatter.Serialize(stream, obj);
+            stream.Seek(0, System.IO.SeekOrigin.Begin);
+            object o = bFormatter.Deserialize(stream);
+
+
+            //返回当前类里的所有公共属性.
+            System.Reflection.PropertyInfo[] propertyInfos = obj.GetType().GetProperties();
+            for (int i = 0; i < propertyInfos.Length; i++)  //给属性赋值.
+            {
+                string attribute = propertyInfos[i].Name;//获得属性名.
+                propertyInfos[i].SetValue(o, dataReader[attribute], null);
+            }
+            return o;
+        }
+
+
+        #endregion
+
+
+
+        #region 通用,统一数据操作
+
+
+        /// <summary>
+        /// 添加,修改一条数据.反回最后一次添加的主键.
+        /// </summary>
+        /// <param name="calling"></param>
+        /// <returns></returns>
+        public static object AddOrUpdate(object obj)
+        {
+            string sql = string.Format("Proc_{0}_AddOrUpdate", obj.GetType().Name);
+            object objScalar = ExecuteScalar(sql, CommandType.StoredProcedure, DBHelper.GetParameter(obj));
+            return objScalar is DBNull ? null : objScalar;
+        }
+
+
+        /// <summary>
+        /// 通过ID删除一条数据.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static bool DeleteById(object obj, int id)
+        {
+            string sql = string.Format("Proc_{0}_DeleteById", obj.GetType().Name);
+            SqlParameter[] parameters = { new SqlParameter("@id", id) };
+            return ExecuteCommand(sql, CommandType.StoredProcedure, parameters);
+        }
+        /// <summary>
+        /// 通过传入表名及条件返回一条记录
+        /// </summary>
+        /// <param name="strtable">表名</param>
+        /// <param name="strwhere">筛选的条件。即where子句。参数中不能带where关键字。</param>
+        /// <param name="strorderby">排序顺序</param>
+        /// <returns></returns>
+        public static object GetOneRecord(string strtable, string strwhere, string strorderby, object obj)
+        {
+            SqlDataReader dataReader = null;
+            try
+            {
+                string sql;
+                if (strwhere != "")
+                {
+                    sql = string.Format("select top 1 * from {0} where {1}", strtable, strwhere);
+                }
+                else
+                {
+                    sql = string.Format("select top 1 * from {0}", strtable);
+                }
+                if (strorderby != "")
+                {
+                    sql = sql + " order by " + strorderby;
+                }
+
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = CommandType.Text;
+
+
+                        sqlConnection.Open();
+                        dataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        if (!dataReader.Read()) { dataReader.Close(); return null; }
+                        obj = DBHelper.GetAttribute(obj, dataReader);
+                        dataReader.Close();
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (dataReader != null)
+                { dataReader.Close(); }
+                return null;
+            }
+            return obj;
+
+        }
+        /// <summary>
+        /// 通过传入表名及条件返回一条记录
+        /// </summary>
+        /// <param name="strtable">表名</param>
+        /// <param name="strwhere">筛选的条件。即where子句。参数中不能带where关键字。</param>
+        /// <returns></returns>
+        public static object GetOneRecord(string strtable, string strwhere, object obj)
+        {//该方法返回的对象可能是无效的结果。即当查询表中的数据为空时，返回的obj不为空。
+
+            SqlDataReader dataReader = null;
+            try
+            {
+                string sql;
+                if (strwhere != "")
+                {
+                    sql = string.Format("select top 1 * from {0} where {1}", strtable, strwhere);
+                }
+                else
+                {
+                    sql = string.Format("select top 1 * from {0}", strtable);
+                }
+
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = CommandType.Text;
+
+                        sqlConnection.Open();
+                        dataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        if (!dataReader.Read()) { dataReader.Close(); return null; }
+                        obj = DBHelper.GetAttribute(obj, dataReader);
+                        dataReader.Close();
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (dataReader != null)
+                { dataReader.Close(); }
+                return null;
+            }
+            return obj;
+        }
+        /// <summary>
+        /// 通过ID返回一条数据.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static object GetById(object obj, int id)
+        {
+            SqlDataReader dataReader = null;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    string sql = string.Format("Proc_{0}_GetById", obj.GetType().Name);
+                    SqlParameter[] parameters = { new SqlParameter("@id", id) };
+                    using (SqlCommand sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddRange(parameters);
+
+                        sqlConnection.Open();
+                        dataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        if (!dataReader.Read()) { dataReader.Close(); return null; }
+                        obj = DBHelper.GetAttribute(obj, dataReader);
+                        dataReader.Close();
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (dataReader != null)
+                { dataReader.Close(); }
+            }
+            return obj;
+        }
+
+        public static object GetById(string tableName, int id, string procName, object obj)
+        {
+            SqlDataReader dataReader = null;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    string sql = string.Format("Proc_{0}_GetById", procName);
+                    SqlParameter[] parameters = {
+                        new SqlParameter("@id", id),
+                        new SqlParameter("@TableName", tableName)
+
+                    };
+                    using (SqlCommand sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddRange(parameters);
+
+                        sqlConnection.Open();
+                        dataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        if (!dataReader.Read()) { dataReader.Close(); return null; }
+                        obj = DBHelper.GetAttribute(obj, dataReader);
+                        dataReader.Close();
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (dataReader != null)
+                { dataReader.Close(); }
+            }
+            return obj;
+        }
+        /// <summary>
+        /// 获得表里的所有数据.
+        /// </summary>
+        /// <returns></returns>
+        public static List<object> GetAll(object obj)
+        {
+            SqlDataReader dataReader = null;
+            List<object> list = new List<object>();
+            try
+            {
+                string sql = string.Format("Proc_{0}_GetAll", obj.GetType().Name);
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        sqlConnection.Open();
+                        dataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        while (dataReader.Read()) { list.Add(DBHelper.GetAttribute(obj, dataReader)); }
+                        dataReader.Close();
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (dataReader != null)
+                { dataReader.Close(); }
+            }
+            return list;
+        }
+
+
+        /// <summary>
+        /// 获得表里的所有数据
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static DataTable GetTable(object obj)
+        {
+            string sql = string.Format("Proc_{0}_GetAll", obj.GetType().Name);
+            return DBHelper.GetDataTable(sql, CommandType.StoredProcedure);
+        }
+
+
+
+        /// <summary>
+        /// 获得指定表的数据行数,where条件
+        /// </summary>
+        public static int GetRowCount(string sql)
+        {
+
+            object count = DBHelper.ExecuteScalar(sql, CommandType.Text);
+            return count == null ? -1 : Convert.ToInt32(count);
+        }
+        /// <summary>
+        /// 获得指定表的数据行数,where条件
+        /// </summary>
+        public static int GetRowCount(object obj, string where)
+        {
+            string sql = "Proc_GetRowCount";
+            SqlParameter[] parameters = {
+                                                            new SqlParameter("@tableName", obj.GetType().Name),
+                                                            new SqlParameter("@where",where)
+                                                    };
+            object count = DBHelper.ExecuteScalar(sql, CommandType.StoredProcedure, parameters);
+            return count == null ? -1 : Convert.ToInt32(count);
+        }
+
+        /// <summary>
+        /// 获得指定表的数据行数
+        /// </summary>
+        public static int GetRowCount(object obj)
+        {
+            return GetRowCount(obj, string.Empty);
+        }
+
+
+        /// <summary>
+        /// 获得,obj指定表,columnName指定排序列的,top指定几条数据,pageIndex第几页从零开始.true升,false降,where条件
+        /// </summary>
+        public static List<object> GetTopOrderBy(object obj, string columnName, int top, int pageIndex, bool order, string where)
+        {
+            SqlDataReader dataReader = null;
+            string sql = "Proc_GetTopOrderBy";
+            List<object> list = new List<object>();
+            try
+            {
+                SqlParameter[] parameters ={
+                        new SqlParameter("@tableName",obj.GetType().Name),
+                        new SqlParameter("@columnName",columnName),
+                        new SqlParameter("@top",top),
+                        new SqlParameter("@pageIndex",pageIndex),
+                        //new SqlParameter("@primarykey","id"),
+                        new SqlParameter("@order",order?"asc":"desc"),
+                        new SqlParameter("@where",where)};
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand sqlCommand = GetCommand(sqlConnection))
+                    {
+                        sqlCommand.CommandText = sql;
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddRange(parameters);
+
+                        sqlConnection.Open();
+                        dataReader = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                        // SqlDataReader dataReader = DBHelper.GetDataReader(CommandType.StoredProcedure, parameters);
+                        while (dataReader.Read()) { list.Add(DBHelper.GetAttribute(obj, dataReader)); }
+                        dataReader.Close();
+                        sqlConnection.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (dataReader != null)
+                { dataReader.Close(); }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获得,obj指定表,columnName指定排序列的,top指定几条数据,pageIndex第几页从零开始.true升,false降
+        /// </summary>
+        public static List<object> GetTopOrderBy(object obj, string columnName, int top, int pageIndex, bool order)
+        {
+            return GetTopOrderBy(obj, columnName, top, pageIndex, order, string.Empty);
+        }
+
+
+        /// <summary>
+        /// 获得表里的排序,并分页的数据,tableName指定表,columnName指定排序列的,top指定几条数据,pageIndex第几页从零开始.true升,false降,where条件
+        /// </summary>
+        public static DataTable GetTableTopOrderBy(string tableName, string columnName, int top, int pageIndex, bool order, string where)
+        {
+            string sql = "Proc_GetTopOrderBy";
+            SqlParameter[] parameters ={
+                        new SqlParameter("@tableName",tableName),
+                        new SqlParameter("@columnName",columnName),
+                        new SqlParameter("@top",top),
+                        new SqlParameter("@pageIndex",pageIndex),
+                        //new SqlParameter("@primarykey","id"),
+                        new SqlParameter("@order",order?"asc":"desc"),
+                        new SqlParameter("@where",where)};
+            return DBHelper.GetDataTable(sql, CommandType.StoredProcedure, parameters);
+        }
+
+        /// <summary>
+        /// 获得表里的排序,并分页的数据,tableName指定表,columnName指定排序列的,top指定几条数据,pageIndex第几页从零开始.true升,false降
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static DataTable GetTableTopOrderBy(string tableName, string columnName, int top, int pageIndex, bool order)
+        {
+            return GetTableTopOrderBy(tableName, columnName, top, pageIndex, order, string.Empty);
+        }
+
+
+        /// <summary>
+        /// 获得表里的排序,并分页的数据,columnName指定排序列的,top指定几条数据,pageIndex第几页从零开始.true升,false降,parameters 扩展参数
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static DataTable GetTableTopOrderBy(string procedure, string columnName, int top, int pageIndex, bool order, params SqlParameter[] parameters)
+        {
+            List<SqlParameter> list = new List<SqlParameter>();
+            list.Add(new SqlParameter("@columnName", columnName));
+            list.Add(new SqlParameter("@top", top));
+            list.Add(new SqlParameter("@pageIndex", pageIndex));
+            list.Add(new SqlParameter("@order", order ? "asc" : "desc"));
+            if (parameters.Length >= 1) { list.AddRange(parameters); }
+            return DBHelper.GetDataTable(procedure, CommandType.StoredProcedure, list.ToArray());
+        }
+
+
+        /// <summary>
+        /// 获得视图表的指定ID数据行.
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static DataTable GetTableById(string viewTableName, int id)
+        {
+            string sql = string.Format("Proc_{0}_GetById", viewTableName);
+            SqlParameter[] parameters = { new SqlParameter("@id", id) };
+            return DBHelper.GetDataTable(sql, CommandType.StoredProcedure, parameters);
+        }
+
+        #endregion
+
+        #region DataTable批量单表添加(有事务) 
+        /// <summary>   
+
+        /// DataTable批量添加(有事务)   
+
+        /// </summary> /  
+
+        // <param name="Table">数据源</param>  
+
+        /// <param name="Mapping">定义数据源和目标源列的关系集合</param>   
+
+        /// <param name="DestinationTableName">目标表</param>   
+
+        public static bool MySqlBulkCopy(DataTable Table, SqlBulkCopyColumnMapping[] Mapping, string DestinationTableName, string deletesql)
+        {
+
+            bool Bool = true;
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+
+                con.Open();
+
+                using (SqlTransaction Tran = con.BeginTransaction())
+                {
+
+                    using (SqlBulkCopy Copy = new SqlBulkCopy(con, SqlBulkCopyOptions.KeepIdentity, Tran))
+                    {
+
+                        Copy.DestinationTableName = DestinationTableName;//指定目标表   
+
+                        if (Mapping != null)
+                        { //如果有数据   
+
+                            foreach (SqlBulkCopyColumnMapping Map in Mapping)
+                            {
+
+                                Copy.ColumnMappings.Add(Map);
+                            }
+                        }
+
+                        try
+                        {
+                            Copy.WriteToServer(Table);//批量添加   
+
+                            Tran.Commit();//提交事务
+                        }
+
+                        catch
+                        {
+                            Tran.Rollback();
+
+                            //回滚事务
+                            Bool = false;
+                        }
+                    }
+                }
+            }
+            return Bool;
+        }
+        #endregion
+
+        #region DataTable多个表同时批量添加(有事务)   
+
+        /// <param name="Table">数据源</param>  
+
+        /// <param name="Mapping">定义数据源和目标源列的关系集合</param>   
+
+        /// <param name="DestinationTableName">目标表</param>   
+
+        public static bool MySqlBulkCopyMultipleTab(DataSet ds, string[] DestinationTableName, string othersql)
+        {
+            bool Bool = true;
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                using (SqlTransaction Tran = con.BeginTransaction())
+                {
+                    try
+                    {
+                        if (othersql != "")
+                        {
+                            //bool sqlresult = ExecuteCommand(othersql);
+                            bool sqlresult = ExecuteCommand(con, Tran, othersql, CommandType.Text, null);
+                        }
+                        for (int i = 0; i < ds.Tables.Count; i++)
+                        {
+                            using (SqlBulkCopy Copy = new SqlBulkCopy(con, SqlBulkCopyOptions.KeepIdentity, Tran))
+                            {
+                                Copy.DestinationTableName = DestinationTableName[i];//指定目标表 
+                                DataTable dt = ds.Tables[i];
+                                SqlBulkCopyColumnMapping[] Mapping = new SqlBulkCopyColumnMapping[dt.Columns.Count];
+                                for (int u = 0; u < dt.Columns.Count; u++)
+                                {
+                                    string dtallcol = dt.Columns[u].ColumnName;
+                                    Mapping[u] = new SqlBulkCopyColumnMapping(dtallcol, dtallcol);
+                                }
+                                if (Mapping != null)
+                                {
+                                    foreach (SqlBulkCopyColumnMapping Map in Mapping)
+                                    {
+                                        Copy.ColumnMappings.Add(Map);
+                                    }
+                                }
+                                Copy.WriteToServer(dt);//批量添加   
+                            }
+                        }
+                        Tran.Commit();//提交事务
+                        Bool = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Bool = false;
+                        string aa = "MySqlBulkCopyMultipleTab方法发生错误:" + ex.Message;
+                    }
+                }
+            }
+            return Bool;
+        }
+        #endregion
+
+        #region 查询======>调用存储过程函数,存储过程名称,输入参数
+        public static DataTable GetDataTable(string sql, SqlParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand sqlCommand = new SqlCommand();
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            sqlCommand.Connection = conn;
+            sqlCommand.Connection.Open();
+            sqlCommand.CommandText = sql;
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            if (parameters != null)
+            {
+                sqlCommand.Parameters.AddRange(parameters);
+            }
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlCommand.Connection.Close();
+            }
+            return dt;
+        }
+        #endregion
+
+        /// <summary>
+        /// 循环model做sql插入语句
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static bool InsertTab(object model)
+        {
+            string sql = GetSql(model, false);
+            return ExecuteCommand(sql);
+        }
+        /// <summary>
+        /// 循环model做sql修改语句
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static bool UpdateTab(object model)
+        {
+            string sql = GetSql(model, true);
+            return ExecuteCommand(sql);
+        }
+
+        public static string GetSql(object model, bool isupdate)
+        {
+            StringBuilder sql = new StringBuilder();
+            if (!isupdate)
+            {
+                sql.Append("insert into ");
+                sql.Append(model.GetType().Name);
+                sql.Append("(");
+                StringBuilder values = new StringBuilder();
+                PropertyInfo[] properties = model.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                foreach (PropertyInfo item in properties)
+                {
+                    //实体类字段名称
+                    string name = item.Name;
+                    if (name == "Id")
+                    {
+                        continue;
+                    }
+                    object value = item.GetValue(model, null);//该字段的值
+                    sql.Append("[" + name + "]");
+                    values.Append("'" + value + "'");
+                    if (name != properties[properties.Length - 1].Name)
+                    {
+                        sql.Append(",");
+                        values.Append(",");
+                    }
+
+                }
+                sql.Append(")");
+                sql.Append(" values (" + values + ")");
+            }
+            else
+            {
+                object id = 0;
+
+                sql.Append("update ");
+                sql.Append(model.GetType().Name);
+                sql.Append(" set ");
+
+                PropertyInfo[] properties = model.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                foreach (PropertyInfo item in properties)
+                {
+                    //实体类字段名称
+                    string name = item.Name;
+                    if (name == "Id")
+                    {
+                        id = item.GetValue(model, null);//该字段的值
+                        continue;
+                    }
+                    object value = item.GetValue(model, null);//该字段的值
+                    sql.Append("[" + name + "]='" + value + "'");
+                    if (name != properties[properties.Length - 1].Name)
+                    {
+                        sql.Append(",");
+                    }
+                }
+                sql.Append(" where Id=" + id);
+            }
+            return sql.ToString();
+        }
+
+    }
 }
