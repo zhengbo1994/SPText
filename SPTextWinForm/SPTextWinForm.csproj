@@ -74,6 +74,12 @@
     <Compile Include="AddStudentForm.Designer.cs">
       <DependentUpon>AddStudentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AS928PrintPictures.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AS928PrintPictures.designer.cs">
+      <DependentUpon>AS928PrintPictures.cs</DependentUpon>
+    </Compile>
     <Compile Include="CodeGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +218,9 @@
     <EmbeddedResource Include="AddStudentForm.resx">
       <DependentUpon>AddStudentForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AS928PrintPictures.resx">
+      <DependentUpon>AS928PrintPictures.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CodeGenerator.resx">
       <DependentUpon>CodeGenerator.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,5 +323,6 @@
       <Name>SPText</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

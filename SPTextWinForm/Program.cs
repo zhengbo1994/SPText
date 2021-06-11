@@ -25,7 +25,7 @@ namespace SPTextWinForm
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new ProgressBarFrom());
+                Application.Run(new LoginForm());
             }
 
 
