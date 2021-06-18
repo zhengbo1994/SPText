@@ -1157,7 +1157,6 @@ namespace SPText
             baseInfo.PersonList.Add(p2);
 
             string path = GetFilePath();
-
             using (var fs = new FileStream(path, FileMode.Create))
             {
                 using (var sr = new StreamWriter(fs, System.Text.Encoding.UTF8))
