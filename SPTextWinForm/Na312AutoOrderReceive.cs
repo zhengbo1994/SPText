@@ -1382,8 +1382,117 @@ namespace SPTextWinForm
 
             return databaseSetSettingInfoList;
         }
+
+
+        /// <summary>
+        /// 装载数据库信息
+        /// </summary>
+        public List<DatabaseSetSettingInfo> GetDatabaseSetSettingInfoList()
+        {
+            List<DatabaseSetSettingInfo> databaseSetSettingInfoList = new List<DatabaseSetSettingInfo>();
+            XmlHelper xmlHelper = new XmlHelper(settingPath);
+            string str = "/set/customers/customer";
+            XmlNodeList xmlNodedatabases = xmlHelper.ReadAllChild(str);
+
+            for (int i = 0; i < xmlNodedatabases.Count; i++)
+            {
+                var xmlData = xmlNodedatabases[i];
+                if (xmlData.Name == "databaseSets")
+                {
+                    for (int j = 0; j < xmlData.ChildNodes.Count; j++)
+                    {
+                        XmlNode databaseSet = xmlData.ChildNodes[j];
+                        DatabaseSetSettingInfo databaseSetSettingInfo = new DatabaseSetSettingInfo();
+                        foreach (XmlNode item in databaseSet)
+                        {
+                            var subXmlNode = item.InnerText;
+                            switch (item.Name)
+                            {
+                                case "dataSource":
+                                    databaseSetSettingInfo.dbHost = subXmlNode;
+                                    break;
+                                case "database":
+                                    databaseSetSettingInfo.dbName = subXmlNode;
+                                    break;
+                                case "user":
+                                    databaseSetSettingInfo.dbUser = subXmlNode;
+                                    break;
+                                case "pwd":
+                                    databaseSetSettingInfo.dbPwd = subXmlNode;
+                                    break;
+                                default:
+                                    throw new Exception("出现错误");
+                            }
+                        }
+                        databaseSetSettingInfoList.Add(databaseSetSettingInfo);
+                    }
+                }
+            }
+
+            return databaseSetSettingInfoList;
+        }
+
+        /// <summary>
+        /// 装载数据库信息
+        /// </summary>
+        public List<SendEmailSettingInfo> GetSendEmailSettingInfoList()
+        {
+            List<SendEmailSettingInfo> sendEmailSettingInfoList = new List<SendEmailSettingInfo>();
+            XmlHelper xmlHelper = new XmlHelper(settingPath);
+            string str = "/set/customers/customer";
+            XmlNodeList xmlNodedatabases = xmlHelper.ReadAllChild(str);
+
+            for (int i = 0; i < xmlNodedatabases.Count; i++)
+            {
+                var xmlData = xmlNodedatabases[i];
+                if (xmlData.Name == "sendEmailSets")
+                {
+                    for (int j = 0; j < xmlData.ChildNodes.Count; j++)
+                    {
+                        XmlNode databaseSet = xmlData.ChildNodes[j];
+                        SendEmailSettingInfo sendEmailSetting = new SendEmailSettingInfo();
+                        foreach (XmlNode item in databaseSet)
+                        {
+                            var subXmlNode = item.InnerText;
+                            switch (item.Name)
+                            {
+                                case "smtpHost":
+                                    sendEmailSetting.SmtpHost = subXmlNode;
+                                    break;
+                                case "smtpPort":
+                                    sendEmailSetting.SmtpPort = int.Parse(subXmlNode);
+                                    break;
+                                case "emailAccount":
+                                    sendEmailSetting.EmailAccount = subXmlNode;
+                                    break;
+                                case "emailPassword":
+                                    sendEmailSetting.EmailPassword = subXmlNode;
+                                    break;
+                                case "emailRecipients":
+                                    sendEmailSetting.EmailRecipientList = subXmlNode.Trim().Replace("；", ";").Split(';').ToList();
+                                    break;
+                                case "ccRecipients":
+                                    sendEmailSetting.CcRecipientList = subXmlNode.Split(';').ToList();
+                                    break;
+                                case "lastEmailTime":
+                                    sendEmailSetting.LastEmailTime = DateTime.Now;
+                                    break;
+                            }
+                        }
+                        if (sendEmailSetting.EmailAccount != null && sendEmailSetting.EmailPassword != null)
+                        {
+                            sendEmailSettingInfoList.Add(sendEmailSetting);
+                        }
+
+                    }
+                }
+            }
+
+            return sendEmailSettingInfoList;
+        }
     }
 
+    #region 类
     /// <summary>
     /// 镜种对照类
     /// </summary>
@@ -1651,4 +1760,5 @@ namespace SPTextWinForm
         public string dbUser { get; set; }
         public string dbPwd { get; set; }
     }
+    #endregion
 }

@@ -304,7 +304,6 @@ namespace SPText
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
 
-
             var strList1 = a.GroupJoin(b, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(p => new { }).ToList();
             var strList2 = a.GroupBy(p => p.ToString()).Select(p => new { ziduan1 = p.Key.ToString() }).ToList();
             //linQ怎么合并同一列的数据   http://www.myexceptions.net/linq/1013611.html
@@ -1158,7 +1157,6 @@ namespace SPText
             baseInfo.PersonList.Add(p2);
 
             string path = GetFilePath();
-
             using (var fs = new FileStream(path, FileMode.Create))
             {
                 using (var sr = new StreamWriter(fs, System.Text.Encoding.UTF8))
@@ -2187,7 +2185,7 @@ namespace SPText
         #region  SFtp
         public static void SFTPAndFTPShow()
         {
-            
+
             {
                 //{
                 //    string host = "192.168.43.221";
@@ -2204,13 +2202,15 @@ namespace SPText
                 //    }
                 //}
                 {
+                    //SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", @"hkosftp.ppk", "mdwpsftp");
+
                     string sshPrivateKeyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Sftp\NA319\hkosftp.ppk");
                     //SftpWinScpHelper _sftp = new SftpWinScpHelper("sftp.warbyparker.com", 22, "hko", "ssh-ed25519 255 aa:ff:58:34:ec:c1:99:f1:ec:29:a6:c0:34:0e:2c:31", sshPrivateKeyPath, "hkosftp");//正式地址
-                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", sshPrivateKeyPath, "hkosftp");//测试地址
+                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", sshPrivateKeyPath, "hkosftp");//测试地址 
                     _sftp.Connect();
                     if (_sftp.Connected)
                     {
-                        var paths = _sftp.GetFileList("/", "");
+                        var paths = _sftp.GetFileList("/upload/Orders", ".xml");
                     }
                 }
             }
@@ -2563,8 +2563,10 @@ namespace SPText
         public static void ZipShow()
         {
             {
-                ZipHelper.ZipDirectory("E:\\test", "E:\\test1.zip");   //压缩文件夹，无密码
-                ZipHelper.ZipDirectory("E:\\test", "E:\\test1.zip", "123456");  //压缩文件夹，有密码
+                //ZipHelper.ZipDirectory("E:\\test", "E:\\test1.zip");   //压缩文件夹，无密码
+                //ZipHelper.ZipDirectory("E:\\test", "E:\\test1.zip", "123456");  //压缩文件夹，有密码
+
+                ZipHelper.UnZip(@"E:\BaiduNetdiskDownload\PS新手入门到高级精通视频教程\PS新手基础入门到高级精通视频教程\PS新手基础入门到高级精通视频教程.zip", @"E:\学习");  //压缩文件夹，有密码
             }
             //{
             //    SPTextCommon.HelperCommon.ImageUpload imageUpload = new SPTextCommon.HelperCommon.ImageUpload();
@@ -2579,6 +2581,7 @@ namespace SPText
             ReportPrintShow reportPrint = new ReportPrintShow();
             reportPrint.Show1();
             reportPrint.Show2();
+            reportPrint.Show3();
             SettingConfiguration.GetLocalPrinters();
 
             string filePath = @"E:\AAAA\new-sgerp\TWERPWeb\TemporaryFile\AO21005810.pdf";

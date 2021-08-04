@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reporting.WebForms;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;

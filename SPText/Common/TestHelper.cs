@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -563,6 +564,7 @@ namespace SPText.Common
             //}
         }
 
+        #region  NPOI
         public void NopiHelper()
         {
             {
@@ -597,7 +599,7 @@ namespace SPText.Common
         {
             string path = "";
             FileInfo fileInfo = new FileInfo(path);
-            NOPIShow(fileInfo,true);
+            NOPIShow(fileInfo, true);
         }
         public DataTable NOPIShow(FileInfo fileInfo, bool isFirstRowColumn)
         {
@@ -606,9 +608,9 @@ namespace SPText.Common
             IWorkbook workbook = null;
 
             Stream stream = new FileStream(fileInfo.FullName, FileMode.Open);
-            if (Path.GetExtension(fileInfo.FullName).ToLower()==".xlsx")
+            if (Path.GetExtension(fileInfo.FullName).ToLower() == ".xlsx")
             {
-                if (workbook==null)
+                if (workbook == null)
                 {
                     try
                     {
@@ -618,10 +620,10 @@ namespace SPText.Common
                     {
                         workbook = new HSSFWorkbook(stream);
                     }
-           
+
                 }
             }
-            else if (Path.GetExtension(fileInfo.FullName).ToLower()==".xls")
+            else if (Path.GetExtension(fileInfo.FullName).ToLower() == ".xls")
             {
                 if (workbook == null)
                 {
@@ -636,10 +638,10 @@ namespace SPText.Common
                 }
             }
 
-            if (workbook!=null)
+            if (workbook != null)
             {
                 var sheet = workbook.GetSheetAt(0);
-                if (sheet!=null)
+                if (sheet != null)
                 {
 
                 }
@@ -647,6 +649,41 @@ namespace SPText.Common
 
 
             return dataTable;
+        }
+        #endregion
+
+
+        /// <summary>
+        /// 执行Cmd
+        /// </summary>
+        /// <param name="argument">cmd命令</param>
+        /// <param name="msg">返回信息</param>
+        /// <param name="directoryPath">路径</param>
+        /// <param name="closed">是否关闭</param>
+        public static void RunCmd(string argument, out string msg, string directoryPath = "", bool redirect = false)
+        {
+            msg = string.Empty;
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "cmd.exe";
+            startInfo.Arguments = redirect ? @"/c " + argument : @"/k " + argument;
+            startInfo.UseShellExecute = false;                        //是否需要启动windows shell
+            startInfo.CreateNoWindow = false;
+            startInfo.RedirectStandardError = redirect;    //是否重定向错误
+            startInfo.RedirectStandardInput = redirect;    //是否重定向输入   是则不能在cmd命令行中输入
+            startInfo.RedirectStandardOutput = redirect;      //是否重定向输出,是则不会在cmd命令行中输出
+            startInfo.WorkingDirectory = directoryPath;       //指定当前命令所在文件位置，
+            process.StartInfo = startInfo;
+            process.Start();
+            if (redirect)
+            {
+                process.StandardInput.Close();
+                msg = process.StandardOutput.ReadToEnd();  //在重定向输出时才能获取
+            }
+            //else
+            //{
+            //    process.WaitForExit();//等待进程退出
+            //}
         }
     }
     #region  事件
