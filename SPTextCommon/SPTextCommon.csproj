@@ -87,9 +87,6 @@
     <Reference Include="Mail, Version=3.0.21008.1129, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
       <HintPath>..\packages\Mail.dll.3.0.21008.1129\lib\net45\Mail.dll</HintPath>
     </Reference>
-    <Reference Include="Mapster">
-      <HintPath>C:\Users\user\.nuget\packages\mapster\6.5.1\lib\netstandard2.0\Mapster.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
     </Reference>
