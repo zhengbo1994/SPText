@@ -89,6 +89,7 @@
     <Compile Include="CommonControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\OptionCommon.cs" />
     <Compile Include="DataGridView\AddProductForm.cs">
       <SubType>Form</SubType>
     </Compile>

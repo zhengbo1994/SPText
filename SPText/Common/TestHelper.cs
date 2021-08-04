@@ -46,6 +46,11 @@ namespace SPText.Common
 
 
             //使用 LocalReport 对象进行打印(https://blog.csdn.net/weixin_30325971/article/details/99996453)
+
+
+            List<(string a, string b, int c)> aList = new List<(string a, string b, int c)>();
+
+            aList.Add(("1", "2", 3));
         }
 
         #region  事件代码测试

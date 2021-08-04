@@ -710,7 +710,7 @@ namespace SPText.Common.RabbitMQ
         }
         #endregion
 
-        #region ConsumptionACKConfirm
+        #region ConsumptionACKConfirm(消费确认)
         public void ConsumptionACKConfirmShow()
         {
             var factory = new ConnectionFactory();
