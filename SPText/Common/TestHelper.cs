@@ -10,6 +10,7 @@ using SPTextCommon;
 using SPTextCommon.Cache;
 using SPTextCommon.HelperCommon;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -21,9 +22,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
-
-
+using System.Xml;
 
 namespace SPText.Common
 {
@@ -547,6 +546,13 @@ namespace SPText.Common
         }
         #endregion
 
+        #region  XML解析
+        public void XmlResult()
+        {
+            //XmlDocument xml = new XmlDocument();
+            //xml.
+        }
+        #endregion
         public void TestShow()
         {
             //SqlHelper sqlHelper = new SqlHelper(na319SettingInfo.DatabaseSetting.DataSource, na319SettingInfo.DatabaseSetting.Database, na319SettingInfo.DatabaseSetting.User, na319SettingInfo.DatabaseSetting.Password);
@@ -1071,6 +1077,62 @@ namespace SPText.Common
             }
             return value;
         }
+
+
+
     }
     #endregion
+
+
+    public class ListAndDataTableConvert<T> where T : new()
+    {
+        public DataTable DataTableByList<S>(IEnumerable<S> tList)
+        {
+            DataTable dataTable = new DataTable();
+            PropertyInfo[] properties = typeof(S).GetProperties();
+            dataTable.Columns.AddRange(properties.Select(p => new DataColumn(p.Name, p.PropertyType)).ToArray());
+            if (tList.Count() > 0)
+            {
+                for (int i = 0; i < tList.Count(); i++)
+                {
+                    ArrayList arrayList = new ArrayList();
+                    foreach (PropertyInfo prop in properties)
+                    {
+                        object obj = prop.GetValue(tList.ElementAt(i));
+                        arrayList.Add(obj);
+                    }
+                    object[] array = arrayList.ToArray();
+                    dataTable.LoadDataRow(array, true);
+                }
+            }
+
+            return dataTable;
+        }
+
+        public List<T> ListByDataTable(DataTable dataTable)
+        {
+            List<T> ts = new List<T>();// 定义集合
+            Type type = typeof(T); // 获得此模型的类型
+            string tempName = "";
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                T t = new T();
+                PropertyInfo[] propertys = t.GetType().GetProperties();// 获得此模型的公共属性
+                foreach (PropertyInfo pi in propertys)
+                {
+                    tempName = pi.Name;
+                    if (dataTable.Columns.Contains(tempName))
+                    {
+                        if (!pi.CanWrite) continue;
+                        object value = dr[tempName];
+                        if (value != DBNull.Value)
+                            pi.SetValue(t, value, null);
+                    }
+                }
+                ts.Add(t);
+            }
+            return ts;
+        }
+    }
+
 }

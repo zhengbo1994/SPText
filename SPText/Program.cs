@@ -218,7 +218,7 @@ namespace SPText
             #endregion
 
             #region  值储存方式（DataTable，Hashtable，Dictionary，List）
-            EnumerableData();
+            //EnumerableData();
             #endregion
 
             #region  加密
@@ -249,18 +249,9 @@ namespace SPText
             //ReportPrint();
             #endregion
 
-            #region  测试代码
-            //TestHelper testHelper = new TestHelper();
-            //testHelper.Show();
-            #endregion
-
             #region  SFTP
             //SFTPAndFTPShow();
             #endregion
-
-
-            //dynamic  避开编译器检查
-            Console.ReadKey();
 
             #region  
             //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
@@ -270,6 +261,14 @@ namespace SPText
             //3.消息队列
             //4.延迟加载
             #endregion
+
+            #region  测试代码
+            //TestHelper testHelper = new TestHelper();
+            //testHelper.Show();
+            #endregion
+
+            //dynamic  避开编译器检查
+            Console.ReadKey();
         }
 
 
@@ -303,14 +302,14 @@ namespace SPText
 
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
-
+            
             var strList1 = a.GroupJoin(b, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(p => new { }).ToList();
             var strList2 = a.GroupBy(p => p.ToString()).Select(p => new { ziduan1 = p.Key.ToString() }).ToList();
             //linQ怎么合并同一列的数据   http://www.myexceptions.net/linq/1013611.html
             //var query = db.YourTable.ToList().GroupBy(t => new { t.FROM, t.To, t.Time })
             //.Select(g => new { FROM = g.Key.From, TO = g.Key.To, NUM = g.Count(), Time = g.Key.Time, Body = string.Join(",", g.Select(s => s.Body).ToArray()) });
 
-
+            
             Console.ReadKey();
         }
         #endregion
@@ -1011,8 +1010,6 @@ namespace SPText
             //        Console.WriteLine($"{parameter.ParameterType}");//获取参数类型
             //    }
             //}
-
-
 
             object obj = Activator.CreateInstance(type);//获取实例
             //dynamic obj1= Activator.CreateInstance(type);  //dynamic可以避开编译器检查

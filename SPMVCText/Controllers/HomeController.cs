@@ -20,7 +20,6 @@ namespace SPMVCText.Controllers
             HttpCookie hcCookie = new HttpCookie("Cookies2", "2");
             Response.Cookies.Add(hcCookie);
 
-
             return View();
         }
 
