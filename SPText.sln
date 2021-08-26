@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTextCommon", "SPTextCommo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTextWinForm", "SPTextWinForm\SPTextWinForm.csproj", "{A91219B3-51CB-4CD5-9B47-6500064299B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTextProject", "SPTextProject\SPTextProject.csproj", "{FD9EE9CB-33C3-40E0-BB9B-7F787EEDD93F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{A91219B3-51CB-4CD5-9B47-6500064299B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A91219B3-51CB-4CD5-9B47-6500064299B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A91219B3-51CB-4CD5-9B47-6500064299B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9EE9CB-33C3-40E0-BB9B-7F787EEDD93F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9EE9CB-33C3-40E0-BB9B-7F787EEDD93F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9EE9CB-33C3-40E0-BB9B-7F787EEDD93F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9EE9CB-33C3-40E0-BB9B-7F787EEDD93F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
