@@ -12,7 +12,6 @@ namespace SPText.Common
 {
     public class QuartzHelper
     {
-
         public async Task Show()
         {
             IScheduler scheduler = await ScheduleManager.BuildScheduler();

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="jatoolsPrinter.js"></script>
+    <script>
+        function doPrint(how) {
+            var myDoc = {
+                settingsID: "mysettings1",//待保留的打印设置id，打印后将被保存在注册表中，下一次启动相同值的settingsID打印文档时，控件将用保留的参数自动设置打印机
+                documents: document,   // 要打印的div 对象在当前文档document中
+                //控件将从本文档中的#page1作为首页打印，#page2作为第二页打印
+                //如果需要打印的内容不在同一页，document可以换成URL
+                copyrights: '杰创软件拥有版权  www.jatools.com'  // 版权声明,必须
+            };
+            // getJatoolsPrinter().print(myDoc,false);
+            // getJatoolsPrinter().print(myDoc,true);
+            // getJatoolsPrinter().print(myDoc,false);
+
+            if (how == 1) {
+                getJatoolsPrinter().printPreview(myDoc);//打印预览功能
+            } else if (how == 2) {
+                getJatoolsPrinter().print(myDoc, true); //无预览有弹框打印
+            } else {
+                getJatoolsPrinter().print(myDoc, false);//直接打印
+            }
+        }</script>
+</head>
+<body>
+    <input type="button" value="打印预览" onclick="doPrint(1)">
+    <input type="button" value="打印..." onclick="doPrint(2)">
+    <input type="button" value="打印" onclick="doPrint(3)">
+    <div id="page1">第一页1</div>
+    <div id="page2">第一页2</div>
+
+    <script>
+        declareJatoolsPrinter();//加载插件声明
+    </script>
+</body>
+</html>

@@ -72,6 +72,7 @@ namespace SPCoreText
 
             #region 支持跨域  所有的Api都支持跨域
             services.AddCors(option => option.AddPolicy("AllowCors", _build => _build.AllowAnyOrigin().AllowAnyMethod()));
+            //services.AddCors(c => c.AddPolicy("any", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
             #endregion
 
             #region JWT鉴权授权（需创建一个独立的类库）

@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>websoket</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        var url = "ws://localhost:1797/WebSoket/ProcessRequest";
+ 
+        $().ready(function () {
+            $('#conn').click(function () {
+                debugger
+                var socketurl = url + "?user=" + $("#user").val();
+                var ws = new WebSocket(socketurl);
+                $('#msg').append('<p>正在连接</p>');
+
+                ws.onopen = function () {
+                    $('#msg').append('<p>已经连接</p>');
+                }
+                ws.onmessage = function (evt) {
+                    $('#msg').append('<p>' + evt.data + '</p>');
+                }
+                ws.onerror = function (evt) {
+                    $('#msg').append('<p>' + JSON.stringify(evt) + '</p>');
+                }
+                ws.onclose = function () {
+                    $('#msg').append('<p>已经关闭</p>');
+                }
+            });
+
+            $('#close').click(function () {
+                ws.close();
+            });
+
+            $('#send').click(function () {
+                if (ws.readyState == WebSocket.OPEN) {
+                    ws.send($("#to").val() + "|" + $('#content').val());
+                }
+                else {
+                    $('#tips').text('连接已经关闭');
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <input id="user" type="text" />
+        <input id="conn" type="button" value="连接" />
+        <input id="close" type="button" value="关闭" /><br />
+        <span id="tips"></span>
+        <input id="content" type="text" />
+        <input id="send" type="button" value="发送" /><br />
+        <input id="to" type="text" />目的用户
+        <div id="msg">
+        </div>
+    </div>
+</body>
+</html>

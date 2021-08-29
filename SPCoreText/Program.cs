@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -52,5 +53,14 @@ namespace SPCoreText
                     builder.AddFilter("Microsoft", LogLevel.Warning);
                     builder.AddLog4Net();//Ê¹ÓÃlog4net
                 });
+
+
+
+        //    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //Host.CreateDefaultBuilder(args)
+        //    .ConfigureServices(webBuilder =>
+        //    {
+        //        webBuilder.AddHostedService<Worker>();
+        //    });
     }
 }

@@ -158,6 +158,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SecondController.cs" />
     <Compile Include="Controllers\ThirdController.cs" />
+    <Compile Include="Controllers\WebSocketController.cs" />
+    <Compile Include="Controllers\WebSoketController.cs" />
     <Compile Include="Models\Text.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -351,6 +353,8 @@
     <Content Include="Views\Fourth\.vs\过渡动画与组件以及传参-2020-2-15\v16\.suo" />
     <Content Include="Views\Fourth\README.md" />
     <Content Include="Views\Home\WebSocket.cshtml" />
+    <Content Include="Views\WebSoket\Index.cshtml" />
+    <Content Include="Views\WebSocket\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

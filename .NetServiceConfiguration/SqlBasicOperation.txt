@@ -55,6 +55,7 @@ alter table T1 alter column F1 varchar(10)
 
 12、批量插入
 insert into [表]([字段]) SELECT [字段] from [表] WHERE Id=2
+SELECT [字段] INTO [临时表] from [表] WHERE Id=2
 
 13、清除数据
 TRUNCATE TABLE [表]
@@ -70,3 +71,39 @@ alter table 表名 add default (0) for 字段名 with values
 
 17、删除字段：
 alter table 表名 drop column 字段名;
+
+
+
+18、游标
+BEGIN TRY
+    BEGIN TRANSACTION tr;
+
+    DECLARE @count INT;
+	DECLARE @username varchar(20),@UserId varchar(100)
+	DECLARE cursor_name CURSOR FOR --定义游标
+		SELECT TOP 10 UserId,UserName FROM UserInfo ORDER BY UserId DESC	--SQL语句
+	OPEN cursor_name --打开游标
+	FETCH NEXT FROM cursor_name INTO  @UserId,@username  --抓取下一行游标数据
+	WHILE @@FETCH_STATUS = 0
+		BEGIN
+			PRINT '用户ID：'+@UserId+'            '+'用户名：'+@username		--SQL语句
+			FETCH NEXT FROM cursor_name INTO @UserId,@username				--SQL语句
+		END
+	CLOSE cursor_name --关闭游标
+	DEALLOCATE cursor_name --释放游标
+
+	COMMIT TRANSACTION tr;
+END TRY
+BEGIN CATCH
+    SELECT ERROR_MESSAGE();
+	SELECT ERROR_LINE();
+    ROLLBACK TRANSACTION tr;
+END CATCH;
+
+
+19、分页
+DECLARE 	@pageSize INT=20,--页码
+	@currentPage INT=3--当前页
+select  top (@pageSize) * from (select ROW_NUMBER() over(order by id) as rowid ,* from [order].[dbo].[o88_service_code_items])as A  where rowid> (@pageSize)*((@currentPage)-1)  
+select top (@pageSize) * from [order].[dbo].[o88_service_code_items] where id>(select ISNULL(MAX(id),0) from (select top ((@pageSize)*(@currentPage-1)) id from [order].[dbo].[o88_service_code_items]  order by id) as a)  order by id 
+SELECT TOP (@pageSize) * FROM [order].[dbo].[o88_service_code_items] WHERE id IN (SELECT TOP(@pageSize) id FROM [order].[dbo].[o88_service_code_items] tablea WHERE tablea.id BETWEEN (@currentPage-1)*@pageSize+1 AND @currentPage*@pageSize)

@@ -27,7 +27,6 @@ namespace SPText.Common
              new SocketModel(){ SocketGuid=string.Empty,UserName="User3",Socket=null },
              new SocketModel(){ SocketGuid=string.Empty,UserName="User4",Socket=null }
         };
-
         /// <summary>
         /// 群发
         /// </summary>

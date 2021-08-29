@@ -475,6 +475,7 @@
     <Compile Include="PropertyWrapper.cs" />
     <Compile Include="PrintHelper.cs" />
     <Compile Include="ReflectionExtensions.cs" />
+    <Compile Include="RegistryHelper.cs" />
     <Compile Include="RenumDropListHelper.cs" />
     <Compile Include="RmbHelper.cs" />
     <Compile Include="Security\DESEncrypt.cs" />
