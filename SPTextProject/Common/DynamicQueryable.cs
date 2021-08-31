@@ -9,6 +9,9 @@ using System.Threading;
 
 namespace SPTextProject.Common
 {
+    /// <summary>
+    /// 动态可查询
+    /// </summary>
     public static class DynamicQueryable
     {
         public static IQueryable<T> Where<T>(this IQueryable<T> source, string predicate, params object[] values)
@@ -212,6 +215,9 @@ namespace SPTextProject.Common
         }
     }
 
+    /// <summary>
+    /// 动态表达
+    /// </summary>
     public static class DynamicExpression
     {
         public static Expression Parse(Type resultType, string expression, params object[] values)

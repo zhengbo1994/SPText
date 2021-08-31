@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using SPTextProject.Common;
 using SPTextProject.Models.Entity;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 
 namespace SPTextProject.Core

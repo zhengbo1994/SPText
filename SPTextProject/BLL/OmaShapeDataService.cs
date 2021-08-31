@@ -19,7 +19,6 @@ namespace SPTextProject.BLL
     public class OmaShapeDataService : IOmaShapeDataService
     {
         private readonly IUnitWork<OutOrderContext> _out;
-
         private readonly IUnitWork<InOrderContext> _in;
 
         public OmaShapeDataService(IUnitWork<OutOrderContext> outUnitWork, IUnitWork<InOrderContext> inUnitWork)

@@ -385,6 +385,6 @@ namespace SPTextProject.Models.Entity
         /// 获取/设置 是否同步到工厂
         /// </summary>
         [Column("isSyncFactory")]
-        public bool? IsSyncFactory { get; set; }
+        public bool IsSyncFactory { get; set; }
     }
 }

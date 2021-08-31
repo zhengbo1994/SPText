@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\First\Data\**" />
+    <Compile Remove="Areas\First\Models\**" />
+    <Content Remove="Areas\First\Data\**" />
+    <Content Remove="Areas\First\Models\**" />
+    <EmbeddedResource Remove="Areas\First\Data\**" />
+    <EmbeddedResource Remove="Areas\First\Models\**" />
+    <None Remove="Areas\First\Data\**" />
+    <None Remove="Areas\First\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Startup.cs~RF13c8f00.TMP" />
   </ItemGroup>
 
@@ -50,11 +61,6 @@
     <Content Update="log4net1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\First\Data\" />
-    <Folder Include="Areas\First\Models\" />
   </ItemGroup>
 
 </Project>
