@@ -139,7 +139,7 @@ namespace SPTextCommon.HelperCommon
             string[] folders, filenames;
             ZipEntry entry = null;
             FileStream fs = null;
-            Crc32 crc = new Crc32();
+            ICSharpCode.SharpZipLib.Checksum.Crc32 crc = new ICSharpCode.SharpZipLib.Checksum.Crc32();
             try
             {
                 entry = new ZipEntry(Path.Combine(ParentFolderName, Path.GetFileName(FolderToZip) + "/"));
