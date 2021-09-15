@@ -269,6 +269,10 @@ namespace SPText
 
             //dynamic  避开编译器检查
             Console.ReadKey();
+
+
+
+
         }
 
 
