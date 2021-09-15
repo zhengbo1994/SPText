@@ -181,8 +181,8 @@
     <Reference Include="MySql.Data, Version=8.0.20.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.dll</HintPath>
@@ -359,9 +359,6 @@
     <Compile Include="CacheRedis\RedisConfigInfo.cs" />
     <Compile Include="Cache\Cache.cs" />
     <Compile Include="Cache\ICache.cs" />
-    <Compile Include="Cache\ICacheManager.cs" />
-    <Compile Include="Cache\MemoryCacheManager.cs" />
-    <Compile Include="Cache\SessionManager.cs" />
     <Compile Include="Cache\WebDataCache.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="Comparint.cs" />
@@ -485,33 +482,6 @@
     <Compile Include="Security\HashEncrypt.cs" />
     <Compile Include="Serialize.cs" />
     <Compile Include="SessionHelper.cs" />
-    <Compile Include="ShareUtils\Base64Utils.cs" />
-    <Compile Include="ShareUtils\BaseUtils.cs" />
-    <Compile Include="ShareUtils\CacheUtils.cs" />
-    <Compile Include="ShareUtils\CommonUtils.cs" />
-    <Compile Include="ShareUtils\ConvertUtils.cs" />
-    <Compile Include="ShareUtils\CopyObjectUtils.cs" />
-    <Compile Include="ShareUtils\CreateDBUtils.cs" />
-    <Compile Include="ShareUtils\EncryptUtils.cs" />
-    <Compile Include="ShareUtils\EnumUtils.cs" />
-    <Compile Include="ShareUtils\FileHashUtils.cs" />
-    <Compile Include="ShareUtils\FileUtils.cs" />
-    <Compile Include="ShareUtils\FtpWebUtils.cs" />
-    <Compile Include="ShareUtils\HttpUtils.cs" />
-    <Compile Include="ShareUtils\ImageUtils.cs" />
-    <Compile Include="ShareUtils\IPUtils.cs" />
-    <Compile Include="ShareUtils\LogUtils.cs" />
-    <Compile Include="ShareUtils\MailUtils.cs" />
-    <Compile Include="ShareUtils\PinyinUtils.cs" />
-    <Compile Include="ShareUtils\PortUtils.cs" />
-    <Compile Include="ShareUtils\RMBUtils.cs" />
-    <Compile Include="ShareUtils\SerializationUtils.cs" />
-    <Compile Include="ShareUtils\StringUtils.cs" />
-    <Compile Include="ShareUtils\ThreadWorkUtils.cs" />
-    <Compile Include="ShareUtils\UnixDateUtils.cs" />
-    <Compile Include="ShareUtils\VerificationCodeUtils.cs" />
-    <Compile Include="ShareUtils\WaterMarkUtils.cs" />
-    <Compile Include="ShareUtils\XmlUtils.cs" />
     <Compile Include="SmsHelper.cs" />
     <Compile Include="SpellHelper.cs" />
     <Compile Include="Str.cs" />

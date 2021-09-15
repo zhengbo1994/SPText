@@ -5,7 +5,6 @@ using System.Text;
 using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Zip;
 
-
 namespace SPTextCommon
 {
     /// <summary>
@@ -36,7 +35,7 @@ namespace SPTextCommon
         /// <param name="staticFile"></param>
         private static void CreateZipFiles(string sourceFilePath, ZipOutputStream zipStream)
         {
-            ICSharpCode.SharpZipLib.Checksum.Crc32 crc = new ICSharpCode.SharpZipLib.Checksum.Crc32();
+            Crc32 crc = new Crc32();
             string[] filesArray = Directory.GetFileSystemEntries(sourceFilePath);
             foreach (string file in filesArray)
             {
@@ -78,13 +77,14 @@ namespace SPTextCommon
             outstream.Finish();
             outstream.Close();
         }
+
         public static void zip(string strFile, ZipOutputStream outstream, string staticFile)
         {
             if (strFile[strFile.Length - 1] != Path.DirectorySeparatorChar)
             {
                 strFile += Path.DirectorySeparatorChar;
             }
-            ICSharpCode.SharpZipLib.Checksum.Crc32 crc = new ICSharpCode.SharpZipLib.Checksum.Crc32();
+            Crc32 crc = new Crc32();
             //获取指定目录下所有文件和子目录文件名称
             string[] filenames = Directory.GetFileSystemEntries(strFile);
             //遍历文件
@@ -136,7 +136,7 @@ namespace SPTextCommon
             string[] folders, files;
             ZipEntry ent = null;
             FileStream fs = null;
-            ICSharpCode.SharpZipLib.Checksum.Crc32 crc = new ICSharpCode.SharpZipLib.Checksum.Crc32();
+            Crc32 crc = new Crc32();
 
             try
             {

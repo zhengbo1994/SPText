@@ -11,7 +11,6 @@ using System.Drawing.Printing;
 using System.IO;
 using ReportPrinting.Model;
 using System.Drawing.Drawing2D;
-using static System.Drawing.Printing.PrinterSettings;
 
 namespace ReportPrinting
 {
@@ -545,10 +544,6 @@ namespace ReportPrinting
                 //pd.PrinterSettings.PrinterName = pd.PrinterSettings.PrinterName; //System.Configuration.ConfigurationManager.AppSettings["PrinterName"].ToString();
                 pd.PrinterSettings.PrinterName = System.Configuration.ConfigurationManager.AppSettings["PrinterName"].ToString();
                 pd.PrintController = controler;
-                //int width = int.Parse(Math.Round(3.92 * 80).ToString());//314
-                //int height = int.Parse(Math.Round(3.92 * 15).ToString());//59
-                //PaperSize paperSize = new PaperSize("Custom Size 1", width, height);
-                //pd.DefaultPageSettings.PaperSize = paperSize;//设置默认纸张大小
                 pd.Print();
                 return true;
             }

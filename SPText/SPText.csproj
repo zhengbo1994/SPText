@@ -459,9 +459,7 @@
     <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\DbHelperSQL.cs" />
-    <Compile Include="Common\DataHelper\Sql\MySqlUtils.cs" />
     <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
-    <Compile Include="Common\DataHelper\Sql\SqlServerUtils.cs" />
     <Compile Include="Common\DesignPatternHelper.cs" />
     <Compile Include="Common\ExpdalHelper.cs" />
     <Compile Include="Common\FtpHelper.cs" />
@@ -536,7 +534,6 @@
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\SettingConfiguration.cs" />
     <Compile Include="Common\SFtpHelper.cs" />
-    <Compile Include="Common\Show\XMLShow.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
@@ -696,9 +693,6 @@
     <Content Include="Common\Public\js-plug\js\respond.js" />
     <Content Include="Common\Public\md5\js\md5.js" />
     <Content Include="Common\Public\moment\js\moment.js" />
-    <Content Include="config\set.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="EF\EF0\数据迁移.txt" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">

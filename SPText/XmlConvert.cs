@@ -191,9 +191,5 @@ namespace SPText
                 }
             }
         }
-        public class StringWriterUTF8 : StringWriter
-        {
-            public override Encoding Encoding => System.Text.Encoding.UTF8;
-        }
     }
 }
