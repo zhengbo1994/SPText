@@ -4,7 +4,9 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using System.Web;
-
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
+using System.Collections;
 
 namespace System
 {
@@ -100,5 +102,107 @@ namespace System
             }
             return value;
         }
+
+
+		#region  Http请求
+		/// <summary>
+		/// 使用GET请求访问某个url并得到文本文档
+		/// </summary>
+		/// <param name="url">访问的地址</param>
+		/// <returns>该文本文档的全部内容</returns>
+		public static string GetCallReturnText(string url)
+		{
+			var stream = Call(RequestMethod.get, url);
+			StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+			string result = reader.ReadToEnd().Replace("\n", "");
+
+			return result;
+		}
+
+		/// <summary>
+		/// 简单的请求访问（暂无请求流数据）
+		/// </summary>
+		/// <param name="method">请求方式：POST或GET</param>
+		/// <param name="url">请求的HOST地址</param>
+		/// <returns>相应的流</returns>
+		public static Stream Call(RequestMethod method, string url)
+		{
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3
+											| SecurityProtocolType.Tls
+											| (SecurityProtocolType)0x300 //Tls11
+											| (SecurityProtocolType)0xC00; //Tls12
+			Encoding encoding = Encoding.Default;
+			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = method.ToString();
+			request.KeepAlive = true;
+
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			Stream stream = response.GetResponseStream();
+
+			return stream;
+		}
+
+		/// <summary>
+		/// HTTP请求方式
+		/// </summary>
+		public enum RequestMethod
+		{
+			get,
+			post
+		}
+		#endregion
+
+		public static string HttpGet(string url, Hashtable headht = null)
+		{
+			HttpWebRequest request;
+
+			//如果是发送HTTPS请求  
+			if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+			{
+				ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+				request = WebRequest.Create(url) as HttpWebRequest;
+				request.ProtocolVersion = HttpVersion.Version10;
+			}
+			else
+			{
+				request = WebRequest.Create(url) as HttpWebRequest;
+			}
+			request.Method = "GET";
+			//request.ContentType = "application/x-www-form-urlencoded";
+			request.Accept = "*/*";
+			request.Timeout = 15000;
+			request.AllowAutoRedirect = false;
+			WebResponse response = null;
+			string responseStr = null;
+			if (headht != null)
+			{
+				foreach (DictionaryEntry item in headht)
+				{
+					request.Headers.Add(item.Key.ToString(), item.Value.ToString());
+				}
+			}
+
+			try
+			{
+				response = request.GetResponse();
+
+				if (response != null)
+				{
+					StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+					responseStr = reader.ReadToEnd();
+					reader.Close();
+				}
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			return responseStr;
+		}
+
+		private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+		{
+			return true; //总是接受  
+		}
 	}
 }

@@ -399,6 +399,15 @@
     <Reference Include="WinSCPnet, Version=1.7.2.10905, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
       <HintPath>..\packages\WinSCP.5.17.9\lib\net40\WinSCPnet.dll</HintPath>
     </Reference>
+    <Reference Include="Z.EntityFramework.Extensions, Version=5.2.10.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Extensions.5.2.10\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=5.2.10.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.EF6.5.2.10\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.Expressions.Eval, Version=4.0.53.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.Expressions.Eval.4.0.53\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    </Reference>
     <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.20\lib\net452\Zstandard.Net.dll</HintPath>
     </Reference>
@@ -552,6 +561,7 @@
     <Compile Include="EF\EF1\SqlserverDatabase.cs" />
     <Compile Include="EF\EF0\Uow.cs" />
     <Compile Include="EF\EF2\IUnitWork.cs" />
+    <Compile Include="EF\EF2\IUnitWorkT.cs" />
     <Compile Include="EF\EF2\ModelDbset.cs" />
     <Compile Include="EF\EF2\UnitWork.cs" />
     <Compile Include="Program.cs" />
@@ -734,6 +744,7 @@
     <None Include="Common\Public\font-awesome\font\fontawesome-webfont.ttf" />
     <None Include="Common\Public\font-awesome\font\fontawesome-webfont.woff" />
     <None Include="Common\Public\font-awesome\font\FontAwesome.otf" />
+    <Compile Include="EF\EF2\UnitWorkT.cs" />
     <None Include="File\AS928參數對照.xlsx" />
     <None Include="File\NA312Model.xls" />
     <None Include="Unity\Unity.Config">
