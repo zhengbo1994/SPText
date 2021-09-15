@@ -26,6 +26,7 @@ namespace SPTextProject
             {
                 services.AddHostedService<Worker>();
             })
+            
             .ConfigureServices((hostContext, services) =>
             {
                 //注册用户定义的服务

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SPTextProject.Common;
 using SPTextProject.IBLL;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,13 @@ namespace SPTextProject
             {
                 _tran.Transfer();
             });
+
+
+            //启动定时任务
+            //await Task.Run(() =>
+            //{
+            //    QuartzManager.Init();
+            //});
         }
 
 
