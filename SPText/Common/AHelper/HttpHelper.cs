@@ -7,6 +7,8 @@ using System.Web;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Collections;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace System
 {

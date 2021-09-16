@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using ConvertExtension = SPText.EF.ConvertExtension;
 using DatabasePage = SPText.EF.DatabasePage;
 using DbHelper = SPText.EF.DbHelper;
-using IDatabase = SPText.Common.DataHelper.IDatabase;
 
 namespace SPText.Common.DataHelper.EF
 {

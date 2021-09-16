@@ -5,7 +5,7 @@ using System.Xml;
 namespace SPTextCommon
 {
     /// <summary>
-    /// Config文件操作
+    /// Config文件操作(XML配置文件操作)
     /// </summary>
     public class Config
     {

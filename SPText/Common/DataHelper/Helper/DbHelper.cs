@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using ServiceStack;
+using SPTextCommon;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPTextCommon.Helper
+namespace SPText.Common.DataHelper.Helper
 {
     public class DbConnectionHelper
     {
@@ -308,7 +311,7 @@ namespace SPTextCommon.Helper
                     object val = dr.GetValue(i);
                     if (val != null && DBNull.Value.Equals(val) == false)
                     {
-                        pInfo.FastSetValue(obj, val.Convert(ptype));
+                        pInfo.FastSetValue(obj, val.ConvertTo(ptype));
                     }
                 }
             }

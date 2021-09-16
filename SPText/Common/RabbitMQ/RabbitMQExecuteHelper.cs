@@ -13,17 +13,18 @@ namespace SPText.Common.RabbitMQ
     {
         public void Show()
         {
-            ProductionConsumerShow();
-            MultiProductionConsumerShow();
-            MutualProductionConsumerShow();
-            SeckillConsumerShow();
-            PriorityQueueShow();
-            PublishSubscribeConsumerShow();
+            ProductionConsumerShow();//生产者消费者
+            MultiProductionConsumerShow();//多生产者多消费者
+            MutualProductionConsumerShow();//互为生产者消费者
+            SeckillConsumerShow();//秒杀
+            PriorityQueueShow();//优先级
+            PublishSubscribeConsumerShow();//发布订阅模式
             DirectExchangeShow();
             FanoutExchangeShow();
             TopicExchangeShow();
-            ConsumptionACKConfirmShow();
+            ConsumptionACKConfirmShow();//消息ACK自动确认
         }
+
         public void ProductionConsumerShow()
         {
             var factory = new ConnectionFactory();
@@ -36,8 +37,6 @@ namespace SPText.Common.RabbitMQ
                 {
                     {
                         {
-
-
                             Console.ForegroundColor = ConsoleColor.Green;
                             try
                             {

@@ -18,7 +18,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace SPTextCommon.Helper
+namespace SPText.Common.DataHelper.Helper
 {
     public class Database : IDatabase
     {

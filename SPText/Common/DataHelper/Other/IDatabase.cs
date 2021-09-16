@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPText.Common.DataHelper
+namespace SPText.Common.DataHelper.Other
 {
     public interface IDatabase
     {

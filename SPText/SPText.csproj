@@ -120,6 +120,9 @@
     <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
       <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
+    <Reference Include="LinqKit, Version=1.1.26.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.1.1.26\lib\net45\LinqKit.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
@@ -146,6 +149,9 @@
     </Reference>
     <Reference Include="Microsoft.Data.SqlClient, Version=2.0.20168.4, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.SqlClient.2.0.0\lib\net46\Microsoft.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Sqlite, Version=5.0.10.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.5.0.10\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=3.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.3.1.2\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
@@ -287,6 +293,18 @@
     <Reference Include="SQLinq.Dapper, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLinq.Dapper.1.2\lib\net\SQLinq.Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=2.0.4.976, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.2.0.4\lib\net461\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=2.0.4.976, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.2.0.4\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.nativelibrary, Version=2.0.4.976, Culture=neutral, PublicKeyToken=502ed628492ab262, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_e_sqlite3.2.0.4\lib\net461\SQLitePCLRaw.nativelibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.4.976, Culture=neutral, PublicKeyToken=b68184102cba0b3b, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.provider.dynamic_cdecl.2.0.4\lib\netstandard2.0\SQLitePCLRaw.provider.dynamic_cdecl.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.2.4\lib\net472\StackExchange.Redis.dll</HintPath>
     </Reference>
@@ -306,6 +324,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -419,7 +441,6 @@
     <Compile Include="Common\AHelper\DataTableHelper.cs" />
     <Compile Include="Common\AHelper\DateTimeHelper.cs" />
     <Compile Include="Common\AHelper\Descartes.cs" />
-    <Compile Include="Common\AHelper\DirectoryHelper.cs" />
     <Compile Include="Common\AHelper\EncryptHelper.cs" />
     <Compile Include="Common\AHelper\EnumHelper.cs" />
     <Compile Include="Common\AHelper\Ext.cs" />
@@ -456,10 +477,18 @@
     <Compile Include="Common\DataHelper\Data\Repository.cs" />
     <Compile Include="Common\DataHelper\Data\SqlHelperBase.cs" />
     <Compile Include="Common\DataHelper\Data\TableAttribute.cs" />
-    <Compile Include="Common\DataHelper\DbHelper.cs" />
+    <Compile Include="Common\DataHelper\EFBaseServices\BaseDal.cs" />
+    <Compile Include="Common\DataHelper\EFBaseServices\BaseServices.cs" />
+    <Compile Include="Common\DataHelper\EFBaseServices\IBaseDal.cs" />
+    <Compile Include="Common\DataHelper\EFBaseServices\IBaseServices.cs" />
+    <Compile Include="Common\DataHelper\EFBaseServices\Model\CompanyModel.cs" />
+    <Compile Include="Common\DataHelper\Helper\DapperDatabase.cs" />
+    <Compile Include="Common\DataHelper\Helper\DataTableListHelper.cs" />
+    <Compile Include="Common\DataHelper\Helper\DbHelper.cs" />
+    <Compile Include="Common\DataHelper\Other\DbHelper.cs" />
     <Compile Include="Common\DataHelper\EF\SqlserverDatabase.cs" />
     <Compile Include="Common\DataHelper\EF\SqlServerDbContext.cs" />
-    <Compile Include="Common\DataHelper\IDatabase.cs" />
+    <Compile Include="Common\DataHelper\Other\IDatabase.cs" />
     <Compile Include="Common\DataHelper\Repository\IRepository.cs" />
     <Compile Include="Common\DataHelper\Repository\IRepositoryT.cs" />
     <Compile Include="Common\DataHelper\Repository\Repository.cs" />
@@ -800,7 +829,9 @@
     <Error Condition="!Exists('..\packages\Microsoft.Data.SqlClient.SNI.2.0.0\build\net46\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Data.SqlClient.SNI.2.0.0\build\net46\Microsoft.Data.SqlClient.SNI.targets'))" />
     <Error Condition="!Exists('..\packages\WinSCP.5.17.9\build\WinSCP.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WinSCP.5.17.9\build\WinSCP.targets'))" />
     <Error Condition="!Exists('..\packages\Grpc.Core.2.35.0\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.2.35.0\build\net45\Grpc.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets'))" />
   </Target>
   <Import Project="..\packages\WinSCP.5.17.9\build\WinSCP.targets" Condition="Exists('..\packages\WinSCP.5.17.9\build\WinSCP.targets')" />
   <Import Project="..\packages\Grpc.Core.2.35.0\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.35.0\build\net45\Grpc.Core.targets')" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.2.0.4\build\net461\SQLitePCLRaw.lib.e_sqlite3.targets')" />
 </Project>

@@ -11,8 +11,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static SPText.Common.DataHelper.DatabaseCommon;
-using DbParameters = SPText.Common.DataHelper.DatabaseCommon.DbParameters;
+using static SPText.Common.DataHelper.Other.DatabaseCommon;
+using DbParameters = SPText.Common.DataHelper.Other.DatabaseCommon.DbParameters;
 
 namespace SPText.Common.DataHelper.Sql
 {

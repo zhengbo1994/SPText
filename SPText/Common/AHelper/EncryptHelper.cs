@@ -7,7 +7,7 @@ using System.Web.Security;
 namespace System
 {
 	/// <summary>
-	/// 加解密帮助类
+	/// 加解密帮助类（MD5/对称加密解密）
 	/// </summary>
 	public class EncryptHelper
 	{

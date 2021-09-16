@@ -22,10 +22,10 @@ namespace SPText.Common.RabbitMQ
             SeckillConsumerShow();              ////秒杀
             PriorityQueueShow();                ////优先级 
             PublishSubscribeConsumerShow();     ////发布订阅模式
-            DirectExchangeShow();
-            FanoutExchangeShow();
-            TopicExchangeShow();
-            HeaderExchangeShow();
+            DirectExchangeShow();               ////交换机模式
+            FanoutExchangeShow();               ////扇形交换机模式
+            TopicExchangeShow();                ////通配符模式
+            HeaderExchangeShow();               ////标签模式
             ProductionMessageTxShow();          ////事务模式
             ProductionMessageConfirmShow();     ////消息确认
             ConsumptionACKConfirmShow();        ////消息ACK自动确认

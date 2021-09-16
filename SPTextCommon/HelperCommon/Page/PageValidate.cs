@@ -12,12 +12,19 @@ namespace SPTextCommon.HelperCommon
     public class PageValidate
     {
         #region 正则表达式变量
+        //数字字符串检查
         private static Regex RegPhone = new Regex("^[0-9]+[-]?[0-9]+[-]?[0-9]$");
+        //是否数字字符串
         private static Regex RegNumber = new Regex("^[0-9]+$");
+        //是否数字字符串 可带正负号
         private static Regex RegNumberSign = new Regex("^[+-]?[0-9]+$");
+        //是否是浮点数
         private static Regex RegDecimal = new Regex("^[0-9]+[.]?[0-9]+$");
+        //是否是浮点数 可带正负号
         private static Regex RegDecimalSign = new Regex("^[+-]?[0-9]+[.]?[0-9]+$"); //等价于^[+-]?\d+[.]?\d+$
+        //邮件地址检查
         private static Regex RegEmail = new Regex("^[\\w-]+@[\\w-]+\\.(com|net|org|edu|mil|tv|biz|info)$");//w 英文字母或数字的字符串，和 [a-zA-Z0-9] 语法一样 
+        //检测是否有中文字符
         private static Regex RegCHZN = new Regex("[\u4e00-\u9fa5]");
         #endregion
 

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace SPTextCommon.EFBaseServices
 {
     using LinqKit;
-    using Microsoft.EntityFrameworkCore;
     using SPTextCommon.EFBaseServices.Model;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;

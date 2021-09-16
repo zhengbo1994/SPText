@@ -267,12 +267,9 @@ namespace SPText
             //testHelper.Show();
             #endregion
 
+
             //dynamic  避开编译器检查
             Console.ReadKey();
-
-
-
-
         }
 
 
@@ -2025,7 +2022,7 @@ namespace SPText
                 var i = dBHelper.DataSet(sql, CommandType.Text, new SqlParameter[] { });
             }
             {//Dapper
-                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
+                Common.DataHelper.Other.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.FindList<Company>();
                 var value = database.FindTable(sql);
@@ -2035,7 +2032,7 @@ namespace SPText
                 var datatabel = Common.DataHelper.Dapper.DbContext.Query<Company>(sql, "where 1=1 and [Name]='王五'");
             }
             {//EF
-                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
+                SPText.EF.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.FindList<Company>();
                 var value = database.FindTable(sql);
