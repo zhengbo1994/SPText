@@ -90,7 +90,7 @@ namespace SPText.Common.ReportPrintingHelper
         {
             string reportPath = string.Empty;//路径
             List<ReportParameter> parameter = new List<ReportParameter>();//参数
-            var report = new Microsoft.Reporting.WinForms.LocalReport();
+            var report = new LocalReport();
             report.ReportPath = reportPath;
             if (parameter.Count() > 0)
             {
