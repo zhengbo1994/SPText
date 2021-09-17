@@ -5,6 +5,9 @@ using System.Text;
 
 namespace System
 {
+	/// <summary>
+	/// 缓存助手
+	/// </summary>
 	public class CookieHelper
 	{
 		/// <summary>

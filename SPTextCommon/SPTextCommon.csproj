@@ -99,8 +99,8 @@
     <Reference Include="Microsoft.AspNetCore.Razor, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Razor.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.0\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
@@ -370,11 +370,6 @@
     <Compile Include="DataHelper.cs" />
     <Compile Include="DBHelperExcel.cs" />
     <Compile Include="DynamicMethodFactory.cs" />
-    <Compile Include="EFBaseServices\BaseDal.cs" />
-    <Compile Include="EFBaseServices\BaseServices.cs" />
-    <Compile Include="EFBaseServices\IBaseDal.cs" />
-    <Compile Include="EFBaseServices\IBaseServices.cs" />
-    <Compile Include="EFBaseServices\Model\CompanyModel.cs" />
     <Compile Include="EmailHelper.cs" />
     <Compile Include="EncryptHelper.cs" />
     <Compile Include="EnumerableExtensions.cs" />
@@ -453,9 +448,6 @@
     <Compile Include="HelperCommon\XML\XmlHelper.cs" />
     <Compile Include="HelperCommon\XML\XmlHelperExt.cs" />
     <Compile Include="HelperCommon\Zip\ZipHelper.cs" />
-    <Compile Include="Helper\Database.cs" />
-    <Compile Include="Helper\DataTableListHelper.cs" />
-    <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Html\ControlsExtensionsHelper.cs" />
     <Compile Include="HttpMethods.cs" />
     <Compile Include="HttpWebHelper.cs" />

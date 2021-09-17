@@ -8,6 +8,9 @@ using System.Text;
 
 namespace System
 {
+    /// <summary>
+    /// Csv文件助手
+    /// </summary>
 	public class CsvHelper
 	{
 		/// <summary>

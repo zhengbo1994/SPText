@@ -28,7 +28,6 @@ using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
 using SPTextCommon.EFBaseServices.Model;
-using SPTextLK.Text;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -262,6 +261,7 @@ namespace SPText
             //TestHelper testHelper = new TestHelper();
             //testHelper.Show();
             #endregion
+
 
             //dynamic  避开编译器检查
             Console.ReadKey();
@@ -1349,19 +1349,17 @@ namespace SPText
         #region  IOC
         public static void IOCShow()
         {
-            {
-                IUnityContainer container = new UnityContainer();//实例化容器
-                container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
-                SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
-                text.One();
-            }
-            {
-                IUnityContainer container = ContainnerFactory.GetContainer();
-                IText text = container.Resolve<IText>();
-                IClassBase classBase = container.Resolve<IClassBase>();
-                text.One();
-                classBase.Show();
-            }
+            //{
+            //    IUnityContainer container = new UnityContainer();//实例化容器
+            //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
+            //    SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
+            //    text.One();
+            //}
+            //{
+            //    IUnityContainer container = ContainnerFactory.GetContainer();
+            //    IText text = container.Resolve<IText>();
+            //    IClassBase classBase = container.Resolve<IClassBase>();
+            //}
         }
         #endregion
 
@@ -1845,7 +1843,7 @@ namespace SPText
                 var i = dBHelper.DataSet(sql, CommandType.Text, new SqlParameter[] { });
             }
             {//Dapper
-                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
+                Common.DataHelper.Other.IDatabase database = new SPText.Common.DataHelper.Dapper.SqlDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.FindList<Company>();
                 var value = database.FindTable(sql);
@@ -1855,7 +1853,7 @@ namespace SPText
                 var datatabel = Common.DataHelper.Dapper.DbContext.Query<Company>(sql, "where 1=1 and [Name]='王五'");
             }
             {//EF
-                Common.DataHelper.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
+                SPText.EF.IDatabase database = new SPText.Common.DataHelper.EF.SqlserverDatabase(connectionStrings);
                 string sql = "select * from Company";
                 var i = database.FindList<Company>();
                 var value = database.FindTable(sql);

@@ -25,7 +25,7 @@ using Unity;
 using Unity.Resolution;
 //using static SPTextCommon.DataHelper.DatabaseCommon;
 
-namespace SPText.Common.DataHelper
+namespace SPText.Common.DataHelper.Other
 {
     public class DbHelper
     {

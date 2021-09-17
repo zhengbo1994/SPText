@@ -15,7 +15,11 @@ using SPText.Common.DataHelper;
 using SPText.EF;
 using Microsoft.Identity.Client;
 using System.Configuration;
-
+using SPText.Common.DataHelper.Other;
+using IDatabase = SPText.Common.DataHelper.Other.IDatabase;
+using DbHelper = SPText.Common.DataHelper.Other.DbHelper;
+using ConvertExtension = SPText.Common.DataHelper.Other.ConvertExtension;
+using DatabaseType = SPText.Common.DataHelper.Other.DatabaseType;
 
 namespace SPText.Common.DataHelper.Dapper
 {
