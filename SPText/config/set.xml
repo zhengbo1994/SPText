@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<set>
+	<customers>
+		<customer usable="true">
+			<databaseSets>
+				<databaseSet customerName="80.101">
+					<dataSource>192.168.80.101</dataSource>
+					<database>ARO</database>
+					<user>APPS</user>
+					<pwd>APPS</pwd>
+				</databaseSet>
+			</databaseSets>
+			<sendEmailSets>
+				<!--散单-->
+				<sendEmailSet customerName="0">
+					<smtpHost>mail.hkoptlens.com</smtpHost>
+					<smtpPort>6025</smtpPort>
+					<emailAccount>no_reply@hkoptlens.com</emailAccount>
+					<emailPassword>Passa@413185hko5</emailPassword>
+					<emailRecipients>whitezheng@hkolens.com</emailRecipients>
+					<!--<emailRecipients>whitezheng@hkolens.com;kylezheng@hkolens.com;jeanzeng@hkolens.com</emailRecipients>-->
+					<ccRecipients></ccRecipients>
+					<lastEmailTime>2020-07-23 12:00:00</lastEmailTime>
+					<sendEmailCount>1</sendEmailCount>
+				</sendEmailSet>
+				<!--普通批量单-->
+				<sendEmailSet customerName="1">
+					<smtpHost>mail.hkoptlens.com</smtpHost>
+					<smtpPort>6025</smtpPort>
+					<emailAccount>no_reply@hkoptlens.com</emailAccount>
+					<emailPassword>Passa@413185hko5</emailPassword>
+					<emailRecipients>whitezheng@hkolens.com</emailRecipients>
+					<!--<emailRecipients>whitezheng@hkolens.com;kylezheng@hkolens.com;jeanzeng@hkolens.com</emailRecipients>-->
+					<ccRecipients></ccRecipients>
+					<lastEmailTime>2020-07-23 12:00:00</lastEmailTime>
+					<sendEmailCount>1</sendEmailCount>
+				</sendEmailSet>
+				<!--特殊批量单-->
+				<sendEmailSet customerName="2">
+					<smtpHost>mail.hkoptlens.com</smtpHost>
+					<smtpPort>6025</smtpPort>
+					<emailAccount>no_reply@hkoptlens.com</emailAccount>
+					<emailPassword>Passa@413185hko5</emailPassword>
+					<emailRecipients>whitezheng@hkolens.com</emailRecipients>
+					<!--<emailRecipients>whitezheng@hkolens.com;kylezheng@hkolens.com;jeanzeng@hkolens.com</emailRecipients>-->
+					<ccRecipients></ccRecipients>
+					<lastEmailTime>2020-07-23 12:00:00</lastEmailTime>
+					<sendEmailCount>1</sendEmailCount>
+				</sendEmailSet>
+				<!--错误邮件-->
+				<sendEmailSet customerName="3">
+					<smtpHost>mail.hkoptlens.com</smtpHost>
+					<smtpPort>6025</smtpPort>
+					<emailAccount>no_reply@hkoptlens.com</emailAccount>
+					<emailPassword>Passa@413185hko5</emailPassword>
+					<emailRecipients>whitezheng@hkolens.com</emailRecipients>
+					<ccRecipients></ccRecipients>
+					<lastEmailTime>2020-07-23 12:00:00</lastEmailTime>
+					<sendEmailCount>1</sendEmailCount>
+				</sendEmailSet>
+			</sendEmailSets>
+			<ftpSets>
+				<ftpSet>
+					<ftpMode>FTP</ftpMode>
+					<ip>192.168.3.3</ip>
+					<port>21</port>
+					<user>user</user>
+					<pwd>1</pwd>
+				</ftpSet>
+			</ftpSets>
+		</customer>
+	</customers>
+</set>
