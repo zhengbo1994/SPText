@@ -1536,8 +1536,6 @@ namespace SPText
                 IUnityContainer container = ContainnerFactory.GetContainer();
                 IText text = container.Resolve<IText>();
                 IClassBase classBase = container.Resolve<IClassBase>();
-                text.One();
-                classBase.Show();
             }
         }
         #endregion
