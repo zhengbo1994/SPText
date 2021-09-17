@@ -497,7 +497,9 @@
     <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\DbHelperSQL.cs" />
+    <Compile Include="Common\DataHelper\Sql\MySqlUtils.cs" />
     <Compile Include="Common\DataHelper\Sql\SqlDBHelper.cs" />
+    <Compile Include="Common\DataHelper\Sql\SqlServerUtils.cs" />
     <Compile Include="Common\DesignPatternHelper.cs" />
     <Compile Include="Common\ExpdalHelper.cs" />
     <Compile Include="Common\FtpHelper.cs" />
@@ -572,6 +574,7 @@
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\SettingConfiguration.cs" />
     <Compile Include="Common\SFtpHelper.cs" />
+    <Compile Include="Common\Show\XMLShow.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
@@ -595,6 +598,7 @@
     <Compile Include="EF\EF2\UnitWork.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Unity\Aop\CastleProxyAOP.cs" />
     <Compile Include="Unity\Aop\DecoratorAOP.cs" />
     <Compile Include="Unity\Aop\IUserProcessor.cs" />
@@ -731,7 +735,23 @@
     <Content Include="Common\Public\js-plug\js\respond.js" />
     <Content Include="Common\Public\md5\js\md5.js" />
     <Content Include="Common\Public\moment\js\moment.js" />
+    <Content Include="config\set.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EF\EF0\数据迁移.txt" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="xmlBaseInfo.xml" />
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
