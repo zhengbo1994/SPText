@@ -27,7 +27,6 @@ using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
 using SPTextCommon.EFBaseServices.Model;
-using SPTextLK.Text;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -1526,17 +1525,17 @@ namespace SPText
         #region  IOC
         public static void IOCShow()
         {
-            {
-                IUnityContainer container = new UnityContainer();//实例化容器
-                container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
-                SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
-                text.One();
-            }
-            {
-                IUnityContainer container = ContainnerFactory.GetContainer();
-                IText text = container.Resolve<IText>();
-                IClassBase classBase = container.Resolve<IClassBase>();
-            }
+            //{
+            //    IUnityContainer container = new UnityContainer();//实例化容器
+            //    container.RegisterType<SPTextLK.Text.IText, SPTextLK.Text.Text>();//注册容器
+            //    SPTextLK.Text.IText text = container.Resolve<SPTextLK.Text.IText>();//获取实例
+            //    text.One();
+            //}
+            //{
+            //    IUnityContainer container = ContainnerFactory.GetContainer();
+            //    IText text = container.Resolve<IText>();
+            //    IClassBase classBase = container.Resolve<IClassBase>();
+            //}
         }
         #endregion
 

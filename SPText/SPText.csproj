@@ -786,10 +786,6 @@
       <Project>{d86a4fa1-d5aa-4f84-bc2e-eee0da5c198f}</Project>
       <Name>SPTextCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SPTextLK\SPTextLK.csproj">
-      <Project>{7a2bb2cf-9e3a-45b9-aef8-cd98b43efa38}</Project>
-      <Name>SPTextLK</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
