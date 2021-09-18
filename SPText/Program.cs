@@ -59,10 +59,6 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
-
-
-
-
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -306,14 +302,14 @@ namespace SPText
 
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
-
+            
             var strList1 = a.GroupJoin(b, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(p => new { }).ToList();
             var strList2 = a.GroupBy(p => p.ToString()).Select(p => new { ziduan1 = p.Key.ToString() }).ToList();
             //linQ怎么合并同一列的数据   http://www.myexceptions.net/linq/1013611.html
             //var query = db.YourTable.ToList().GroupBy(t => new { t.FROM, t.To, t.Time })
             //.Select(g => new { FROM = g.Key.From, TO = g.Key.To, NUM = g.Count(), Time = g.Key.Time, Body = string.Join(",", g.Select(s => s.Body).ToArray()) });
 
-
+            
             Console.ReadKey();
         }
         #endregion
@@ -2184,7 +2180,7 @@ namespace SPText
         #region  SFtp
         public static void SFTPAndFTPShow()
         {
-
+            
             {
                 //{
                 //    string host = "192.168.43.221";
