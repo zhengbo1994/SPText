@@ -14,6 +14,10 @@ namespace SPText.Common.RabbitMQ
 {
     public class RabbitMQHelper
     {
+
+
+
+
         public void Show()
         {
             ProductionConsumerShow();           ////生产者消费者
