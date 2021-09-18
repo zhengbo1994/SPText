@@ -5,7 +5,6 @@ using Microsoft.Reporting.WinForms;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using RabbitMQ.Client;
 using ServiceStack.Redis;
 using SPTextCommon;
 using SPTextCommon.Cache;
@@ -691,25 +690,6 @@ namespace SPText.Common
             //{
             //    process.WaitForExit();//等待进程退出
             //}
-        }
-
-
-        public void ConnectionFaction()
-        {
-            ConnectionFactory connectionFactory = new ConnectionFactory();
-            using (IConnection connection = connectionFactory.CreateConnection())
-            {
-                using (IModel model = connection.CreateModel())
-                {
-                    model.QueueDeclare(queue: "queue",durable:false,exclusive:false,autoDelete:true,arguments:null);
-
-                    for (int i = 0; i < 10; i++)
-                    {
-                        byte[] bytes = Encoding.UTF8.GetBytes($"消息{i}");
-                        model.BasicPublish(null, null, bytes);
-                    }
-                }
-            }
         }
     }
     #region  事件

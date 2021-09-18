@@ -14,10 +14,6 @@ namespace SPText.Common.RabbitMQ
 {
     public class RabbitMQHelper
     {
-
-
-
-
         public void Show()
         {
             ProductionConsumerShow();           ////生产者消费者
@@ -26,7 +22,7 @@ namespace SPText.Common.RabbitMQ
             SeckillConsumerShow();              ////秒杀
             PriorityQueueShow();                ////优先级 
             PublishSubscribeConsumerShow();     ////发布订阅模式
-            DirectExchangeShow();               ////交换机模式
+            DirectExchangeShow();               ////直接交换机模式
             FanoutExchangeShow();               ////扇形交换机模式
             TopicExchangeShow();                ////通配符模式
             HeaderExchangeShow();               ////标签模式
