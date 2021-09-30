@@ -144,6 +144,10 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.1.2\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\.NetServiceConfiguration\AAAcustom\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
@@ -195,6 +199,10 @@
     </Reference>
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Office, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>..\packages\Office.12.0.0\lib\net40\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
@@ -373,6 +381,7 @@
     <Compile Include="EmailHelper.cs" />
     <Compile Include="EncryptHelper.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="ExcelHelper.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="File\DirFileHelper.cs" />
     <Compile Include="File\FileDownHelper.cs" />
@@ -399,7 +408,6 @@
     <Compile Include="HelperCommon\Email\MailSmtpHelper.cs" />
     <Compile Include="HelperCommon\Email\SmtpConfig.cs" />
     <Compile Include="HelperCommon\Email\SmtpSetting.cs" />
-    <Compile Include="HelperCommon\Excel\ExcelHelper.cs" />
     <Compile Include="HelperCommon\Excel\GridViewExport.cs" />
     <Compile Include="HelperCommon\File\DirectoryHelper.cs" />
     <Compile Include="HelperCommon\File\FileDownHelper.cs" />

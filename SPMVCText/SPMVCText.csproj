@@ -157,6 +157,7 @@
     <Compile Include="Controllers\FourthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SecondController.cs" />
+    <Compile Include="Controllers\TextController.cs" />
     <Compile Include="Controllers\ThirdController.cs" />
     <Compile Include="Controllers\WebSocketController.cs" />
     <Compile Include="Controllers\WebSoketController.cs" />
@@ -355,6 +356,7 @@
     <Content Include="Views\Home\WebSocket.cshtml" />
     <Content Include="Views\WebSoket\Index.cshtml" />
     <Content Include="Views\WebSocket\Index.cshtml" />
+    <Content Include="Views\Text\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

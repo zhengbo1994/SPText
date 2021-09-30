@@ -18,11 +18,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using log4net.Plugin;
 
 namespace SPText.Common
 {
@@ -48,9 +50,11 @@ namespace SPText.Common
             //使用 LocalReport 对象进行打印(https://blog.csdn.net/weixin_30325971/article/details/99996453)
 
 
-            List<(string a, string b, int c)> aList = new List<(string a, string b, int c)>();
+            //List<(string a, string b, int c)> aList = new List<(string a, string b, int c)>();
 
-            aList.Add(("1", "2", 3));
+            //aList.Add(("1", "2", 3));
+
+            //PlayVideo();
         }
 
         #region  事件代码测试
@@ -691,6 +695,39 @@ namespace SPText.Common
             //    process.WaitForExit();//等待进程退出
             //}
         }
+
+
+        public void PlayVideo()
+        {
+
+            string filePath = @"C:\Program Files (x86)\金狮视频播放器\Utility.dll";
+
+            Assembly dll = null;
+
+            {//方法一:直接从DLL路径加载(网上代码,本机测试出错)
+             //dll = Assembly.Load(filePath); 
+            }
+
+            {//方法二:先把DLL加载到内存,再从内存中加载
+                FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+                byte[] bFile = br.ReadBytes((int)fs.Length);
+                br.Close();
+                fs.Close();
+                dll = Assembly.Load(bFile);
+            }
+
+            //调用接口
+            foreach (var t in dll.GetTypes())
+            {
+                if (t.GetInterface("IPlugin") != null)
+                {
+                    //var plugin = (IPlugin.IPlugin)Activator.CreateInstance(t);
+                    //plugin.Run("test");
+                }
+            }
+        }
+
     }
     #region  事件
     #region 事件1
