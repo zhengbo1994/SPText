@@ -107,7 +107,7 @@ namespace SPTextWinForm
             }
 
 
-            msg.From = new MailAddress("no_reply@hkoptlens.com", "HK-IT", System.Text.Encoding.UTF8);
+            msg.From = new MailAddress("no_reply@hkolens.com", "HK-IT", System.Text.Encoding.UTF8);
             msg.Subject = title;//邮件标题 
             msg.SubjectEncoding = System.Text.Encoding.UTF8;//邮件标题编码
             msg.Body = mailContent;//邮件内容          
@@ -118,11 +118,11 @@ namespace SPTextWinForm
             SmtpClient client = new SmtpClient();
             client.UseDefaultCredentials = true;
             // client.Credentials = new System.Net.NetworkCredential("it-service@hkolens.com", "IT2016@"); //注册的邮箱和密码   
-            client.Credentials = new System.Net.NetworkCredential("no_reply@hkoptlens.com", "a@T1sG5xa977"); //注册的邮箱和密码   
+            client.Credentials = new System.Net.NetworkCredential("no_reply@hkolens.com", "bd7mHFuba6m6w92E"); //注册的邮箱和密码   
             //client.Host = "smtp.qiye.163.com";
-            client.Host = "mail.hkoptlens.com";
+            client.Host = "smtp.qiye.163.com";
             // client.Port = 25;
-            client.Port = 6025;
+            client.Port = 25;
             //client.EnableSsl = true;
             client.EnableSsl = false;
 
@@ -144,6 +144,7 @@ namespace SPTextWinForm
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 Console.WriteLine(ex.Message);
                 return false;
             }

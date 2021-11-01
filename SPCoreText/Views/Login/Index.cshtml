@@ -1,0 +1,200 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SPCoreText.App;
+@inject IViewLocalizer  Localizer
+
+@{
+    //var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+
+    string selectedCulture = SPCoreText.App.LanguageApp.GetCulture();
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>@Localizer["Title"]</title>
+    <link href="~/css/framecss/style.min.css" rel="stylesheet">
+    <link href="~/vendor/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/css/login.css?Date=@DateTime.Now.ToString("yyyyMMddHHmm")" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader" style="display: none;">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center" style="background: url(/images/loginBackground.jpg) no-repeat center center; background-size: cover;">
+            <div class="auth-box p-4 bg-white rounded">
+                <div id="loginform">
+                    <div class="logo">
+                        <h3 class="box-title mb-3" style="display: inline;">@Localizer["LoginDescription"]</h3>
+                        <div class="dropdown" style="display: inline;float: right;">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <img src="~/images/icon/language/icons8-@selectedCulture-48.png" style=" width: 24px;" />
+                            </a>
+                            <ul class="dropdown-menu dropdown-language">
+                                <li class="dropdown-item">
+                                    <a href="/Language/Change?language=zh-hk&url=@HttpContext.Current.Request.Path">
+                                        <img src="~/images/icon/language/icons8-zh-HK-48.png" style="width: 24px;" />
+                                        繁體中文
+                                    </a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/Language/Change?language=zh-cn&url=@HttpContext.Current.Request.Path">
+                                        <img src="~/images/icon/language/icons8-zh-CN-48.png" style="width: 24px;" />
+                                        简体中文
+                                    </a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/Language/Change?language=en-us&url=@HttpContext.Current.Request.Path">
+                                        <img src="~/images/icon/language/icons8-en-US-48.png" style="width:24px;" />
+                                        EN-US
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- /.dropdown-language -->
+                        </div>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal mt-3 form-material" id="loginform">
+                                <div class="form-group mb-3">
+                                    <div class="">
+                                        <input class="form-control" placeholder="Uesrname or Email" id="email" name="email" type="email" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <div class="">
+                                        <input class="form-control" placeholder="Password" id="password" name="password" type="password" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex">
+                                        <div class="checkbox checkbox-info pt-0 d-flex align-items-center" style="margin-bottom:5px;">
+                                            <input id="rememberme" type="checkbox" class="material-inputs chk-col-indigo">
+                                            <label for="rememberme">@Localizer["RememberMe"] </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4" id="errordivlogin" style="display:none">
+                                    <div class="">
+                                        <span id="erroriconlogin" class="fa fa-exclamation text-danger"></span>
+                                        <span id="errormesslogin" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center mt-4">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="button" onclick="LoginClickNotVerification();">@Localizer["LoginButton"]</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="verificationform" style="display:none;">
+                    @*style="display:none;"*@
+                    <div class="logo">
+                        <h3 class="box-title mb-3" style="display: inline;">@Localizer["verificationTop"]</h3><br /><br />
+                        <h6 class="box-title mb-3" style="display: inline;">@Localizer["verificationDescription"]</h6>
+                    </div>
+                    <!-- Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            <form class="form-horizontal mt-3 form-material" id="verificationform">
+                                <div class="form-group mb-3">
+                                    <div class="">
+                                        <input class="form-control" placeholder="Email" disabled="disabled" id="verificationEmail" name="email" type="email" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <div class="">
+                                        <input class="form-control" placeholder="Enter the 6-digit code" id="verificationCode" name="text" type="text" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <div class="">
+                                        <h6>
+                                            @Localizer["verificationclickTip"]
+                                            @*<a href="#" onclick="getVerification($('#email').val(), $('#verificationEmail').val())" class="text-info">@Localizer["verificationClick"]</a>*@
+                                            <a href="javascript:void(0);" id="sendEmailid" onclick="getVerification($('#email').val(), $('#verificationEmail').val())" class="text-info">@Localizer["verificationClick"]</a>
+                                            <span id="secondemail"></span>
+                                        </h6>
+                                        <div id="smsid">
+                                            <h6>@Localizer["Or"],</h6>
+                                            <h6>@Localizer["verifySMSTip"]</h6>
+                                            <div>
+                                                <span id="phonenumber" style="font-weight:700;font-size:16px;margin-right:65px;" title=""></span>
+                                                @*<a href="javascript:void(0)" id="sendSMSid" onclick="sentVeriftyToPhone($('#email').val(), $('#phonenumber').attr('title'))" style="font-weight:400; font-size:14px;text-align:right;margin-left:65px;" class="text-info">@Localizer["verifySMSClick"]</a>*@
+                                                <a href="javascript:void(0);" id="sendSMSid" onclick="sentVeriftyToPhone($('#email').val(), $('#phonenumber').attr('title'))" style="font-weight:400; font-size:14px;text-align:right;" class="text-info">@Localizer["verifySMSClick"]</a>
+                                                @*<span class="fa fa-hand-pointer-o"></span>*@
+                                                <span id="second"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4" id="errordiv" style="display:none">
+                                    <div class="">
+                                        <span id="erroricon" class="fa fa-exclamation text-danger"></span>
+                                        <span id="errormess" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group text-center mt-4">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="button" onclick="loginDone()">@Localizer["verificationDone"]</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="~/js/framejs/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/js/framejs/popper.min.js"></script>
+    <script src="~/js/framejs/bootstrap.min.js"></script>
+    <script src="~/vendor/jquery/jquery-cookie/jquery.cookie.js"></script>
+    <script src="~/js/login.js?Date=@DateTime.Now.ToString("yyyyMMddHHmm")"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".preloader").fadeOut();
+        // ==============================================================
+        // Login and Recover Password
+        // ==============================================================
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+
+    </script>
+
+</body>
+</html>
