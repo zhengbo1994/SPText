@@ -296,7 +296,7 @@ namespace SPTextProject.Common
         }
     }
 
-    internal class ClassFactory
+    public class ClassFactory
     {
         public static readonly ClassFactory Instance = new ClassFactory();
 
@@ -307,7 +307,7 @@ namespace SPTextProject.Common
         int classCount;
         ReaderWriterLock rwLock;
 
-        private ClassFactory()
+        public ClassFactory()
         {
             AssemblyName name = new AssemblyName("DynamicClasses");
             AssemblyBuilder assembly = AssemblyBuilder.DefineDynamicAssembly(name, AssemblyBuilderAccess.Run);

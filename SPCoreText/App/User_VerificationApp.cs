@@ -27,9 +27,9 @@ namespace SPCoreText.App
         }
 
         //邮件发送验证码
-        public Response SentVerificationCode(string useremail, string user)
+        public RetResponse SentVerificationCode(string useremail, string user)
         {
-            var resp = new Response();
+            var resp = new RetResponse();
             //生成验证码
             string code = GenerateVerifyCode(user, "Email");
             //发生邮件给用户
@@ -57,9 +57,9 @@ namespace SPCoreText.App
             return resp;
         }
         //验证 验证码 是否正确
-        public Response CheckVerificationCode(string username, string verificationCode, string useremail)
+        public RetResponse CheckVerificationCode(string username, string verificationCode, string useremail)
         {
-            var resp = new Response();
+            var resp = new RetResponse();
             var userlist = _userapp.FindSingle(c => c.Account == username);
             if (userlist != null)
             {

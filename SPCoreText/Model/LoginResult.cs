@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SPCoreText.Model
 {
-    public class LoginResult : Response<string>
+    public class LoginResult : RetResponse<string>
     {
         public string ReturnUrl;
         public string Token;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SPCoreText.Common
 {
-    public class Response
+    public class RetResponse
     {
         /// <summary>
         /// 操作消息【当Status不为 200时，显示详细的错误信息】
@@ -17,14 +17,14 @@ namespace SPCoreText.Common
         /// </summary>
         public int Code { get; set; }
 
-        public Response()
+        public RetResponse()
         {
             Code = 200;
             Message = "操作成功";
         }
     }
 
-    public class Response<T> : Response
+    public class RetResponse<T> : RetResponse
     {
         /// <summary>
         /// 回传的结果

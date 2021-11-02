@@ -289,7 +289,7 @@ namespace SPCoreText
             services.AddHttpContextAccessorExt();
 
             ////使用AutoFac进行依赖注入
-            //new AutofacServiceProvider(AutofacExt.InitAutofac(services));
+            new AutofacServiceProvider(AutofacExt.InitAutofac(services));
             #endregion
         }
 

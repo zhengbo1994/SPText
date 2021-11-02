@@ -28,17 +28,6 @@ namespace SPCoreText.Common
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));//注册数据库基础操作//当需要一个继承于IRepository接口的类的对象时，使用BaseRepository（均为泛型）
             services.AddScoped(typeof(IUnitWork), typeof(UnitWork));//注册工作单元
 
-            services.AddScoped(typeof(IAuth), typeof(LocalAuth));//注册权限管理
-
-
-
-            ////通用接口 根本不能用啊啊啊啊
-            //services.AddScoped(typeof(IRepositoryBase<>), typeof(BaseRepositoryBase<>));
-            //services.AddScoped(typeof(IUnitWorkBase), typeof(UnitWorkBase));
-
-            //如果想使用WebApi SSO授权，请使用下面这种方式
-            //services.AddScoped(typeof(IAuth), typeof(ApiAuth));
-
             //注册app层
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly());
 
