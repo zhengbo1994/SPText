@@ -56,7 +56,7 @@ $(function () {
                 var table = this;
                 updatePagerIcons(table);
                 jqGridAutoWidth();
-               setGridHeight($gridExerciseManageMain.selector);
+                setGridHeight($gridExerciseManageMain.selector);
             }
         });
     }
@@ -64,7 +64,7 @@ $(function () {
     var initButtonArea = function () {
 
         //新增
-        $("#divExerciseManage_ExerciseList").find("[name='btnExerciseInsert']").on("click", function() {
+        $("#divExerciseManage_ExerciseList").find("[name='btnExerciseInsert']").on("click", function () {
             currentEdittype = enumEditTypes.insert;
             $mdlExerciseManageExerciseInfo.modal("show");
         });
@@ -145,7 +145,7 @@ $(function () {
                 }
 
                 var isShow = function (exerciseData) {
-  
+
                     if (exerciseData.IsLimitTime === "否") {
                         $("#trExerciseManageLimitTime").hide();
                         $divExerciseManageExerciseInfo.find('input[name = LimitTime]').removeAttr("data-verify", "int").removeAttr("data-verify-errormessage", "限制时长必须是正整数，请检查!");
@@ -155,7 +155,7 @@ $(function () {
                     }
                 }
 
-                var getExerciseManageListDataByExerciseId = function() {
+                var getExerciseManageListDataByExerciseId = function () {
                     var queryData = {};
                     var dataResult = {};
                     queryData.ExerciseId = exerciseId;
@@ -165,7 +165,7 @@ $(function () {
                         type: "get",
                         datatype: "json",
                         async: false,
-                        success: function(jdata) {
+                        success: function (jdata) {
                             dataResult = jdata;
                         }
                     });
@@ -233,10 +233,10 @@ $(function () {
                     url: "/" + controllerName + functionName,
                     type: "post",
                     date: exerciseData,
-                    beforeSubmit: function(formArray, jqForm) {
+                    beforeSubmit: function (formArray, jqForm) {
                     },
                     success: function (jdata) {
-                        if (jdata.IsSuccess !=null) {
+                        if (jdata.IsSuccess != null) {
                             alert(jdata.ErrorMessage);
                             return false;
                         }
@@ -256,7 +256,7 @@ $(function () {
     }
 
     //页面加载时运行
-    $(document).ready(function() {
+    $(document).ready(function () {
         initQueryArea();
         initExerciseManageGrid();
         initButtonArea();

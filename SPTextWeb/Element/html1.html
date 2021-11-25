@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <div id="app">
+    <div id="app" hidden="hidden">
         <template>
             <el-button @click="visible = true">Button</el-button>
             <el-dialog :visible.sync="visible" title="Hello world">
@@ -44,6 +44,43 @@
                 </div>
             </div>
         </template>
+    </div>
+
+    <div>
+        <div style="FONT-FAMILY: Calibri">
+            <br><br>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;(this is an automated message - please do not reply
+                directly to this email)
+            </p>
+            <p></p>
+            <p>&nbsp;&nbsp;&nbsp;Customer Group: BausRx Lab   </p>
+            <p>&nbsp;&nbsp;&nbsp;Date:10/22/2021 04:00:37 PM </p>
+            <p>&nbsp;&nbsp;&nbsp;Number of orders: 2 </p>
+            <p></p>
+            <div style="PADDING-LEFT: 10px">
+                <table border=1 cellspacing=0 cellpadding=0>
+                    <tbody>
+                        <tr>
+                            <th width=250>HKO Sequence No.</th>
+                            <th width=350>Customer JOB No.</th>
+                        </tr>
+                        <tr>
+                            <td>PN1022-5572C</td>
+                            <td>CNXSSD2110031151</td>
+                        </tr>
+                        <tr>
+                            <td>PN1022-5573C</td>
+                            <td>CNXSSD2110031157</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p></p>
+            <p>&nbsp;&nbsp;&nbsp;<font face=Tahoma>Thank you</font></p>
+            <p>&nbsp;&nbsp;&nbsp;<font face=Tahoma>HKO IT Team</font></p>
+                <!--<p>&nbsp;&nbsp;&nbsp;HKO IT Team</p>-->
+</div>
     </div>
 
 

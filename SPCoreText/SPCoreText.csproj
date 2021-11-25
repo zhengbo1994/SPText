@@ -4,6 +4,10 @@
 	<!--.NET CORE2.0发布后没有 VIEWS视图页面文件-->
 	<!--<MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>-->
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!--.net core发布之后可以更改视图文件配置项-->
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <RazorCompileOnBuild>false</RazorCompileOnBuild>
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
   </PropertyGroup>
 
   <ItemGroup>
