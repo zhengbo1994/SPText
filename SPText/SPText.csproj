@@ -301,6 +301,9 @@
     <Reference Include="SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.4.976, Culture=neutral, PublicKeyToken=b68184102cba0b3b, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.provider.dynamic_cdecl.2.0.4\lib\netstandard2.0\SQLitePCLRaw.provider.dynamic_cdecl.dll</HintPath>
     </Reference>
+    <Reference Include="SqlSugar, Version=5.0.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlSugar.5.0.4.6\lib\SqlSugar.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.2.4\lib\net472\StackExchange.Redis.dll</HintPath>
     </Reference>
@@ -494,6 +497,8 @@
     <Compile Include="Common\DataHelper\Repository\RepositoryFactory.cs" />
     <Compile Include="Common\DataHelper\Repository\RepositoryFactoryT.cs" />
     <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
+    <Compile Include="Common\DataHelper\SqlSugar\SimpleClient.cs" />
+    <Compile Include="Common\DataHelper\SqlSugar\SqlSugarHelper.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\DbHelperSQL.cs" />
     <Compile Include="Common\DataHelper\Sql\MySqlUtils.cs" />
@@ -766,6 +771,9 @@
     <Compile Include="EF\EF2\UnitWorkT.cs" />
     <None Include="File\AS928參數對照.xlsx" />
     <None Include="File\NA312Model.xls" />
+    <None Include="Sftp\NA319\hkosftp.ppk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Unity\Unity.Config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

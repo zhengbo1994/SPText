@@ -60,6 +60,9 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
+
+
+
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -2030,7 +2033,7 @@ namespace SPText
 
                     string sshPrivateKeyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Sftp\NA319\hkosftp.ppk");
                     //SftpWinScpHelper _sftp = new SftpWinScpHelper("sftp.warbyparker.com", 22, "hko", "ssh-ed25519 255 aa:ff:58:34:ec:c1:99:f1:ec:29:a6:c0:34:0e:2c:31", sshPrivateKeyPath, "hkosftp");//正式地址
-                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", sshPrivateKeyPath, "hkosftp");//测试地址 
+                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.80.24", 1919, "hkosftp", "ssh-rsa 1024 5e:02:db:da:95:35:6a:fb:42:ab:fc:b7:16:76:f1:a0", sshPrivateKeyPath, "hkosftp");//测试地址 
                     _sftp.Connect();
                     if (_sftp.Connected)
                     {
