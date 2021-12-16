@@ -1908,4 +1908,1007 @@ namespace SPText
         }
 
     }
+
+
+    #region  泛型ORM
+    public class BaseRepository<T> where T : class
+    {
+        public virtual bool Add(T Model)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            string tableName = GetTableName(Model);
+            stringBuilder.Append("Insert into ");
+            stringBuilder.Append(tableName);
+            stringBuilder.Append("(");
+            Type typeFromHandle = typeof(T);
+            PropertyInfo[] properties = typeFromHandle.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            if (properties.Length <= 0)
+            {
+                throw new Exception("没有一个属性");
+            }
+            PropertyInfo[] array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                if (!propertyInfo.IsDefined(typeof(KeyIdAttribute), inherit: true))
+                {
+                    stringBuilder.Append(propertyInfo.Name);
+                    stringBuilder.Append(",");
+                }
+            }
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            stringBuilder.Append(") ");
+            stringBuilder.Append("values (");
+            array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                if (!propertyInfo.IsDefined(typeof(KeyIdAttribute), inherit: true))
+                {
+                    stringBuilder.Append("@" + propertyInfo.Name);
+                    stringBuilder.Append(",");
+                }
+            }
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            stringBuilder.Append(") ");
+            List<SqlParameter> parameters = GetParameters(Model, properties);
+            int num = DbHelperSQL.ExecuteSql(stringBuilder.ToString(), parameters.ToArray());
+            if (num <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static List<SqlParameter> GetParameters(T Model, PropertyInfo[] propertys)
+        {
+            List<SqlParameter> list = new List<SqlParameter>();
+            foreach (PropertyInfo propertyInfo in propertys)
+            {
+                if (!propertyInfo.IsDefined(typeof(KeyIdAttribute), inherit: true))
+                {
+                    if (propertyInfo.GetValue(Model, null) == null)
+                    {
+                        list.Add(new SqlParameter("@" + propertyInfo.Name, DBNull.Value));
+                    }
+                    else
+                    {
+                        list.Add(new SqlParameter("@" + propertyInfo.Name, propertyInfo.GetValue(Model, null)));
+                    }
+                }
+            }
+            return list;
+        }
+
+        private static string GetTableName(T Model)
+        {
+            string[] array = Model.ToString().Split('.');
+            return array[array.Length - 1];
+        }
+
+        private string GetObjectPropertyValue(T t, string propertyName)
+        {
+            Type typeFromHandle = typeof(T);
+            PropertyInfo property = typeFromHandle.GetProperty(propertyName);
+            if (property == null)
+            {
+                return string.Empty;
+            }
+            object value = property.GetValue(t, null);
+            if (value == null)
+            {
+                return string.Empty;
+            }
+            return value.ToString();
+        }
+
+        public virtual bool Edit(T model)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            string tableName = GetTableName(model);
+            stringBuilder.Append("Update ");
+            stringBuilder.Append(tableName);
+            stringBuilder.Append(" set ");
+            Type typeFromHandle = typeof(T);
+            PropertyInfo[] properties = typeFromHandle.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            if (properties.Length <= 0)
+            {
+                throw new Exception("没有一个属性");
+            }
+            string arg = "";
+            int num = 0;
+            PropertyInfo[] array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                if (!propertyInfo.IsDefined(typeof(KeyIdAttribute), inherit: true))
+                {
+                    if (propertyInfo.GetValue(model, null) != null)
+                    {
+                        stringBuilder.Append(propertyInfo.Name + "=@" + propertyInfo.Name);
+                        stringBuilder.Append(",");
+                    }
+                }
+                else
+                {
+                    arg = propertyInfo.Name;
+                    num = (int)propertyInfo.GetValue(model, null);
+                }
+            }
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            stringBuilder.Append(" where ");
+            stringBuilder.Append(arg + " = " + num);
+            List<SqlParameter> list = new List<SqlParameter>();
+            array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                if (!propertyInfo.IsDefined(typeof(KeyIdAttribute), inherit: true) && propertyInfo.GetValue(model, null) != null)
+                {
+                    list.Add(new SqlParameter("@" + propertyInfo.Name, propertyInfo.GetValue(model, null)));
+                }
+            }
+            int num2 = DbHelperSQL.ExecuteSql(stringBuilder.ToString(), list.ToArray());
+            if (num2 <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public virtual bool Del(T model)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            string tableName = GetTableName(model);
+            stringBuilder.Append("delete " + tableName);
+            stringBuilder.Append(" where ");
+            Type typeFromHandle = typeof(T);
+            PropertyInfo[] properties = typeFromHandle.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            if (properties.Length <= 0)
+            {
+                throw new Exception("没有一个属性");
+            }
+            PropertyInfo[] array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                if (propertyInfo.PropertyType == typeof(string))
+                {
+                    if (propertyInfo.GetValue(model, null) != null)
+                    {
+                        stringBuilder.Append(" ");
+                        stringBuilder.Append(propertyInfo.Name + "=@" + propertyInfo.Name);
+                        stringBuilder.Append(" and");
+                    }
+                }
+                else if (Convert.ToInt32(propertyInfo.GetValue(model, null)) != 0)
+                {
+                    stringBuilder.Append(" ");
+                    stringBuilder.Append(propertyInfo.Name + "=@" + propertyInfo.Name);
+                    stringBuilder.Append(" and");
+                }
+            }
+            stringBuilder.Remove(stringBuilder.Length - 3, 3);
+            List<SqlParameter> list = new List<SqlParameter>();
+            array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                if (propertyInfo.PropertyType == typeof(string))
+                {
+                    if (propertyInfo.GetValue(model, null) != null)
+                    {
+                        list.Add(new SqlParameter("@" + propertyInfo.Name, propertyInfo.GetValue(model, null)));
+                    }
+                }
+                else if (Convert.ToInt32(propertyInfo.GetValue(model, null)) != 0)
+                {
+                    list.Add(new SqlParameter("@" + propertyInfo.Name, propertyInfo.GetValue(model, null)));
+                }
+            }
+            int num = DbHelperSQL.ExecuteSql(stringBuilder.ToString(), list.ToArray());
+            if (num <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public virtual DataTable QueryByPage(Page page)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            SqlParameter[] array = new SqlParameter[11]
+            {
+                new SqlParameter("@TableName", SqlDbType.VarChar, 200),
+                new SqlParameter("@FieldList", SqlDbType.VarChar, 1500),
+                new SqlParameter("@PageSize", SqlDbType.Int),
+                new SqlParameter("@PageNumber", SqlDbType.Int),
+                new SqlParameter("@SortFields", SqlDbType.VarChar, 1000),
+                new SqlParameter("@EnabledSort", SqlDbType.Bit),
+                new SqlParameter("@QueryCondition", SqlDbType.VarChar, 1500),
+                new SqlParameter("@Primarykey", SqlDbType.VarChar, 50),
+                new SqlParameter("@EnabledDistinct", SqlDbType.Bit),
+                new SqlParameter("@PageCount", SqlDbType.Int),
+                new SqlParameter("@RecordCount", SqlDbType.Int)
+            };
+            array[9].Direction = ParameterDirection.Output;
+            array[10].Direction = ParameterDirection.Output;
+            array[0].Value = page.TableName;
+            array[1].Value = page.FieldList;
+            array[2].Value = page.PageSize;
+            array[3].Value = page.PageIndex;
+            array[4].Value = page.SortFields;
+            array[5].Value = page.EnabledSort;
+            array[6].Value = page.QueryCondition;
+            array[7].Value = page.Primarykey;
+            array[8].Value = page.EnabledDistinct;
+            DataTable result = DbHelperSQL.RunProcedureToDataSet("P_GridViewPager", array).Tables[0];
+            page.PageCount = ((array[9].Value != null) ? ((int)array[9].Value) : 0);
+            page.RecordCount = ((array[10].Value != null) ? ((int)array[10].Value) : 0);
+            return result;
+        }
+
+        private static List<T> GetListEntrty(Type typeTableName, DataTable dt)
+        {
+            List<T> list = new List<T>();
+            if (dt.Rows.Count >= 1)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    object obj = Activator.CreateInstance(typeTableName);
+                    PropertyInfo[] properties = typeTableName.GetProperties();
+                    PropertyInfo[] array = properties;
+                    foreach (PropertyInfo propertyInfo in array)
+                    {
+                        if (row[propertyInfo.Name] != DBNull.Value)
+                        {
+                            propertyInfo.SetValue(obj, row[propertyInfo.Name], null);
+                        }
+                    }
+                    list.Add(obj as T);
+                }
+                return list;
+            }
+            return null;
+        }
+
+        public virtual List<T> QueryWhere(Type typeTableName, string where)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            string name = typeTableName.Name;
+            stringBuilder.Append("select ");
+            Type typeFromHandle = typeof(T);
+            PropertyInfo[] properties = typeFromHandle.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            if (properties.Length <= 0)
+            {
+                throw new Exception("没有一个属性");
+            }
+            PropertyInfo[] array = properties;
+            foreach (PropertyInfo propertyInfo in array)
+            {
+                stringBuilder.Append(propertyInfo.Name);
+                stringBuilder.Append(",");
+            }
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            stringBuilder.Append(" from ");
+            stringBuilder.Append(name);
+            stringBuilder.Append(" ");
+            stringBuilder.Append(where);
+            DataTable dt = DbHelperSQL.Query(stringBuilder.ToString()).Tables[0];
+            return GetListEntrty(typeTableName, dt);
+        }
+    }
+
+    public abstract class DbHelperSQL
+    {
+        public static string connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+
+        public DbHelperSQL()
+        {
+        }
+
+        public static bool ColumnExists(string tableName, string columnName)
+        {
+            string sQLString = "select count(1) from syscolumns where [id]=object_id('" + tableName + "') and [name]='" + columnName + "'";
+            object single = GetSingle(sQLString);
+            if (single == null)
+            {
+                return false;
+            }
+            return Convert.ToInt32(single) > 0;
+        }
+
+        public static int GetMaxID(string FieldName, string TableName)
+        {
+            string sQLString = "select max(" + FieldName + ")+1 from " + TableName;
+            object single = GetSingle(sQLString);
+            if (single == null)
+            {
+                return 1;
+            }
+            return int.Parse(single.ToString());
+        }
+
+        public static bool Exists(string strSql)
+        {
+            object single = GetSingle(strSql);
+            if (object.Equals(single, null) || object.Equals(single, DBNull.Value) || int.Parse(single.ToString()) == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool TabExists(string TableName)
+        {
+            string sQLString = "select count(*) from sysobjects where id = object_id(N'[" + TableName + "]') and OBJECTPROPERTY(id, N'IsUserTable') = 1";
+            object single = GetSingle(sQLString);
+            if (object.Equals(single, null) || object.Equals(single, DBNull.Value) || int.Parse(single.ToString()) == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool Exists(string strSql, params SqlParameter[] cmdParms)
+        {
+            object single = GetSingle(strSql, cmdParms);
+            if (object.Equals(single, null) || object.Equals(single, DBNull.Value) || int.Parse(single.ToString()) == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static int ExecuteSql(string SQLString)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand(SQLString, sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        return sqlCommand.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        sqlConnection.Close();
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        public static int ExecuteSqlByTime(string SQLString, int Times)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand(SQLString, sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        sqlCommand.CommandTimeout = Times;
+                        return sqlCommand.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        sqlConnection.Close();
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        public static int ExecuteSqlTranThrow(List<string> SQLStringList)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = sqlConnection;
+                SqlTransaction sqlTransaction2 = sqlCommand.Transaction = sqlConnection.BeginTransaction();
+                try
+                {
+                    int num = 0;
+                    for (int i = 0; i < SQLStringList.Count; i++)
+                    {
+                        string text = SQLStringList[i];
+                        if (text.Trim().Length > 1)
+                        {
+                            sqlCommand.CommandText = text;
+                            num += sqlCommand.ExecuteNonQuery();
+                        }
+                    }
+                    sqlTransaction2.Commit();
+                    return num;
+                }
+                catch (Exception ex)
+                {
+                    sqlTransaction2.Rollback();
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
+
+        public static int ExecuteSql(string SQLString, string content)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(SQLString, sqlConnection);
+                SqlParameter sqlParameter = new SqlParameter("@content", SqlDbType.NText);
+                sqlParameter.Value = content;
+                sqlCommand.Parameters.Add(sqlParameter);
+                try
+                {
+                    sqlConnection.Open();
+                    return sqlCommand.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlCommand.Dispose();
+                    sqlConnection.Close();
+                }
+            }
+        }
+
+        public static object ExecuteSqlGet(string SQLString, string content)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(SQLString, sqlConnection);
+                SqlParameter sqlParameter = new SqlParameter("@content", SqlDbType.NText);
+                sqlParameter.Value = content;
+                sqlCommand.Parameters.Add(sqlParameter);
+                try
+                {
+                    sqlConnection.Open();
+                    object obj = sqlCommand.ExecuteScalar();
+                    if (object.Equals(obj, null) || object.Equals(obj, DBNull.Value))
+                    {
+                        return null;
+                    }
+                    return obj;
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlCommand.Dispose();
+                    sqlConnection.Close();
+                }
+            }
+        }
+
+        public static int ExecuteSqlInsertImg(string strSQL, byte[] fs)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(strSQL, sqlConnection);
+                SqlParameter sqlParameter = new SqlParameter("@fs", SqlDbType.Image);
+                sqlParameter.Value = fs;
+                sqlCommand.Parameters.Add(sqlParameter);
+                try
+                {
+                    sqlConnection.Open();
+                    return sqlCommand.ExecuteNonQuery();
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    sqlCommand.Dispose();
+                    sqlConnection.Close();
+                }
+            }
+        }
+
+        public static object GetSingle(string SQLString)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand(SQLString, sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        object obj = sqlCommand.ExecuteScalar();
+                        if (object.Equals(obj, null) || object.Equals(obj, DBNull.Value))
+                        {
+                            return null;
+                        }
+                        return obj;
+                    }
+                    catch (SqlException ex)
+                    {
+                        sqlConnection.Close();
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        public static object GetSingle(string SQLString, int Times)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand(SQLString, sqlConnection))
+                {
+                    try
+                    {
+                        sqlConnection.Open();
+                        sqlCommand.CommandTimeout = Times;
+                        object obj = sqlCommand.ExecuteScalar();
+                        if (object.Equals(obj, null) || object.Equals(obj, DBNull.Value))
+                        {
+                            return null;
+                        }
+                        return obj;
+                    }
+                    catch (SqlException ex)
+                    {
+                        sqlConnection.Close();
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        public static SqlDataReader ExecuteReader(string strSQL)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = new SqlCommand(strSQL, sqlConnection);
+            try
+            {
+                sqlConnection.Open();
+                return sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static DataSet Query(string SQLString)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                DataSet dataSet = new DataSet();
+                try
+                {
+                    sqlConnection.Open();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(SQLString, sqlConnection);
+                    sqlDataAdapter.Fill(dataSet, "ds");
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                return dataSet;
+            }
+        }
+
+        public static DataSet Query(string SQLString, int Times)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                DataSet dataSet = new DataSet();
+                try
+                {
+                    sqlConnection.Open();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(SQLString, sqlConnection);
+                    sqlDataAdapter.SelectCommand.CommandTimeout = Times;
+                    sqlDataAdapter.Fill(dataSet, "ds");
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                return dataSet;
+            }
+        }
+
+        public static int ExecuteSql(string SQLString, params SqlParameter[] cmdParms)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    try
+                    {
+                        PrepareCommand(sqlCommand, conn, null, SQLString, cmdParms);
+                        int result = sqlCommand.ExecuteNonQuery();
+                        sqlCommand.Parameters.Clear();
+                        return result;
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        public static int ExecuteSqlTran(List<CommandInfo> cmdList)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                using (SqlTransaction sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    SqlCommand sqlCommand = new SqlCommand();
+                    try
+                    {
+                        int num = 0;
+                        foreach (CommandInfo cmd in cmdList)
+                        {
+                            string commandText = cmd.CommandText;
+                            SqlParameter[] parameters = cmd.Parameters;
+                            PrepareCommand(sqlCommand, sqlConnection, sqlTransaction, commandText, parameters);
+                            if (cmd.EffentNextType == EffentNextType.WhenHaveContine || cmd.EffentNextType == EffentNextType.WhenNoHaveContine)
+                            {
+                                if (cmd.CommandText.ToLower().IndexOf("count(") == -1)
+                                {
+                                    sqlTransaction.Rollback();
+                                    return 0;
+                                }
+                                object obj = sqlCommand.ExecuteScalar();
+                                bool flag = false;
+                                if (obj == null && obj == DBNull.Value)
+                                {
+                                    flag = false;
+                                }
+                                flag = (Convert.ToInt32(obj) > 0);
+                                if (cmd.EffentNextType == EffentNextType.WhenHaveContine && !flag)
+                                {
+                                    sqlTransaction.Rollback();
+                                    return 0;
+                                }
+                                if (cmd.EffentNextType == EffentNextType.WhenNoHaveContine && flag)
+                                {
+                                    sqlTransaction.Rollback();
+                                    return 0;
+                                }
+                            }
+                            else
+                            {
+                                int num2 = sqlCommand.ExecuteNonQuery();
+                                num += num2;
+                                if (cmd.EffentNextType == EffentNextType.ExcuteEffectRows && num2 == 0)
+                                {
+                                    sqlTransaction.Rollback();
+                                    return 0;
+                                }
+                                sqlCommand.Parameters.Clear();
+                            }
+                        }
+                        sqlTransaction.Commit();
+                        return num;
+                    }
+                    catch
+                    {
+                        sqlTransaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public static void ExecuteSqlTranWithIndentity(List<CommandInfo> SQLStringList)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                using (SqlTransaction sqlTransaction = sqlConnection.BeginTransaction())
+                {
+                    SqlCommand sqlCommand = new SqlCommand();
+                    try
+                    {
+                        int num = 0;
+                        foreach (CommandInfo SQLString in SQLStringList)
+                        {
+                            string commandText = SQLString.CommandText;
+                            SqlParameter[] parameters = SQLString.Parameters;
+                            SqlParameter[] array = parameters;
+                            foreach (SqlParameter sqlParameter in array)
+                            {
+                                if (sqlParameter.Direction == ParameterDirection.InputOutput)
+                                {
+                                    sqlParameter.Value = num;
+                                }
+                            }
+                            PrepareCommand(sqlCommand, sqlConnection, sqlTransaction, commandText, parameters);
+                            int num2 = sqlCommand.ExecuteNonQuery();
+                            array = parameters;
+                            foreach (SqlParameter sqlParameter in array)
+                            {
+                                if (sqlParameter.Direction == ParameterDirection.Output)
+                                {
+                                    num = Convert.ToInt32(sqlParameter.Value);
+                                }
+                            }
+                            sqlCommand.Parameters.Clear();
+                        }
+                        sqlTransaction.Commit();
+                    }
+                    catch
+                    {
+                        sqlTransaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public static object GetSingle(string SQLString, params SqlParameter[] cmdParms)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    try
+                    {
+                        PrepareCommand(sqlCommand, conn, null, SQLString, cmdParms);
+                        object obj = sqlCommand.ExecuteScalar();
+                        sqlCommand.Parameters.Clear();
+                        if (object.Equals(obj, null) || object.Equals(obj, DBNull.Value))
+                        {
+                            return null;
+                        }
+                        return obj;
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+        public static SqlDataReader ExecuteReader(string SQLString, params SqlParameter[] cmdParms)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = new SqlCommand();
+            try
+            {
+                PrepareCommand(sqlCommand, conn, null, SQLString, cmdParms);
+                SqlDataReader result = sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+                sqlCommand.Parameters.Clear();
+                return result;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static DataSet Query(string SQLString, params SqlParameter[] cmdParms)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand();
+                PrepareCommand(sqlCommand, conn, null, SQLString, cmdParms);
+                using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand))
+                {
+                    DataSet dataSet = new DataSet();
+                    try
+                    {
+                        sqlDataAdapter.Fill(dataSet, "ds");
+                        sqlCommand.Parameters.Clear();
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
+                    return dataSet;
+                }
+            }
+        }
+
+        private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, SqlTransaction trans, string cmdText, SqlParameter[] cmdParms)
+        {
+            if (conn.State != ConnectionState.Open)
+            {
+                conn.Open();
+            }
+            cmd.Connection = conn;
+            cmd.CommandText = cmdText;
+            if (trans != null)
+            {
+                cmd.Transaction = trans;
+            }
+            cmd.CommandType = CommandType.Text;
+            if (cmdParms == null)
+            {
+                return;
+            }
+            foreach (SqlParameter sqlParameter in cmdParms)
+            {
+                if ((sqlParameter.Direction == ParameterDirection.InputOutput || sqlParameter.Direction == ParameterDirection.Input) && sqlParameter.Value == null)
+                {
+                    sqlParameter.Value = DBNull.Value;
+                }
+                cmd.Parameters.Add(sqlParameter);
+            }
+        }
+
+        public static SqlDataReader RunProcedure(string storedProcName, IDataParameter[] parameters)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand sqlCommand = BuildQueryCommand(sqlConnection, storedProcName, parameters);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            return sqlCommand.ExecuteReader(CommandBehavior.CloseConnection);
+        }
+
+        public static DataSet RunProcedureToDataSet(string storedProcName, IDataParameter[] parameters)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                DataSet dataSet = new DataSet();
+                sqlConnection.Open();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+                sqlDataAdapter.SelectCommand = BuildQueryCommand(sqlConnection, storedProcName, parameters);
+                sqlDataAdapter.Fill(dataSet, "ds");
+                sqlConnection.Close();
+                return dataSet;
+            }
+        }
+
+        public static DataSet RunProcedure(string storedProcName, IDataParameter[] parameters, string tableName)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                DataSet dataSet = new DataSet();
+                sqlConnection.Open();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+                sqlDataAdapter.SelectCommand = BuildQueryCommand(sqlConnection, storedProcName, parameters);
+                sqlDataAdapter.Fill(dataSet, tableName);
+                sqlConnection.Close();
+                return dataSet;
+            }
+        }
+
+        public static DataSet RunProcedure(string storedProcName, IDataParameter[] parameters, string tableName, int Times)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                DataSet dataSet = new DataSet();
+                sqlConnection.Open();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+                sqlDataAdapter.SelectCommand = BuildQueryCommand(sqlConnection, storedProcName, parameters);
+                sqlDataAdapter.SelectCommand.CommandTimeout = Times;
+                sqlDataAdapter.Fill(dataSet, tableName);
+                sqlConnection.Close();
+                return dataSet;
+            }
+        }
+
+        private static SqlCommand BuildQueryCommand(SqlConnection connection, string storedProcName, IDataParameter[] parameters)
+        {
+            SqlCommand sqlCommand = new SqlCommand(storedProcName, connection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                SqlParameter sqlParameter = (SqlParameter)parameters[i];
+                if (sqlParameter != null)
+                {
+                    if ((sqlParameter.Direction == ParameterDirection.InputOutput || sqlParameter.Direction == ParameterDirection.Input) && sqlParameter.Value == null)
+                    {
+                        sqlParameter.Value = DBNull.Value;
+                    }
+                    sqlCommand.Parameters.Add(sqlParameter);
+                }
+            }
+            return sqlCommand;
+        }
+
+        public static int RunProcedure(string storedProcName, IDataParameter[] parameters, out int rowsAffected)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = BuildIntCommand(sqlConnection, storedProcName, parameters);
+                rowsAffected = sqlCommand.ExecuteNonQuery();
+                return (int)sqlCommand.Parameters["ReturnValue"].Value;
+            }
+        }
+
+        private static SqlCommand BuildIntCommand(SqlConnection connection, string storedProcName, IDataParameter[] parameters)
+        {
+            SqlCommand sqlCommand = BuildQueryCommand(connection, storedProcName, parameters);
+            sqlCommand.Parameters.Add(new SqlParameter("ReturnValue", SqlDbType.Int, 4, ParameterDirection.ReturnValue, isNullable: false, 0, 0, string.Empty, DataRowVersion.Default, null));
+            return sqlCommand;
+        }
+    }
+    public enum EffentNextType
+    {
+        None,
+        WhenHaveContine,
+        WhenNoHaveContine,
+        ExcuteEffectRows,
+        SolicitationEvent
+    }
+    public class KeyIdAttribute : Attribute
+    {
+    }
+    public sealed class Page
+    {
+        public string TableName { get; set; }
+
+        public string FieldList { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public string SortFields { get; set; }
+
+        public bool EnabledSort { get; set; }
+
+        public string QueryCondition { get; set; }
+
+        public string Primarykey { get; set; }
+
+        public bool EnabledDistinct { get; set; }
+
+        public int PageCount { get; set; }
+
+        public int RecordCount { get; set; }
+    }
+    public class CommandInfo
+    {
+        public object ShareObject = null;
+
+        public object OriginalData = null;
+
+        public string CommandText;
+
+        public SqlParameter[] Parameters;
+
+        public EffentNextType EffentNextType = EffentNextType.None;
+
+        private event EventHandler _solicitationEvent;
+
+        public event EventHandler SolicitationEvent
+        {
+            add
+            {
+                _solicitationEvent += value;
+            }
+            remove
+            {
+                _solicitationEvent -= value;
+            }
+        }
+
+        public void OnSolicitationEvent()
+        {
+            if (this._solicitationEvent != null)
+            {
+                this._solicitationEvent(this, new EventArgs());
+            }
+        }
+
+        public CommandInfo()
+        {
+        }
+
+        public CommandInfo(string sqlText, SqlParameter[] para)
+        {
+            CommandText = sqlText;
+            Parameters = para;
+        }
+
+        public CommandInfo(string sqlText, SqlParameter[] para, EffentNextType type)
+        {
+            CommandText = sqlText;
+            Parameters = para;
+            EffentNextType = type;
+        }
+    }
+    #endregion
 }
