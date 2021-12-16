@@ -156,7 +156,7 @@ namespace SPText.Common.Redis
                     不要先用IsLock判断是否有锁再用Add加锁，因为这两个操作非原子性操作，期间会被其他操作干
                  */
                 {
-                    //bool block = client.Add("Lock",, true, timeSpan);
+                    //bool block = client.Add("Lock", true, timeSpan);
                     //if (block)
                     //{
 

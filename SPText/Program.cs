@@ -204,7 +204,7 @@ namespace SPText
             #endregion
 
             #region  二维码
-            //GetQRCode();
+            GetQRCode();
             #endregion
 
             #region  加密
@@ -2005,6 +2005,12 @@ namespace SPText
 
             QRCodeHelper qRCodeHelper = new QRCodeHelper();
             qRCodeHelper.GetQRCODEByString("https://www.baidu.com", file, 60);
+
+
+            string zoneCodeQRCode = "JW1201-2221C&103;Eyecare Center of St. James;517 1st Avenue S;;St. James;MN;560811727;USA";
+            qRCodeHelper.GetQRCODEByString(zoneCodeQRCode, file, 60);
+
+
         }
 
         #endregion
