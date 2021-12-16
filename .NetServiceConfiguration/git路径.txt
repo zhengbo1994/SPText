@@ -3,3 +3,15 @@ httpsgitee.comzheng_bo1994SPText.git
 
 19971197414
 zb19940118
+
+
+
+
+查看当前路径：git remote -v
+力软框架：https://github.com/zhengbo1994/Long.Learun.Framework.7.0.2.git
+微服务框架：
+网址:https://www.cnblogs.com/linbin524/p/15210147.html
+在线文档：http://doc.yc-l.com/#/README
+在线演示地址：http://yc.yc-l.com/#/login
+源码github：https://github.com/linbin524/yc.boilerplate
+源码gitee：https://gitee.com/linxuanming/yc.boilerplate

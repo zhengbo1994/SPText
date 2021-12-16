@@ -60,6 +60,9 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
+
+
+
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -120,7 +123,7 @@ namespace SPText
             #endregion
 
             #region  xml
-            xmlShow();
+            //xmlShow();
             #endregion
 
             #region Unity
@@ -248,6 +251,10 @@ namespace SPText
             //SFTPAndFTPShow();
             #endregion
 
+            #region  生成饼状图
+            //PieChartShow();
+            #endregion
+
             #region  
             //string aa = @"div+css、layui、vue、bootstrap、jQuery、ado.net、ef、wcf、api、linq、xml、orm、ef、ioc、NoSql、WebSocket、委托、特性、泛型、数组、反射、多线程、爬虫、.Net Core、微服务";
             //1.分布式（应用程序、文件、数据库）
@@ -298,14 +305,14 @@ namespace SPText
 
             List<string> strList = new List<string>();
             strList = strList.Where((p, i) => strList.FindIndex(m => m.ToString() == p.ToString()) == i).ToList();//自定义去重（未验证）
-            
+
             var strList1 = a.GroupJoin(b, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(p => new { }).ToList();
             var strList2 = a.GroupBy(p => p.ToString()).Select(p => new { ziduan1 = p.Key.ToString() }).ToList();
             //linQ怎么合并同一列的数据   http://www.myexceptions.net/linq/1013611.html
             //var query = db.YourTable.ToList().GroupBy(t => new { t.FROM, t.To, t.Time })
             //.Select(g => new { FROM = g.Key.From, TO = g.Key.To, NUM = g.Count(), Time = g.Key.Time, Body = string.Join(",", g.Select(s => s.Body).ToArray()) });
 
-            
+
             Console.ReadKey();
         }
         #endregion
@@ -1130,7 +1137,8 @@ namespace SPText
         #endregion
 
         #region  xml数据操作
-        public static void xmlShow() {
+        public static void xmlShow()
+        {
             XMLShow xmlShow = new XMLShow();
             xmlShow.Show();
         }
@@ -2004,7 +2012,7 @@ namespace SPText
         #region  SFtp
         public static void SFTPAndFTPShow()
         {
-            
+
             {
                 //{
                 //    string host = "192.168.43.221";
@@ -2025,7 +2033,7 @@ namespace SPText
 
                     string sshPrivateKeyPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Sftp\NA319\hkosftp.ppk");
                     //SftpWinScpHelper _sftp = new SftpWinScpHelper("sftp.warbyparker.com", 22, "hko", "ssh-ed25519 255 aa:ff:58:34:ec:c1:99:f1:ec:29:a6:c0:34:0e:2c:31", sshPrivateKeyPath, "hkosftp");//正式地址
-                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.43.221", 1919, "hkosftp", "ssh-rsa 1024 78:ff:09:36:4e:38:92:ba:55:4b:d2:09:0e:d9:5b:d1", sshPrivateKeyPath, "hkosftp");//测试地址 
+                    SftpWinScpHelper _sftp = new SftpWinScpHelper("192.168.80.24", 1919, "hkosftp", "ssh-rsa 1024 5e:02:db:da:95:35:6a:fb:42:ab:fc:b7:16:76:f1:a0", sshPrivateKeyPath, "hkosftp");//测试地址 
                     _sftp.Connect();
                     if (_sftp.Connected)
                     {
@@ -2418,6 +2426,12 @@ namespace SPText
             p.WaitForInputIdle();
         }
         #endregion
+
+        public static void PieChartShow()
+        {
+            PieChartShow pieChartShow = new PieChartShow();
+            pieChartShow.Show();
+        }
     }
     #region  特性
     public static class AttributcMapping
@@ -2587,6 +2601,95 @@ namespace SPText
         public string Name { set; get; }
         public int Age { set; get; }
     }
+
+    #region  xml类
+    [Serializable]
+    public class BaseInfo
+    {
+        List<Person> perList = new List<Person>();
+
+        [XmlElement(ElementName = "Person")]
+        public List<Person> PersonList
+        {
+            get { return perList; }
+            set { perList = value; }
+        }
+    }
+    public class Person
+    {
+        string name;
+        int age;
+        List<Books> bookList = new List<Books>();
+
+        /// <summary>
+        /// 必须有默认的构造函数
+        /// </summary>
+        public Person()
+        { }
+
+        public Person(string name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+        [XmlElement(ElementName = "Books")]
+        public List<Books> BookList
+        {
+            get { return bookList; }
+            set { bookList = value; }
+        }
+    }
+    public class Books
+    {
+        List<Book> bookList = new List<Book>();
+
+        [XmlElement(ElementName = "Book")]
+        public List<Book> BookList
+        {
+            get { return bookList; }
+            set { bookList = value; }
+        }
+    }
+
+    public class Book
+    {
+        string isbn;
+        string title;
+
+        public Book() { }
+
+        public Book(string isbn, string title)
+        {
+            this.isbn = isbn;
+            this.title = title;
+        }
+
+        public string ISBN
+        {
+            get { return isbn; }
+            set { isbn = value; }
+        }
+
+        public string Title
+        {
+            get { return title; }
+            set { title = value; }
+        }
+    }
+    #endregion
     #endregion
 
     #region  字典缓存

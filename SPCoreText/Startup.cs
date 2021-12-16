@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac.Extensions.DependencyInjection;
 using EF_CodeDB;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +24,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SPCoreApiText.Utiltiy;
+using SPCoreText.Common;
 using SPCoreText.Extensions;
+using SPCoreText.Interface;
+using SPCoreText.Model;
 using SPCoreText.Services;
 using SPCoreText.Unlity;
 using SPCoreTextLK.Interface;
@@ -133,6 +139,7 @@ namespace SPCoreText
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DbContext"));
             });
+
 
 
             //services.AddEntityFrameworkSqlServer()
@@ -263,6 +270,27 @@ namespace SPCoreText
             //services.AddSingleton<IAuthorizationHandler, ZhaoxiMailHandler>();
             //services.AddSingleton<IAuthorizationHandler, QQMailHandler>();
             #endregion
+
+
+            #region  其它项目移植（不可用）
+            //services.AddDistributedMemoryCache();
+            ////多语言1.添加AddLocalization
+            //services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+
+            //services.AddMemoryCache();
+            //services.AddOptions();
+
+            ////映射配置文件
+            //services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
+
+
+            ////使用HttpContext获取器扩展 用来获取静态HttpContext
+            services.AddHttpContextAccessorExt();
+
+            ////使用AutoFac进行依赖注入
+            new AutofacServiceProvider(AutofacExt.InitAutofac(services));
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -322,10 +350,31 @@ namespace SPCoreText
 
             app.UseResponseCaching();
 
-
             // 通用的添加中间件的方法
             //app.UseMiddleware<TestMiddleware>();
             //app.UseTest();
+
+            #region  其它项目移植（不可用）
+            ////多语言3.应用UseRequestLocalization
+            //IList<CultureInfo> supportedCultures = new List<CultureInfo>
+            //{
+            //    new CultureInfo("en-US"),
+            //    new CultureInfo("zh-CN"),
+            //    new CultureInfo("zh-HK")
+            //};
+            //app.UseRequestLocalization(new RequestLocalizationOptions()
+            //{
+            //    DefaultRequestCulture = new RequestCulture("en-US"),
+            //    SupportedCultures = supportedCultures,
+            //    SupportedUICultures = supportedCultures
+            //});
+
+            //app.UseCookiePolicy();
+            //app.UseSession();
+            ////使用静态的HttpContext
+            ////2. 为自己构建的静态HttpContext添加当前app的HttpContext访问器
+            app.UseStaticHttpContext();
+            #endregion
 
 
 

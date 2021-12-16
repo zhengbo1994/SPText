@@ -182,6 +182,12 @@ namespace SPText.Common.DataHelper.Dapper
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
+
+                SqlCommand sqlCommand = con.CreateCommand();
+                sqlCommand.CommandText = "select * from table";
+                sqlCommand.ExecuteNonQuery();
+
+
                 using (var transaction = con.BeginTransaction())
                 {
                     try

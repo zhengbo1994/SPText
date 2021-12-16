@@ -9,8 +9,24 @@ using System.Threading.Tasks;
 
 namespace SPCoreText.Common
 {
-    public static partial class EmailHelper
+    public partial class EmailHelper
     {
+        public string EmailAccount { get; set; }
+        public string EmailPassword { get; set; }
+        public string SmtpHost { get; set; }
+        public int? SmtpPort { get; set; }
+        public bool EnableSsl { get; set; }
+        public EmailHelper() { 
+        
+        }
+        public EmailHelper(string emailAccount, string emailPassword, string smtpHost, int? smtpPort, bool enableSsl)
+        {
+            this.EmailAccount = emailAccount;
+            this.EmailPassword = emailPassword;
+            this.SmtpHost = smtpHost;
+            this.SmtpPort = smtpPort;
+            this.EnableSsl = enableSsl;
+        }
         /// <summary>
         /// 发送邮件
         /// </summary>
@@ -265,6 +281,85 @@ namespace SPCoreText.Common
         public static bool SendMail(string emailAcount, string emailPassword, List<string> emailRecipientList, string title, string content)
         {
             return SendMail(emailAcount, emailPassword, emailRecipientList, null, title, content, null, null, null);
+        }
+        public bool SendMail(string emailRecipient, List<string> ccRecipientList, string title, string content, List<string> attachmentPathList, string displayName = "HK-IT")
+        {
+            MailMessage message = new MailMessage();
+            MailAddress fromAddr = new MailAddress(this.EmailAccount, displayName);
+            message.From = fromAddr;
+
+            message.To.Add(emailRecipient.Trim());
+
+            if (ccRecipientList != null && ccRecipientList.Count > 0)
+            {
+                foreach (string ccRecipient in ccRecipientList)
+                {
+                    message.CC.Add(ccRecipient.Trim());
+                }
+            }
+
+            //设置邮件标题
+            message.Subject = title;
+            //设置邮箱内容
+            message.Body = content;
+            //html
+            message.IsBodyHtml = true;
+            //设置邮件附件
+            if (attachmentPathList != null && attachmentPathList.Count > 0)
+            {
+                foreach (var item in attachmentPathList)
+                {
+                    string SUpFile = item;
+                    if (SUpFile != null && SUpFile != "")
+                    {
+                        //将文件进行转换成Attachments
+                        Attachment data = new Attachment(SUpFile, MediaTypeNames.Application.Octet); ;
+                        //Add time stamp information for the file.
+                        ContentDisposition disposition = data.ContentDisposition;
+                        disposition.CreationDate = System.IO.File.GetCreationTime(SUpFile);
+                        disposition.ModificationDate = System.IO.File.GetLastWriteTime(SUpFile);
+                        disposition.ReadDate = System.IO.File.GetLastAccessTime(SUpFile);
+
+                        message.Attachments.Add(data);
+                    }
+                }
+            }
+
+            //设置发送服务器，服务器根据你使用的邮箱而不用，可以到相应的邮箱管理后台查看
+            if (SmtpHost == null || SmtpHost.Trim() == "")
+            {
+                SmtpHost = "smtp.qiye.163.com";
+            }
+            if (SmtpPort == null || SmtpPort == 0)
+            {
+                SmtpPort = 587;
+            }
+
+            SmtpClient client = new SmtpClient(SmtpHost, (int)SmtpPort);
+            //设置发送人的邮箱账户和密码
+            client.Credentials = new NetworkCredential(EmailAccount, EmailPassword);
+            //启动ssl,也就是安全发送
+            client.EnableSsl = EnableSsl;
+
+            try
+            {
+                client.Send(message);
+                foreach (Attachment item in message.Attachments)
+                {
+                    item.Dispose();
+                }
+                message = null;
+                GC.Collect();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                message.Attachments.Clear();
+                message = null;
+                GC.Collect();
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
         }
     }
 }

@@ -250,10 +250,6 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
-    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.19.7.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
@@ -302,6 +298,9 @@
     <Reference Include="SQLitePCLRaw.provider.dynamic_cdecl, Version=2.0.4.976, Culture=neutral, PublicKeyToken=b68184102cba0b3b, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLitePCLRaw.provider.dynamic_cdecl.2.0.4\lib\netstandard2.0\SQLitePCLRaw.provider.dynamic_cdecl.dll</HintPath>
     </Reference>
+    <Reference Include="SqlSugar, Version=5.0.4.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlSugar.5.0.4.6\lib\SqlSugar.dll</HintPath>
+    </Reference>
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.2.4\lib\net472\StackExchange.Redis.dll</HintPath>
     </Reference>
@@ -321,6 +320,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.3\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.SQLite, Version=1.0.112.1, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.2\lib\net40\System.Data.SQLite.dll</HintPath>
@@ -492,6 +494,8 @@
     <Compile Include="Common\DataHelper\Repository\RepositoryFactory.cs" />
     <Compile Include="Common\DataHelper\Repository\RepositoryFactoryT.cs" />
     <Compile Include="Common\DataHelper\Repository\RepositoryT.cs" />
+    <Compile Include="Common\DataHelper\SqlSugar\SimpleClient.cs" />
+    <Compile Include="Common\DataHelper\SqlSugar\SqlSugarHelper.cs" />
     <Compile Include="Common\DataHelper\Sql\DatabaseCommon.cs" />
     <Compile Include="Common\DataHelper\Sql\DbHelperSQL.cs" />
     <Compile Include="Common\DataHelper\Sql\MySqlUtils.cs" />
@@ -501,7 +505,6 @@
     <Compile Include="Common\ExpdalHelper.cs" />
     <Compile Include="Common\FtpHelper.cs" />
     <Compile Include="Common\IO\DirFileHelper.cs" />
-    <Compile Include="Common\ExcelAdoDotNetHelper.cs" />
     <Compile Include="Common\ExcelHelper.cs" />
     <Compile Include="Common\ExpressionExtend\ConditionBuilderVisitor.cs" />
     <Compile Include="Common\ExpressionExtend\OperationsVisitor.cs" />
@@ -533,7 +536,6 @@
     <Compile Include="Common\baseFn\AppFn.cs" />
     <Compile Include="Common\NOPIHelper.cs" />
     <Compile Include="Common\Offices\ExcelConfig.cs" />
-    <Compile Include="Common\Offices\ExcelHelper.cs" />
     <Compile Include="Common\PageHelper.cs" />
     <Compile Include="Common\Pagination.cs" />
     <Compile Include="Common\PDF.cs" />
@@ -571,6 +573,7 @@
     <Compile Include="Common\Serialize\xHelper.cs" />
     <Compile Include="Common\SettingConfiguration.cs" />
     <Compile Include="Common\SFtpHelper.cs" />
+    <Compile Include="Common\Show\PieChartShow.cs" />
     <Compile Include="Common\Show\XMLShow.cs" />
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\ThreadHelper.cs" />
@@ -765,6 +768,9 @@
     <Compile Include="EF\EF2\UnitWorkT.cs" />
     <None Include="File\AS928參數對照.xlsx" />
     <None Include="File\NA312Model.xls" />
+    <None Include="Sftp\NA319\hkosftp.ppk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Unity\Unity.Config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

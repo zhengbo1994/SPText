@@ -4,6 +4,10 @@
 	<!--.NET CORE2.0发布后没有 VIEWS视图页面文件-->
 	<!--<MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>-->
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!--.net core发布之后可以更改视图文件配置项-->
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <RazorCompileOnBuild>false</RazorCompileOnBuild>
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,7 +31,9 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Consul" Version="1.6.1.1" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="IdentityModel" Version="5.0.0" />
     <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="log4net.AspNetCore" Version="1.0.0" />
@@ -47,8 +53,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="SharpZipLib" Version="1.0.0" />
+    <PackageReference Include="SqlMapper" Version="2.0.0" />
+    <PackageReference Include="SqlMapper.Core" Version="1.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="3.2.16" />
   </ItemGroup>
 
   <ItemGroup>
