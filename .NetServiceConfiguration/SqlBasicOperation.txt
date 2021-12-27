@@ -107,3 +107,14 @@ DECLARE 	@pageSize INT=20,--页码
 select  top (@pageSize) * from (select ROW_NUMBER() over(order by id) as rowid ,* from [order].[dbo].[o88_service_code_items])as A  where rowid> (@pageSize)*((@currentPage)-1)  
 select top (@pageSize) * from [order].[dbo].[o88_service_code_items] where id>(select ISNULL(MAX(id),0) from (select top ((@pageSize)*(@currentPage-1)) id from [order].[dbo].[o88_service_code_items]  order by id) as a)  order by id 
 SELECT TOP (@pageSize) * FROM [order].[dbo].[o88_service_code_items] WHERE id IN (SELECT TOP(@pageSize) id FROM [order].[dbo].[o88_service_code_items] tablea WHERE tablea.id BETWEEN (@currentPage-1)*@pageSize+1 AND @currentPage*@pageSize)
+
+
+
+
+20、查看所有加密存储过程
+select *
+from sys.objects SP
+left join sys.sql_modules AS smsp ON smsp.object_id = sp.object_id
+where sp.type ='P'
+and smsp.definition IS NULL --加密时内容为NULL
+order by 1

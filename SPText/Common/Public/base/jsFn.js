@@ -67,6 +67,17 @@
         return $.ajax(options);
     };
 
+
+    var ajaxRequestWhen = function (opts, callBackFun) {
+        var ajaxresult = ajaxRequest(opts);
+
+        $.when(ajaxresult).done(function () {
+            if (callBackFun != undefined && typeof callBackFun == 'function') {
+                callBackFun();
+            }
+        })
+    }
+
     //创建GUID
     var newGuid = function () {
         var i, n;
@@ -583,6 +594,7 @@
     this.getQueryString = getQueryString;//获取地址栏参数
     this.isNull = isNull;//判断是否为空 
     this.ajaxRequest = ajaxRequest;//ajax统一请求接口
+    this.ajaxRequestWhen = ajaxRequestWhen;
     this.newGuid = newGuid;//创建GUID
     this.arrContext = arrContext;//匹配数组，返回索引
     this.split = split;//分割
