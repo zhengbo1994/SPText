@@ -40,6 +40,31 @@ namespace SPTextWinForm
             GetCodeContrastRangeList(codeContrastRangeList);
             GetFtpSettingInfo();
             GetSendEmailSettingInfo();
+
+            //GetXmlAnalysis();
+        }
+
+
+        public void GetXmlAnalysis()
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            string xmlPath = Path.Combine(path, @"config\set.xml");
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(xmlPath);
+            if (xmlDocument.ChildNodes.Count>0)
+            {
+                foreach (XmlNode childNode in xmlDocument.ChildNodes)
+                {
+                    if (childNode.ChildNodes.Count > 0)
+                    {
+                        foreach (XmlNode childNode_1 in childNode.ChildNodes)
+                        {
+
+                        }
+                    }
+                }
+            }
+            
         }
 
         private void btn_run_Click(object sender, EventArgs e)

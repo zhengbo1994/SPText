@@ -60,9 +60,6 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
-
-
-
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -274,7 +271,6 @@ namespace SPText
             Console.ReadKey();
         }
 
-
         #region  linq交叉并补
         public static void linqUse()
         {
@@ -312,7 +308,17 @@ namespace SPText
             //var query = db.YourTable.ToList().GroupBy(t => new { t.FROM, t.To, t.Time })
             //.Select(g => new { FROM = g.Key.From, TO = g.Key.To, NUM = g.Count(), Time = g.Key.Time, Body = string.Join(",", g.Select(s => s.Body).ToArray()) });
 
+            //strList1.GroupJoin(strList1, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(o => new
+            //{
+            //    namep = o.p.ToString(),
+            //    nameq = o.q.ToString()
+            //}).ToList();
 
+            //strList1.Join(strList1, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q }).Select(o => new
+            //{
+            //    namep = o.p.ToString(),
+            //    nameq = o.q.ToString()
+            //}).ToList();
             Console.ReadKey();
         }
         #endregion
@@ -2433,11 +2439,13 @@ namespace SPText
         }
         #endregion
 
+        #region  生成饼状图
         public static void PieChartShow()
         {
             PieChartShow pieChartShow = new PieChartShow();
             pieChartShow.Show();
         }
+        #endregion
     }
     #region  特性
     public static class AttributcMapping

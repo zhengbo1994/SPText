@@ -7,6 +7,10 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using Oracle.ManagedDataAccess.Client;
+using System.Data.OleDb;
+using System.Collections;
+using SPText.Common.DataHelper.Other;
 
 namespace SPText
 {
@@ -2909,6 +2913,1226 @@ namespace SPText
             Parameters = para;
             EffentNextType = type;
         }
+    }
+    #endregion
+
+
+
+    #region  AdoHelper
+    //public class CommonUtils
+    //{
+    //    /// <summary>
+    //    /// 用于字符串和枚举类型的转换
+    //    /// </summary>
+    //    /// <typeparam name="T"></typeparam>
+    //    /// <param name="value"></param>
+    //    /// <returns></returns>
+    //    public static T EnumParse<T>(string value)
+    //    {
+    //        try
+    //        {
+    //            return (T)Enum.Parse(typeof(T), value);
+    //        }
+    //        catch
+    //        {
+    //            throw new Exception("传入的值与枚举值不匹配。");
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// 根据传入的Key获取配置文件中的Value值
+    //    /// </summary>
+    //    /// <param name="Key"></param>
+    //    /// <returns></returns>
+    //    public static string GetConfigValueByKey(string Key)
+    //    {
+    //        try
+    //        {
+    //            return ConfigurationManager.AppSettings[Key].ToString();
+    //        }
+    //        catch
+    //        {
+    //            throw new Exception("web.config中 Key=\"" + Key + "\"未配置或配置错误！");
+    //        }
+    //    }
+
+    //    public static Boolean IsNullOrEmpty(Object value)
+    //    {
+    //        if (value == null)
+    //            return true;
+    //        if (String.IsNullOrEmpty(value.ToString()))
+    //            return true;
+    //        return false;
+    //    }
+    //}
+    //public class DbFactory
+    //{
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 来获取命令参数中的参数符号oracle为":",sqlserver为"@"
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static string CreateDbParmCharacter()
+    //    {
+    //        string character = string.Empty;
+
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                character = "@";
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                character = ":";
+    //                break;
+    //            case DatabaseType.Access:
+    //                character = "@";
+    //                break;
+    //            default:
+    //                throw new Exception("数据库类型目前不支持！");
+    //        }
+
+    //        return character;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型和传入的
+    //    /// 数据库链接字符串来创建相应数据库连接对象
+    //    /// </summary>
+    //    /// <param name="connectionString"></param>
+    //    /// <returns></returns>
+    //    public static IDbConnection CreateDbConnection(string connectionString)
+    //    {
+    //        IDbConnection conn = null;
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                conn = new SqlConnection(connectionString);
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                conn = new OracleConnection(connectionString);
+    //                break;
+    //            case DatabaseType.Access:
+    //                conn = new OleDbConnection(connectionString);
+    //                break;
+    //            default:
+    //                throw new Exception("数据库类型目前不支持！");
+    //        }
+
+    //        return conn;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 来创建相应数据库命令对象
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static IDbCommand CreateDbCommand()
+    //    {
+    //        IDbCommand cmd = null;
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                cmd = new SqlCommand();
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                cmd = new OracleCommand();
+    //                break;
+    //            case DatabaseType.Access:
+    //                cmd = new OleDbCommand();
+    //                break;
+    //            default:
+    //                throw new Exception("数据库类型目前不支持！");
+    //        }
+
+    //        return cmd;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 来创建相应数据库适配器对象
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static IDbDataAdapter CreateDataAdapter()
+    //    {
+    //        IDbDataAdapter adapter = null;
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                adapter = new SqlDataAdapter();
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                adapter = new OracleDataAdapter();
+    //                break;
+    //            case DatabaseType.Access:
+    //                adapter = new OleDbDataAdapter();
+    //                break;
+    //            default:
+    //                throw new Exception("数据库类型目前不支持！");
+    //        }
+
+    //        return adapter;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 和传入的命令对象来创建相应数据库适配器对象
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static IDbDataAdapter CreateDataAdapter(IDbCommand cmd)
+    //    {
+    //        IDbDataAdapter adapter = null;
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                adapter = new SqlDataAdapter((SqlCommand)cmd);
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                adapter = new OracleDataAdapter((OracleCommand)cmd);
+    //                break;
+    //            case DatabaseType.Access:
+    //                adapter = new OleDbDataAdapter((OleDbCommand)cmd);
+    //                break;
+    //            default: throw new Exception("数据库类型目前不支持！");
+    //        }
+
+    //        return adapter;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 来创建相应数据库的参数对象
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static IDbDataParameter CreateDbParameter()
+    //    {
+    //        IDbDataParameter param = null;
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                param = new SqlParameter();
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                param = new OracleParameter();
+    //                break;
+    //            case DatabaseType.Access:
+    //                param = new OleDbParameter();
+    //                break;
+    //            default:
+    //                throw new Exception("数据库类型目前不支持！");
+    //        }
+
+    //        return param;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 和传入的参数来创建相应数据库的参数数组对象
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static IDbDataParameter[] CreateDbParameters(int size)
+    //    {
+    //        int i = 0;
+    //        IDbDataParameter[] param = null;
+    //        switch (AdoHelper.DbType)
+    //        {
+    //            case DatabaseType.SqlServer:
+    //                param = new SqlParameter[size];
+    //                while (i < size) { param[i] = new SqlParameter(); i++; }
+    //                break;
+    //            case DatabaseType.Oracle:
+    //                param = new OracleParameter[size];
+    //                while (i < size) { param[i] = new OracleParameter(); i++; }
+    //                break;
+    //            case DatabaseType.Access:
+    //                param = new OleDbParameter[size];
+    //                while (i < size) { param[i] = new OleDbParameter(); i++; }
+    //                break;
+    //            default:
+    //                throw new Exception("数据库类型目前不支持！");
+
+    //        }
+
+    //        return param;
+    //    }
+
+    //    /// <summary>
+    //    /// 根据配置文件中所配置的数据库类型
+    //    /// 来创建相应数据库的事物对象
+    //    /// </summary>
+    //    /// <returns></returns>
+    //    public static IDbTransaction CreateDbTransaction()
+    //    {
+    //        IDbConnection conn = CreateDbConnection(AdoHelper.ConnectionString);
+
+    //        if (conn.State == ConnectionState.Closed)
+    //        {
+    //            conn.Open();
+    //        }
+
+    //        return conn.BeginTransaction();
+    //    }
+    //}
+    //public class AdoHelper
+    //{
+    //    //获取数据库类型
+    //    private static string strDbType = CommonUtils.GetConfigValueByKey("dbType").ToUpper();
+
+    //    //将数据库类型转换成枚举类型
+    //    public static DatabaseType DbType = DatabaseTypeEnumParse<DatabaseType>(strDbType);
+
+    //    //获取数据库连接字符串
+    //    public static string ConnectionString = GetConnectionString("connectionString");
+
+    //    public static string DbParmChar = DbFactory.CreateDbParmCharacter();
+
+    //    private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
+
+    //    /// <summary>
+    //    ///通过提供的参数，执行无结果集的数据库操作命令
+    //    /// 并返回执行数据库操作所影响的行数。
+    //    /// </summary>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行<</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回通过执行命令所影响的行数</returns>
+    //    public static int ExecuteNonQuery(string connectionString, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        using (IDbConnection conn = DbFactory.CreateDbConnection(connectionString))
+    //        {
+    //            PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
+    //            int val = cmd.ExecuteNonQuery();
+    //            cmd.Parameters.Clear();
+    //            return val;
+    //        }
+    //    }
+    //    /// <summary>
+    //    ///通过提供的参数，执行无结果集的数据库操作命令
+    //    /// 并返回执行数据库操作所影响的行数。
+    //    /// </summary>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行<</param>
+    //    /// <returns>返回通过执行命令所影响的行数</returns>
+    //    public static int ExecuteNonQuery(string connectionString, CommandType cmdType, string cmdText)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        using (IDbConnection conn = DbFactory.CreateDbConnection(connectionString))
+    //        {
+    //            PrepareCommand(cmd, conn, null, cmdType, cmdText, null);
+    //            int val = cmd.ExecuteNonQuery();
+    //            cmd.Parameters.Clear();
+    //            return val;
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    ///通过提供的参数，执行无结果集返回的数据库操作命令
+    //    ///并返回执行数据库操作所影响的行数。
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  int result = ExecuteNonQuery(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="conn">数据库连接对象</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回通过执行命令所影响的行数</returns>
+    //    public static int ExecuteNonQuery(IDbConnection connection, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
+    //        int val = cmd.ExecuteNonQuery();
+    //        cmd.Parameters.Clear();
+    //        return val;
+    //    }
+    //    /// <summary>
+    //    ///通过提供的参数，执行无结果集返回的数据库操作命令
+    //    ///并返回执行数据库操作所影响的行数。
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  int result = ExecuteNonQuery(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="conn">数据库连接对象</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行</param>
+    //    /// <returns>返回通过执行命令所影响的行数</returns>
+    //    public static int ExecuteNonQuery(IDbConnection connection, CommandType cmdType, string cmdText)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        PrepareCommand(cmd, connection, null, cmdType, cmdText, null);
+    //        int val = cmd.ExecuteNonQuery();
+    //        cmd.Parameters.Clear();
+    //        return val;
+    //    }
+
+    //    /// <summary>
+    //    ///通过提供的参数，执行无结果集返回的数据库操作命令
+    //    ///并返回执行数据库操作所影响的行数。
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  int result = ExecuteNonQuery(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="trans">sql事务对象</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行<</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回通过执行命令所影响的行数</returns>
+    //    public static int ExecuteNonQuery(IDbTransaction trans, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        IDbConnection conn = null;
+    //        if (trans == null)
+    //        {
+    //            conn = DbFactory.CreateDbConnection(ConnectionString);
+    //        }
+    //        else
+    //        {
+    //            conn = trans.Connection;
+    //        }
+
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+    //        PrepareCommand(cmd, conn, trans, cmdType, cmdText, commandParameters);
+    //        int val = cmd.ExecuteNonQuery();
+    //        cmd.Parameters.Clear();
+    //        return val;
+    //    }
+    //    /// <summary>
+    //    ///通过提供的参数，执行无结果集返回的数据库操作命令
+    //    ///并返回执行数据库操作所影响的行数。
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  int result = ExecuteNonQuery(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="trans">sql事务对象</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行<</param>
+    //    /// <returns>返回通过执行命令所影响的行数</returns>
+    //    public static int ExecuteNonQuery(IDbTransaction trans, CommandType cmdType, string cmdText)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+    //        PrepareCommand(cmd, trans.Connection, trans, cmdType, cmdText, null);
+    //        int val = cmd.ExecuteNonQuery();
+    //        cmd.Parameters.Clear();
+    //        return val;
+    //    }
+    //    /// <summary>
+    //    /// 使用提供的参数，执行有结果集返回的数据库操作命令
+    //    /// 并返回SqlDataReader对象
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  SqlDataReader r = ExecuteReader(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行<</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回SqlDataReader对象</returns>
+    //    public static IDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+    //        IDbConnection conn = DbFactory.CreateDbConnection(connectionString);
+
+    //        //我们在这里使用一个 try/catch,因为如果PrepareCommand方法抛出一个异常，我们想在捕获代码里面关闭
+    //        //connection连接对象，因为异常发生datareader将不会存在，所以commandBehaviour.CloseConnection
+    //        //将不会执行。
+    //        try
+    //        {
+    //            PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
+    //            IDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+    //            cmd.Parameters.Clear();
+    //            return rdr;
+    //        }
+    //        catch
+    //        {
+    //            conn.Close();
+    //            throw;
+    //        }
+    //    }
+    //    /// <summary>
+    //    ///使用提供的参数，执行有结果集返回的数据库操作命令
+    //    /// 并返回SqlDataReader对象
+    //    /// </summary>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行<</param>
+    //    /// <returns>返回SqlDataReader对象</returns>
+    //    public static IDataReader ExecuteReader(string connectionString, CommandType cmdType, string cmdText)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+    //        IDbConnection conn = DbFactory.CreateDbConnection(connectionString);
+
+    //        //我们在这里使用一个 try/catch,因为如果PrepareCommand方法抛出一个异常，我们想在捕获代码里面关闭
+    //        //connection连接对象，因为异常发生datareader将不会存在，所以commandBehaviour.CloseConnection
+    //        //将不会执行。
+    //        try
+    //        {
+    //            PrepareCommand(cmd, conn, null, cmdType, cmdText, null);
+    //            IDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+    //            cmd.Parameters.Clear();
+    //            return rdr;
+    //        }
+    //        catch
+    //        {
+    //            conn.Close();
+    //            throw;
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// 查询数据填充到数据集DataSet中
+    //    /// </summary>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="cmdType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="cmdText">命令文本</param>
+    //    /// <param name="commandParameters">参数数组</param>
+    //    /// <returns>数据集DataSet对象</returns>
+    //    public static DataSet dataSet(string connectionString, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        DataSet ds = new DataSet();
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+    //        IDbConnection conn = DbFactory.CreateDbConnection(connectionString);
+    //        try
+    //        {
+    //            PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
+    //            IDbDataAdapter sda = DbFactory.CreateDataAdapter(cmd);
+    //            sda.Fill(ds);
+    //            return ds;
+    //        }
+    //        catch
+    //        {
+    //            conn.Close();
+    //            throw;
+    //        }
+    //        finally
+    //        {
+    //            conn.Close();
+    //            cmd.Dispose();
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// 查询数据填充到数据集DataSet中
+    //    /// </summary>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="cmdType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="cmdText">命令文本</param>
+    //    /// <returns>数据集DataSet对象</returns>
+    //    public static DataSet dataSet(string connectionString, CommandType cmdType, string cmdText)
+    //    {
+    //        DataSet ds = new DataSet();
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+    //        IDbConnection conn = DbFactory.CreateDbConnection(connectionString);
+    //        try
+    //        {
+    //            PrepareCommand(cmd, conn, null, cmdType, cmdText, null);
+    //            IDbDataAdapter sda = DbFactory.CreateDataAdapter(cmd);
+    //            sda.Fill(ds);
+    //            return ds;
+    //        }
+    //        catch
+    //        {
+    //            conn.Close();
+    //            throw;
+    //        }
+    //        finally
+    //        {
+    //            conn.Close();
+    //            cmd.Dispose();
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// 依靠数据库连接字符串connectionString,
+    //    /// 使用所提供参数，执行返回首行首列命令
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回一个对象，使用Convert.To{Type}将该对象转换成想要的数据类型。</returns>
+    //    public static object ExecuteScalar(string connectionString, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        using (IDbConnection connection = DbFactory.CreateDbConnection(connectionString))
+    //        {
+    //            PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
+    //            object val = cmd.ExecuteScalar();
+    //            cmd.Parameters.Clear();
+    //            return val;
+    //        }
+    //    }
+    //    /// <summary>
+    //    /// 依靠数据库连接字符串connectionString,
+    //    /// 使用所提供参数，执行返回首行首列命令
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="connectionString">数据库连接字符串</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行</param>
+    //    /// <returns>返回一个对象，使用Convert.To{Type}将该对象转换成想要的数据类型。</returns>
+    //    public static object ExecuteScalar(string connectionString, CommandType cmdType, string cmdText)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        using (IDbConnection connection = DbFactory.CreateDbConnection(connectionString))
+    //        {
+    //            PrepareCommand(cmd, connection, null, cmdType, cmdText, null);
+    //            object val = cmd.ExecuteScalar();
+    //            cmd.Parameters.Clear();
+    //            return val;
+    //        }
+    //    }
+    //    /// <summary>
+    //    ///依靠数据库连接字符串connectionString,
+    //    /// 使用所提供参数，执行返回首行首列命令
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="conn">数据库连接对象</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回一个对象，使用Convert.To{Type}将该对象转换成想要的数据类型。</returns>
+    //    public static object ExecuteScalar(IDbConnection connection, CommandType cmdType, string cmdText, params IDbDataParameter[] commandParameters)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
+    //        object val = cmd.ExecuteScalar();
+    //        cmd.Parameters.Clear();
+    //        return val;
+    //    }
+    //    /// <summary>
+    //    ///依靠数据库连接字符串connectionString,
+    //    /// 使用所提供参数，执行返回首行首列命令
+    //    /// </summary>
+    //    /// <remarks>
+    //    /// e.g.:  
+    //    ///  Object obj = ExecuteScalar(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+    //    /// </remarks>
+    //    /// <param name="conn">数据库连接对象</param>
+    //    /// <param name="commandType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="commandText">存储过程名称或者T-SQL命令行</param>
+    //    /// <param name="commandParameters">执行命令所需的参数数组</param>
+    //    /// <returns>返回一个对象，使用Convert.To{Type}将该对象转换成想要的数据类型。</returns>
+    //    public static object ExecuteScalar(IDbConnection connection, CommandType cmdType, string cmdText)
+    //    {
+    //        IDbCommand cmd = DbFactory.CreateDbCommand();
+
+    //        PrepareCommand(cmd, connection, null, cmdType, cmdText, null);
+    //        object val = cmd.ExecuteScalar();
+    //        cmd.Parameters.Clear();
+    //        return val;
+    //    }
+
+
+    //    /// <summary>
+    //    /// add parameter array to the cache
+    //    /// </summary>
+    //    /// <param name="cacheKey">Key to the parameter cache</param>
+    //    /// <param name="cmdParms">an array of SqlParamters to be cached</param>
+    //    public static void CacheParameters(string cacheKey, params IDbDataParameter[] commandParameters)
+    //    {
+    //        parmCache[cacheKey] = commandParameters;
+    //    }
+
+    //    /// <summary>
+    //    /// 查询缓存参数
+    //    /// </summary>
+    //    /// <param name="cacheKey">使用缓存名称查找值</param>
+    //    /// <returns>缓存参数数组</returns>
+    //    public static IDbDataParameter[] GetCachedParameters(string cacheKey)
+    //    {
+    //        IDbDataParameter[] cachedParms = (IDbDataParameter[])parmCache[cacheKey];
+
+    //        if (cachedParms == null)
+    //            return null;
+
+    //        IDbDataParameter[] clonedParms = new IDbDataParameter[cachedParms.Length];
+
+    //        for (int i = 0, j = cachedParms.Length; i < j; i++)
+    //            clonedParms[i] = (IDbDataParameter)((ICloneable)cachedParms[i]).Clone();
+
+    //        return clonedParms;
+    //    }
+
+    //    /// <summary>
+    //    /// 为即将执行准备一个命令
+    //    /// </summary>
+    //    /// <param name="cmd">SqlCommand对象</param>
+    //    /// <param name="conn">SqlConnection对象</param>
+    //    /// <param name="trans">IDbTransaction对象</param>
+    //    /// <param name="cmdType">执行命令的类型（存储过程或T-SQL，等等）</param>
+    //    /// <param name="cmdText">存储过程名称或者T-SQL命令行, e.g. Select * from Products</param>
+    //    /// <param name="cmdParms">SqlParameters to use in the command</param>
+    //    private static void PrepareCommand(IDbCommand cmd, IDbConnection conn, IDbTransaction trans, CommandType cmdType, string cmdText, IDbDataParameter[] cmdParms)
+    //    {
+    //        if (conn.State != ConnectionState.Open)
+    //            conn.Open();
+
+    //        cmd.Connection = conn;
+    //        cmd.CommandText = cmdText;
+
+    //        if (trans != null)
+    //            cmd.Transaction = trans;
+
+    //        cmd.CommandType = cmdType;
+
+    //        if (cmdParms != null)
+    //        {
+    //            foreach (IDbDataParameter parm in cmdParms)
+    //                cmd.Parameters.Add(parm);
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// 根据传入的Key获取配置文件中
+    //    /// 相应Key的数据库连接字符串
+    //    /// </summary>
+    //    /// <param name="Key"></param>
+    //    /// <returns></returns>
+    //    public static string GetConnectionString(string Key)
+    //    {
+    //        try
+    //        {
+    //            return CommonUtils.GetConfigValueByKey(Key);
+    //        }
+    //        catch
+    //        {
+    //            throw new Exception("web.config文件appSettings中数据库连接字符串未配置或配置错误，必须为Key=\"connectionString\"");
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// 用于数据库类型的字符串枚举转换
+    //    /// </summary>
+    //    /// <typeparam name="T"></typeparam>
+    //    /// <param name="value"></param>
+    //    /// <returns></returns>
+    //    public static T DatabaseTypeEnumParse<T>(string value)
+    //    {
+    //        try
+    //        {
+    //            return CommonUtils.EnumParse<T>(value);
+    //        }
+    //        catch
+    //        {
+    //            throw new Exception("数据库类型\"" + value + "\"错误，请检查！");
+    //        }
+    //    }
+    //}
+
+    //public class TypeUtils
+    //{
+    //    public static object ConvertForType(object value, Type type)
+    //    {
+    //        switch (type.FullName)
+    //        {
+    //            case "System.String":
+    //                value = value.ToString();
+    //                break;
+    //            case "System.Boolean":
+    //                value = bool.Parse(value.ToString());
+    //                break;
+    //            case "System.Int16":
+    //            case "System.Int32":
+    //            case "System.Int64":
+    //                value = int.Parse(value.ToString());
+    //                break;
+    //            case "System.Double":
+    //                value = double.Parse(value.ToString());
+    //                break;
+    //            case "System.Decimal":
+    //                value = new decimal(double.Parse(value.ToString()));
+    //                break;
+    //        }
+
+    //        return value;
+    //    }
+    //}
+    #endregion
+
+
+    #region  ORMDBhelper
+    public partial class ORMDBhelper<T> where T : class, new()
+    {
+        //获取连接字符串
+        private static string con = System.Configuration.ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
+
+        #region 动态查询的方式使用泛型+反射
+        //sql语句 select *from student
+        public static List<T> Query(string where)
+        {
+            DataTable tb = new DataTable();
+            List<T> list = new List<T>();
+
+            //
+            string sql = GetQuerySql();
+            sql += where;
+            //用反射赋值
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(command);
+                    sqlDataAdapter.Fill(tb);
+                    //获取T的类型
+                    Type type = typeof(T);
+                    //循环循环行
+                    for (int i = 0; i < tb.Rows.Count; i++)
+                    {
+                        //实例化T，每一次都需要实例化new 对象
+                        Object obj = Activator.CreateInstance(type);
+                        //循环列
+                        for (int j = 0; j < tb.Columns.Count; j++)
+                        {
+                            //获取列的名称 student s_id  GetProperty("s_id")
+                            PropertyInfo info = type.GetProperty(tb.Columns[j].ColumnName);//赋值了s_id
+
+                            //判断类型 tb.Columns[j].DataType 获取数据库列的类型
+
+                            #region 类型的判断并赋值
+                            //int类型
+
+
+                            if (tb.Columns[j].DataType == typeof(Int32))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    //obj.setValue(info,12);
+                                    info.SetValue(obj, int.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, 0, null);
+                                }
+                            }
+
+                            //float类型
+                            else if (tb.Columns[j].DataType == typeof(float))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, float.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, 0.0f, null);
+                                }
+                            }
+
+                            //datetime
+                            else if (tb.Columns[j].DataType == typeof(DateTime))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, DateTime.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, DateTime.Now, null);
+                                }
+                            }
+
+                            //double
+                            else if (tb.Columns[j].DataType == typeof(double))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, double.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, 0.00, null);
+                                }
+                            }
+                            //GUID
+                            else if (tb.Columns[j].DataType == typeof(Guid))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null && !tb.Rows[i][j].ToString().Equals(""))
+                                {
+                                    info.SetValue(obj, Guid.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, Guid.Parse("00000000-0000-0000-0000-000000000000"), null);
+                                }
+
+                            }
+                            else
+                            {
+                                //string
+
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, tb.Rows[i][j].ToString(), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, "", null);
+                                }
+                            }
+                            #endregion
+
+
+
+                        }
+                        //将object 类型强转对应的类型
+                        list.Add((T)obj);//（类型）强制转换
+                    }
+                }
+            }
+            return list;
+        }
+        //通过字符串方式进行查询
+        public static List<T> Query(string where, string sql)
+        {
+            DataTable tb = new DataTable();
+            List<T> list = new List<T>();
+
+            sql += where;
+            //用反射赋值
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(command);
+                    sqlDataAdapter.Fill(tb);
+                    //获取T的类型
+                    Type type = typeof(T);
+                    //循环循环行
+                    for (int i = 0; i < tb.Rows.Count; i++)
+                    {
+                        //实例化T，每一次都需要实例化new 对象
+                        Object obj = Activator.CreateInstance(type);
+                        //循环列
+                        for (int j = 0; j < tb.Columns.Count; j++)
+                        {
+                            //获取列的名称 student s_id  GetProperty("s_id")
+                            PropertyInfo info = type.GetProperty(tb.Columns[j].ColumnName);//赋值了s_id
+
+                            //判断类型 tb.Columns[j].DataType 获取数据库列的类型
+
+                            #region 类型的判断并赋值
+                            //int类型
+                            if (tb.Columns[j].DataType == typeof(Int32))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    //obj.setValue(info,12);
+                                    info.SetValue(obj, int.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, 0, null);
+                                }
+                            }
+
+                            //float类型
+                            else if (tb.Columns[j].DataType == typeof(float))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, float.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, 0.0f, null);
+                                }
+                            }
+
+                            //datetime
+                            else if (tb.Columns[j].DataType == typeof(DateTime))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null && !tb.Rows[i][j].ToString().Equals(""))
+                                {
+                                    info.SetValue(obj, DateTime.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, DateTime.Now, null);
+                                }
+                            }
+
+                            //double
+                            else if (tb.Columns[j].DataType == typeof(double))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, double.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, 0.00, null);
+                                }
+                            }
+                            //GUID
+                            else if (tb.Columns[j].DataType == typeof(Guid))
+                            {
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null && !tb.Rows[i][j].ToString().Equals(""))
+                                {
+                                    info.SetValue(obj, Guid.Parse(tb.Rows[i][j].ToString()), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, Guid.Parse("00000000-0000-0000-0000-000000000000"), null);
+                                }
+
+                            }
+                            else
+                            {
+                                //string
+
+                                //有没有可能空值？
+                                if (tb.Rows[i][j] != null)
+                                {
+                                    info.SetValue(obj, tb.Rows[i][j].ToString(), null);
+                                }
+                                else
+                                {
+                                    //null值的情况
+                                    info.SetValue(obj, "", null);
+                                }
+                            }
+                            #endregion
+
+
+
+                        }
+                        //将object 类型强转对应的类型
+                        list.Add((T)obj);//（类型）强制转换
+                    }
+                }
+            }
+            return list;
+        }
+        //使用T-sql查询
+        public static string QuerySign(string sql)
+        {
+            DataTable tb = new DataTable();
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(command);
+                    sqlDataAdapter.Fill(tb);
+                }
+            }
+            if (tb != null && tb.Rows.Count > 0)
+            {
+                return tb.Rows[0][0].ToString();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        //获取sql
+        public static string GetQuerySql()
+        {
+            Type type = typeof(T);
+            //type.Name获取类的名称
+            //无需实例化
+            string sql = "";
+            //判断表是否包含Relation的名称
+            sql = "select * from " + type.Name.Replace("Models", "") + " where 1=1 ";
+            return sql;
+        }
+        #endregion
+
+        #region 动态添加的操作
+        public static int Insert(T models)
+        {
+            int flag = 0;
+            //获取sql
+            string sql = GetInsertSql(models);
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    flag = command.ExecuteNonQuery();
+                }
+            }
+            return flag;
+        }
+
+        public static string GetInsertSql(T models)
+        {
+            //已实例化的实体用GetType，如果未实例化的我们需要使用typeof
+            Type type = models.GetType();//new 过的对象
+            //先获取所有的字段
+            PropertyInfo[] info = type.GetProperties();
+            //这里是字段
+            string field = "";
+            //获取值
+            string value = "";
+            for (int i = 0; i < info.Length; i++)
+            {
+                //有可能字段没有值，没有值的我们不添加info 是属性[i]第几个属性
+                if (info[i].GetValue(models) != null)
+                {
+                    if (!info[i].Name.Contains("Id"))
+                        //获取字段和值
+                        if ((i + 1) == info.Length)//代表最后一个循环不要,
+                        {
+                            field += info[i].Name;
+                            value += "'" + info[i].GetValue(models).ToString() + "'";//为什么没有用类型判断，
+                        }
+                        else
+                        {
+                            field += info[i].Name + ",";
+                            value += "'" + info[i].GetValue(models).ToString() + "',";//为什么没有用类型判断，
+                        }
+                }
+            }
+            //生成了sql语句
+            string sql = "insert into " + type.Name.Replace("Models", "") + "(" + field + ") values(" + value + ")";
+            return sql;
+        }
+        #endregion
+
+        #region 动态修改的操作
+        public static int Update(string field, T models, string where)
+        {
+            int flag = 0;
+            //获取sql
+            string sql = GetUpdateSql(field, models, where);
+
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    flag = command.ExecuteNonQuery();
+                }
+            }
+            return flag;
+        }
+        //修改
+        public static int UpdateToField(string sql)
+        {
+            int flag = 0;
+            //获取sql
+
+
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    flag = command.ExecuteNonQuery();
+                }
+            }
+            return flag;
+        }
+
+
+        public static string GetUpdateSql(string field, T models, string where)
+        {
+            Type type = models.GetType();
+            //获取所有的字段
+            string updateStr = "";
+            PropertyInfo[] propertyInfos = type.GetProperties();
+            for (int i = 0; i < propertyInfos.Length; i++)
+            {
+                //包含字段再进入
+                if (propertyInfos[i].Name.Equals(field))
+                {
+                    if (propertyInfos[i].GetValue(models) != null)
+                    {
+                        updateStr += propertyInfos[i].Name + "='" + propertyInfos[i].GetValue(models) + "',";
+
+                    }
+                }
+            }
+            updateStr = updateStr.Substring(0, updateStr.Length - 1);
+            //update biao set ziduan =zhi where userNAME=
+            string sql = "update " + type.Name + " set " + updateStr + " where 1=1 " + where;
+            return sql;
+        }
+
+        #endregion
+
+        #region 动态删除
+        public static int Delete(T models, string where)
+        {
+            int flag = 0;
+            //获取sql
+            string sql = GetDeleteSql(models, where);
+
+            using (SqlConnection connection = new SqlConnection(con))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    flag = command.ExecuteNonQuery();
+                }
+            }
+            return flag;
+        }
+
+        //删除的sql语句
+        public static string GetDeleteSql(T models, string where)
+        {
+            Type type = models.GetType();
+            //获取所有的字段
+
+
+            //delete from 表 where
+            string sql = "delete from  " + type.Name + "  where 1=1 " + where;
+            return sql;
+        }
+
+        #endregion
+
     }
     #endregion
 }
