@@ -327,7 +327,7 @@
                     },
                 },
                 //挂载
-                mounted: {
+                mounted: ()=>{
 
                 },
                 //创建
@@ -335,17 +335,17 @@
 
                 },
                 //组件
-                components: {
-                    props: ['name', 'comeFrom'],    //在注册组件的时候通过props选项声明了要取用的多个prop
-                    "my-component": {
-                        template: '<p>我叫：{{name}}, 我来自：{{comeFrom}}</p>',
-                        data: function() {
-                            return {
-                                count: 0
-                            }
-                        }
-                    }
-                },
+                //components: {
+                //    props: ['name', 'comeFrom'],    //在注册组件的时候通过props选项声明了要取用的多个prop
+                //    "my-component": {
+                //        template: '<p>我叫：{{name}}, 我来自：{{comeFrom}}</p>',
+                //        data: function() {
+                //            return {
+                //                count: 0
+                //            }
+                //        }
+                //    }
+                //},
                 //自定义指令（注册一个局部的自定义指令 v-focus）
                 directives: {
                     focus: {

@@ -3,33 +3,327 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+
+
+    <style>
+        /*.table_wrap {
+            width: 100%;
+            height: 100px;
+            overflow: auto;
+            border-bottom: 1px solid #61dafb;
+        }*/
+
+        table {
+            table-layout: fixed;
+            width: 100%;
+            /*border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #DDDDDD;*/
+        }
+
+        /* 表格th/td样式 */
+        /*td, th {
+            width: 150px;
+            box-sizing: border-box;
+            border-right: 1px solid #DDDDDD;
+            border-bottom: 1px solid #DDDDDD;*/
+            /*超出长度...*/
+            /*overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height: 30px;
+        }*/
+
+        /* 表头固定 */
+        thead tr th {
+            position: sticky;
+            top: 0;
+            background: #F4F4F5;
+        }
+
+        /* 首列固定/最后一列固定*/
+        /*th:first-child,
+        th:last-child,
+        td:first-child,
+        td:last-child {
+            position: sticky;
+            left: 0;
+            background: #F4F4F5;
+            text-align: center;
+            right: 0px;
+            border-left: 1px solid #DDDDDD;
+            width: 100px;
+        }*/
+
+        /* 表头首列和最后一列强制最顶层 */
+        /*th:last-child,
+        th:first-child {
+            z-index: 3;*/
+            /*左上角单元格z-index，切记要设置，不然表格纵向横向滚动时会被该单元格右方或者下方的单元格遮挡*/
+            /*background: #F4F4F5;
+        }*/
+    </style>
 </head>
 <body>
-    <h2>1月5日</h2>
-    <!--<table width="400" border="1" cellspacing="0" cellpadding="0" style="text-align:center">
-        <tr><td style="font-size: 18px;">序号</td><td style="font-size: 18px;">取消原因</td><td style="font-size: 18px;">PCS</td><td style="font-size: 18px;">备注</td></tr>
-        <tr><td>1</td><td>K.NVI無架取</td><td>1</td><td></td></tr>
-        <tr><td>2</td><td>K.客戶取消</td><td>1</td><td></td></tr>
-        <tr><td>3</td><td>K.度數問題客戶取消</td><td>3</td><td></td></tr>
-        <tr><td>4</td><td>K.超鏡大取消</td><td>11</td><td></td></tr>
-        <tr><td>5</td><td>K.鏡高問題取消</td><td>2</td><td></td></tr>
-        <tr><td>总计</td><td></td><td>28</td><td></td></tr>
+    <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>栏目1</th>
+                        <th>栏目2</th>
+                        <th>栏目3</th>
+                        <th>栏目4</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>27</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
+                    <tr>
+                        <td>28</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td><a href="#">修改</a></td>
+                    </tr>
 
+                </tbody>
 
+            </table>
 
-
-        <tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>
-    </table>-->
-    <table width="400" border="1" cellspacing="0" cellpadding="0" style="text-align:center">
-        <tr><td style="font-size: 18px;">序号</td><td style="font-size: 18px;">取消原因</td><td style="font-size: 18px;">PCS</td><td style="font-size: 18px;">备注</td></tr>
-        <tr><td>1</td><td>K.超鏡大取消</td><td>11</td><td>&nbsp;</td></tr>
-        <tr><td>2</td><td>K.客戶取消</td><td>1</td><td>&nbsp;</td></tr>
-        <tr><td>3</td><td>K.鏡高問題取消</td><td>2</td><td>&nbsp;</td></tr>
-        <tr><td>4</td><td>K.度數問題客戶取消</td><td>3</td><td>&nbsp;</td></tr>
-        <tr><td>5</td><td>K.NVI無架取消</td><td>11</td><td>&nbsp;</td></tr>
-        <tr><td>总计</td><td>&nbsp;</td><td style="color: red;font-size: 18px;">28</td><td>&nbsp;</td></tr>
-    </table>
-    
-
+        </div>
+    </div>
 </body>
 </html>
