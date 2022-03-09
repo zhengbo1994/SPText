@@ -80,13 +80,49 @@ namespace SPText.Common
 
         public static void show2()
         {
-            string path = @"E:\AAA\SPText\SPText\File\AS928參數對照.xlsx";
+            string currentPath = AppDomain.CurrentDomain.BaseDirectory;
+            //string path =Path.Combine(currentPath,) 
+            string path = @"E:\测试\SPText\SPText\File\AS928參數對照.xlsx";
 
             DataTable dataTable = ExcelToDataTableByNpoi(path, true);
 
             DataTable dt = ImportExcelFile(path);
             WriteExcel(dt, path);
 
+        }
+
+        public static void show3() {
+            string filePath = @"E:\测试\SPText\SPText\File\AS928參數對照.xls";
+            //string filePath = @"E:\测试\SPText\SPText\File\AS928參數對照.xlsx";
+
+            IWorkbook workbook;
+            try
+            {
+                using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    workbook = new HSSFWorkbook(file);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            string currentPath = AppDomain.CurrentDomain.BaseDirectory + "Excel";
+            DateTime dateTime = DateTime.Now;
+            string newfilePath = Path.Combine(currentPath, dateTime.ToString("yyyyMMddHHmmss") + ".xls");
+            // 写入到客户端  
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                workbook.Write(ms);
+                using (FileStream fs = new FileStream(newfilePath, FileMode.Create, FileAccess.Write))
+                {
+                    byte[] data = ms.ToArray();
+                    fs.Write(data, 0, data.Length);
+                    fs.Flush();
+                }
+                workbook = null;
+            }
         }
 
 
@@ -100,14 +136,14 @@ namespace SPText.Common
         /// <returns></returns>
         public static DataTable ImportExcelFile(string filePath)
         {
-            HSSFWorkbook hssfworkbook;
+            IWorkbook hssfworkbook;
             //filePath = $"E:\\A-CompanyProject\\SPText\\SPText\\bin\\Debug\\前台日志(20200630 042526).xls";
             #region//初始化信息  
             try
             {
                 using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    hssfworkbook = new HSSFWorkbook(file);
+                    hssfworkbook = new XSSFWorkbook(file);
                 }
             }
             catch (Exception e)
@@ -126,7 +162,7 @@ namespace SPText.Common
             }
             while (rows.MoveNext())
             {
-                HSSFRow row = (HSSFRow)rows.Current;
+                IRow row = (XSSFRow)rows.Current;
                 DataRow dr = dt.NewRow();
                 for (int i = 0; i < row.LastCellNum; i++)
                 {
@@ -153,10 +189,13 @@ namespace SPText.Common
         public static void WriteExcel(DataTable dt, string filePath)
         {
             dt.TableName = "new";
-            filePath = $"E:\\A-CompanyProject\\SPText\\SPText\\bin\\Debug\\前台日志新.xls";
+            string currentPath = AppDomain.CurrentDomain.BaseDirectory + "Excel";
+            DateTime dateTime = DateTime.Now;
+
+            filePath = Path.Combine(currentPath, dateTime.ToString("yyyyMMddHHmmss")+ ".xlsx");
             if (!string.IsNullOrEmpty(filePath) && null != dt && dt.Rows.Count > 0)
             {
-                NPOI.HSSF.UserModel.HSSFWorkbook book = new NPOI.HSSF.UserModel.HSSFWorkbook();
+                IWorkbook book = new XSSFWorkbook();
                 ISheet sheet = book.CreateSheet(dt.TableName);
 
                 IRow row = sheet.CreateRow(0);

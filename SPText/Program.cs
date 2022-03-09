@@ -60,9 +60,6 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
-
-
-
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -177,6 +174,7 @@ namespace SPText
             #region  NPOI
             //NOPIHelper.Show();
             //NOPIHelper.show2();
+            NOPIHelper.show3();
             #endregion
 
             #region  比较和计时
@@ -204,7 +202,7 @@ namespace SPText
             #endregion
 
             #region  二维码
-            GetQRCode();
+            //GetQRCode();
             #endregion
 
             #region  加密
@@ -274,7 +272,6 @@ namespace SPText
             Console.ReadKey();
         }
 
-
         #region  linq交叉并补
         public static void linqUse()
         {
@@ -312,6 +309,79 @@ namespace SPText
             //var query = db.YourTable.ToList().GroupBy(t => new { t.FROM, t.To, t.Time })
             //.Select(g => new { FROM = g.Key.From, TO = g.Key.To, NUM = g.Count(), Time = g.Key.Time, Body = string.Join(",", g.Select(s => s.Body).ToArray()) });
 
+            //strList1.GroupJoin(strList1, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q = q.FirstOrDefault() }).Select(o => new
+            //{
+            //    namep = o.p.ToString(),
+            //    nameq = o.q.ToString()
+            //}).ToList();
+
+            //strList1.Join(strList1, p => p.ToString(), q => q.ToString(), (p, q) => new { p, q }).Select(o => new
+            //{
+            //    namep = o.p.ToString(),
+            //    nameq = o.q.ToString()
+            //}).ToList();
+
+
+
+
+            {
+                //{
+                //    var semiFinishRequisitionFormQueryableList = semiFinishRequisitionFormList
+                //        .GroupJoin(commodityWorkFlowAuditList, b => b.StorageRegion, c => c.StorageRegion, (b, c) => new { b, c = c.FirstOrDefault() })
+                //        .Select(o => new
+                //        {
+                //            ApplicationNumber = o.c == null ? "" : o.c.ApplicationNumber,
+                //            StorageRegion = o.c == null ? "" : o.c.StorageRegion,
+                //            OrderStatus = o.c == null ? 0 : o.c.OrderStatus,
+                //        })
+                //        .ToList();
+
+                //    var resData = productSalesForecastList
+                //        .GroupJoin(semiFinishRequisitionFormQueryableList, p => p.ApplicationNumber, q => q.ApplicationNumber,
+                //        (p, q) => new { a = p, b = q })
+                //        .SelectMany(o => o.b.DefaultIfEmpty(),
+                //        //.SelectMany(o => o.b == null ? o.b.DefaultIfEmpty() : o.b,
+                //        (o, b) => new
+                //        {
+                //            a = Newtonsoft.Json.JsonConvert.SerializeObject(o),
+                //            b = Newtonsoft.Json.JsonConvert.SerializeObject(b),
+                //        //ApplicationNumber = o.a.ApplicationNumber,
+                //        //Date = DateTime.Parse(o.a.Date.ToString()).ToString("yyyy-MM-dd"),
+                //        //CustomerName = o.a.CustomerName,
+                //        //ProjectName = o.a.ProjectName,
+                //        //SalesRegion = o.a.SalesRegion,
+                //        //ResponsibleSales = o.a.ResponsibleSales,
+                //        //StorageRegion = b == null ? "" : b.StorageRegion,
+                //        //CreationDate = GetDateTimeString(o.a.CreationDate),
+                //        //OrderStatus = b == null ? 0 : b.OrderStatus,
+                //    })
+                //        .ToList();
+                //    return resData;
+                //}
+                //{
+                //    var resData = productSalesForecastQueryable
+                //        .GroupJoin(semiFinishRequisitionFormQueryable, a => a.ApplicationNumber, b => b.ApplicationNumber, (a, b) => new { a, b = b.DefaultIfEmpty() })
+                //        .SelectMany(o => o.b.DefaultIfEmpty(), (o, c) => new { o.a, c })
+                //        .GroupJoin(commodityWorkFlowAuditQueryable,
+                //        o => new { ApplicationNumber = o.c == null ? "" : o.c.ApplicationNumber, StorageRegion = o.c == null ? "" : o.c.StorageRegion },
+                //        c => new { c.ApplicationNumber, c.StorageRegion }, (o, c) => new { c, a = o.a, b = o.c })
+                //        .SelectMany(o => o.c.DefaultIfEmpty(), (o, d) => new
+                //        {
+                //            a = Newtonsoft.Json.JsonConvert.SerializeObject(o),
+                //            ApplicationNumber = o.a.ApplicationNumber,
+                //            Date = DateTime.Parse(o.a.Date.ToString()).ToString("yyyy-MM-dd"),
+                //            CustomerName = o.a.CustomerName,
+                //            ProjectName = o.a.ProjectName,
+                //            SalesRegion = o.a.SalesRegion,
+                //            ResponsibleSales = o.a.ResponsibleSales,
+                //            StorageRegion = o.b == null ? "" : o.b.StorageRegion,
+                //            CreationDate = GetDateTimeString(o.a.CreationDate),
+                //            OrderStatus = o.c.FirstOrDefault() == null ? 0 : o.c.FirstOrDefault().OrderStatus,
+                //        })
+                //        .ToList();
+                //    return resData;
+                //}
+            }
 
             Console.ReadKey();
         }
@@ -2433,11 +2503,13 @@ namespace SPText
         }
         #endregion
 
+        #region  生成饼状图
         public static void PieChartShow()
         {
             PieChartShow pieChartShow = new PieChartShow();
             pieChartShow.Show();
         }
+        #endregion
     }
     #region  特性
     public static class AttributcMapping
