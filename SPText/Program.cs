@@ -69,7 +69,7 @@ namespace SPText
             #endregion
 
             #region  常见算法
-            //sf();
+            //SuanFa();
             //int[] intArray = new int[] { 2, 5, 4, 1, 3 };
             //QuickSort(intArray, 0, intArray.Length - 1);
             #endregion
@@ -417,7 +417,7 @@ namespace SPText
         #endregion
 
         #region  常见算法
-        public static void sf()
+        public static void SuanFa()
         {
             cjsf();
             dysjx();
