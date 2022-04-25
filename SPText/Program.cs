@@ -419,21 +419,21 @@ namespace SPText
         #region  常见算法
         public static void SuanFa()
         {
-            cjsf();
-            dysjx();
+            //cjsf();
+            //dysjx();
             suijicharu();
-            mppx(dataArr.ToArray());
+            //mppx(dataArr.ToArray());
             QuickSort(dataArr.ToArray(), 0, 10);
-            daoxu();
-            Combine(dataArr.ToArray());
-            jiecheng(10);
-            qh();
-            Foo(10);
-            jisuanzhishu();
-            qssz(dataArr.ToArray());
-            cf(dataArr.ToArray());
-            MaxAndMin(dataArr.ToArray());
-            gys(8, 64);
+            //daoxu();
+            //Combine(dataArr.ToArray());
+            //jiecheng(10);
+            //qh();
+            //Foo(10);
+            //jisuanzhishu();
+            //qssz(dataArr.ToArray());
+            //cf(dataArr.ToArray());
+            //MaxAndMin(dataArr.ToArray());
+            //gys(8, 64);
 
             AlgorithmHelper.Show0();
             AlgorithmHelper.Show1();
@@ -494,7 +494,6 @@ namespace SPText
             dataArr = arr;
             return arr;
         }
-
         //冒泡排序
         public static int[] mppx(int[] data)
         {

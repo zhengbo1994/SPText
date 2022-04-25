@@ -40,9 +40,9 @@ namespace SPText.Common.RabbitMQ
             factory.UserName = "guest";//用户名
             factory.Password = "guest";//密码 
             //factory.VirtualHost = "/Richard";
-            using (IConnection connection = factory.CreateConnection())
+            using (IConnection connecction = factory.CreateConnection())
             {
-                using (IModel channel = connection.CreateModel())
+                using (IModel channel = connecction.CreateModel())
                 {
                     channel.QueueDeclare(queue: "OnlyProducerMessage", durable: true, exclusive: false, autoDelete: false, arguments: null);
 
