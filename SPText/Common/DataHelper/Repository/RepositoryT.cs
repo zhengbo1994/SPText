@@ -15,17 +15,11 @@ namespace SPText.Common.DataHelper.Repository
     {
         #region 构造
         public IDatabase db;
-        private IDatabase database;
 
-        public RepositoryT(IDatabase idatabase)
+        public RepositoryT(IDatabase database)
         {
-            this.db = idatabase;
+            this.db = database;
         }
-
-        //public RepositoryT(IDatabase database)
-        //{
-        //    this.database = database;
-        //}
         #endregion
 
         #region 事物提交

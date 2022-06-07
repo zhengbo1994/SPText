@@ -58,6 +58,12 @@ namespace System
 		{
 			logger.Warn(msg, e);
 		}
+		public void WriteLog(Type type, string msg)
+		{
+
+			ILog log = LogManager.GetLogger(type);
+			log.Error(msg);
+		}
 
 		/*
 		 在webconfig的configuration节点下添加以下配置项，并在网站启动时添加代码：log4net.Config.XmlConfigurator.Configure();

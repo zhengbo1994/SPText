@@ -9,13 +9,76 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <script src="~/Content/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <div>
-        <video controls="" autoplay="" name="media"><source src="file:///D://Users/user/Desktop/NA115_Print_Tool/AAA.mp4" type="video/mp4"></video>
+        @*<video controls="" autoplay="" name="media"><source src="file:///D://Users/user/Desktop/NA115_Print_Tool/AAA.mp4" type="video/mp4"></video>*@
         @*<video src="d:\\Users\\user\\Desktop\\NA115_Print_Tool\\AAA.mp4" controls="controls"></video>*@
 
 
+        <form action="/Text/DownloadFile" method="get" id="form">
+            下载文件 <input type="text" id="name" name="fileName" value="222" />
+        </form>
+        <input type="button" id="download" value="下载文件" />
+
+        <script>
+            //下载
+            $("#download").click(function () {
+                var form = $("#form");
+                form.submit();
+            });</script>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div>
+        上传文件 <input type="file" id="file" />
+        <input type="button" id="upload" value="上传文件" />
+
+        <script>
+            //上传
+            $("#upload").click(function () {
+                var formData = new FormData();
+                var file = document.getElementById("file").files[0];
+                formData.append("fileInfo", file);
+                $.ajax({
+                    url: "/Text/UploadFile",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,//必须false才会自动加上正确的Content-Type
+                    processData: false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (data) {
+                        alert("上传失败！");
+                    }
+                });
+            });
+        </script>
+    </div>
+
+
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div>
+        <div>
+            <form action='@Url.Action("Upload", "Text")' method="post" enctype="multipart/form-data">
+                <input type="file" id="file" name="file" /><br />
+                <input type="submit" value="提交" />
+            </form>
+            <a href='@Url.Action("Download", "Text", new { fileName = "white_项目git地址.xlsx" })'>下载</a>
+        </div>
 
     </div>
 </body>

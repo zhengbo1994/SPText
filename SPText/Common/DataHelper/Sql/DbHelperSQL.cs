@@ -610,120 +610,120 @@ namespace SPText.Common.DataHelper.Sql
         /// 执行多条SQL语句，实现数据库事务。
         /// </summary>
         /// <param name="SQLStringList">SQL语句的哈希表（key为sql语句，value是该语句的SqlParameter[]）</param>
-        //public static int ExecuteSqlTran(System.Collections.Generic.List<CommandInfo> cmdList)
-        //{
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-        //        using (SqlTransaction trans = conn.BeginTransaction())
-        //        {
-        //            SqlCommand cmd = new SqlCommand();
-        //            try
-        //            {
-        //                int count = 0;
-        //                //循环
-        //                foreach (CommandInfo myDE in cmdList)
-        //                {
-        //                    string cmdText = myDE.CommandText;
-        //                    SqlParameter[] cmdParms = (SqlParameter[])myDE.Parameters;
-        //                    PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
+        public static int ExecuteSqlTran(System.Collections.Generic.List<CommandInfo> cmdList)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlTransaction trans = conn.BeginTransaction())
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    try
+                    {
+                        int count = 0;
+                        //循环
+                        foreach (CommandInfo myDE in cmdList)
+                        {
+                            string cmdText = myDE.CommandText;
+                            SqlParameter[] cmdParms = (SqlParameter[])myDE.Parameters;
+                            PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
 
-        //                    if (myDE.EffentNextType == EffentNextType.WhenHaveContine || myDE.EffentNextType == EffentNextType.WhenNoHaveContine)
-        //                    {
-        //                        if (myDE.CommandText.ToLower().IndexOf("count(") == -1)
-        //                        {
-        //                            trans.Rollback();
-        //                            return 0;
-        //                        }
+                            if (myDE.EffentNextType == EffentNextType.WhenHaveContine || myDE.EffentNextType == EffentNextType.WhenNoHaveContine)
+                            {
+                                if (myDE.CommandText.ToLower().IndexOf("count(") == -1)
+                                {
+                                    trans.Rollback();
+                                    return 0;
+                                }
 
-        //                        object obj = cmd.ExecuteScalar();
-        //                        bool isHave = false;
-        //                        if (obj == null && obj == DBNull.Value)
-        //                        {
-        //                            isHave = false;
-        //                        }
-        //                        isHave = Convert.ToInt32(obj) > 0;
+                                object obj = cmd.ExecuteScalar();
+                                bool isHave = false;
+                                if (obj == null && obj == DBNull.Value)
+                                {
+                                    isHave = false;
+                                }
+                                isHave = Convert.ToInt32(obj) > 0;
 
-        //                        if (myDE.EffentNextType == EffentNextType.WhenHaveContine && !isHave)
-        //                        {
-        //                            trans.Rollback();
-        //                            return 0;
-        //                        }
-        //                        if (myDE.EffentNextType == EffentNextType.WhenNoHaveContine && isHave)
-        //                        {
-        //                            trans.Rollback();
-        //                            return 0;
-        //                        }
-        //                        continue;
-        //                    }
-        //                    int val = cmd.ExecuteNonQuery();
-        //                    count += val;
-        //                    if (myDE.EffentNextType == EffentNextType.ExcuteEffectRows && val == 0)
-        //                    {
-        //                        trans.Rollback();
-        //                        return 0;
-        //                    }
-        //                    cmd.Parameters.Clear();
-        //                }
-        //                trans.Commit();
-        //                return count;
-        //            }
-        //            catch
-        //            {
-        //                trans.Rollback();
-        //                throw;
-        //            }
-        //        }
-        //    }
-        //}
+                                if (myDE.EffentNextType == EffentNextType.WhenHaveContine && !isHave)
+                                {
+                                    trans.Rollback();
+                                    return 0;
+                                }
+                                if (myDE.EffentNextType == EffentNextType.WhenNoHaveContine && isHave)
+                                {
+                                    trans.Rollback();
+                                    return 0;
+                                }
+                                continue;
+                            }
+                            int val = cmd.ExecuteNonQuery();
+                            count += val;
+                            if (myDE.EffentNextType == EffentNextType.ExcuteEffectRows && val == 0)
+                            {
+                                trans.Rollback();
+                                return 0;
+                            }
+                            cmd.Parameters.Clear();
+                        }
+                        trans.Commit();
+                        return count;
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 执行多条SQL语句，实现数据库事务。
         /// </summary>
         /// <param name="SQLStringList">SQL语句的哈希表（key为sql语句，value是该语句的SqlParameter[]）</param>
-        //public static void ExecuteSqlTranWithIndentity(System.Collections.Generic.List<CommandInfo> SQLStringList)
-        //{
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-        //        using (SqlTransaction trans = conn.BeginTransaction())
-        //        {
-        //            SqlCommand cmd = new SqlCommand();
-        //            try
-        //            {
-        //                int indentity = 0;
-        //                //循环
-        //                foreach (CommandInfo myDE in SQLStringList)
-        //                {
-        //                    string cmdText = myDE.CommandText;
-        //                    SqlParameter[] cmdParms = (SqlParameter[])myDE.Parameters;
-        //                    foreach (SqlParameter q in cmdParms)
-        //                    {
-        //                        if (q.Direction == ParameterDirection.InputOutput)
-        //                        {
-        //                            q.Value = indentity;
-        //                        }
-        //                    }
-        //                    PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
-        //                    int val = cmd.ExecuteNonQuery();
-        //                    foreach (SqlParameter q in cmdParms)
-        //                    {
-        //                        if (q.Direction == ParameterDirection.Output)
-        //                        {
-        //                            indentity = Convert.ToInt32(q.Value);
-        //                        }
-        //                    }
-        //                    cmd.Parameters.Clear();
-        //                }
-        //                trans.Commit();
-        //            }
-        //            catch
-        //            {
-        //                trans.Rollback();
-        //                throw;
-        //            }
-        //        }
-        //    }
-        //}
+        public static void ExecuteSqlTranWithIndentity(System.Collections.Generic.List<CommandInfo> SQLStringList)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlTransaction trans = conn.BeginTransaction())
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    try
+                    {
+                        int indentity = 0;
+                        //循环
+                        foreach (CommandInfo myDE in SQLStringList)
+                        {
+                            string cmdText = myDE.CommandText;
+                            SqlParameter[] cmdParms = (SqlParameter[])myDE.Parameters;
+                            foreach (SqlParameter q in cmdParms)
+                            {
+                                if (q.Direction == ParameterDirection.InputOutput)
+                                {
+                                    q.Value = indentity;
+                                }
+                            }
+                            PrepareCommand(cmd, conn, trans, cmdText, cmdParms);
+                            int val = cmd.ExecuteNonQuery();
+                            foreach (SqlParameter q in cmdParms)
+                            {
+                                if (q.Direction == ParameterDirection.Output)
+                                {
+                                    indentity = Convert.ToInt32(q.Value);
+                                }
+                            }
+                            cmd.Parameters.Clear();
+                        }
+                        trans.Commit();
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 执行多条SQL语句，实现数据库事务。
         /// </summary>
@@ -825,11 +825,11 @@ namespace SPText.Common.DataHelper.Sql
             {
                 throw e;
             }
-            //            finally
-            //            {
-            //                cmd.Dispose();
-            //                connection.Close();
-            //            }    
+            finally
+            {
+                cmd.Dispose();
+                connection.Close();
+            }
 
         }
 

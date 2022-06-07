@@ -215,6 +215,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthorizeFilterAttribute.cs" />
+    <Compile Include="Controllers\ExerciseManagerController.cs" />
     <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\FirstController.cs" />
     <Compile Include="Controllers\FourthController.cs" />
@@ -236,6 +238,7 @@
     <Compile Include="Unity\Filter\CustomActionFilterAttribute.cs" />
     <Compile Include="Unity\Filter\CustomAuthorizeAttribute.cs" />
     <Compile Include="Unity\Filter\CustomHandleErrorAttribute.cs" />
+    <Compile Include="Unity\LogExceptionAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -421,6 +424,7 @@
     <Content Include="Views\WebSoket\Index.cshtml" />
     <Content Include="Views\WebSocket\Index.cshtml" />
     <Content Include="Views\Text\Index.cshtml" />
+    <Content Include="Views\ExerciseManager\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

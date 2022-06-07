@@ -14,6 +14,7 @@ using ServiceStack.Redis;
 using SPText.Common;
 using SPText.Common.DataHelper;
 using SPText.Common.DataHelper.Sql;
+using SPText.Common.DataHelper.SqlSugar;
 using SPText.Common.ExpressionExtend;
 using SPText.Common.RabbitMQ;
 using SPText.Common.Redis;
@@ -28,6 +29,7 @@ using SPTextCommon;
 using SPTextCommon.CacheRedis;
 using SPTextCommon.EFBaseServices;
 using SPTextCommon.EFBaseServices.Model;
+using SqlSugar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -174,7 +176,7 @@ namespace SPText
             #region  NPOI
             //NOPIHelper.Show();
             //NOPIHelper.show2();
-            NOPIHelper.show3();
+            //NOPIHelper.show3();
             #endregion
 
             #region  比较和计时
@@ -198,7 +200,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            //DatabaseOperations();
+            DatabaseOperations();
             #endregion
 
             #region  二维码
@@ -421,9 +423,9 @@ namespace SPText
         {
             //cjsf();
             //dysjx();
-            suijicharu();
+            //suijicharu();
             //mppx(dataArr.ToArray());
-            QuickSort(dataArr.ToArray(), 0, 10);
+            //QuickSort(dataArr.ToArray(), 0, 10);
             //daoxu();
             //Combine(dataArr.ToArray());
             //jiecheng(10);
@@ -1907,6 +1909,7 @@ namespace SPText
                 //手写ORM
                 CustomDBHelper database = new CustomDBHelper();
                 List<Company> textModel = database.FindAll<Company>().ToList();
+                textModel = textModel.OrderBy(p => p.Id).ToList();
             }
             {
 
@@ -2005,11 +2008,48 @@ namespace SPText
                 //    System.Data.DataTable data = db.ExecuteDataTable(sql, null);
                 //}
             }
-            //{
-            //    //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
-            //    IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
-            //    baseServices.QueryWhere(p => 1 == 1).ToList();
-            //}
+            {
+                //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
+                IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
+                baseServices.QueryWhere(p => 1 == 1).ToList();
+            }
+            {
+                SqlSugarClient sqlSugarClient = new SqlSugarClient(new ConnectionConfig()
+                {
+                    ConnectionString = connectionStrings,
+                    DbType=SqlSugar.DbType.SqlServer,
+                    IsAutoCloseConnection=true,
+                    //ConfigId= "SqlServer",
+                });
+                {
+                 
+                    var aa= sqlSugarClient.Queryable<SPTextCommon.EFBaseServices.Model.Company>();
+                    var aa123 = aa.ToList();
+
+                    //sqlSugarClient.DbFirst.IsCreateAttribute().CreateClassFile(@"E:\项目\测试", "Models");
+
+                    ////同步数据表结构
+                    //sqlSugarClient.DbMaintenance.CreateDatabase();//创建库
+                    //sqlSugarClient.CodeFirst.SetStringDefaultLength(50).BackupTable().InitTables(new Type[]
+                    //{
+                    //    typeof(SPTextCommon.EFBaseServices.Model.Company),
+                    //    typeof(Test)
+                    //});//多表同步
+                }
+                {
+                    SPText.Common.DataHelper.SqlSugar.SimpleClient simpleClient1 = new SPText.Common.DataHelper.SqlSugar.SimpleClient(sqlSugarClient);
+                    var bb= simpleClient1.GetList<SPTextCommon.EFBaseServices.Model.Company>();
+
+                    var aa123 = bb.ToList();
+                }
+                {
+                    SPText.Common.DataHelper.SqlSugar.SimpleClient<SPTextCommon.EFBaseServices.Model.Company> simpleClient2 = new Common.DataHelper.SqlSugar.SimpleClient<SPTextCommon.EFBaseServices.Model.Company>(sqlSugarClient);
+                    var cc = simpleClient2.AsQueryable();
+                    var aa123 = cc.ToList();
+                }
+
+  
+            }
         }
         #endregion
 

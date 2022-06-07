@@ -1,0 +1,150 @@
+﻿@{
+    Layout = null;
+}
+<link href="~/Public/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+<link href="~/Public/chosen/css/chosen.css" rel="stylesheet" />
+<link href="~/Public/content/exercisemanager/css/exercisemanager.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="widget-box">
+            <div class="widget-header">
+                <h4 class="widget-title">查询区域</h4>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+                <div class="widget-toolbar">
+                    <a id="btnExerciseManage_Query" href="#">
+                        <i class="ace-icon fa fa-search">查询</i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="widget-body" style="display: block;">
+                <div id="divExerciseManage_QueryArea" class="widget-main form-horizontal ">
+                    <div class="row">
+                        <div class="col-xs-3 ">
+                            <label class="control-label col-xs-4 ">练习名称</label>
+                            <input class="col-xs-8" type="text" name="ExerciseName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<!-- 练习管理-->
+<div class="row" id="divExerciseManage_Container">
+    <div class="col-sm-12">
+        <!--练习列表-->
+        <div class="widget-box">
+            <div class="widget-header" id="divExerciseManage_ExerciseList">
+                <h4 class="widget-title">练习管理</h4>
+                <!--删除-->
+                <div class="widget-toolbar">
+                    <a href="#" name="btnExerciseDelete">
+                        <i class="aace-icon fa fa-trash-o">删除</i>
+                    </a>
+                </div>
+                <!--修改-->
+                <div class="widget-toolbar">
+                    <a href="#" name="btnExerciseUpdate">
+                        <i class="ace-icon fa fa-edit">修改</i>
+                    </a>
+                </div>
+                <!--新增-->
+                <div class="widget-toolbar">
+                    <a href="#" name="btnExerciseInsert">
+                        <i class="aace-icon fa fa-plus">新增</i>
+                    </a>
+                </div>
+            </div>
+            <table id="gridExerciseManage_Main"></table>
+            <div id="pagerExerciseManage_Main"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 练习管理-->
+<div class="modal fade" id="mdlExerciseManage_ExerciseInfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h4 class="modal-title" name="myModalLabel">练习管理</h4>
+            </div>
+            <div class="modal-body">
+                <form id="divExerciseManage_ExerciseInfo" class="form-horizontal" role="form">
+                    <input name="exerciseId" type="hidden" />
+                    <table class="table table-bordered text-center table">
+                        <tr>
+                            <td colspan="1" class="col-xs-3">练习名称<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1"><input type="text" name="ExerciseName" class="form-control col-xs-8 width-100" data-verify="notempty" data-verify-errormessage="练习名称为必填项，请检查" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="col-xs-3">试卷编号<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1"><input type="text" name="PaperCode" class="form-control col-xs-8 width-100" data-verify="notempty" data-verify-errormessage="试卷编号为必填项，请检查" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="col-xs-3">是否随机出题<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1">
+                                <label>
+                                    <input type="radio" name="IsRandom" value="是" />是
+                                    <input type="radio" name="IsRandom" value="否" />否
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="col-xs-3">是否显示答案<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1">
+                                <label>
+                                    <input type="radio" name="IsShowRightAnswer" value="是" />是
+                                    <input type="radio" name="IsShowRightAnswer" value="否" />否
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="1" class="col-xs-3">是否存储答案<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1">
+                                <label>
+                                    <input type="radio" name="IsSaveAnswer" value="是" />是
+                                    <input type="radio" name="IsSaveAnswer" value="否" />否
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" class="col-xs-3">是否限制时长<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1">
+                                <label>
+                                    <input type="radio" name="IsLimitTime" value="是" />是
+                                    <input type="radio" name="IsLimitTime" value="否" />否
+                                </label>
+                            </td>
+                        </tr>
+                        <tr id="trExerciseManageLimitTime">
+                            <td colspan="1" class="col-xs-3">限制时长<span class="text-danger"> ❉ </span></td>
+                            <td colspan="1">
+                                <div class="input-group">
+                                    <input type="text" name="LimitTime" class="form-control col-xs-8 width-100" />
+                                    <div class="input-group-addon">分钟</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" name="saveExerciseManage_ExerciseInfoConfirm" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Public/content/exercisemanager/js/exercisemanager.js?v=@DateTime.Now.ToString("yyyyMMddHHmmss")"></script>
