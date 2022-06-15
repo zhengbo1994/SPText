@@ -193,6 +193,38 @@ namespace SPText.Common
                 }
             }
         }
+
+        /// <summary>
+        /// 执行查询语句，返回DataSet
+        /// </summary>
+        /// <param name="SQLString">查询语句</param>
+        /// <returns>DataTable</returns>
+        public DataTable GetDataTable(string SQLString)
+        {
+            using (DbConnection connection = provider.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                using (DbCommand cmd = provider.CreateCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = SQLString;
+                    try
+                    {
+                        DataTable dt = new DataTable();
+                        DbDataAdapter adapter = provider.CreateDataAdapter();
+                        adapter.SelectCommand = cmd;
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                    catch (DbException ex)
+                    {
+                        connection.Close();
+                        connection.Dispose();
+                        throw new Exception(ex.Message);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region 执行带参数的SQL语句
@@ -363,6 +395,40 @@ namespace SPText.Common
             }
         }
 
+        /// <summary>
+        /// 执行查询语句，返回DataSet
+        /// </summary>
+        /// <param name="SQLString">查询语句</param>
+        /// <returns>DataSet</returns>
+        public DataTable GetDataTable(string SQLString, DbParameter[] cmdParms)
+        {
+            using (DbConnection connection = provider.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                using (DbCommand cmd = provider.CreateCommand())
+                {
+                    using (DbDataAdapter da = provider.CreateDataAdapter())
+                    {
+                        PrepareCommand(cmd, connection, null, SQLString, cmdParms);
+                        da.SelectCommand = cmd;
+                        DataTable dt = new DataTable();
+                        try
+                        {
+                            da.Fill(dt);
+                            cmd.Parameters.Clear();
+                            return dt;
+                        }
+                        catch (DbException ex)
+                        {
+                            connection.Close();
+                            connection.Dispose();
+                            throw new Exception(ex.Message);
+                        }
+                    }
+                }
+            }
+        }
+
         private void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, string cmdText, DbParameter[] cmdParms)
         {
             if (conn.State != ConnectionState.Open)
@@ -477,6 +543,27 @@ namespace SPText.Common
                 sqlDA.SelectCommand.Parameters.Clear();
                 sqlDA.Dispose();
                 return dataSet;
+            }
+        }
+
+        /// <summary>
+        /// 执行存储过程
+        /// </summary>
+        /// <param name="storedProcName">存储过程名</param>
+        /// <param name="parameters">存储过程参数</param>
+        /// <returns>DataTable</returns>
+        public DataTable RunProcedureGetDataTable(string storedProcName, DbParameter[] parameters)
+        {
+            using (DbConnection connection = provider.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                DataTable dataTable = new DataTable();
+                DbDataAdapter sqlDA = provider.CreateDataAdapter();
+                sqlDA.SelectCommand = BuildQueryCommand(connection, storedProcName, parameters);
+                sqlDA.Fill(dataTable);
+                sqlDA.SelectCommand.Parameters.Clear();
+                sqlDA.Dispose();
+                return dataTable;
             }
         }
 
@@ -664,6 +751,19 @@ namespace SPText.Common
                     adapter.SelectCommand = command;
                     DataTable data = new DataTable();
                     adapter.Fill(data);
+                    return data;
+                }
+            }
+        }
+        public DataSet ExecuteDataSet(string sql, IList<DbParameter> parameters, CommandType commandType)
+        {
+            using (DbCommand command = CreateDbCommand(sql, parameters, commandType))
+            {
+                using (DbDataAdapter adapter = providerFactory.CreateDataAdapter())
+                {
+                    adapter.SelectCommand = command;
+                    DataSet data = new DataSet();
+                    adapter.Fill(data,"ds");
                     return data;
                 }
             }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using MySql.Data.MySqlClient;
+using Oracle.ManagedDataAccess.Client;
 using SPText.Common.DataHelper;
 using SPTextCommon.Attributes;
 using System;
@@ -847,13 +849,14 @@ namespace SPText.Common.DataHelper.Other
                 case "SqlServer":
                     dbConnection = new SqlConnection(connectionString);
                     break;
-                //case "Oracle":
-                //    dbConnection = new OracleConnection(connectionString);
-                //    break;
-                //case "MySql":
-                //    dbConnection = new MySqlConnection(connectionString);
-                //    break;
+                case "Oracle":
+                    dbConnection = new OracleConnection(connectionString);
+                    break;
+                case "MySql":
+                    dbConnection = new MySqlConnection(connectionString);
+                    break;
                 default:
+                    dbConnection = new SqlConnection(connectionString);
                     break;
             }
             return dbConnection;
@@ -870,26 +873,26 @@ namespace SPText.Common.DataHelper.Other
             {
                 string character = string.Empty;
                 character = "@";
-                //switch (DbHelper.DbType)
-                //{
-                //    case DatabaseType.SqlServer:
-                //        character = "@";
-                //        break;
-                //    case DatabaseType.Oracle:
-                //        character = ":";
-                //        break;
-                //    case DatabaseType.MySql:
-                //        character = "?";
-                //        break;
-                //    case DatabaseType.Access:
-                //        character = "@";
-                //        break;
-                //    case DatabaseType.SQLite:
-                //        character = "@";
-                //        break;
-                //    default:
-                //        throw new Exception("数据库类型目前不支持！");
-                //}
+                switch (DbHelper.DbType)
+                {
+                    case DatabaseType.SqlServer:
+                        character = "@";
+                        break;
+                    case DatabaseType.Oracle:
+                        character = ":";
+                        break;
+                    case DatabaseType.MySql:
+                        character = "?";
+                        break;
+                    case DatabaseType.Access:
+                        character = "@";
+                        break;
+                    case DatabaseType.SQLite:
+                        character = "@";
+                        break;
+                    default:
+                        throw new Exception("数据库类型目前不支持！");
+                }
                 return character;
             }
             /// <summary>

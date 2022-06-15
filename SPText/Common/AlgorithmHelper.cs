@@ -663,7 +663,7 @@ namespace SPText.Common
             for (int i = 0; i < array.Length; i++)
             {
                 Thread.Sleep(100);
-                array[i] = new Random(i + 100 + DateTime.Now.Millisecond).Next(100, 999);
+                array[i] = new Random(i + 100 + DateTime.Now.Millisecond).Next(1, 99);
             }
 
             Console.WriteLine("before AdvancedSort");
@@ -865,7 +865,7 @@ namespace SPText.Common
         /// <param name="arr"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        private static void QuickSortRecursion(int[] arr, int left, int right)
+        public static void QuickSortRecursion(int[] arr, int left, int right)
         {
             if (left < right)
             {

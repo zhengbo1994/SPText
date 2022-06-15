@@ -530,6 +530,7 @@
     <Compile Include="Common\Crawler\CategorySearch.cs" />
     <Compile Include="Common\Crawler\CourseSearch.cs" />
     <Compile Include="Common\Crawler\HttpHelper.cs" />
+    <Compile Include="Common\CSVHelper.cs" />
     <Compile Include="Common\CurrencyDBHelper.cs" />
     <Compile Include="Common\CustomCache\CacheHelper.cs" />
     <Compile Include="Common\CGeneral.cs" />

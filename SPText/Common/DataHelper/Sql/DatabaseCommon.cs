@@ -1,4 +1,6 @@
-﻿using SPText.EF;
+﻿using MySql.Data.MySqlClient;
+using Oracle.ManagedDataAccess.Client;
+using SPText.EF;
 using SPTextCommon.Attributes;
 using System;
 using System.Collections;
@@ -484,12 +486,12 @@ namespace SPText.Common.DataHelper.Sql
                 case "SqlServer":
                     dbConnection = new SqlConnection(connectionString);
                     break;
-                //case "Oracle":
-                //    dbConnection = new OracleConnection(connectionString);
-                //    break;
-                //case "MySql":
-                //    dbConnection = new MySqlConnection(connectionString);
-                //    break;
+                case "Oracle":
+                    dbConnection = new OracleConnection(connectionString);
+                    break;
+                case "MySql":
+                    dbConnection = new MySqlConnection(connectionString);
+                    break;
                 default:
                     break;
             }

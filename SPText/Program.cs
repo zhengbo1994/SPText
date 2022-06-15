@@ -58,6 +58,7 @@ namespace SPText
 {
     class Program
     {
+        static Program program = new Program();
         private static int[] dataArr = new int[100];
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
@@ -437,11 +438,101 @@ namespace SPText
             //MaxAndMin(dataArr.ToArray());
             //gys(8, 64);
 
+            //program.kuaisupaixushujvgouzaoNew();
+
             AlgorithmHelper.Show0();
             AlgorithmHelper.Show1();
             AlgorithmHelper.Show2();
             AlgorithmHelper.Show4();
             AlgorithmHelper.Show5();
+        }
+
+
+        public void kuaisupaixushujvgouzaoNew()
+        {
+            int[] arr = new int[10] { 72, 25, 76, 29, 80, 34, 85, 38, 89, 42 };
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    arr[i] = new Random(i).Next(1, 99);
+            //}
+
+            int left = 0;
+            int right = arr.Length - 1;
+            kuaisupaixuNew(arr, left, right);
+
+
+            //AlgorithmHelper.QuickSortRecursion(arr, left, right);
+        }
+
+
+
+        public void kuaisupaixuNew(int[] arr, int left, int right)
+        {
+            if (left < right)
+            {
+                int avg = (left + right) / 2;
+                if (arr[left] > arr[avg])
+                {
+                    Swap(arr, left, avg);
+                }
+                if (arr[left] > arr[right])
+                {
+                    Swap(arr, left, right);
+                }
+                if (arr[avg] > arr[right])
+                {
+                    Swap(arr, avg, right);
+                }
+                Swap(arr, right - 1, avg);
+
+                int i = left;
+                int j = right - 1;
+                int index = right - 1;
+
+                while (true)
+                {
+                    if (i == left)
+                    {
+                        i++;
+                    }
+                    if (j == index)
+                    {
+                        j--;
+                    }
+
+                    while (arr[i] < arr[index])
+                    {
+                        i++;
+                    }
+                    while (arr[j] > arr[index])
+                    {
+                        j--;
+                    }
+                    if (j > i)
+                    {
+                        Swap(arr, i, j);
+                    }
+
+
+                    if (i > j)
+                    {
+                        break;
+                    }
+                }
+                if (i < right)
+                {
+                    Swap(arr, i, right - 1);
+                }
+                kuaisupaixuNew(arr, left, i - 1);
+                kuaisupaixuNew(arr, i + 1, right);
+            }
+
+            void Swap(int[] subArr, int subLeft, int subRight)
+            {
+                int temp = subArr[subLeft];
+                subArr[subLeft] = subArr[subRight];
+                subArr[subRight] = temp;
+            }
         }
 
 
@@ -2017,13 +2108,13 @@ namespace SPText
                 SqlSugarClient sqlSugarClient = new SqlSugarClient(new ConnectionConfig()
                 {
                     ConnectionString = connectionStrings,
-                    DbType=SqlSugar.DbType.SqlServer,
-                    IsAutoCloseConnection=true,
+                    DbType = SqlSugar.DbType.SqlServer,
+                    IsAutoCloseConnection = true,
                     //ConfigId= "SqlServer",
                 });
                 {
-                 
-                    var aa= sqlSugarClient.Queryable<SPTextCommon.EFBaseServices.Model.Company>();
+
+                    var aa = sqlSugarClient.Queryable<SPTextCommon.EFBaseServices.Model.Company>();
                     var aa123 = aa.ToList();
 
                     //sqlSugarClient.DbFirst.IsCreateAttribute().CreateClassFile(@"E:\项目\测试", "Models");
@@ -2038,7 +2129,7 @@ namespace SPText
                 }
                 {
                     SPText.Common.DataHelper.SqlSugar.SimpleClient simpleClient1 = new SPText.Common.DataHelper.SqlSugar.SimpleClient(sqlSugarClient);
-                    var bb= simpleClient1.GetList<SPTextCommon.EFBaseServices.Model.Company>();
+                    var bb = simpleClient1.GetList<SPTextCommon.EFBaseServices.Model.Company>();
 
                     var aa123 = bb.ToList();
                 }
@@ -2047,8 +2138,13 @@ namespace SPText
                     var cc = simpleClient2.AsQueryable();
                     var aa123 = cc.ToList();
                 }
+                {
+                    CurrencyDBHelper currencyDBHelper = new CurrencyDBHelper(DbProviderType.SqlServer, connectionStrings);
+                    StringBuilder sqlStringBuilder = DatabaseCommon.SelectSql<SPTextCommon.EFBaseServices.Model.Company>();
+                    var v= currencyDBHelper.GetDataTable(sqlStringBuilder.ToString());
+                }
 
-  
+
             }
         }
         #endregion

@@ -972,9 +972,6 @@ namespace SPText.Common.Redis
             }
             return result;
         }
-
-        #endregion 辅助方法
-
         public static IBatch CreateBatch()
         {
             return GetDatabase().CreateBatch();
@@ -1000,5 +997,6 @@ namespace SPText.Common.Redis
                 new RedisKey[] { key });
             return result.ToList();
         }
+        #endregion 辅助方法
     }
 }
