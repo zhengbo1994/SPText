@@ -63,6 +63,10 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
+
+
+
+
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -201,7 +205,7 @@ namespace SPText
             #endregion
 
             #region  数据库操作
-            DatabaseOperations();
+            //DatabaseOperations();
             #endregion
 
             #region  二维码
@@ -266,8 +270,8 @@ namespace SPText
             #endregion
 
             #region  测试代码
-            //TestHelper testHelper = new TestHelper();
-            //testHelper.Show();
+            TestHelper testHelper = new TestHelper();
+            testHelper.Show();
             #endregion
 
 

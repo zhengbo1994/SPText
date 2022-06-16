@@ -1,5 +1,7 @@
 ﻿using Common;
+using MySql.Data.MySqlClient;
 using NLog;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +11,9 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
+using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -1222,18 +1226,18 @@ namespace SPText.EF
                 case DatabaseType.SqlServer:
                     param = new SqlParameter();
                     break;
-                //case DatabaseType.MySql:
-                //    param = new MySqlParameter();
-                //    break;
-                //case DatabaseType.Oracle:
-                //    param = new OracleParameter();
-                //    break;
-                //case DatabaseType.Access:
-                //    param = new OleDbParameter();
-                //    break;
-                //case DatabaseType.SQLite:
-                //    param = new SQLiteParameter();
-                //    break;
+                case DatabaseType.MySql:
+                    param = new MySqlParameter();
+                    break;
+                case DatabaseType.Oracle:
+                    param = new OracleParameter();
+                    break;
+                case DatabaseType.Access:
+                    param = new OleDbParameter();
+                    break;
+                case DatabaseType.SQLite:
+                    param = new SQLiteParameter();
+                    break;
                 default:
                     throw new Exception("数据库类型目前不支持！");
             }
@@ -1284,38 +1288,38 @@ namespace SPText.EF
                         i++;
                     }
                     break;
-                //case DatabaseType.MySql:
-                //    _dbParameter = new MySqlParameter[size];
-                //    while (i < size)
-                //    {
-                //        _dbParameter[i] = new MySqlParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
-                //        i++;
-                //    }
-                //    break;
-                //case DatabaseType.Oracle:
-                //    _dbParameter = new OracleParameter[size];
-                //    while (i < size)
-                //    {
-                //        _dbParameter[i] = new OracleParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
-                //        i++;
-                //    }
-                //    break;
-                //case DatabaseType.Access:
-                //    _dbParameter = new OleDbParameter[size];
-                //    while (i < size)
-                //    {
-                //        _dbParameter[i] = new OleDbParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
-                //        i++;
-                //    }
-                //    break;
-                //case DatabaseType.SQLite:
-                //    _dbParameter = new SQLiteParameter[size];
-                //    while (i < size)
-                //    {
-                //        _dbParameter[i] = new SQLiteParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
-                //        i++;
-                //    }
-                //    break;
+                case DatabaseType.MySql:
+                    _dbParameter = new MySqlParameter[size];
+                    while (i < size)
+                    {
+                        _dbParameter[i] = new MySqlParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
+                        i++;
+                    }
+                    break;
+                case DatabaseType.Oracle:
+                    _dbParameter = new OracleParameter[size];
+                    while (i < size)
+                    {
+                        _dbParameter[i] = new OracleParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
+                        i++;
+                    }
+                    break;
+                case DatabaseType.Access:
+                    _dbParameter = new OleDbParameter[size];
+                    while (i < size)
+                    {
+                        _dbParameter[i] = new OleDbParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
+                        i++;
+                    }
+                    break;
+                case DatabaseType.SQLite:
+                    _dbParameter = new SQLiteParameter[size];
+                    while (i < size)
+                    {
+                        _dbParameter[i] = new SQLiteParameter(dbParameter[i].ParameterName, dbParameter[i].Value);
+                        i++;
+                    }
+                    break;
                 default:
                     throw new Exception("数据库类型目前不支持！");
             }

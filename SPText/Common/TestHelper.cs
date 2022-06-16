@@ -25,6 +25,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using log4net.Plugin;
+using static SPTextCommon.Code128;
+using IOSerialize.Serialize;
 
 namespace SPText.Common
 {
@@ -40,7 +42,7 @@ namespace SPText.Common
             //this.TheardShow();
 
 
-            //this.TestShow();
+            this.TestShow();
 
             //this.PrintShow();
 
@@ -572,6 +574,15 @@ namespace SPText.Common
             //{
             //    TxtHelper.Write(trcFileName, stringBuilder.ToString());
             //}
+
+
+
+            //string fatherNodeName = "XMLTEXT";
+            //Text text = new Text() { 
+            //    Id=123,
+            //    UseName= "UseName",
+            //};
+            //var aaa= xHelper.ParseToXml(text, fatherNodeName);
         }
 
         #region  NPOI

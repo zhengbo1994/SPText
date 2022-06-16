@@ -39,7 +39,7 @@ namespace SPText.Common
             this.strList = list;
         }
 
-        private string Get128CodeString(string inputData)//转换CODE128码
+        public string Get128CodeString(string inputData)//转换CODE128码
         {
             string result;
             int checksum = 104;
