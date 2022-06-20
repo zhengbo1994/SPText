@@ -63,10 +63,6 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
-
-
-
-
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -270,8 +266,8 @@ namespace SPText
             #endregion
 
             #region  测试代码
-            TestHelper testHelper = new TestHelper();
-            testHelper.Show();
+            //TestHelper testHelper = new TestHelper();
+            //testHelper.Show();
             #endregion
 
 
@@ -442,7 +438,7 @@ namespace SPText
             //MaxAndMin(dataArr.ToArray());
             //gys(8, 64);
 
-            //program.kuaisupaixushujvgouzaoNew();
+            program.kuaisupaixushujvgouzaoNew();
 
             AlgorithmHelper.Show0();
             AlgorithmHelper.Show1();
@@ -464,10 +460,8 @@ namespace SPText
             int right = arr.Length - 1;
             kuaisupaixuNew(arr, left, right);
 
-
             //AlgorithmHelper.QuickSortRecursion(arr, left, right);
         }
-
 
 
         public void kuaisupaixuNew(int[] arr, int left, int right)
@@ -2034,15 +2028,15 @@ namespace SPText
                 var value = database.FindTable(sql);
             }
             {//Sql
-                //var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
-                //var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
+                var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
+
+                var datatabel = DbHelperSQL.Query(sql.ToString(), null);
             }
             {//力软EF框架
-             //SPTextCommon.Helper.IDatabase database = new SPTextCommon.Helper.Database("Server=.;Initial Catalog=Customers;User ID=sa;Password=123456;");
+                Common.DataHelper.Helper.IDatabase database = new Common.DataHelper.Helper.Database(connectionStrings);
 
-                //string sql = "select * from Company";
-                //var data= database.FindEntity<Company>(sql, null);
-                //var data1 = database.FindEntity<Company>(2);
+                string sql = "select * from Company";
+                var data = database.FindEntity<Company>(sql, null);
             }
             {
                 {
@@ -2104,9 +2098,11 @@ namespace SPText
                 //}
             }
             {
-                //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
-                IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
-                baseServices.QueryWhere(p => 1 == 1).ToList();
+                ////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
+                //IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
+                //var where = PredicateBuilder.True<SPTextCommon.EFBaseServices.Model.Company>();
+                //where = where.And(p => p.Id > 0);
+                //var a = baseServices.QueryWhere(where).ToList();
             }
             {
                 SqlSugarClient sqlSugarClient = new SqlSugarClient(new ConnectionConfig()
@@ -2145,7 +2141,7 @@ namespace SPText
                 {
                     CurrencyDBHelper currencyDBHelper = new CurrencyDBHelper(DbProviderType.SqlServer, connectionStrings);
                     StringBuilder sqlStringBuilder = DatabaseCommon.SelectSql<SPTextCommon.EFBaseServices.Model.Company>();
-                    var v= currencyDBHelper.GetDataTable(sqlStringBuilder.ToString());
+                    var v = currencyDBHelper.GetDataTable(sqlStringBuilder.ToString());
                 }
 
 
