@@ -618,6 +618,9 @@
     <Compile Include="Common\PrinterSettingHelper.cs" />
     <Compile Include="Common\QRCodeHelper.cs" />
     <Compile Include="Common\QuartzHelper.cs" />
+    <Compile Include="Common\RabbitMQ\Framework002\Common\RabbitMQHelper.cs" />
+    <Compile Include="Common\RabbitMQ\Framework002\RabbitMQConsumer.cs" />
+    <Compile Include="Common\RabbitMQ\Framework002\RabbitMQProvider.cs" />
     <Compile Include="Common\RabbitMQ\RabbitMQExecuteHelper.cs" />
     <Compile Include="Common\RabbitMQ\RabbitMQHelper.cs" />
     <Compile Include="Common\RabbitMQ\RBMQHelper.cs" />
