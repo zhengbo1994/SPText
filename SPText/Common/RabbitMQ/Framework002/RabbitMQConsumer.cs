@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -51,6 +52,14 @@ namespace SPText.Common.RabbitMQ.Framework002
 
             #region 测试延时队列
             // DelayConsumer.ReceiveMessage();
+            #endregion
+
+
+            #region 其它
+            //BackupExchange.BackupMethod();
+            //ReturnModel.Producer();
+            //TransactionModel.TxProducer();
+            //TransactionModel.ConfirmProducer();
             #endregion
 
             Console.WriteLine("消费端已经启动");
@@ -564,5 +573,190 @@ namespace SPText.Common.RabbitMQ.Framework002
             }
         }
         #endregion
+
+
+        #region BackupExchange
+        /// <summary>
+        /// 使用交换机备份
+        /// </summary>
+        ///
+        public class BackupExchange
+        {
+            public static void BackupMethod()
+            {
+                string queueName = "BACKUP_QUEUE";
+                string exchangeName = "BACKUP_EXCHANGE";
+                string backupQueue = "BACKUP_QUEUE_D";
+                string backupExchangeName = "ALTERNATE_EXCHNAGE";
+                string routeKey = "BACKUP_ROUTEKEY";
+                using (var connection = Common.RabbitMQHelper.GetConnection("192.168.3.200", 5671))
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        // 声明交互交换机[指定备份交换机]
+                        Dictionary<string, object> argument = new Dictionary<string, object>();
+                        argument.Add("alternate-exchange", backupExchangeName);
+                        channel.ExchangeDeclare(exchangeName, ExchangeType.Direct, false, false, argument);
+                        // 声明备份交互机
+                        channel.ExchangeDeclare(backupExchangeName, ExchangeType.Fanout, false, false, null);
+                        // 声明队列
+                        channel.QueueDeclare(queueName, false, false, false, null);
+                        // 声明备份队列
+                        channel.QueueDeclare(backupQueue, false, false, false, null);
+
+                        // 绑定队列
+                        channel.QueueBind(queueName, exchangeName, routeKey);
+                        channel.QueueBind(backupQueue, backupExchangeName, "");
+
+                        //发送数据
+                        for (int i = 0; i < 10; i++)
+                        {
+                            // 消息内容
+                            string message = "This is Backup Exchange Model-->" + i;
+                            var body = Encoding.UTF8.GetBytes(message);
+                            //指定发送消息到哪个路由，以及他的路由键,消息等
+                            if (i % 2 == 0)
+                            {
+                                channel.BasicPublish(exchangeName, routeKey, null, body);
+                            }
+                            else
+                            {
+                                //匹配不到队列[如果路由key找不到队列则启用备用交换机]
+                                channel.BasicPublish(exchangeName, "kkkk", null, body);
+                            }
+                            Console.WriteLine(" [x] Sent '" + message + "'");
+                            Thread.Sleep(200);
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+
+        #region ReturnModel
+        /// <summary>
+        /// 演示消息没有正确路由到队列处理方式
+        /// </summary>
+        /// 
+        public class ReturnModel
+        {
+            public static void Producer()
+            {
+                string queueName = "RE_QUEUE";
+                string exchangeName = "RE_EXCHANGE";
+                using (var connection = Common.RabbitMQHelper.GetConnection("192.168.3.200", 5671))
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        // 声明队列
+                        channel.QueueDeclare(queueName, false, false, false, null);
+                        // 声明交换机[交换机没有绑定队列的情况]
+                        //channel.ExchangeDeclare(exchangeName, ExchangeType.Fanout);
+                        //channel.QueueBind(queueName, exchangeName, "");
+                        // 声明交换机
+                        channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+                        channel.QueueBind(queueName, exchangeName, "test_direct");
+
+                        string message = "This is Return Model";
+                        var body = Encoding.UTF8.GetBytes(message);
+                        // 配置回调
+                        channel.BasicReturn += (o, basic) =>
+                        {
+                            var rc = basic.ReplyCode; //消息失败的code
+                            var rt = basic.ReplyText; //描述返回原因的文本。
+                            var msg = Encoding.UTF8.GetString(basic.Body.Span.ToArray()); //失败消息的内容
+                                                                                //在这里我们可能要对这条不可达消息做处理，比如是否重发这条不可达的消息呀，或者这条消息发送到其他的路由中等等
+                            System.IO.File.AppendAllText("d:/return.txt", "调用了Return;ReplyCode:" + rc + ";ReplyText:" + rt + ";Body:" + msg + "\r\n");
+                            Console.WriteLine("send message failed,不可达的消息消息监听.");
+                        };
+
+                        var properties = channel.CreateBasicProperties();
+                        properties.MessageId = "fdsfdfs";
+                        channel.BasicPublish(exchange: exchangeName,
+                                             routingKey: "test_direct1",
+                                             mandatory: true, // 必须设置该参数为true
+                                             basicProperties: properties,
+                                             body: body);
+
+                        Console.WriteLine(" [x] Sent {0}", message);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region TransactionModel
+        public class TransactionModel
+        {
+            public static void TxProducer()
+            {
+                string queueName = "ORIGN_QUEUE";
+                using (var connection = Common.RabbitMQHelper.GetConnection("192.168.3.200", 5671))
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        // 声明队列
+                        channel.QueueDeclare(queueName, false, false, false, null);
+                        try
+                        {
+                            // 开启事务
+                            channel.TxSelect();
+                            // 发送信息
+                            channel.BasicPublish("", queueName, false, null, Encoding.UTF8.GetBytes("这个是事务消息1"));
+                            // 提交事务
+                            channel.TxCommit();
+
+                            channel.BasicPublish("", queueName, false, null, Encoding.UTF8.GetBytes("这个是事务消息2"));
+                            // 模拟异常
+                            int i = 1;
+                            int x = i / 0;
+                            channel.TxCommit();
+                            Console.WriteLine("消息发送成功");
+                        }
+                        catch (Exception)
+                        {
+                            if (channel.IsOpen)
+                            {
+                                // 回滚事务
+                                channel.TxRollback();
+                                Console.WriteLine("消息已经回滚");
+                            }
+                            throw;
+                        }
+                    }
+                }
+            }
+            public static void ConfirmProducer()
+            {
+                string queueName = "ORIGN_QUEUE";
+                using (var connection = Common.RabbitMQHelper.GetConnection("192.168.3.215", 5672))
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        // 声明队列
+                        channel.QueueDeclare(queueName, false, false, false, null);
+                        string message = "This is Confirm Model";
+                        var body = Encoding.UTF8.GetBytes(message);
+                        channel.ConfirmSelect();
+                        channel.BasicAcks += (sender, e) =>
+                        {
+                            Console.Write("ACK received");
+                        };
+
+                        var properties = channel.CreateBasicProperties();
+
+                        channel.BasicPublish(exchange: "",
+                                             routingKey: queueName,
+                                             basicProperties: properties,
+                                             body: body);
+
+                        Console.WriteLine(" [x] Sent {0}", message);
+                    }
+                }
+            }
+        }
+        #endregion
+
     }
 }
