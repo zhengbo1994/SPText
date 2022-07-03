@@ -18,3 +18,6 @@ npm install sass-loader node-sass --save
 
 路由
 npm install vue-router@next
+
+axios安装
+npm install axios --save

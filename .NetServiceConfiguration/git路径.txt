@@ -15,3 +15,8 @@ zb19940118
 在线演示地址：http://yc.yc-l.com/#/login
 源码github：https://github.com/linbin524/yc.boilerplate
 源码gitee：https://gitee.com/linxuanming/yc.boilerplate
+
+RuYiAdmin
+.net core 开源框架 https://gitee.com/pang-mingjun/RuYiAdmin
+
+

@@ -278,7 +278,7 @@
       <HintPath>..\.NetServiceConfiguration\AAAcustom\PdfiumViewer.dll</HintPath>
     </Reference>
     <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.2.0\lib\net472\Pipelines.Sockets.Unofficial.dll</HintPath>
+      <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.2.2\lib\net472\Pipelines.Sockets.Unofficial.dll</HintPath>
     </Reference>
     <Reference Include="Quartz, Version=3.1.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
       <HintPath>..\packages\Quartz.3.1.0\lib\net461\Quartz.dll</HintPath>
@@ -332,7 +332,7 @@
       <HintPath>..\packages\SqlSugar.5.0.4.6\lib\SqlSugar.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
-      <HintPath>..\packages\StackExchange.Redis.2.2.4\lib\net472\StackExchange.Redis.dll</HintPath>
+      <HintPath>..\packages\StackExchange.Redis.2.6.48\lib\net472\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -380,8 +380,8 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.Pipelines, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Pipelines.5.0.0\lib\net461\System.IO.Pipelines.dll</HintPath>
+    <Reference Include="System.IO.Pipelines, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.5.0.1\lib\net461\System.IO.Pipelines.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -607,6 +607,8 @@
     <Compile Include="Common\Json.cs" />
     <Compile Include="Common\JSONHelper.cs" />
     <Compile Include="Common\baseFn\AppFn.cs" />
+    <Compile Include="Common\MongoDB\Framework002\DBbase.cs" />
+    <Compile Include="Common\MongoDB\Framework002\MongoDBHelper.cs" />
     <Compile Include="Common\MongoDB\MongoDBHelper.cs" />
     <Compile Include="Common\NOPIHelper.cs" />
     <Compile Include="Common\Offices\ExcelConfig.cs" />
@@ -620,6 +622,9 @@
     <Compile Include="Common\RabbitMQ\RabbitMQHelper.cs" />
     <Compile Include="Common\RabbitMQ\RBMQHelper.cs" />
     <Compile Include="Common\Redis\CacheClientDB.cs" />
+    <Compile Include="Common\Redis\Framework002\StackExchangeRedisHelper.cs" />
+    <Compile Include="Common\Redis\Framework002\TransAction.cs" />
+    <Compile Include="Common\Redis\LuaTest.cs" />
     <Compile Include="Common\Redis\RedisHelper.cs" />
     <Compile Include="Common\Redis\Data_HashTest.cs" />
     <Compile Include="Common\Redis\Data_ListTest.cs" />
