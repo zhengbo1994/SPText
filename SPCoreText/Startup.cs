@@ -291,6 +291,8 @@ namespace SPCoreText
             ////使用AutoFac进行依赖注入
             new AutofacServiceProvider(AutofacExt.InitAutofac(services));
             #endregion
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

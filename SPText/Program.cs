@@ -460,9 +460,67 @@ namespace SPText
             int right = arr.Length - 1;
             kuaisupaixuNew(arr, left, right);
 
+
             //AlgorithmHelper.QuickSortRecursion(arr, left, right);
         }
+        public void kuaisupaixuNew1(int[] arr, int left, int right)
+        {
+            if (left < right)
+            {
+                int avg = (left + right) / 2;
+                if (arr[left] > arr[avg])
+                {
+                    jihuan(arr, left, avg);
+                }
+                if (arr[left] > arr[right])
+                {
+                    jihuan(arr, left, right);
+                }
+                if (arr[avg] > arr[right])
+                {
+                    jihuan(arr, right, avg);
+                }
+                jihuan(arr, avg, right - 1);
 
+
+                int i = left;
+                int j = right - 1;
+                int index = right - 1;
+                while (true)
+                {
+                    while (arr[++i] < arr[index])
+                    {
+
+                    }
+                    while (arr[--j] > arr[index])
+                    {
+
+                    }
+                    if (i < j)
+                    {
+                        jihuan(arr, i, j);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (i < right)
+                {
+                    jihuan(arr, i, right - 1);
+                }
+                kuaisupaixuNew1(arr, left, i - 1);
+                kuaisupaixuNew1(arr, i + 1, right);
+            }
+
+
+            void jihuan(int[] iarr, int ileft, int iright)
+            {
+                int temp = iarr[ileft];
+                iarr[ileft] = iarr[iright];
+                iarr[iright] = temp;
+            }
+        }
 
         public void kuaisupaixuNew(int[] arr, int left, int right)
         {
