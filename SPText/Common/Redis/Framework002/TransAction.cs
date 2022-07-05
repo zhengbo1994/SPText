@@ -46,6 +46,7 @@ namespace SPText.Common.Redis.Framework002
                 TransActionShow();
             }
             #endregion
+
             #region Lua
             {
                 Console.WriteLine("*****************Lua****************");

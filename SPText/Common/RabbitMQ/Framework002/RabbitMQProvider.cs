@@ -13,45 +13,45 @@ namespace SPText.Common.RabbitMQ.Framework002
     {
         public void Show()
         {
-            //RabbitMQConnection.SendMessage();
+            RabbitMQConnection.SendMessage();
 
             #region 测试普通队列模式
-            // Send.SendMessage();
+            Send.SendMessage();
             #endregion
 
             #region 测试工作队列模式
-            // WorkerSend.SendMessage();
+            WorkerSend.SendMessage();
             #endregion
 
             #region 测试扇形队列模式
-            //FanoutSend.SendMessage();
+            FanoutSend.SendMessage();
             #endregion
 
             #region 测试匹配直接队列模式
-            // DirectSend.SendMessage();
+            DirectSend.SendMessage();
             #endregion
 
             #region 测试模糊匹配队列模式
-            //TopicProvider.SendMessage();
+            TopicProvider.SendMessage();
             #endregion
 
             #region 测试消息确认机制
             // 事务方式
-            // Transaction.TransactionMode();
+            Transaction.TransactionMode();
             // 确认方式
-            // ConfirmDemo.ConfirmModel();
+            ConfirmDemo.ConfirmModel();
             #endregion
 
             #region 测试持久化操作
-            // DurableDemo.SendDurableMessage();
+            DurableDemo.SendDurableMessage();
             #endregion
 
             #region 测试优先级队列
-            // PriorityProvider.SendMessage();
+            PriorityProvider.SendMessage();
             #endregion
 
             #region 测试死信队列
-            // DLXSend.SendMessage();
+            DLXSend.SendMessage();
             #endregion
 
             #region 测试延迟队列

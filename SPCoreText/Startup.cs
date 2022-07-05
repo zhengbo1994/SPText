@@ -285,11 +285,11 @@ namespace SPCoreText
             //services.Configure<AppSetting>(Configuration.GetSection("AppSetting"));
 
 
-            ////使用HttpContext获取器扩展 用来获取静态HttpContext
+            //使用HttpContext获取器扩展 用来获取静态HttpContext
             services.AddHttpContextAccessorExt();
 
             ////使用AutoFac进行依赖注入
-            new AutofacServiceProvider(AutofacExt.InitAutofac(services));
+            //new AutofacServiceProvider(AutofacExt.InitAutofac(services));
             #endregion
 
 

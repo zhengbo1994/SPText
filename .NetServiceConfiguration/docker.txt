@@ -1,0 +1,32 @@
+下载镜像
+docker pull mcr.microsoft.com/dotent/core/aspnet:3.1
+
+cd 目录 切换目录
+cd /bin
+
+查看镜像
+docker images
+
+
+
+docker run -d -p 8080:8080 -v /NewFile/publish:/app --workdir /app mcr.microsoft.com/dotnet/core/aspnet  dotnet /app/WebText.dll
+
+
+curl http://192.168.30.129:8080
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
