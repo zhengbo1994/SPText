@@ -25,6 +25,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
 using Ocelot.Provider.Polly;
+using SPCoreApiText.Middleware;
 using SPCoreApiText.Utiltiy;
 using SPCoreTextLK.Interface;
 using SPCoreTextLK.Service;
@@ -238,6 +239,11 @@ namespace SPCoreApiText
                 }
             }
             #endregion
+
+            #region FastDFS（类似FTP，可实现文件上传下载等操作）
+            // 添加FastDFS依赖
+            services.AddFastDFS();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -261,6 +267,11 @@ namespace SPCoreApiText
 
             #region jwt
             app.UseAuthentication();//注意添加这一句，启用验证
+            #endregion
+
+            #region FastDFS（类似FTP，可实现文件上传下载等操作）
+            // 使用FastDFS中间件
+            app.UseFastDFS();
             #endregion
 
             app.UseRouting();
