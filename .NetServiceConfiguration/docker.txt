@@ -4,13 +4,23 @@ docker pull mcr.microsoft.com/dotent/core/aspnet:3.1
 cd 目录 切换目录
 cd /bin
 
+启动docker
+systemctl start docker
+
 查看镜像
 docker images
 
 
 
-docker run -d -p 8080:8080 -v /NewFile/publish:/app --workdir /app mcr.microsoft.com/dotnet/core/aspnet  dotnet /app/WebText.dll
+linux 安装.net core 运行环境
+1、
+在安装.NET之前，需要注册产品存储库并安装所需的依赖关系。
+sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm
+2、
+sudo yum install dotnet-sdk-6.0
 
+//将/NewFile/publish里面的文件挂载再docker上面
+docker run -it -d -p 8080:8080 -v /NewFile/publish:/app --workdir /app mcr.microsoft.com/dotnet/core/aspnet  dotnet /app/WebText.dll
 
 curl http://192.168.30.129:8080
 
