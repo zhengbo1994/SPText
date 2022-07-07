@@ -17,6 +17,7 @@ using SPText.Common.DataHelper.Sql;
 using SPText.Common.DataHelper.SqlSugar;
 using SPText.Common.ExpressionExtend;
 using SPText.Common.RabbitMQ;
+using SPText.Common.RabbitMQ.Framework002;
 using SPText.Common.Redis;
 using SPText.Common.Redis.Service;
 using SPText.Common.ReportPrintingHelper;
@@ -63,10 +64,6 @@ namespace SPText
         static string connectionStrings = ConfigurationManager.ConnectionStrings["DataContext"].ToString();
         static void Main(string[] args)
         {
-
-
-
-
             #region  linq交叉并补
             //linqUse();
             #endregion
@@ -270,8 +267,8 @@ namespace SPText
             #endregion
 
             #region  测试代码
-            TestHelper testHelper = new TestHelper();
-            testHelper.Show();
+            //TestHelper testHelper = new TestHelper();
+            //testHelper.Show();
             #endregion
 
 
@@ -442,7 +439,7 @@ namespace SPText
             //MaxAndMin(dataArr.ToArray());
             //gys(8, 64);
 
-            //program.kuaisupaixushujvgouzaoNew();
+            program.kuaisupaixushujvgouzaoNew();
 
             AlgorithmHelper.Show0();
             AlgorithmHelper.Show1();
@@ -467,8 +464,64 @@ namespace SPText
 
             //AlgorithmHelper.QuickSortRecursion(arr, left, right);
         }
+        public void kuaisupaixuNew1(int[] arr, int left, int right)
+        {
+            if (left < right)
+            {
+                int avg = (left + right) / 2;
+                if (arr[left] > arr[avg])
+                {
+                    jihuan(arr, left, avg);
+                }
+                if (arr[left] > arr[right])
+                {
+                    jihuan(arr, left, right);
+                }
+                if (arr[avg] > arr[right])
+                {
+                    jihuan(arr, right, avg);
+                }
+                jihuan(arr, avg, right - 1);
 
 
+                int i = left;
+                int j = right - 1;
+                int index = right - 1;
+                while (true)
+                {
+                    while (arr[++i] < arr[index])
+                    {
+
+                    }
+                    while (arr[--j] > arr[index])
+                    {
+
+                    }
+                    if (i < j)
+                    {
+                        jihuan(arr, i, j);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (i < right)
+                {
+                    jihuan(arr, i, right - 1);
+                }
+                kuaisupaixuNew1(arr, left, i - 1);
+                kuaisupaixuNew1(arr, i + 1, right);
+            }
+
+
+            void jihuan(int[] iarr, int ileft, int iright)
+            {
+                int temp = iarr[ileft];
+                iarr[ileft] = iarr[iright];
+                iarr[iright] = temp;
+            }
+        }
 
         public void kuaisupaixuNew(int[] arr, int left, int right)
         {
@@ -2034,15 +2087,15 @@ namespace SPText
                 var value = database.FindTable(sql);
             }
             {//Sql
-                //var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
-                //var datatabel = SqlHelper.ExecuteDataTable(sql.ToString(), CommandType.Text, null);
+                var sql = SPText.Common.DataHelper.Sql.DatabaseCommon.SelectSql<Company>();
+
+                var datatabel = DbHelperSQL.Query(sql.ToString(), null);
             }
             {//力软EF框架
-             //SPTextCommon.Helper.IDatabase database = new SPTextCommon.Helper.Database("Server=.;Initial Catalog=Customers;User ID=sa;Password=123456;");
+                Common.DataHelper.Helper.IDatabase database = new Common.DataHelper.Helper.Database(connectionStrings);
 
-                //string sql = "select * from Company";
-                //var data= database.FindEntity<Company>(sql, null);
-                //var data1 = database.FindEntity<Company>(2);
+                string sql = "select * from Company";
+                var data = database.FindEntity<Company>(sql, null);
             }
             {
                 {
@@ -2104,9 +2157,11 @@ namespace SPText
                 //}
             }
             {
-                //////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
-                IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
-                baseServices.QueryWhere(p => 1 == 1).ToList();
+                ////EF有错误（可能是EF版本问题，目前未找到原因）（**慎用**）
+                //IBaseDal<SPTextCommon.EFBaseServices.Model.Company> baseServices = new SPTextCommon.EFBaseServices.BaseDal<SPTextCommon.EFBaseServices.Model.Company>();
+                //var where = PredicateBuilder.True<SPTextCommon.EFBaseServices.Model.Company>();
+                //where = where.And(p => p.Id > 0);
+                //var a = baseServices.QueryWhere(where).ToList();
             }
             {
                 SqlSugarClient sqlSugarClient = new SqlSugarClient(new ConnectionConfig()
@@ -2145,7 +2200,7 @@ namespace SPText
                 {
                     CurrencyDBHelper currencyDBHelper = new CurrencyDBHelper(DbProviderType.SqlServer, connectionStrings);
                     StringBuilder sqlStringBuilder = DatabaseCommon.SelectSql<SPTextCommon.EFBaseServices.Model.Company>();
-                    var v= currencyDBHelper.GetDataTable(sqlStringBuilder.ToString());
+                    var v = currencyDBHelper.GetDataTable(sqlStringBuilder.ToString());
                 }
 
 
@@ -2534,7 +2589,7 @@ namespace SPText
         }
         #endregion
 
-        #region  RabbitMQ（测试未通过）
+        #region  RabbitMQ
         public static void RabbitMQ()
         {
             {
@@ -2547,56 +2602,13 @@ namespace SPText
                     rabbitMQExecuteHelper.Show();
                 }
             }
-            {//向RabbitMQ服务器发送消息（推送）
-                var factory = new ConnectionFactory();
-                factory.HostName = "localhost";//主机名，Rabbit会拿这个IP生成一个endpoint，这个很熟悉吧，就是socket绑定的那个终结点。
-                factory.UserName = "guest";//默认用户名,用户可以在服务端自定义创建，有相关命令行
-                factory.Password = "guest";//默认密码
-
-                using (var connection = factory.CreateConnection())//连接服务器，即正在创建终结点。
-                {
-                    //创建一个通道，这个就是Rabbit自己定义的规则了，如果自己写消息队列，这个就可以开脑洞设计了
-                    //这里Rabbit的玩法就是一个通道channel下包含多个队列Queue
-                    using (var channel = connection.CreateModel())
-                    {
-                        channel.QueueDeclare("kibaQueue", false, false, false, null);//创建一个名称为kibaqueue的消息队列
-                        var properties = channel.CreateBasicProperties();
-                        properties.DeliveryMode = 1;
-                        string message = "I am Kiba518"; //传递的消息内容
-                        channel.BasicPublish("", "kibaQueue", properties, Encoding.UTF8.GetBytes(message)); //生产消息
-                        Console.WriteLine($"Send:{message}");
-                    }
-                }
+            {
+                RabbitMQConsumer rabbitMQConsumer = new RabbitMQConsumer();
+                rabbitMQConsumer.Show();
             }
-            {//去RabbitMQ的服务器查看当前消息队列（查看）
-                var factory = new ConnectionFactory();
-                factory.HostName = "localhost";
-                factory.UserName = "guest";
-                factory.Password = "guest";
-
-                using (var connection = factory.CreateConnection())
-                {
-                    using (var channel = connection.CreateModel())
-                    {
-                        channel.QueueDeclare("kibaQueue", false, false, false, null);
-
-                        /* 这里定义了一个消费者，用于消费服务器接受的消息
-                         * C#开发需要注意下这里，在一些非面向对象和面向对象比较差的语言中，是非常重视这种设计模式的。
-                         * 比如RabbitMQ使用了生产者与消费者模式，然后很多相关的使用文章都在拿这个生产者和消费者来表述。
-                         * 但是，在C#里，生产者与消费者对我们而言，根本算不上一种设计模式，他就是一种最基础的代码编写规则。
-                         * 所以，大家不要复杂的名词吓到，其实，并没那么复杂。
-                         * 这里，其实就是定义一个EventingBasicConsumer类型的对象，然后该对象有个Received事件，
-                         * 该事件会在服务接收到数据时触发。
-                         */
-                        var consumer = new EventingBasicConsumer(channel);//消费者
-                        channel.BasicConsume("kibaQueue", true, consumer);//消费消息
-                        consumer.Received += (model, ea) =>
-                        {
-                            var body = ea.Body;
-                            var message = Encoding.UTF8.GetString(body.ToArray());
-                        };
-                    }
-                }
+            {
+                RabbitMQProvider rabbitMQProvider = new RabbitMQProvider();
+                rabbitMQProvider.Show();
             }
         }
         #endregion
@@ -2621,24 +2633,10 @@ namespace SPText
         public static void ReportPrint()
         {
             ReportPrintShow reportPrint = new ReportPrintShow();
-            reportPrint.Show1();
-            reportPrint.Show2();
-            reportPrint.Show3();
-            SettingConfiguration.GetLocalPrinters();
-
-            string filePath = @"E:\AAAA\new-sgerp\TWERPWeb\TemporaryFile\AO21005810.pdf";
-            string printer = @"pr-730";
-            ProcessStartInfo info = new ProcessStartInfo();
-            info.Arguments = printer;
-            info.Verb = "PrintTo";
-            info.FileName = filePath;
-            info.CreateNoWindow = true;
-            info.WindowStyle = ProcessWindowStyle.Hidden;
-
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo = info;
-            p.Start();
-            p.WaitForInputIdle();
+            reportPrint.Show1();//水晶报表
+            reportPrint.Show2();//画图
+            reportPrint.Show3();//水晶报表
+            reportPrint.Show4();//水晶报表
         }
         #endregion
 
