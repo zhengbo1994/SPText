@@ -2633,24 +2633,10 @@ namespace SPText
         public static void ReportPrint()
         {
             ReportPrintShow reportPrint = new ReportPrintShow();
-            reportPrint.Show1();
-            reportPrint.Show2();
-            reportPrint.Show3();
-            SettingConfiguration.GetLocalPrinters();
-
-            string filePath = @"E:\AAAA\new-sgerp\TWERPWeb\TemporaryFile\AO21005810.pdf";
-            string printer = @"pr-730";
-            ProcessStartInfo info = new ProcessStartInfo();
-            info.Arguments = printer;
-            info.Verb = "PrintTo";
-            info.FileName = filePath;
-            info.CreateNoWindow = true;
-            info.WindowStyle = ProcessWindowStyle.Hidden;
-
-            System.Diagnostics.Process p = new System.Diagnostics.Process();
-            p.StartInfo = info;
-            p.Start();
-            p.WaitForInputIdle();
+            reportPrint.Show1();//水晶报表
+            reportPrint.Show2();//画图
+            reportPrint.Show3();//水晶报表
+            reportPrint.Show4();//水晶报表
         }
         #endregion
 

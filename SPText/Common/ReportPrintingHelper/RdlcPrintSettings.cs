@@ -15,7 +15,7 @@ namespace ReportPrinting.Model
             var report = new LocalReport();
             report.DataSources.Add(dtSource);//1.数据源
 
-            string path = @"OrderReport\Report1.rdlc";
+            string path = @"Common\ReportPrintingHelper\OrderReport\Report1.rdlc";
             report.ReportPath = path;//2.报表文件路径赋值
             if (parameter.Count() > 0)
             {
