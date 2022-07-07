@@ -111,141 +111,158 @@
             <input type="text" v-model="id">
             <input type="text" v-model="userName"><br>
             <button v-on:click="addUser">添加</button>
+
+
+            <!--<router-link to="/main">main</router-link>
+            <router-link to="/page">page</router-link>
+            <router-view to="/page"></router-view>-->
         </div>
 
 
     </div>
 
     <script type="text/javascript">
-    //setTimeout(function () {
-    var vm = new Vue({
-        el: "#app",
-        //设置绑定值
-        data: {
-            message: "Hello World",
-            htmltext: "<h1>我是一段文本！</h1>",
-            buttontext: "我是按钮！",
-            score: 0,
-            level: null,
-            intervalIndex: null,
-            msg: "Hello World",
-            flag: false,
-            style1: { 'background-color': 'brown', color: 'white' },
-            style2: { 'font-size': "18px" },
-            userIds: [1, 2, 3, 4, 5, 6],
-            userList: [
-                { id: 1, name: "张三" },
-                { id: 2, name: "李四" },
-                { id: 3, name: "王五" },
-                { id: 4, name: "赵六" }
-            ],
-            userInfo: { id: 4, name: "赵六" },
-            isif: false,
-            isShow: true,
-            scoreIndex: 50,
-            maxValue: 100,
-            id: 5,
-            userName: "",
-            getData: [],
-        },
-        //注册方法（没色四）
-        methods: {
-            chickMe() {
-                this.buttontext = "我是修改后的按钮！"
+        //setTimeout(function () {
+        var vm = new Vue({
+            el: "#app",
+            //设置绑定值
+            data: {
+                message: "Hello World",
+                htmltext: "<h1>我是一段文本！</h1>",
+                buttontext: "我是按钮！",
+                score: 0,
+                level: null,
+                intervalIndex: null,
+                msg: "Hello World",
+                flag: false,
+                style1: { 'background-color': 'brown', color: 'white' },
+                style2: { 'font-size': "18px" },
+                userIds: [1, 2, 3, 4, 5, 6],
+                userList: [
+                    { id: 1, name: "张三" },
+                    { id: 2, name: "李四" },
+                    { id: 3, name: "王五" },
+                    { id: 4, name: "赵六" }
+                ],
+                userInfo: { id: 4, name: "赵六" },
+                isif: false,
+                isShow: true,
+                scoreIndex: 50,
+                maxValue: 100,
+                id: 5,
+                userName: "",
+                getData: [],
             },
-            start() {
-                if (this.intervalIndex == null) {
-                    this.intervalIndex = setInterval(() => {
-                        //Math.random() 生成 0~1之间的随机数
-                        this.score = parseInt(Math.random() * 100);
-                        //switch语句的范围判断
-                        switch (true) {
-                            case this.score < 30:
-                                this.level = "参与奖"
-                                break;
-                            case this.score >= 30 && this.score < 65:
-                                this.level = "三等奖"
-                                break;
-                            case this.score >= 65 && this.score < 85:
-                                this.level = "二等奖"
-                                break;
-                            case this.score >= 85:
-                                this.level = "一等奖"
-                                break;
-                        }
-                    }, 50)
+            //注册方法（没色四）
+            methods: {
+                chickMe() {
+                    this.buttontext = "我是修改后的按钮！"
+                },
+                start() {
+                    if (this.intervalIndex == null) {
+                        this.intervalIndex = setInterval(() => {
+                            //Math.random() 生成 0~1之间的随机数
+                            this.score = parseInt(Math.random() * 100);
+                            //switch语句的范围判断
+                            switch (true) {
+                                case this.score < 30:
+                                    this.level = "参与奖"
+                                    break;
+                                case this.score >= 30 && this.score < 65:
+                                    this.level = "三等奖"
+                                    break;
+                                case this.score >= 65 && this.score < 85:
+                                    this.level = "二等奖"
+                                    break;
+                                case this.score >= 85:
+                                    this.level = "一等奖"
+                                    break;
+                            }
+                        }, 50)
+                    }
+                },
+                stop() {
+                    clearInterval(this.intervalIndex);
+                    this.intervalIndex = null
+                },
+                change() {
+                    this.style2['font-size'] = "22px";
+                },
+                addUser() {
+                    this.userList.unshift({ id: 5, name: "田七" })
+                },
+                isOdd(index) {
+                    var res = index % 2;
+                    if (res == 1) return true;
+                    else return false;
+                },
+                addUser() {
+                    this.userList.push({ id: this.id++, name: this.userName })
+                },
+                remove(index) {
+                    this.userList.splice(index, 1);
+                    //delete this.userList[0];
+                    //this.$forceUpdate();
+                },
+                qq() {
+                    var that = this;
+                    $.get("/Home/GetData", {}, function (res) {
+                        this.getData = res;
+                    })
+                },
+                search() {
+                    //includes内容包括
+                    //var searchRes = this.supplys.filter(m => m.supplyDemandTitle.includes(this.searchText));
+                },
+            },
+            //对属性进行计算（啃皮提的）
+            computed: {
+                js() {
+                    debugger
+                    //filter类似于where
+                    this.userList.filter(m => m.id == 1);
                 }
             },
-            stop() {
-                clearInterval(this.intervalIndex);
-                this.intervalIndex = null
+            //方法请求前进行调用（ajax）（忙提的）
+            mounted() {
+                this.qq();
             },
-            change() {
-                this.style2['font-size'] = "22px";
-            },
-            addUser() {
-                this.userList.unshift({ id: 5, name: "田七" })
-            },
-            isOdd(index) {
-                var res = index % 2;
-                if (res == 1) return true;
-                else return false;
-            },
-            addUser() {
-                this.userList.push({ id: this.id++, name: this.userName })
-            },
-            remove(index) {
-                this.userList.splice(index, 1);
-                //delete this.userList[0];
-                //this.$forceUpdate();
-            },
-            qq() {
-                var that = this;
-                $.get("/Home/GetData", {}, function (res) {
-                    this.getData = res;
-                })
-            },
-            search() {
-                //includes内容包括
-                //var searchRes = this.supplys.filter(m => m.supplyDemandTitle.includes(this.searchText));
-            },
-        },
-        //对属性进行计算（啃皮提的）
-        computed: {
-            js() {
-                debugger
-                //filter类似于where
-                this.userList.filter(m => m.id == 1);
-            }
-        },
-        //方法请求前进行调用（ajax）（忙提的）
-        mounted() {
-            this.qq();
-        },
-    })
-    //}, 3000)
+        })
+        //}, 3000)
     </script>
 
     <script>
         Vue.component("my-component", function () {
-            template:"<h1>这是自定义组件</h1>"
+            template: "<h1>这是自定义组件</h1>"
         })
         let vm = new Vue({
-            el:"",
-            data:{
-                
+            el: "",
+            //routers: router,
+            data: {
+
             },
             components: {
-                "my-component":{
+                "my-component": {
                     template: "<h1>这是自定义组件</h1>",
-                    data: ()=>{
+                    data: () => {
                         return {
-                            count:0
+                            count: 0
                         }
                     }
                 }
             }
         })
+
+
+
+        //var router = new VueRouter({
+        //    routers: [
+        //        //{ path: "/", redirect: "/main" },
+        //        { path: "/", redirect: main },
+        //        { path: "/main", component: { template: "主题" }, name: "main" },
+        //        { path: "/page", component: { template: "内容" }, name: "page" }
+        //    ]
+        //})
     </script>
 </body>
 </html>

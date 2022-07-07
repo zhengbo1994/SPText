@@ -35,12 +35,12 @@ namespace SPTextCommon.EFBaseServices
         public void CreateBaseService(string connection)
         {
             this.Context = new System.Data.Entity.DbContext(connection);//连接数据库字符串
-            this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
-            this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
-            this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
-            this.Context.Configuration.AutoDetectChangesEnabled = false;//上下文跟踪
-            this.Context.Configuration.UseDatabaseNullSemantics = false;//上下文跟踪
-            this.Context.Configuration.EnsureTransactionsForFunctionsAndCommands = false;//上下文跟踪
+            //this.Context.Configuration.ProxyCreationEnabled = false;//创建实体类型
+            //this.Context.Configuration.LazyLoadingEnabled = false;//延迟加载
+            //this.Context.Configuration.ValidateOnSaveEnabled = false;//上下文跟踪
+            //this.Context.Configuration.AutoDetectChangesEnabled = false;//上下文跟踪
+            //this.Context.Configuration.UseDatabaseNullSemantics = false;//上下文跟踪
+            //this.Context.Configuration.EnsureTransactionsForFunctionsAndCommands = false;//上下文跟踪
         }
         public virtual System.Data.Entity.DbSet<Company> Company { get; set; }
     }
@@ -81,7 +81,7 @@ namespace SPTextCommon.EFBaseServices
         protected System.Data.Entity.DbSet<T> _dbset;
         public BaseDal()
         {
-            _dbset = db.Context.Set<T>();
+            _dbset = db.Set<T>();
         }
 
         #region 3.0 查询方法的封装
@@ -92,7 +92,6 @@ namespace SPTextCommon.EFBaseServices
         {
             return _dbset.Where(where).ToList();
         }
-
         #endregion
 
         #region 3.0.2 连表带条件查询
