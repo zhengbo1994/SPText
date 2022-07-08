@@ -79,6 +79,12 @@ namespace ReportPrinting.Model
 
         private Stream CreateStream(string name, string extension, Encoding encoding, string mimeType, bool willSeek)
         {
+            var path= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"EMF");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            };
+
             //EMF为增强型图元文件
             string emfPath = @"EMF\" + name + Guid.NewGuid() + "." + extension;
             Stream stream = new FileStream(emfPath, FileMode.Create);

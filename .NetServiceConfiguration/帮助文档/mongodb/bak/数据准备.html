@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>数据准备</title>
+</head>
+<body><h1 id='数据准备'>数据准备</h1>
+<h5 id='mongodb基本操作'>Mongodb基本操作</h5>
+<pre><code class='language-shell' lang='shell'>查询数据库
+show databases
+切换数据库
+use test
+查询当前数据库下面的集合
+show  collections
+创建集合
+db.createCollection(&quot;集合名称&quot;)
+删除集合
+db.集合名称.drop()
+删除数据库
+db.dropDatabase() //首先要通过use切换到当前的数据库
+</code></pre>
+<h5 id='mongodb增删改查curd'>Mongodb增删改查(CURD)</h5>
+<p>id 系统会自动加一个</p>
+<p>时间戳+机器码 生成</p>
+<h6 id='增insert）'>增（insert）</h6>
+<pre><code class='language-shell' lang='shell'>新增一条
+db.userinfo.insert({name:&quot;贾宝玉&quot;,age:25,gander:&quot;男&quot;,address:&#39;贾府&#39;})
+新增多条
+db.userinfo.insert([{name:&quot;贾宝玉&quot;,age:25,gander:&quot;男&quot;,address:&#39;贾府&#39;}
+,{name:&quot;林黛玉&quot;,age:16,gander:&quot;女&quot;,address:&#39;林府&#39;}])
+可不可以快速插入10条数据
+for(var i=1;i&lt;=10;i++)
+{
+ db.userinfo.insert({name:&quot;clay&quot;+i,age:i})
+ } 
+
+</code></pre>
+<h6 id='查find）'>查（find）</h6>
+<pre><code class='language-shell' lang='shell'>查询所有的数据
+db.集合名称.find({})
+查询top条数
+db.集合名称.find({}).limit(条数)
+条件查询
+ db.userinfo.find({name:&quot;clay1&quot;,age:1},{name:1,_id:0})
+</code></pre>
+<h6 id='排序分页'>排序&amp;分页</h6>
+<pre><code class='language-shell' lang='shell'>db.c1.insert({_id:1,name:&quot;a&quot;,sex:1,age:1})
+db.c1.insert({_id:2,name:&quot;a&quot;,sex:1,age:2})
+db.c1.insert({_id:3,name:&quot;b&quot;,sex:2,age:3})
+db.c1.insert({_id:4,name:&quot;c&quot;,sex:2,age:4})
+db.c1.insert({_id:5,name:&quot;d&quot;,sex:2,age:5})
+
+db.c1.find()
+正序
+db.c1.find({}).sort({age:1})
+降序
+ db.c1.find({}).sort({age:-1})
+ 分页查询 跳过两条查询两条
+ db.c1.find({}).sort({age:1}).skip(2).limit(2) 
+ 
+</code></pre>
+<h6 id='运算符'>运算符</h6>
+<figure><table>
+<thead>
+<tr><th style='text-align:center;' >运算符</th><th style='text-align:left;' >作用</th></tr></thead>
+<tbody><tr><td style='text-align:center;' >$gt</td><td style='text-align:left;' >大于</td></tr><tr><td style='text-align:center;' >$gte</td><td style='text-align:left;' >大于等于</td></tr><tr><td style='text-align:center;' >$lt</td><td style='text-align:left;' >小于</td></tr><tr><td style='text-align:center;' >$lte</td><td style='text-align:left;' >小于等于</td></tr><tr><td style='text-align:center;' >$ne</td><td style='text-align:left;' >不等于</td></tr><tr><td style='text-align:center;' >$in</td><td style='text-align:left;' >in</td></tr><tr><td style='text-align:center;' >$nin</td><td style='text-align:left;' >not in</td></tr></tbody>
+</table></figure>
+<pre><code class='language-shell' lang='shell'>//年龄大于1
+db.c1.find({age:{$gt:1}})
+//年龄是 3,4,5的
+db.c1.find({age:{$in:[3,4,5]}})
+</code></pre>
+<h6 id='改update）'>改（update）</h6>
+<p>db.集合名.update（条件， 新数据）
+					  {修改器: {键:值}}</p>
+<figure><table>
+<thead>
+<tr><th style='text-align:center;' >修改器</th><th style='text-align:left;' >作用</th></tr></thead>
+<tbody><tr><td style='text-align:center;' >$inc</td><td style='text-align:left;' >递增</td></tr><tr><td style='text-align:center;' >$rename</td><td style='text-align:left;' >重命名列</td></tr><tr><td style='text-align:center;' >$set</td><td style='text-align:left;' >修改列值</td></tr><tr><td style='text-align:center;' >$unset</td><td style='text-align:left;' >删除列</td></tr></tbody>
+</table></figure>
+<pre><code class='language-shell' lang='shell'> 准备数据
+ 
+ db.c1.insert({name:&quot;8888&quot;,age:1,addr:&#39;address&#39;,flag:true})
+  db.c1.update({name:&quot;8888&quot;}, {name:&quot;99&quot;})
+ db.c1.update({name:&quot;8888&quot;}, 
+ {
+  $set:{name: &quot;zs44&quot;},
+  $inc:{age:10},
+  $rename:{addr:&quot;address&quot;} ,
+  $unset:{flag:&quot;&quot;}
+   }
+ )
+ db.c1.find({name:&quot;zs44&quot;})
+ 
+ 
+</code></pre>
+<p>&nbsp;</p>
+<h6 id='删delete）'>删（delete）</h6>
+<pre><code class='language-javascript' lang='javascript'>//全部移除
+db.userinfo.deleteMany({})
+db.userinfo.deleteMany({age:1})
+</code></pre>
+<p>&nbsp;</p>
+<h5 id='聚合查询'>聚合查询</h5>
+<p>顾名思义就是把数据聚起来，然后统计</p>
+<h6 id='语法'>语法</h6>
+<pre><code>db.集合名称.aggregate([
+    {管道:{表达式}}
+     ....
+])
+</code></pre>
+<h6 id='常用管道'>常用管道</h6>
+<pre><code>$group 将集合中的文档分组，用于统计结果
+$match 过滤数据，只要输出符合条件的文档
+$sort  聚合数据进一步排序
+$skip  跳过指定文档数
+$limit 限制集合数据返回文档数
+....
+</code></pre>
+<h6 id='常用表达式'>常用表达式</h6>
+<pre><code>$sum  总和  $sum:1同count表示统计
+$avg  平均
+$min  最小值
+$max  最大值
+...
+</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h6 id='准备'>准备</h6>
+<pre><code>use test4
+db.c1.insert({_id:1,name:&quot;a&quot;,sex:1,age:1})
+db.c1.insert({_id:2,name:&quot;a&quot;,sex:1,age:2})
+db.c1.insert({_id:3,name:&quot;b&quot;,sex:2,age:3})
+db.c1.insert({_id:4,name:&quot;c&quot;,sex:2,age:4})
+db.c1.insert({_id:5,name:&quot;d&quot;,sex:2,age:5})
+</code></pre>
+<p>&nbsp;</p>
+<h6 id='练习'>练习</h6>
+<ul>
+<li>统计男生、女生的总年龄</li>
+
+</ul>
+<blockquote><pre><code>db.c1.aggregate([
+{
+	$group:{
+_id: &quot;$sex&quot;,
+rs: {$sum: &quot;$age&quot;}
+	}
+}
+])
+</code></pre>
+</blockquote>
+<ul>
+<li>统计男生、女生的总人数</li>
+
+</ul>
+<blockquote><pre><code>db.c1.aggregate([
+{
+	$group:{
+_id: &quot;$sex&quot;,
+rs: {$sum:1}
+	}
+}
+])
+</code></pre>
+</blockquote>
+<ul>
+<li>求学生总数和平均年龄</li>
+
+</ul>
+<blockquote><pre><code>db.c1.aggregate([
+{
+	$group:{
+_id: null,
+total_num: {$sum:1},
+total_avg: {$avg: &quot;$age&quot;}
+	}
+}
+])
+</code></pre>
+</blockquote>
+<ul>
+<li>查询男生、女生人数，按人数升序</li>
+
+</ul>
+<blockquote><pre><code>db.c1.aggregate([
+{$group:{_id: &quot;$sex&quot;,rs: {$sum: 1}}},
+{$sort:{rs: -1}}
+])
+</code></pre>
+</blockquote>
+<p>##### </p>
+<p>&nbsp;</p>
+<h1 id='自增id'>自增id</h1>
+<pre><code class='language-javascript' lang='javascript'>#创建序列
+db.counters.insert({_id:&quot;productid&quot;,sequence_value:0})
+</code></pre>
+<h2 id='创建-javascript-函数'>创建 Javascript 函数</h2>
+<p>现在，我们创建函数 getNextSequenceValue 来作为序列名的输入， 指定的序列会自动增长 1 并返回最新序列值。在本文的实例中序列名为 productid 。</p>
+<pre><code>&gt;function getNextSequenceValue(sequenceName){
+   var sequenceDocument = db.counters.findAndModify(
+      {
+         query:{_id: sequenceName },
+         update: {$inc:{sequence_value:1}},
+         &quot;new&quot;:true
+      });
+   return sequenceDocument.sequence_value;
+}
+</code></pre>
+<hr />
+<h2 id='使用-javascript-函数'>使用 Javascript 函数</h2>
+<p>接下来我们将使用 getNextSequenceValue 函数创建一个新的文档， 并设置文档 _id 自动为返回的序列值：</p>
+<pre><code>&gt;db.products.insert({
+   &quot;_id&quot;:getNextSequenceValue(&quot;productid&quot;),
+   &quot;product_name&quot;:&quot;Apple iPhone&quot;,
+   &quot;category&quot;:&quot;mobiles&quot;})
+
+&gt;db.products.insert({
+   &quot;_id&quot;:getNextSequenceValue(&quot;productid&quot;),
+   &quot;product_name&quot;:&quot;Samsung S3&quot;,
+   &quot;category&quot;:&quot;mobiles&quot;})
+</code></pre>
+<p>就如你所看到的，我们使用 getNextSequenceValue 函数来设置 _id 字段。</p>
+<p>为了验证函数是否有效，我们可以使用以下命令读取文档：</p>
+<pre><code>&gt;db.products.find()
+</code></pre>
+<p>以上命令将返回以下结果，我们发现 _id 字段是自增长的：</p>
+<pre><code class='language-javascript' lang='javascript'>{ &quot;_id&quot; : 1, &quot;product_name&quot; : &quot;Apple iPhone&quot;, &quot;category&quot; : &quot;mobiles&quot;}
+
+{ &quot;_id&quot; : 2, &quot;product_name&quot; : &quot;Samsung S3&quot;, &quot;category&quot; : &quot;mobiles&quot; }
+</code></pre>
+<p>&nbsp;</p>
+<h1 id='事务'>事务</h1>
+<pre><code class='language-shell' lang='shell'>use test
+db.createCollection(&quot;userinfo&quot;)
+
+s=db.getMongo().startSession()
+s.startTransaction()
+s.getDatabase(&quot;test&quot;).userinfo.insert({name:&quot;a&quot;})
+s.commitTransaction() 
+</code></pre>
+<p>&nbsp;</p>
+</body>
+</html>

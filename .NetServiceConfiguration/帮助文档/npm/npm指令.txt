@@ -1,0 +1,23 @@
+vue cli 安装
+npm install -g @vue/cli
+
+创建文件
+vue create zhaoxi-ui
+
+启动
+npm run build
+
+安装ypescript
+npm install -g typescript
+
+启动项目
+npm run serve
+
+css样式域
+npm install sass-loader node-sass --save
+
+路由
+npm install vue-router@next
+
+axios安装
+npm install axios --save
