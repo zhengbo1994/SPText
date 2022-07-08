@@ -1,0 +1,18 @@
+https://zhuanlan.zhihu.com/p/61639212
+
+https://www.anaconda.com/download/
+
+python -m pip install mysql-connector -i https://pypi.tuna.tsinghua.edu.cn/simple/
+
+python -m pip install mysql-connector
+
+conda env list
+conda activate py_39
+
+pip list
+
+
+
+
+每次pip执行
+conda activate py_39
