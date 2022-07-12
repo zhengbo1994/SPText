@@ -25,6 +25,14 @@ docker run -it -d -p 8080:8080 -v /NewFile/publish:/app --workdir /app mcr.micro
 curl http://192.168.30.129:8080
 
 
+安装 SDK
+yum install libunwind libicu
+sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+sudo yum install dotnet-sdk-5.0
+sudo yum install aspnetcore-runtime-5.0
+sudo yum install dotnet-runtime-5.0
+
+
 
 
 
