@@ -158,8 +158,13 @@ namespace SPText.Common.Crawler
             document.LoadHtml(strHtml);
             string liPath = "/html/body/section[1]/div/div[@class='market-bd market-bd-6 course-list course-card-list-multi-wrap js-course-list']/ul/li";
             HtmlNodeCollection liNodes = document.DocumentNode.SelectNodes(liPath);
+  
 
             List<CourseEntity> courseEntities = new List<CourseEntity>();
+            if (liNodes == null)
+            {
+                return courseEntities;
+            }
             foreach (var node in liNodes)
             {
                 CourseEntity courseEntity = GetLiData(node);

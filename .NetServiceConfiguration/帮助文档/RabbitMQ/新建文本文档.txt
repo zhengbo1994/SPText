@@ -1,0 +1,34 @@
+下面是搭建单机，搭建是成功
+https://www.cnblogs.com/takako_mu/p/14610718.html
+拉取
+docker pull rabbitmq:management
+
+挂载端口到docker里面
+docker run -p 5672:5672 -p 15672:15672 --name myrabbitmq -d rabbitmq:management
+
+
+搭建集群，搭建失败*****************************************************************************************
+https://blog.csdn.net/m0_67392182/article/details/124465209
+
+#创建RabbitMQ目录
+mkdir /usr/rabbitmq
+cd /usr/rabbitmq
+#创建三个rabbitmq 目录，存储三个节点配置信息
+mkdir rabbitmq01 rabbitmq02 rabbitmq03
+
+#创建rabbitmq01节点容器
+docker run -p 5672:5672 -p 15672:15672 --name rabbitmq01 -d rabbitmq:management  --hostname rabbitmq01  -v /usr/rabbitmq/rabbitmq01:/var/lib/rabbitmq  -e RABBITMQ_ERLANG_COOKIE='rabbitcookie’ 
+
+
+
+#创建rabbitmq02节点容器
+docker run -d --hostname rabbitmq02 --name rabbitmq02 -v /usr/rabbitmq/rabbitmq02:/var/lib/rabbitmq -p 15673:15672 -p 5673:5672 –link rabbitmq01:rabbitmq01 -e RABBITMQ_ERLANG_COOKIE='rabbitcookie' rabbitmq:management
+
+
+#创建rabbitmq03节点容器
+docker run -d --hostname rabbitmq03 --name rabbitmq03  -v /usr/rabbitmq/rabbitmq03:/var/lib/rabbitmq -p 15674:15672 -p 5674:5672 –link rabbitmq01:rabbitmq01 --link rabbitmq02:rabbitmq02 -e RABBITMQ_ERLANG_COOKIE='rabbitcookie’ rabbitmq:management
+
+
+
+
+

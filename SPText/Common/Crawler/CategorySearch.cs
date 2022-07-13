@@ -128,6 +128,10 @@ namespace SPText.Common.Crawler
             string path = "//*[@id='auto-test-1']/div[1]/dl/dd";
             HtmlNodeCollection nodeList = doc.DocumentNode.SelectNodes(path);
 
+            if (nodeList==null)
+            {
+                return categoryList;
+            }
             foreach (HtmlNode node in nodeList)
             {
                 HtmlDocument htmlDocument = new HtmlDocument();

@@ -226,7 +226,7 @@ namespace SPText
             #endregion
 
             #region  爬虫
-            //Crawler();
+            Crawler();
             #endregion
 
             #region  定时调度(有错误)
@@ -2375,6 +2375,10 @@ namespace SPText
         {
             try
             {
+                string url = $"https://ke.qq.com/course/list/?tuin=7e4f8b7d";
+                var html = SPTextCommon.HttpMethods.HttpGet(url);
+
+
                 #region 抓取腾讯课堂类别数据 
                 Common.Crawler.CategorySearch search = new Common.Crawler.CategorySearch();
                 search.Crawler();

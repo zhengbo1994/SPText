@@ -1,0 +1,32 @@
+https://blog.csdn.net/qq_47831505/article/details/123883715
+
+1.创建安装目录/usr/local/redis
+mkdir /usr/local/redis 
+
+
+2.进入安装包目录
+cd /usr/local/src
+
+3.进行下载安装包（此处可以自定义下载版本）
+wget http://download.redis.io/releases/redis-7.0.3.tar.gz
+
+
+4.进行解压
+tar -xzvf redis-7.0.3.tar.gz
+
+5.进入redis-3.0.7此目录
+cd redis-7.0.3 
+
+6.安装到指定目录中
+make PREFIX=/usr/local/redis install 
+
+
+7.配置文件，拷贝redis.conf到安装目录下
+cp redis.conf /usr/local/redis/bin/
+
+
+8.启动 ：进入安装目录/usr/local/redis/bin，运行启动命令
+cd /usr/local/redis/bin
+./redis-server /usr/local/redis/bin/redis.conf -port 6379
+./redis-cli -port 6379
+
