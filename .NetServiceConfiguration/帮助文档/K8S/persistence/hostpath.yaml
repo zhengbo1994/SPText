@@ -1,0 +1,21 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod
+spec:
+  volumes:
+  - name: share-volume
+    hostPath:
+      path: "/data/hostpath"
+  containers:
+  - name: httpd
+    image:  httpd
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: share-volume
+    args:
+    - /bin/bash
+    - -c
+    - echo "hello hostPath Persistence" > /usr/share/nginx/html/index.html; sleep 30000
+  nodeSelector:
+    disktype: ssd 

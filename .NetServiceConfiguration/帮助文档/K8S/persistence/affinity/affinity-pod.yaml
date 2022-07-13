@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: affinity
+  labels:
+    app: node-affinity-pod
+spec:
+  containers:
+    - name: with-node-affinity
+      image: nginx
+  affinity:		# 亲和性
+    nodeAffinity:		# Node 亲和性
+      requiredDuringSchedulingIgnoredDuringExecution:	# 硬策略
+        nodeSelectorTerms:		# Node 选择方案
+          - matchExpressions:
+              # 优先选择：节点标签 kubernetes.io/hostname 的值不在 ["work2"] 中的节点
+              # kubectl get node --show-labels 查看所有节点标签
+              # kubernetes.io/hostname 标签存储的是节点 hostname
+              - key: kubernetes.io/hostname		# 键名，Node 节点的标签
+                operator: In					# 匹配条件
+                values:							# 值
+                  - work12

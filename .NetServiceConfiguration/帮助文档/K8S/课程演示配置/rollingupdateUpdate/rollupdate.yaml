@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gerry-deployment
+  labels:
+    app: gerry-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gerry-pod
+  template:
+    metadata:
+      labels:
+        app: gerry-pod
+    spec:
+      containers:
+      - name: gerry-container
+        image: registry.cn-hangzhou.aliyuncs.com/gerry-docker/k8s-deploy-v1:v1
+        ports:
+        - containerPort: 80

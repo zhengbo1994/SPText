@@ -1,0 +1,12 @@
+﻿1、解压拷贝的文件jenkins_home.tar.gz
+2、设置挂载文件jenkins_mount的归属和权限
+chown -R 1000:1000 ./jenkins_mount
+chmod 777 ./jenkins_mount
+3、导入Jenkins镜像
+docker load < myjenkins.tar
+4、运行容器
+docker run -p 10241:8080 --name myjenkins -v /root/gerry_back/jenkins_mount:/var/jenkins_home -d 256d8774b5a7
+5、升级Jenkins版本
+docker cp ./jenkins.war 容器ID:/usr/share/jenkins
+重启Jenkisn容器
+docker restart 容器ID/名称

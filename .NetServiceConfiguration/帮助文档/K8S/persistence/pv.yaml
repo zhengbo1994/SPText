@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv
+spec: 
+  capacity: 
+    storage:  500M
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy:  Recycle
+  storageClassName: nfs
+  nfs:  
+    path: /nfsdata/pv1
+    server: 192.168.3.235

@@ -1,0 +1,28 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: emptydir-consumer
+spec:
+  volumes:
+  - name: shared-volume
+    emptyDir: {}
+
+  containers:
+  - name: emptydir
+    image:  busybox
+    volumeMounts:
+    - mountPath:  /empty_dir
+      name: shared-volume
+    args:
+    - /bin/sh
+    - -c
+    - echo "hello world" > /empty_dir/hello.txt; sleep 30000
+  - name: consumer
+    image:  busybox
+    volumeMounts:
+    - mountPath:  /consumer_dir
+      name: shared-volume
+    args:
+    - /bin/sh
+    - -c
+    - cat /consumer_dir/hello.txt ; sleep 30000

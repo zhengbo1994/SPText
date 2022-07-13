@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: bluegreen
+  replicas: 6
+  template:
+    metadata:
+      labels:
+        app: bluegreen
+        version: v1.0
+    spec:
+      containers:
+      - name: bluegreen
+        image: registry.cn-hangzhou.aliyuncs.com/gerry-docker/k8s-deploy-v1:v1
+        ports:
+        - containerPort: 80

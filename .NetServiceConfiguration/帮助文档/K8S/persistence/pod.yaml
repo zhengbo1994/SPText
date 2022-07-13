@@ -1,0 +1,19 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod
+spec:
+  volumes:
+  - name: share-data
+    persistentVolumeClaim:
+      claimName:  pvc
+  containers:
+  - name: pod
+    image:  busybox
+    args:
+    - /bin/sh
+    - -c
+    - sleep 30000
+    volumeMounts:
+    - mountPath:  "/data"
+      name: share-data

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb
+spec:
+  replicas: 5	# 副本数
+  selector:
+    matchLabels:
+      app: myweb
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      nodeName: master	# 指定 Node 节点的名字
+      containers:
+        - name: myweb
+          image: nginx
+          ports:
+            - containerPort: 80

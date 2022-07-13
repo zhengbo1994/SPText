@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-svc
+  namespace:  test
+  labels:
+    app: mysql-svc
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+  selector:
+    app: mysql-pod
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-statefulset
+  namespace:  test
+spec:
+  replicas: 3
+  serviceName: mysql-svc
+  selector:
+    matchLabels:
+      app: mysql-pod
+  template:
+    metadata:
+      labels:
+        app: mysql-pod
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: 123.com
+        volumeMounts:
+        - name: share-mysql
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:  #这个字段会自动执行创建PVC
+  - metadata:
+      name: share-mysql
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "storageclass"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi
