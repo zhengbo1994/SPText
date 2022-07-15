@@ -20,9 +20,9 @@ sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-pr
 sudo yum install dotnet-sdk-6.0
 
 //将/NewFile/publish里面的文件挂载再docker上面
-docker run -it -d -p 8080:8080 -v /NewFile/publish:/app --workdir /app mcr.microsoft.com/dotnet/core/aspnet  dotnet /app/WebText.dll
+docker run -it -d -p 5003:5000 -v /file/publish:/app --workdir /app mcr.microsoft.com/dotnet/sdk:5.0  dotnet /app/WebText.dll
 
-curl http://192.168.30.129:8080
+curl http://192.168.3.203:5003
 
 
 安装 SDK
@@ -34,7 +34,14 @@ sudo yum install dotnet-runtime-5.0
 
 
 
+进入交互
+docker exec -it acb473d3a62d /bin/bash
+查看目录
+ls
 
+
+基本操作（mysql和redis集群搭建）
+https://www.yuque.com/charlie-3leiq/pnnqey/ntqfob
 
 
 

@@ -1,0 +1,12 @@
+https://www.cnblogs.com/wangyang0210/p/14553135.html
+
+
+
+
+
+
+docker run --restart=always --name sftp -v /users/sftp/file:/home/tgUser/file --privileged=true -p 1003:22 -d atmoz/sftp sftp_test:sftp_test:1001
+https://blog.csdn.net/weixin_44395100/article/details/117228807
+
+
+
