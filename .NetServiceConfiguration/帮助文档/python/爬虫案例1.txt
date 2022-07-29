@@ -91,3 +91,35 @@ if __name__ == '__main__':
 
     pool.close()
     pool.join()
+
+
+
+
+
+ÍøÒ×ÔÆÒôÀÖÅÀ³æÏÂÔØ£¨ÊµÀı£©
+import requests
+import re 
+import os
+
+url='https://music.163.com/discover/toplist?id=3778678'
+headers={
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+}
+
+file_name='muisc\\' 
+if not os.path.exists(file_name):
+    os.mkdir(file_name)
+
+respose= requests.get(url,headers)
+#print(respose.text)
+html_data= re.findall('<li><a href="/song\?id=(\d+)">(.*?)</a>',respose.text)
+#print(html_data)
+
+
+for num_id,title in html_data:
+    #'https://music.163.com/song/media/outer/url?id=1859245776.mp3'
+    muisc_url='https://music.163.com/song/media/outer/url?id={}.mp3'.format(num_id)
+
+    muisc_context=requests.get(muisc_url,headers).content
+    with open(file_name+title+'.mp3',mode='wb') as f: 
+        f.write(muisc_context) 
