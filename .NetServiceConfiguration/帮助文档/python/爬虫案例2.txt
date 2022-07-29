@@ -1,0 +1,206 @@
+# 网易云热榜单爬虫
+# import requests
+# import re
+# import os
+#
+# url='https://music.163.com/discover/toplist?id=3778678'
+# headers={
+#     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+#     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+# }
+#
+# file_name='muisc\\'
+# if not os.path.exists(file_name):
+#     os.mkdir(file_name)
+#
+# respose= requests.get(url,headers)
+# #print(respose.text)
+# html_data= re.findall('<li><a href="/song\?id=(\d+)">(.*?)</a>',respose.text)
+# #print(html_data)
+#
+#
+# for num_id,title in html_data:
+#     #'https://music.163.com/song/media/outer/url?id=1859245776.mp3'
+#     muisc_url='https://music.163.com/song/media/outer/url?id={}.mp3'.format(num_id)
+#
+#     muisc_context=requests.get(muisc_url,headers).content
+#     with open(file_name+title+'.mp3',mode='wb') as f:
+#         f.write(muisc_context)
+
+
+
+
+# 酷狗热榜单爬虫
+# import requests
+# import sys
+# import re
+# import json
+# import pprint
+# import parsel
+# import os
+#
+# headers={
+#    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+#    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+# }
+#
+# file_name='muisc\\kugou\\'
+# if not os.path.exists(file_name):
+#    os.mkdir(file_name)
+#
+# def get_respone(html_url):
+#    if html_url!='':
+#        respone= requests.get(url=html_url,headers=headers)
+#        return respone
+#    else:
+#        return ''
+#
+# def get_list_url(html_url):
+#    respone= get_respone(html_url).text
+#
+#    selector=parsel.Selector(respone)
+#    list_name_title= selector.css('.pc_rank_sidebar li
+#    a::attr(title)').getall()
+#    href= selector.css('.pc_rank_sidebar li a::attr(href)').getall()
+#    list_info=zip(list_name_title,href)
+#    return list_info
+#
+#    #list_url=re.findall('<a title="(.*?)" hidefocus="true"
+#    href="(.*?)"',respone)
+#    # print(len(list_url))
+#    #return list_url
+#
+#
+# def get_hash_id(html_url):
+#    respone= get_respone(html_url).text
+#    hash_list=re.findall('"Hash":"(.*?)"',respone)
+#    album_id=re.findall('"album_id":(\d+)',respone)
+#    muisc_list=zip(hash_list,album_id)
+#    return muisc_list;
+#
+#
+# def get_muisc_list(hash,muisc_id):
+#    link_url=f'https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash={hash}&dfid=4FIHFU4TyC0o00oExb27eTLX&appid=1014&mid=6a31f940f3a8817fec45c689f9a16819&platid=4&album_id={muisc_id}'
+#    respone=get_respone(html_url=link_url).text
+#
+#    #print(type(respone))
+#    jsonData=json.loads(respone)
+#    #pprint.pprint(respone.json())
+#    title=jsonData['data']['audio_name']
+#    play_url=jsonData['data']['play_url']
+#    muisc_info=[title,play_url]
+#    return muisc_info
+#
+#
+# def save(title,play_url):
+#   if play_url!='':
+#        muisc_content=get_respone(html_url=play_url).content
+#        with open(file_name+title+".mp3",mode='wb') as f:
+#            f.write(muisc_content)
+#            print(title,'保存成功')
+#
+#
+#
+#
+# def main(html_url):
+#    list_url=get_list_url(html_url=html_url)
+#    for list_name,link in list_url:
+#        print(f'------------------正在爬取{list_name}--------------------')
+#        muisc_id_list=get_hash_id(html_url=link)
+#        for hash,muisc_id in muisc_id_list:
+#            muisc_info=get_muisc_list(hash,muisc_id)
+#            save(muisc_info[0],muisc_info[1])
+#
+#
+# if __name__ == "__main__":
+#    url='https://www.kugou.com/yy/html/rank.html'
+#    main(url)
+
+
+
+# 爬取小说（https://www.ruihangkeji.com/）
+#import parsel
+#import requests
+#import os
+
+#filePath = 'xiazai//xiaoshuo//'
+#if(not os.path.exists(filePath)):
+#    os.mkdir(filePath)
+
+#url = 'https://www.ruihangkeji.com/book/26212/'
+
+#response = requests.get(url)
+#selector = parsel.Selector(response.text)
+#biaoti = selector.css('#info > h1::text').get()
+#zhangjie = selector.css('#list > dl > dd > a::text').getall()
+#zhangjie_href = selector.css('#list > dl > dd > a::attr(href)').getall()
+##print(biaoti)
+##print(zhangjie)
+#url_dizhi_zhu = 'https://www.ruihangkeji.com/'
+#for link in zhangjie_href:
+#    url_link = url_dizhi_zhu + link
+#    url_content = requests.get(url_link).text
+
+#    xs_selector = parsel.Selector(url_content)
+#    xs_title = xs_selector.css('#wrapper > div.content_read > div >
+#    div.bookname > h1::text').get()
+#    xs_context = xs_selector.css('#content::text').getall()
+#    # print(xs_title)
+#    # print(xs_context)
+#    xs_context_zl = '\n'.join(xs_context)
+
+#    with open(filePath + xs_title + '.txt',mode='a',encoding='utf-8') as f:
+#        f.write(xs_title + '\n')
+#        f.write(xs_context_zl + '\n\n\n')
+#        print(xs_title)
+
+
+# 抓取抖音视频
+#import requests
+#import re
+#import os
+#from selenium import webdriver
+#import time
+
+#filename = 'xiazai\\douyin'
+#if not os.path.exists(filename):
+#   os.mkdir(filename)
+
+#headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 Edg/103.0.1264.71'}
+
+#def change_title(title):
+#    pattern = re.compile(r'[\/\\\:\*\?\"\<\>\|]') # '/ \ : * ?  " < > | '
+#    new_title = re.sub(pattern,"_",title) #替换为下划线
+#    return new_title
+
+#def drop_down():
+#    for x in range(1,100,4):
+#        time.sleep(1)
+#        j = x / 9
+#        js = 'document.documentElement.scrollTop=document.documentElement.scrollHeight * %f' % j
+#        driver.execute_script(js)
+
+#driver = webdriver.Chrome()
+#driver.get('https://www.douyin.com/user/MS4wLjABAAAA8Nl-RLXjSF0kleaBbiP5bkEtuck5xzhr5mFCL_ybKTBv6NGM_wDbOS-Q8m5hsLAh')
+#time.sleep(3)
+#drop_down()
+
+#lis = driver.find_elements_by_css_selector('#root > div > div.T_foQflM > div > div > div.ckqOrial > div.mwbaK9mv > div:nth-child(2) > ul > li')
+#for li in lis:
+#    li_url = li.find_element_by_css_selector('a').get_attribute('href')
+
+#    response = requests.get(url=li_url,headers=headers)
+#    html_data = re.findall('%3D%',response.text)[1]
+#    title = re.findall('<title data-react-helmet="true">(.*?)</title>',response.text)[0]
+#    video_url = requests.utils.unquote(html_data).replace('":"','https:')
+#    video_content = requests.get(url=video_url,headers=headers).content
+#    new_title = change_title(title)
+#    with open(filename + new_title + '.mp4',mode='wb') as f:
+#        f.write(video_content)
+#        print(new_title,video_url)
+
+
+
+
+
+

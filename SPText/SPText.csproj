@@ -310,6 +310,9 @@
     <Reference Include="SharpCompress, Version=0.30.1.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpCompress.0.30.1\lib\net461\SharpCompress.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.4.0\lib\net461\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="SQLinq, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1c5d57eb9e11fe4b, processorArchitecture=MSIL">
       <HintPath>..\packages\SQLinq.2.0\lib\net\SQLinq.dll</HintPath>
     </Reference>
@@ -662,6 +665,7 @@
     <Compile Include="Common\TestHelper.cs" />
     <Compile Include="Common\ThreadHelper.cs" />
     <Compile Include="Common\UnityIocHelper.cs" />
+    <Compile Include="Common\UnityIoc\UnityIocHelper.cs" />
     <Compile Include="Common\UploadFileContext.cs" />
     <Compile Include="Common\ValidateCodeImage.cs" />
     <Compile Include="Common\WebHelper.cs" />
