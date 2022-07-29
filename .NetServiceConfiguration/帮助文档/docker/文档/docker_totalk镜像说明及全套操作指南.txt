@@ -1,0 +1,166 @@
+--【注意】--
+每次有更新文档，都会在文档最底部进行记录更新的内容。
+
+
+【预备操作】
+服务器配置建议
+用户量在线1000：
+建议最低配置：双核cpu，2G内存，10G硬盘，2Mbps出口带宽
+--------------------------------------------------------------------------------------
+【注意只支持物理机，不支持虚拟机win10】Windows10下安装参考：
+<条件:windows10专业版才可以支持docker，家庭版不可以！>
+文档：https://www.jianshu.com/p/27dc76f855f1
+参考上述文档，下载后，打开cmd命令行执行
+C:\Users\LIFE_MM>docker -v
+Docker version 19.03.12, build 48a66213fe
+说明安装成功
+--------------------------------------------------------------------------------------
+Linux下安装
+<Ubuntu 16.04 Server版>
+执行：sudo apt install docker.io
+<centos 桌面版>
+执行：yum install -y docker-io
+确认：执行：docker -v 有版本信息输出说明成功
+--------------------------------------------------------------------------------------
+滔滔对讲服务器部署--docker初始化及下载镜像
+【注】：这里是在线下载官方镜像，如需离线安装，目前还未进行--待完成教程。
+官方Hub.docker镜像地址及使用简介
+dockerHub totalk仓库地址
+附：https://hub.docker.com/repository/docker/562245918/totalk
+首先你需要注册一个账号，不然之后没法使用docker！
+
+
+【！！！】这里获取镜像，应访问最新dockerHub totalk仓库得到最新pull镜像指令【！！！】
+
+
+【范例】这里的指令应该替换成最新的tag。
+在对应的系统命令行中执行：
+docker pull 562245918/totalk:v2.5
+即可下载得到镜像。
+可使用docker images 查看是否有对应的镜像信息输出。
+之后查看使用指南！
+
+【离线安装镜像】
+拿到totalk_v18.tar 大概1G大小，传上服务器。
+执行docker load < totalk_v18.tar
+                          《这里具体看tar的文件名》
+
+
+
+【使用指南】（by LIFEMM）
+1.建立共享数据卷  [以此来确保数据安全，防止丢失数据]
+
+	-1.执行docker volume create totalk_info
+	-2.执行docker volume ls
+log信息：
+DRIVER              VOLUME NAME
+local               totalk_info
+成功！
+
+docker volume inspect totalk_info 查看共享卷的宿主机路径
+
+
+
+2.运行totalk镜像
+  --【注意】--这里执行命令要以实际的imgae name(比如我这里是562245918/totalk:v0.4————可通过docker images查询)为准
+
+vⅠ.第一步启动容器&启动服务器
+【方式1】docker run -p 1935:1935/tcp -p 8080:8080 -p 8081:8081 -p  59638:59638/tcp -p 59638:59638/udp -p  59639:59639/tcp -p 59680:59680  --restart=always   -v totalk_info:/home/zcx 562245918/totalk:v2.5 /bin/bash cmd.sh
+说明：该命令直接初始化进入容器不断的实时输出Log信息，无法退出。有些不灵活。
+如果需要监测运行日志可以启动运行该命令。
+【方式2】docker run -d -p 1935:1935/tcp -p 8080:8080 -p 8081:8081 -p  59638:59638/tcp -p 59638:59638/udp -p  59639:59639/tcp -p 59680:59680   --restart=always  -v totalk_info:/home/zcx 562245918/totalk:v2.5 /bin/bash cmd.sh
+说明：该命令增加-d参数，运行后直接退出，该容器默认会在后台运行(可通过docker ps查看是否在运行)。如果需要进入该容器进行调试以及灵活操作，请本文内搜索【《附》3.如需进入container】按相关指令进行操作。该命令较为灵活
+
+log信息参考:----run do_nothing-----
+* Restarting web server apache2
+   ...done.
+1111111111
+2222222222
+<W>2020-08-28 08:46:26.072 OpenSSL: OpenSSL 1.0.1f 6 Jan 2014
+<W>2020-08-28 08:46:26.099 ServerDB: Opened SQLite database /home/lifemm/totalk.sqlite
+<W>2020-08-28 08:46:26.126 Generating new tables...
+<W>2020-08-28 08:46:26.144 MurmurIce: Endpoint "tcp -h 127.0.0.1 -p 6504" running
+<W>2020-08-28 08:46:26.144 Manager => Max users: 5
+<W>2020-08-28 08:46:26.144 Manager => Read channels...
+<W>2020-08-28 08:46:26.145 Manager => Read channel nicks...
+<W>2020-08-28 08:46:26.147 Manager => Read users...
+<W>2020-08-28 08:46:26.147 Manager => Cache joined channels...
+<W>2020-08-28 08:46:26.147 Manager => Server listening on 59638
+<W>2020-08-28 08:46:26.148 Manager => Udp server listening on 59638
+<W>2020-08-28 08:46:26.148 Manager => launch DB thread...
+<W>2020-08-28 08:46:26.148 WriteDB: Opened SQLite database /home/lifemm/totalk.sqlite
+<W>2020-08-28 08:46:26.148 Manager => boot servers...
+<W>2020-08-28 08:46:26.148 0 => Generating new server certificate.
+<W>2020-08-28 08:46:26.294 0 => server 0 running
+<W>2020-08-28 08:46:26.294 1 => Generating new server certificate.
+<W>2020-08-28 08:46:26.515 1 => server 1 running
+<W>2020-08-28 08:46:26.515 Manager => prepare signals...
+<W>2020-08-28 08:46:26.515 Manager => start threads...
+<W>2020-08-28 08:46:26.516 Manager => boot server done
+
+
+【注】562245918/totalk:v2.5 这里是镜像名称，可通过docker images 查看进行获取最新的镜像名称进行修改，不然可能提示找不到镜像。
+
+
+
+-----------说明启动成功-------------------
+查看宿主机ensxx ip地址：执行ifconfig
+打开浏览器输入192.168.xxx.xxx:8080/manage即可访问滔滔后台界面
+《附》3.如需进入container
+Ⅰ.>宿主机执行docker ps 查看最后的container name 
+Ⅱ.>宿主机执行docker exec -it  ${container name} bash
+即可进入bash控制container
+如需root进入执行该命令添加 -u root即可~
+
+
+
+****【升级指南】----保存现有容器创建的用户数据及序列码等
+1.在宿主机执行[docker ps],拿到容器名或容器ID，这里列举执行该命令后输出的内容
+
+-----------------------------输出--------------------------------------------------
+CONTAINER ID        IMAGE                 COMMAND             CREATED             STATUS              PORTS                                                                                                                                            NAMES
+58cab4ca39e5        562245918/totalk:v2.5       "./cmd.sh start"    39 minutes ago      Up 30 minutes       3306/tcp, 0.0.0.0:80->80/tcp, 0.0.0.0:59638->59638/tcp, 0.0.0.0:59638->59638/udp, 0.0.0.0:59680->59680/tcp, 6504/tcp, 0.0.0.0:59680->59680/udp   laughing_yalow
+
+-----------------------------输出--------------------------------------------------
+
+这里[58cab4ca39e5]为容器ID，[laughing_yalow]为容器名，任选一个，执行下一步。
+
+2.在宿主机执行[docker cp 58cab4ca39e5:/home/lifemm/totalk.sqlite    /home/lifemm/]
+【注意】这里命令仅供参考，实际使用不一样。
+这里将c312ef05ea89替换为我们上面实际执行[docker ps]后的容器名或者容器ID，【:/home/lifemm/totalk.sqlite】这个部分不用修改，最后【/home/lifemm/】改为你指定暂存的文件的路径，执行该命令后你会在发现【/home/lifemm/】你指定的路径下，会产生一个totalk.sqlite文件
+
+至此你的旧版本服务器数据已保存成功。
+【升级新版本】
+3.访问[ https://hub.docker.com/repository/docker/562245918/taotao6.0 ]查询最新镜像,然后找到TAG栏目下，复制【docker pull 562245918/taotao6.0:v0.9】新镜像的命令，在宿主机执行该命令。然后按照本教程相关内容将新容器启动。
+4.执行[docker cp  /home/lifemm/totalk.sqlite 58cab4ca39e5:/home/lifemm/totalk.sqlite]此命令将备份好的服务器数据载入新镜像启动的容器。
+5.重启容器进行生效，执行[docker restart 容器名或容器ID]
+
+访问IP/pttDev,查询用户及相关内容是否都在,即升级成功。
+
+
+
+
+2020.09.23
+//更新主程pttserver
+
+1.首先将最新的pttserver_0921拷贝至宿主机
+2.改文件名 pttserver_0921 为pttserver1
+3.进入容器执行：docker exec -it  ${container name} bash
+执行ll查看pttserver1的日期 【暂记是不是旧的日期】
+4.执行exit  退出容器
+5.在宿主机执行docker cp pttserver1 ${container name}:/home/lifemm
+范例: docker cp pttserver1 xxxxx:/home/lifemm
+说明 1.》container name 为docker ps 查看最后的Name，
+    2.》 【:/home/lifemm】确保旧的pttserver1在这个目录下
+6.执行 docker restart ${container name} 重启容器
+7.再次进入容器 执行ll确认是不是新的pttserver   然后可以打开后台执行相关操作
+
+
+2020.11.17
+//更新问题
+1.后台管理页面时间不对问题
+可以在执行开始容器时加入-e TZ=Asia/Shanghai参数。
+比如：docker run -d -p 80:80  -p 59638:59638 -e TZ=Asia/Shanghai 562245918/taotao5.0:v1
+备注：此时需要宿主机是正确的时间，否则时间还是不对。
+
+

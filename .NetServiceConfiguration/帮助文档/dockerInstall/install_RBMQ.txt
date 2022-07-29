@@ -1,0 +1,41 @@
+安装mssql
+https://blog.csdn.net/weixin_44758276/article/details/124153156
+docker pull mcr.microsoft.com/mssql/server
+docker images
+docker run --name msserver -e ‘ACCEPT_EULA=Y’ -e ‘MSSQL_SA_PASSWORD=MSsql123’ -p 1433:1433 -v /opt/msserver/data:/var/opt/mssql -d mcr.microsoft.com/mssql/server 
+
+
+（创建成功）
+https://www.pudn.com/news/62a54fad3934cd25af7cac87.html
+1. 拉取镜像
+docker pull mcr.microsoft.com/mssql/server
+2. 运行镜像
+运行MS SQLServer, 容易出现的错误是密码不满足要求，SQLServer的要求是至少8位且需要由大写字母、小写字母、数字、符号中的至少3种组成
+docker run --name SQLServer -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Abc12345" -p 1433:1433 -d mcr.microsoft.com/mssql/server
+3. 进入容器
+docker exec -it SQLServer bash
+4. 连接到SQLServer 
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Abc12345
+5. 创建数据库
+注意：SQLServer中每一个语句输入完成后都不会立刻执行（我还不知道DDL和DML有没有被区别对待），需要使用go来执行输入的语句。
+创建
+CREATE DATABASE TestDB;
+go
+查询
+SELECT Name from sys.Databases;
+6. 创建用户并授权
+和PostgreSQL有一点点相似，SQLServer也是将用户分为了登录用户和数据库用户的，所以需要分别创建
+创建登录用户
+go
+create login chenth with password='abc@1234', default_database=TestDB;
+go
+create user chenth for login chenth with default_schema=artc
+go
+7. 创建表并执行CRUD操作
+create table cth(a int, b varchar(16));
+go
+select * from cth;
+go
+
+
+
