@@ -13,7 +13,7 @@ conda env list
 conda activate py_39
 
 pip list
-
+conda
 
 
 
