@@ -53,7 +53,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="mongocsharpdriver" Version="2.14.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.14.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
     <PackageReference Include="SharpZipLib" Version="1.0.0" />
     <PackageReference Include="SqlMapper" Version="2.0.0" />
     <PackageReference Include="SqlMapper.Core" Version="1.0.0" />
